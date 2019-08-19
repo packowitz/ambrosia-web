@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Tavern
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+          Recruit heroes in the tavern
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="3">
+          <ion-button (click)="recruit('BASIC')"><ion-icon name="pricetag"></ion-icon>Basic (1* - 3*)</ion-button>
+        </ion-col>
+        <ion-col sizeMd="3">
+          <ion-button (click)="recruit('ADVANCED')"><ion-icon name="pricetags"></ion-icon>Adavanced (3* - 5*)</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+          Get some stuff on the black market
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="3">
+          <ion-button (click)="buyGear()"><ion-icon name="pricetag"></ion-icon>Get Gear</ion-button>
+        </ion-col>
+        <ion-col sizeMd="3">
+          <ion-button (click)="buyJewel()"><ion-icon name="pricetag"></ion-icon>Get Jewel</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

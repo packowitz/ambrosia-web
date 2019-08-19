@@ -1,0 +1,28 @@
+.gear-icon-box {
+  position: relative;
+  .gear-icon {
+    font-size: 2em;
+  }
+  .gear-special-icon {
+    position: absolute;
+    font-size: 1em;
+    top: 0.5em;
+    left: 0.5em;
+    &.inner {
+      color: white;
+    }
+    &.jewel {
+      color: #bfbd1e;
+    }
+  }
+}
+
+.gear-stars {
+  font-size: 0.3em;
+}
+
+.gear-jewels {
+  height: 40px;
+  width: 20px;
+  padding: 0 4px;
+}

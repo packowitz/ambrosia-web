@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Properties
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-row>
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Category</ion-label>
+            <ion-select interface="popover" slot="end" placeholder="Select" (ionChange)="categoryChanged($event)" required>
+              <ion-select-option *ngFor="let category of enumService.getPropertyCategories()" [value]="category">{{category}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <ion-item *ngIf="types">
+            <ion-label>Type</ion-label>
+            <ion-select interface="popover" slot="end" placeholder="Select" (ionChange)="typeChanged($event)" required>
+              <ion-select-option *ngFor="let type of types" [value]="type">{{type.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-row *ngIf="type">
+          {{type.description}}
+        </ion-row>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content *ngIf="properties">
+      <ion-row>
+        <ion-col sizeMd="2">Level</ion-col>
+        <ion-col sizeMd="3">Stat</ion-col>
+        <ion-col sizeMd="2">Value1</ion-col>
+        <ion-col sizeMd="2">Value2</ion-col>
+        <ion-col sizeMd="1">Delete</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let prop of properties">
+        <ion-col sizeMd="2">
+          <ion-item class="full-width">
+            <ion-input type="number" [(ngModel)]="prop.level"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="3">
+          <ion-item class="full-width">
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="prop.stat" [selectedText]="prop.stat" class="full-width no-max-width">
+              <ion-select-option [value]="null">none</ion-select-option>
+              <ion-select-option *ngFor="let stat of enumService.getHeroStats()" [value]="stat">{{stat}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item class="full-width">
+            <ion-input type="number" [(ngModel)]="prop.value1"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item class="full-width">
+            <ion-input type="number" [(ngModel)]="prop.value2"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="1">
+          <ion-button fill="clean" (click)="delete(prop)"><ion-icon name="trash" color="danger"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col offsetMd="6" sizeMd="4">
+          <ion-button color="medium" (click)="addProperty()">Add Property</ion-button>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-button color="success" (click)="save()">Save</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

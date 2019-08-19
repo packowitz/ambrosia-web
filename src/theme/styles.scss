@@ -1,0 +1,103 @@
+.RED {
+  color: #a32324;
+}
+
+.GREEN {
+  color: #2f9b34;
+}
+
+.BLUE {
+  color: #1b76ef;
+}
+
+.color-grey {
+  color: grey;
+}
+
+.color-green {
+  color: #0f7b1c;
+}
+
+.color-orange {
+  color: #d4910d;
+}
+
+.color-jewel-STRENGTH {
+  color: #9a1d13;
+}
+
+.color-jewel-ARMOR {
+  color: #1110ad;
+}
+
+.color-jewel-HP {
+  color: #0f7b1c;
+}
+
+.color-jewel-BUFFING {
+  color: #76157b;
+}
+
+.color-jewel-SPEED {
+  color: #c4c412;
+}
+
+.color-jewel-CRIT {
+  color: #2ba6bb;
+}
+
+.strong {
+  font-weight: 500;
+}
+
+.active {
+  --ion-text-color: var(--ion-color-primary);
+
+  ion-icon {
+    --ion-text-color-rgb: var(--ion-color-primary);
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.no-max-width {
+  max-width: inherit;
+}
+
+.parent-active {
+  font-weight: 500;
+}
+
+.sub-item {
+  padding-left: 20px;
+  font-size: small;
+}
+
+ion-row.table-header {
+  background-color: #4c8dff;
+  ion-col {
+    padding: 10px 12px;
+    border: solid 1px grey;
+    font-weight: 500;
+  }
+  ion-col:nth-child(n+2) {
+    border-left: none;
+  }
+}
+
+ion-row.table-row {
+  ion-col {
+    padding: 10px 12px;
+    border-right: solid 1px grey;
+    border-bottom: solid 1px grey;
+  }
+  ion-col:first-child {
+    border-left: solid 1px grey;
+  }
+}
+
+.border-bottom {
+  border-bottom: 1px solid black;
+}

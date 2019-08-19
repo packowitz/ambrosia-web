@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {AdminGuard} from './services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -12,9 +13,29 @@ const routes: Routes = [
     loadChildren: './home/home.module#HomePageModule'
   },
   {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  }
+    path: 'properties',
+    loadChildren: './properties/properties.module#PropertiesPageModule',
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'herobase',
+    loadChildren: './herobase/herobase.module#HerobaseModule',
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'tavern',
+    loadChildren: './tavern/tavern.module#TavernModule',
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'barracks',
+    loadChildren: './barracks/barracks.module#BarracksModule'
+  },
+  {
+    path: 'login',
+    loadChildren: './login/login.module#LoginPageModule'
+  },
+  { path: 'properties', loadChildren: './properties/properties.module#PropertiesPageModule' }
 ];
 
 @NgModule({

@@ -1,0 +1,76 @@
+<ion-content>
+    <ion-row>
+        <ion-col sizeMd="12">
+            <ion-item>
+                <div class="full-width flex-center">
+                    <div>{{converter.readableIdentifier(gear.set)}} {{converter.readableIdentifier(gear.rarity)}} {{converter.readableIdentifier(gear.type)}}</div>
+                    <gear-stat class="ml-1" [stat]="gear.stat" [value]="gear.statValue"></gear-stat>
+                </div>
+                <ion-button slot="end" fill="clear" (click)="dismiss()" color="medium"><ion-icon name="close"></ion-icon></ion-button>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col sizeMd="12">
+            <ion-item>
+                <div class="flex-start">
+                    <gear-icon [gear]="gear" [type]="gear.type" class="flex-vert-center"></gear-icon>
+                    <div *ngIf="gear.specialJewelSlot" class="flex-center">
+                        <ion-button (click)="selectJewelSlot(0, gear.set)" color="dark" [fill]="selectedJewel == 0 ? 'outline' : 'clear'">
+                            <i class="ra ra-kaleidoscope" [class.color-grey]="!gear.specialJewelType" [class.color-orange]="gear.specialJewelType"></i>
+                            <span *ngIf="gear.specialJewelType" class="ml-1">Lvl {{gear.specialJewelLevel}}</span>
+                            <span *ngIf="!gear.specialJewelType" class="ml-1"><i class="color-grey">empty</i></span>
+                        </ion-button>
+                    </div>
+                    <div *ngIf="gear.jewelSlot1" class="flex-center">
+                        <ion-button (click)="selectJewelSlot(1, gear.jewelSlot1)" color="dark" [fill]="selectedJewel == 1 ? 'outline' : 'clear'">
+                            <gear-jewel-slot [slotType]="gear.jewelSlot1" [pluggedInType]="gear.jewel1Type" style="font-size: 2em; display: flex"></gear-jewel-slot>
+                            <gear-stat *ngIf="gear.jewel1Type" class="ml-1" [stat]="gear.jewel1Type" [value]="propertyService.getJewelValue(gear.jewel1Type, gear.jewel1Level)" [showStatName]="false"></gear-stat>
+                            <span *ngIf="!gear.jewel1Type" class="ml-1"><i class="color-grey">empty</i></span>
+                        </ion-button>
+                    </div>
+                    <div *ngIf="gear.jewelSlot2" class="flex-center">
+                        <ion-button (click)="selectJewelSlot(2, gear.jewelSlot2)" color="dark" [fill]="selectedJewel == 2 ? 'outline' : 'clear'">
+                            <gear-jewel-slot [slotType]="gear.jewelSlot2" [pluggedInType]="gear.jewel2Type" style="font-size: 2em; display: flex"></gear-jewel-slot>
+                            <gear-stat *ngIf="gear.jewel2Type" class="ml-1" [stat]="gear.jewel2Type" [value]="propertyService.getJewelValue(gear.jewel2Type, gear.jewel2Level)" [showStatName]="false"></gear-stat>
+                            <span *ngIf="!gear.jewel2Type" class="ml-1"><i class="color-grey">empty</i></span>
+                        </ion-button>
+                    </div>
+                    <div *ngIf="gear.jewelSlot3" class="flex-center">
+                        <ion-button (click)="selectJewelSlot(3, gear.jewelSlot3)" color="dark" [fill]="selectedJewel == 3 ? 'outline' : 'clear'">
+                            <gear-jewel-slot [slotType]="gear.jewelSlot3" [pluggedInType]="gear.jewel3Type" style="font-size: 2em; display: flex"></gear-jewel-slot>
+                            <gear-stat *ngIf="gear.jewel3Type" class="ml-1" [stat]="gear.jewel3Type" [value]="propertyService.getJewelValue(gear.jewel3Type, gear.jewel3Level)" [showStatName]="false"></gear-stat>
+                            <span *ngIf="!gear.jewel3Type" class="ml-1"><i class="color-grey">empty</i></span>
+                        </ion-button>
+                    </div>
+                    <div *ngIf="gear.jewelSlot4" class="flex-center">
+                        <ion-button (click)="selectJewelSlot(4, gear.jewelSlot4)" color="dark" [fill]="selectedJewel == 4 ? 'outline' : 'clear'">
+                            <gear-jewel-slot [slotType]="gear.jewelSlot3" [pluggedInType]="gear.jewel4Type" style="font-size: 2em; display: flex"></gear-jewel-slot>
+                            <gear-stat *ngIf="gear.jewel4Type" class="ml-1" [stat]="gear.jewel4Type" [value]="propertyService.getJewelValue(gear.jewel4Type, gear.jewel4Level)" [showStatName]="false"></gear-stat>
+                            <span *ngIf="!gear.jewel4Type" class="ml-1"><i class="color-grey">empty</i></span>
+                        </ion-button>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col sizeMd="6" *ngFor="let jewelry of jewelries">
+            <ion-list>
+                <ion-list-header>{{converter.readableIdentifier(jewelry.type)}}</ion-list-header>
+                <div *ngFor="let level of jewelLevels">
+                    <ion-item *ngIf="jewelry['lvl' + level] > 0 || isEquipped(jewelry.type, level)" class="full-width">
+                        <div class="flex-grow flex-start">
+                            <ion-badge color="danger">{{jewelry['lvl' + level]}}</ion-badge>
+                            <div class="ml-2">L{{level}}</div>
+                            <gear-stat class="ml-2" [stat]="jewelry.type" [value]="propertyService.getJewelValue(jewelry.type, level)"></gear-stat>
+                        </div>
+                        <ion-button slot="end" (click)="upgrade(jewelry.type, level)" *ngIf="level < 10 && jewelry['lvl' + level] >= 4" color="secondary" fill="clear" class="ml-0"><ion-icon name="arrow-round-up"></ion-icon></ion-button>
+                        <ion-button slot="end" (click)="pluginJewel(jewelry.type, level)" *ngIf="jewelry['lvl' + level] > 0 && !isEquipped(jewelry.type, level)" class="ml-0" fill="clear" color="success"><i class="fas fa-user-plus"></i></ion-button>
+                        <ion-button slot="end" (click)="unplugJewel()" *ngIf="isEquipped(jewelry.type, level)" class="ml-0" fill="clear" color="danger"><i class="fas fa-user-minus"></i></ion-button>
+                    </ion-item>
+                </div>
+            </ion-list>
+        </ion-col>
+    </ion-row>
+</ion-content>

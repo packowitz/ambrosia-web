@@ -1,0 +1,178 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Barracks
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="model.heroes">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+          Your Heroes
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="hero-list">
+        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile flex-vert-center" [class.selected-tile]="hero.id == selectedHero.id">
+          <div [class]="hero.heroBase.color">{{hero.heroBase.name}}</div>
+          <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero.stars)"></ion-icon></div>
+          <div>Lvl {{hero.level}}</div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="selectedHero">
+    <ion-card-header>
+      <ion-card-title>
+        <div class="flex-space-between">
+          <div [class]="selectedHero.heroBase.color">{{selectedHero.heroBase.name}}</div>
+          <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(selectedHero.stars)"></ion-icon></div>
+          <div>Lvl {{selectedHero.level}}</div>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-segment [(ngModel)]="tab">
+        <ion-segment-button value="stats">
+          <ion-label>Stats</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="skills">
+          <ion-label>Skills</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="gear">
+          <ion-label>Gear</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="ascend">
+          <ion-label>Ascend</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <div *ngIf="tab == 'stats'">
+        <div class="flex-start mt-2 ml-1 mr-1">
+          <span>Lvl {{selectedHero.level}}</span>
+          <span class="flex-grow bar-outer ml-2">
+            <span class="bar-inner" [style.width]="(100 * selectedHero.xp / selectedHero.maxXp) + '%'">&nbsp;</span>
+            <span class="bar-text">{{selectedHero.xp == selectedHero.maxXp ? 'MAX' : selectedHero.xp + ' / ' + selectedHero.maxXp + ' XP'}}</span>
+            &nbsp;
+          </span>
+          <span *ngIf="model.player.admin" class="ml-4">
+            Modify level
+            <ion-button size="small" fill="clear" (click)="adminHeroLooseLevel()"><ion-icon name="remove"></ion-icon></ion-button>
+            <ion-button size="small" fill="clear" (click)="adminHeroGainLevel()"><ion-icon name="add"></ion-icon></ion-button>
+          </span>
+        </div>
+        <div class="mt-1 ml-1 mr-1 mb-2 border-bottom flex-space-between">
+          <div>{{selectedHero.heroBase.rarity}}</div>
+          <div>{{selectedHero.heroBase.color}}</div>
+          <div>{{selectedHero.heroBase.heroClass}}</div>
+          <div>{{selectedHero.heroBase.heroType}}</div>
+        </div>
+        <ion-row>
+          <ion-col sizeMd="6">
+            <ion-row>
+              <ion-col sizeMd="4">Strength</ion-col>
+              <ion-col sizeMd="">{{selectedHero.baseStrength}} <strong *ngIf="selectedHero.strengthTotal > selectedHero.baseStrength" class="color-green">+{{selectedHero.strengthTotal - selectedHero.baseStrength}}</strong></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col sizeMd="4">Hitpoints</ion-col>
+              <ion-col sizeMd="">{{selectedHero.baseHp}} <strong *ngIf="selectedHero.hpTotal > selectedHero.baseHp" class="color-green">+{{selectedHero.hpTotal - selectedHero.baseHp}}</strong></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col sizeMd="4">Armor</ion-col>
+              <ion-col sizeMd="">{{selectedHero.baseArmor}} <strong *ngIf="selectedHero.armorTotal > selectedHero.baseArmor" class="color-green">+{{selectedHero.armorTotal - selectedHero.baseArmor}}</strong></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col sizeMd="4">Initiative</ion-col>
+              <ion-col sizeMd="">{{selectedHero.baseInitiative}} <strong *ngIf="selectedHero.initiativeTotal > selectedHero.baseInitiative" class="color-green">+{{selectedHero.initiativeTotal - selectedHero.baseInitiative}}</strong></ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col sizeMd="6">
+            <ion-row>
+              <ion-col sizeMd="4">Dexterity</ion-col>
+              <ion-col sizeMd="">{{selectedHero.baseDexterity}} <strong *ngIf="selectedHero.dexterityTotal > selectedHero.baseDexterity" class="color-green">+{{selectedHero.dexterityTotal - selectedHero.baseDexterity}}</strong></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col sizeMd="4">Resistance</ion-col>
+              <ion-col sizeMd="">{{selectedHero.baseResistance}} <strong *ngIf="selectedHero.resistanceTotal > selectedHero.baseResistance" class="color-green">+{{selectedHero.resistanceTotal - selectedHero.baseResistance}}</strong></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col sizeMd="4">Crit</ion-col>
+              <ion-col sizeMd="">{{selectedHero.baseCrit}} <strong *ngIf="selectedHero.critTotal > selectedHero.baseCrit" class="color-green">+{{selectedHero.critTotal - selectedHero.baseCrit}}</strong></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col sizeMd="4">CritMult</ion-col>
+              <ion-col sizeMd="">{{selectedHero.baseCritMult}} <strong *ngIf="selectedHero.critMultTotal > selectedHero.baseCritMult" class="color-green">+{{selectedHero.critMultTotal - selectedHero.baseCritMult}}</strong></ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <div *ngIf="tab == 'skills'">
+        <div class="skill-list">
+          <div *ngFor="let skill of selectedHero.heroBase.skills" (click)="selectSkill(skill.number)" class="skill-tile flex-vert-center" [class.selected-tile]="skill.number == selectedSkill.number">
+            <div>{{skill.name}}</div>
+            <div *ngIf="getSkillLevel(skill) > 0">Lvl {{getSkillLevel(skill)}}</div>
+            <div *ngIf="getSkillLevel(skill) == 0" class="locked"><ion-icon name="lock"></ion-icon></div>
+          </div>
+        </div>
+        <div *ngIf="selectedSkill">
+          <div><strong>{{selectedSkill.name}}</strong></div>
+          <div>{{selectedSkill.description}}</div>
+          <div *ngIf="selectedSkill.cooldown > 1">Cooldown of {{selectedSkill.cooldown}}</div>
+          <div *ngIf="selectedSkill.initCooldown > 1">Initial Cooldown of {{selectedSkill.cooldown}}</div>
+          <div *ngIf="selectedSkill.skillLevel.length > 0" class="mt-2">
+            <div *ngFor="let lvl of selectedSkill.skillLevel" [class.strong]="getSkillLevel(selectedSkill) >= lvl.level">L{{lvl.level}} {{lvl.description}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="tab == 'gear'">
+        <ion-row>
+          <ion-col sizeMd="6">
+            <ion-list>
+              <ion-item>Hero's Gear</ion-item>
+              <ion-item><gear-list-item type="WEAPON" [hero]="selectedHero" [gear]="selectedHero.weapon" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
+              <ion-item><gear-list-item type="SHIELD" [hero]="selectedHero" [gear]="selectedHero.shield" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
+              <ion-item><gear-list-item type="HELMET" [hero]="selectedHero" [gear]="selectedHero.helmet" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
+              <ion-item><gear-list-item type="ARMOR" [hero]="selectedHero" [gear]="selectedHero.armor" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
+              <ion-item><gear-list-item type="PANTS" [hero]="selectedHero" [gear]="selectedHero.pants" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
+              <ion-item><gear-list-item type="BOOTS" [hero]="selectedHero" [gear]="selectedHero.boots" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
+            </ion-list>
+            <ion-list *ngIf="selectedHero.sets" lines="none">
+              <ion-item>Completed sets</ion-item>
+              <ion-item *ngFor="let set of selectedHero.sets">{{converter.readableIdentifier(set)}}: {{getSetDescription(set)}} ({{getSetPieces(set)}} pieces)</ion-item>
+            </ion-list>
+          </ion-col>
+
+          <ion-col sizeMd="6">
+            <div class="armory">
+              <ion-list>
+                <ion-item>
+                  <div class="flex-space-between">
+                    Armory
+                    <ion-button [fill]="gearTypeFilter.indexOf('WEAPON') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('WEAPON')"><i class="ra ra-relic-blade"></i></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('SHIELD') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('SHIELD')"><i class="ra ra-eye-shield"></i></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('HELMET') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('HELMET')"><i class="ra ra-helmet"></i></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('ARMOR') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('ARMOR')"><i class="ra ra-vest"></i></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('PANTS') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('PANTS')"><i class="ra ra-forward"></i></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('BOOTS') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('BOOTS')"><i class="ra ra-footprint"></i></ion-button>
+                  </div>
+                </ion-item>
+                <ion-item *ngFor="let gear of getAvailableGears()">
+                  <gear-list-item [hero]="selectedHero" [type]="gear.type" [gear]="gear" (callback)="selectHero($event)" class="full-width"></gear-list-item>
+                </ion-item>
+              </ion-list>
+            </div>
+
+          </ion-col>
+        </ion-row>
+      </div>
+      <div *ngIf="tab == 'ascend'">Ascend</div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

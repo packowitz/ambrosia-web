@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Base heroes
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-row class="table-header">
+        <ion-col>Hero Class</ion-col>
+        <ion-col>RED</ion-col>
+        <ion-col>GREEN</ion-col>
+        <ion-col>BLUE</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let heroClass of heroClassList" class="table-row">
+        <ion-col>{{heroClass.heroClass}} {{converter.rarityStars(heroClass.rarity)}}*</ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'RED') as hero"><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="RED">{{hero.name}}</a></ion-col>
+        <ion-col *ngIf="!getHero(heroClass, 'RED')">-</ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'GREEN') as hero"><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="GREEN">{{hero.name}}</a></ion-col>
+        <ion-col *ngIf="!getHero(heroClass, 'GREEN')">-</ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'BLUE') as hero"><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="BLUE">{{hero.name}}</a></ion-col>
+        <ion-col *ngIf="!getHero(heroClass, 'BLUE')">-</ion-col>
+    </ion-row>
+</ion-content>
