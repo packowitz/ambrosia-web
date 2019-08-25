@@ -15,19 +15,19 @@ export class AppComponent {
         {
             title: 'Home',
             url: '/home',
-            icon: 'home'
+            icon: 'gemini'
         },
         {
             title: 'Properties',
             url: '/properties',
-            icon: 'settings'
+            icon: 'flower'
         },
         {
             title: 'Base heroes',
             path: '/herobase/',
             admin: true,
             open: false,
-            icon: 'person',
+            icon: 'player',
             children: [
                 {
                     title: 'Create',
@@ -49,7 +49,12 @@ export class AppComponent {
         {
             title: 'Barracks',
             url: '/barracks',
-            icon: 'contacts'
+            icon: 'muscle-fat'
+        },
+        {
+            title: 'Training',
+            url: '/training',
+            icon: 'crossed-axes'
         }
     ];
 

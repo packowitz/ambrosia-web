@@ -8,6 +8,8 @@ import {Gear} from '../domain/gear.model';
 import {Jewelry} from '../domain/jewelry.model';
 import {map} from 'rxjs/operators';
 import {DynamicProperty} from '../domain/property.model';
+import {Team} from '../domain/team.model';
+import {OtherTeam} from '../domain/otherTeam.model';
 
 
 export class PlayerActionResponse {
@@ -129,6 +131,38 @@ export class BackendService {
 
     unplugJewel(gear: Gear, slot: number): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>('http://localhost:8080/gear/unplug/jewel', {gearId: gear.id, slot: slot});
+    }
+
+    getOwnTeams(): Observable<Team[]> {
+        return this.http.get<Team[]>('http://localhost:8080/teams');
+    }
+
+    saveTeam(team: Team): Observable<Team> {
+        if (team.id) {
+            return this.http.put<Team>('http://localhost:8080/teams/' + team.id, team);
+        } else {
+            return this.http.post<Team>('http://localhost:8080/teams/type/' + team.type, team);
+        }
+    }
+
+    getOtherTeams(type: string): Observable<OtherTeam[]> {
+        return this.http.get<OtherTeam[]>('http://localhost:8080/teams/type/' + type);
+    }
+
+    startDuell(otherTeam: OtherTeam, ownTeam: Team): Observable<any> {
+        let request = {
+            type: 'DUELL',
+            opponentId: otherTeam.playerId,
+            hero1Id: ownTeam.hero1Id,
+            hero2Id: ownTeam.hero2Id,
+            hero3Id: ownTeam.hero3Id,
+            hero4Id: ownTeam.hero4Id,
+            oppHero1Id: otherTeam.hero1 ? otherTeam.hero1.id : null,
+            oppHero2Id: otherTeam.hero2 ? otherTeam.hero2.id : null,
+            oppHero3Id: otherTeam.hero3 ? otherTeam.hero3.id : null,
+            oppHero4Id: otherTeam.hero4 ? otherTeam.hero4.id : null
+        };
+        return this.http.post<any>('http://localhost:8080/battle', request);
     }
 
 }

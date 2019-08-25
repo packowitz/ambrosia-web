@@ -101,3 +101,20 @@ ion-row.table-row {
 .border-bottom {
   border-bottom: 1px solid black;
 }
+
+.scrollable-list {
+  display: flex;
+  overflow-x: scroll;
+}
+
+.hero-tile {
+  width: 80px;
+  min-width: 80px;
+  height: 80px;
+  cursor: pointer;
+}
+
+.selected-tile {
+  border: 1px solid black;
+  background-color: #e6e6e6;
+}

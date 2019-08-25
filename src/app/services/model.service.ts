@@ -6,6 +6,7 @@ import {Gear} from '../domain/gear.model';
 import {HeroBase} from '../domain/herobase.model';
 import {Jewelry} from '../domain/jewelry.model';
 import {PlayerActionResponse} from './backend.service';
+import {Team} from '../domain/team.model';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,7 @@ export class Model {
     baseHeroes: HeroBase[];
     heroes: Hero[];
     gears: Gear[];
+    teams: Team[];
 
     update(data: PlayerActionResponse) {
         if (data.token) {

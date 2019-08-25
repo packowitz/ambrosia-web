@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Training Camp</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="team">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Your Heroes
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="scrollable-list">
+        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile flex-vert-center" [class.selected-tile]="isHeroSelected(hero)">
+          <div [class]="hero.heroBase.color">{{hero.heroBase.name}}</div>
+          <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero.stars)"></ion-icon></div>
+          <div>Lvl {{hero.level}}</div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <div>Your Team</div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="hero1">
+          <div (click)="selectHero(hero1)" class="hero-tile flex-vert-center selected-tile">
+            <div [class]="hero1.heroBase.color">{{hero1.heroBase.name}}</div>
+            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero1.stars)"></ion-icon></div>
+            <div>Lvl {{hero1.level}}</div>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="!hero1">
+          <div class="hero-tile flex-vert-center selected-tile"></div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="hero2">
+          <div (click)="selectHero(hero2)" class="hero-tile flex-vert-center selected-tile">
+            <div [class]="hero2.heroBase.color">{{hero2.heroBase.name}}</div>
+            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero2.stars)"></ion-icon></div>
+            <div>Lvl {{hero2.level}}</div>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="!hero2">
+          <div class="hero-tile flex-vert-center selected-tile"></div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="hero3">
+          <div (click)="selectHero(hero3)" class="hero-tile flex-vert-center selected-tile">
+            <div [class]="hero3.heroBase.color">{{hero3.heroBase.name}}</div>
+            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero3.stars)"></ion-icon></div>
+            <div>Lvl {{hero3.level}}</div>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="!hero3">
+          <div class="hero-tile flex-vert-center selected-tile"></div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="hero4">
+          <div (click)="selectHero(hero4)" class="hero-tile flex-vert-center selected-tile">
+            <div [class]="hero4.heroBase.color">{{hero4.heroBase.name}}</div>
+            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero4.stars)"></ion-icon></div>
+            <div>Lvl {{hero4.level}}</div>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="!hero4">
+          <div class="hero-tile flex-vert-center selected-tile"></div>
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-button color="success" (click)="saveTeam()">default</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Fight against others</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row *ngFor="let otherTeam of otherTeams">
+        <ion-col sizeMd="2" class="flex-center">
+          <div>{{otherTeam.playerName}}</div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="otherTeam.hero1">
+          <div class="hero-tile flex-vert-center selected-tile">
+            <div [class]="otherTeam.hero1.heroBase.color">{{otherTeam.hero1.heroBase.name}}</div>
+            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(otherTeam.hero1.stars)"></ion-icon></div>
+            <div>Lvl {{otherTeam.hero1.level}}</div>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="!otherTeam.hero1">
+          <div class="hero-tile flex-vert-center selected-tile"></div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="otherTeam.hero2">
+          <div class="hero-tile flex-vert-center selected-tile">
+            <div [class]="otherTeam.hero2.heroBase.color">{{otherTeam.hero2.heroBase.name}}</div>
+            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(otherTeam.hero2.stars)"></ion-icon></div>
+            <div>Lvl {{otherTeam.hero2.level}}</div>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="!otherTeam.hero2">
+          <div class="hero-tile flex-vert-center selected-tile"></div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="otherTeam.hero3">
+          <div class="hero-tile flex-vert-center selected-tile">
+            <div [class]="otherTeam.hero3.heroBase.color">{{otherTeam.hero3.heroBase.name}}</div>
+            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(otherTeam.hero3.stars)"></ion-icon></div>
+            <div>Lvl {{otherTeam.hero3.level}}</div>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="!otherTeam.hero3">
+          <div class="hero-tile flex-vert-center selected-tile"></div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="otherTeam.hero4">
+          <div class="hero-tile flex-vert-center selected-tile">
+            <div [class]="otherTeam.hero4.heroBase.color">{{otherTeam.hero4.heroBase.name}}</div>
+            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(otherTeam.hero4.stars)"></ion-icon></div>
+            <div>Lvl {{otherTeam.hero4.level}}</div>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" *ngIf="!otherTeam.hero4">
+          <div class="hero-tile flex-vert-center selected-tile"></div>
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-button color="danger" (click)="fight(otherTeam)">fight</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

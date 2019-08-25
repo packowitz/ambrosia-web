@@ -17,7 +17,7 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div class="hero-list">
+      <div class="scrollable-list">
         <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile flex-vert-center" [class.selected-tile]="hero.id == selectedHero.id">
           <div [class]="hero.heroBase.color">{{hero.heroBase.name}}</div>
           <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero.stars)"></ion-icon></div>
