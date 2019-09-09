@@ -18,6 +18,8 @@ export class HerobaseEditPage implements OnInit {
     skill: HeroSkill;
     saving = false;
 
+    skillActionsExpanded = 0;
+
     constructor(private route: ActivatedRoute,
                 private backendService: BackendService,
                 private converter: ConverterService,
@@ -76,6 +78,7 @@ export class HerobaseEditPage implements OnInit {
             let selected = Number(event.detail.value);
             this.skill = this.hero.skills.find(s => s.number === selected);
         }
+        this.skillActionsExpanded = 0;
     }
 
     skillMaxLevelChanged(skill: HeroSkill, event) {
@@ -97,5 +100,35 @@ export class HerobaseEditPage implements OnInit {
         let action = new HeroSkillAction();
         action.position = skill.actions.length + 1;
         skill.actions.push(action);
+        this.skillActionsExpanded = action.position;
+    }
+
+    toggleExpandAction(position: number) {
+        if (this.skillActionsExpanded === position) {
+            this.skillActionsExpanded = 0;
+        } else {
+            this.skillActionsExpanded = position;
+        }
+    }
+
+    moveAction(action: HeroSkillAction, move: number) {
+        let newPos = action.position + move;
+        if (newPos >= 1 && newPos <= this.skill.actions.length) {
+            let oldPos = action.position;
+            this.skill.actions.find(a => a.position === newPos).position = oldPos;
+            action.position = newPos;
+            this.skill.actions.sort((a, b) => a.position - b.position);
+            if (this.skillActionsExpanded === oldPos) {
+                this.skillActionsExpanded = newPos;
+            } else if (this.skillActionsExpanded === newPos) {
+                this.skillActionsExpanded = oldPos;
+            }
+        }
+    }
+
+    dropAction(action: HeroSkillAction) {
+        let idx = this.skill.actions.indexOf(action);
+        this.skill.actions.filter(a => a.position > action.position).forEach(a => a.position--);
+        this.skill.actions.splice(idx, 1);
     }
 }

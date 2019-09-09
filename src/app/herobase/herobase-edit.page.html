@@ -340,7 +340,18 @@
                         <ion-item><strong>Skill Actions</strong></ion-item>
                     </ion-row>
                     <ion-row *ngFor="let action of skill.actions" class="mt-4">
-                        <ion-col sizeMd="5">
+                        <ion-col sizeMd="12">
+                            <div class="flex-space-between ml-2 mr-2">
+                                <div>{{action.position}}. {{action.triggerChance}}% {{action.type}} {{action.effect}} ({{action.effectValue}}) on {{action.target}}<span *ngIf="action.effectDuration"> for {{action.effectDuration}} turn(s)</span></div>
+                                <div class="flex-grow"></div>
+                                <ion-button (click)="dropAction(action)" size="small" fill="outline" color="danger"><ion-icon name="trash"></ion-icon></ion-button>
+                                <ion-button (click)="moveAction(action, -1)" size="small" fill="outline" [disabled]="action.position <= 1"><ion-icon name="arrow-dropup-circle"></ion-icon></ion-button>
+                                <ion-button (click)="moveAction(action, 1)" size="small" fill="outline" [disabled]="action.position >= skill.actions.length"><ion-icon name="arrow-dropdown-circle"></ion-icon></ion-button>
+                                <ion-button *ngIf="skillActionsExpanded != action.position" size="small" fill="clear" (click)="toggleExpandAction(action.position)"><ion-icon name="arrow-dropdown"></ion-icon></ion-button>
+                                <ion-button *ngIf="skillActionsExpanded == action.position" size="small" fill="clear" (click)="toggleExpandAction(action.position)"><ion-icon name="arrow-dropup"></ion-icon></ion-button>
+                            </div>
+                        </ion-col>
+                        <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
                             <ion-item class="full-width">
                                 <ion-label position="fixed">Trigger</ion-label>
                                 <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.trigger" required>
@@ -348,19 +359,19 @@
                                 </ion-select>
                             </ion-item>
                         </ion-col>
-                        <ion-col sizeMd="3">
+                        <ion-col sizeMd="3" *ngIf="skillActionsExpanded == action.position">
                             <ion-item class="full-width">
                                 <ion-label position="fixed">Tr. Value</ion-label>
                                 <ion-input slot="end" type="text" [(ngModel)]="action.triggerValue"></ion-input>
                             </ion-item>
                         </ion-col>
-                        <ion-col sizeMd="4">
+                        <ion-col sizeMd="4" *ngIf="skillActionsExpanded == action.position">
                             <ion-item class="full-width">
                                 <ion-label position="fixed">Tr. Chance</ion-label>
                                 <ion-input slot="end" type="text" [(ngModel)]="action.triggerChance" required></ion-input>
                             </ion-item>
                         </ion-col>
-                        <ion-col sizeMd="5">
+                        <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
                             <ion-item class="full-width">
                                 <ion-label position="fixed">Action Type</ion-label>
                                 <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.type" required>
@@ -368,7 +379,7 @@
                                 </ion-select>
                             </ion-item>
                         </ion-col>
-                        <ion-col sizeMd="5">
+                        <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
                             <ion-item class="full-width">
                                 <ion-label position="fixed">Action Target</ion-label>
                                 <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.target" required>
@@ -376,7 +387,7 @@
                                 </ion-select>
                             </ion-item>
                         </ion-col>
-                        <ion-col sizeMd="5">
+                        <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
                             <ion-item class="full-width">
                                 <ion-label position="fixed">Action Effect</ion-label>
                                 <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.effect" required>
@@ -384,13 +395,13 @@
                                 </ion-select>
                             </ion-item>
                         </ion-col>
-                        <ion-col sizeMd="3">
+                        <ion-col sizeMd="3" *ngIf="skillActionsExpanded == action.position">
                             <ion-item class="full-width">
                                 <ion-label position="fixed">E. Value</ion-label>
                                 <ion-input slot="end" type="text" [(ngModel)]="action.effectValue" required></ion-input>
                             </ion-item>
                         </ion-col>
-                        <ion-col sizeMd="4">
+                        <ion-col sizeMd="4" *ngIf="skillActionsExpanded == action.position">
                             <ion-item class="full-width">
                                 <ion-label position="fixed">E. Duration</ion-label>
                                 <ion-input slot="end" type="text" [(ngModel)]="action.effectDuration"></ion-input>
