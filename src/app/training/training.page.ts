@@ -5,6 +5,7 @@ import {Hero} from '../domain/hero.model';
 import {Team} from '../domain/team.model';
 import {BackendService} from '../services/backend.service';
 import {OtherTeam} from '../domain/otherTeam.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-training',
@@ -20,7 +21,10 @@ export class TrainingPage implements OnInit {
 
   otherTeams: OtherTeam[] = [];
 
-  constructor(private model: Model, private converter: ConverterService, private backendService: BackendService) { }
+  constructor(private model: Model,
+              private converter: ConverterService,
+              private backendService: BackendService,
+              private router: Router) { }
 
   ngOnInit() {
     if (!this.model.teams) {
@@ -125,7 +129,8 @@ export class TrainingPage implements OnInit {
 
   fight(otherTeam: OtherTeam) {
     this.backendService.startDuell(otherTeam, this.team).subscribe(data => {
-      console.log(data);
+      this.model.ongoingBattle = data;
+      this.router.navigateByUrl('/battle');
     });
   }
 

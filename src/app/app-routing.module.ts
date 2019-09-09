@@ -30,7 +30,8 @@ const routes: Routes = [
     {path: 'barracks', loadChildren: './barracks/barracks.module#BarracksModule'},
     {path: 'login', loadChildren: './login/login.module#LoginPageModule'},
     {path: 'properties', loadChildren: './properties/properties.module#PropertiesPageModule'},
-    {path: 'training', loadChildren: './training/training.module#TrainingPageModule'}
+    {path: 'training', loadChildren: './training/training.module#TrainingPageModule'},
+    {path: 'battle', loadChildren: './battle/battle.module#BattlePageModule'}
 ];
 
 @NgModule({

@@ -20,7 +20,8 @@ export class AppComponent {
         {
             title: 'Properties',
             url: '/properties',
-            icon: 'flower'
+            icon: 'flower',
+            admin: true
         },
         {
             title: 'Base heroes',
@@ -55,6 +56,11 @@ export class AppComponent {
             title: 'Training',
             url: '/training',
             icon: 'crossed-axes'
+        },
+        {
+            title: 'Ongoing Battle',
+            url: '/battle',
+            icon: 'dripping-sword'
         }
     ];
 

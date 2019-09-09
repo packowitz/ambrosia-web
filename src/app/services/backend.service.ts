@@ -7,9 +7,9 @@ import {Player} from '../domain/player.model';
 import {Gear} from '../domain/gear.model';
 import {Jewelry} from '../domain/jewelry.model';
 import {map} from 'rxjs/operators';
-import {DynamicProperty} from '../domain/property.model';
 import {Team} from '../domain/team.model';
 import {OtherTeam} from '../domain/otherTeam.model';
+import {Battle} from '../domain/battle.model';
 
 
 export class PlayerActionResponse {
@@ -22,6 +22,7 @@ export class PlayerActionResponse {
     gears?: Gear[];
     gearIdsRemovedFromArmory?: number[];
     jewelries?: Jewelry[];
+    ongoingBattle?: Battle;
 }
 
 @Injectable({
@@ -149,10 +150,10 @@ export class BackendService {
         return this.http.get<OtherTeam[]>('http://localhost:8080/teams/type/' + type);
     }
 
-    startDuell(otherTeam: OtherTeam, ownTeam: Team): Observable<any> {
+    startDuell(otherTeam: OtherTeam, ownTeam: Team): Observable<Battle> {
         let request = {
             type: 'DUELL',
-            opponentId: otherTeam.playerId,
+            oppPlayerId: otherTeam.playerId,
             hero1Id: ownTeam.hero1Id,
             hero2Id: ownTeam.hero2Id,
             hero3Id: ownTeam.hero3Id,
@@ -162,7 +163,7 @@ export class BackendService {
             oppHero3Id: otherTeam.hero3 ? otherTeam.hero3.id : null,
             oppHero4Id: otherTeam.hero4 ? otherTeam.hero4.id : null
         };
-        return this.http.post<any>('http://localhost:8080/battle', request);
+        return this.http.post<Battle>('http://localhost:8080/battle', request);
     }
 
 }

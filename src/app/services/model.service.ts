@@ -7,6 +7,7 @@ import {HeroBase} from '../domain/herobase.model';
 import {Jewelry} from '../domain/jewelry.model';
 import {PlayerActionResponse} from './backend.service';
 import {Team} from '../domain/team.model';
+import {Battle} from '../domain/battle.model';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +19,7 @@ export class Model {
     heroes: Hero[];
     gears: Gear[];
     teams: Team[];
+    ongoingBattle?: Battle;
 
     update(data: PlayerActionResponse) {
         if (data.token) {
@@ -51,6 +53,9 @@ export class Model {
         }
         if (data.gearIdsRemovedFromArmory && this.gears) {
             this.gears = this.gears.filter(g => data.gearIdsRemovedFromArmory.findIndex(i => i === g.id) === -1);
+        }
+        if (data.ongoingBattle) {
+            this.ongoingBattle = data.ongoingBattle;
         }
     }
 

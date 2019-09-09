@@ -1,0 +1,59 @@
+.container {
+  width: 120px;
+  height: 120px;
+  border: 1px solid black;
+
+  &.container-empty {
+    border-color: #d6d6d6;
+  }
+
+  &.container-active {
+    border-width: 3px;
+    border-color: #e0b516;
+  }
+}
+
+.level-bubble {
+  color: white;
+  border-radius: 10px;
+  width: 20px;
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.health-bar {
+  border: 1px solid #06a042;
+  background-color: #c0ead1;
+  position: relative;
+  height: 8px;
+  overflow: hidden;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  .health-bar-inner {
+    background-color: #1ec35f;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 8px;
+  }
+}
+.armor-bar {
+  border: 1px solid #0d4fc1;
+  background-color: #b8c5f7;
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  //border-bottom-left-radius: 2px;
+  //border-bottom-right-radius: 2px;
+  .armor-bar-inner {
+    background-color: #387aef;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 6px;
+  }
+}
+.speedbar {
+  height: 3px;
+  background-color: #e0b516;
+}

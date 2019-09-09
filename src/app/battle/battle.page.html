@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ongoing Battle</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!model.ongoingBattle">
+  There is currently no battle going on
+</ion-content>
+
+<ion-content *ngIf="model.ongoingBattle">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{model.ongoingBattle.playerId}} vs {{model.ongoingBattle.opponentId}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row class="flex-space-around">
+        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.oppHero1"></battlefield-hero>
+        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.oppHero2"></battlefield-hero>
+        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.oppHero3"></battlefield-hero>
+        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.oppHero4"></battlefield-hero>
+      </ion-row>
+      <ion-row class="mt-4 flex-space-around">
+        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.hero1"></battlefield-hero>
+        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.hero2"></battlefield-hero>
+        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.hero3"></battlefield-hero>
+        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.hero4"></battlefield-hero>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

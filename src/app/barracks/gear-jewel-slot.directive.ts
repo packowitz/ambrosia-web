@@ -16,7 +16,7 @@ import {ModalController} from '@ionic/angular';
         <i *ngIf="slotType == 'SPEED'" class="jewel-slot ra ra-lightning-bolt {{pluggedInType ? 'color-jewel-' + slotType : 'color-grey'}}"></i>
         <i *ngIf="slotType == 'CRIT'" class="jewel-slot ra ra-hydra-shot {{pluggedInType ? 'color-jewel-' + slotType : 'color-grey'}}"></i>
   `,
-    styleUrls: ['gear-jewel-slot.directice.scss']
+    styleUrls: ['gear-jewel-slot.directive.scss']
 })
 export class GearJewelSlot {
     @Input() slotType: string;
