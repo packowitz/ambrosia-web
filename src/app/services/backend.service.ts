@@ -10,6 +10,8 @@ import {map} from 'rxjs/operators';
 import {Team} from '../domain/team.model';
 import {OtherTeam} from '../domain/otherTeam.model';
 import {Battle} from '../domain/battle.model';
+import {BattleHero} from '../domain/battleHero.model';
+import {HeroSkill} from '../domain/heroSkill.model';
 
 
 export class PlayerActionResponse {
@@ -164,6 +166,11 @@ export class BackendService {
             oppHero4Id: otherTeam.hero4 ? otherTeam.hero4.id : null
         };
         return this.http.post<Battle>('http://localhost:8080/battle', request);
+    }
+
+    takeTurn(battle: Battle, hero: BattleHero, skill: HeroSkill, target: BattleHero): Observable<Battle> {
+        let url = 'http://localhost:8080/battle/' + battle.id + '/' + hero.position + '/' + skill.number + '/' + target.position;
+        return this.http.post<Battle>(url, null);
     }
 
 }

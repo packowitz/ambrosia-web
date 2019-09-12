@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Gear} from '../domain/gear.model';
 import {ConverterService} from '../services/converter.service';
 import {BattleHero} from '../domain/battleHero.model';
@@ -7,7 +7,10 @@ import {Battle} from '../domain/battle.model';
 @Component({
     selector: 'battlefield-hero',
     template: `
-        <div class="container flex-vert" *ngIf="hero" [class.container-active]="hero && battle.activeHero == hero.position">
+        <div class="container flex-vert" *ngIf="hero" 
+             [class.container-active]="isActive()" 
+             [class.container-targetable]="targetable" 
+             (click)="selectHero()">
             <div class="flex-start mt-1">
                 <div class="ml-1 level-bubble background-{{hero.color}}">{{hero.level}}</div>
                 <div class="flex-grow">
@@ -33,7 +36,22 @@ import {Battle} from '../domain/battle.model';
 export class BattlefieldHero {
     @Input() battle: Battle;
     @Input() hero: BattleHero;
+    @Input() targetable: boolean;
+    @Output() selected = new EventEmitter();
 
     constructor(private converter: ConverterService) { }
+
+    isActive(): boolean {
+        if (this.battle.status !== 'WON' && this.battle.status !== 'LOST') {
+            return this.hero && this.battle.activeHero === this.hero.position;
+        }
+        return false;
+    }
+
+    selectHero() {
+        if (this.targetable) {
+            this.selected.emit(this.hero);
+        }
+    }
 
 }

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Model} from '../services/model.service';
+import {Battle} from '../domain/battle.model';
+import {BattleHero} from '../domain/battleHero.model';
+import {HeroSkill} from '../domain/heroSkill.model';
+import {BackendService} from '../services/backend.service';
 
 @Component({
   selector: 'app-battle',
@@ -8,9 +12,73 @@ import {Model} from '../services/model.service';
 })
 export class BattlePage implements OnInit {
 
-  constructor(private model: Model) { }
+  battle: Battle;
+  activeHero: BattleHero;
+  selectedSkill: HeroSkill;
+
+  constructor(private model: Model, private backendService: BackendService) {}
 
   ngOnInit() {
+    this.battle = this.model.ongoingBattle;
+    if (this.battle) {
+      this.setActiveHero();
+    }
+  }
+
+  setActiveHero() {
+    if (this.battle.status === 'WON' || this.battle.status === 'LOST') {
+      this.activeHero = null;
+    } else if (this.battle.hero1 && this.battle.hero1.position === this.battle.activeHero) {
+      this.activeHero = this.battle.hero1;
+    } else if (this.battle.hero2 && this.battle.hero2.position === this.battle.activeHero) {
+      this.activeHero = this.battle.hero2;
+    } else if (this.battle.hero3 && this.battle.hero3.position === this.battle.activeHero) {
+      this.activeHero = this.battle.hero3;
+    } else if (this.battle.hero4 && this.battle.hero4.position === this.battle.activeHero) {
+      this.activeHero = this.battle.hero4;
+    }
+
+    if (this.activeHero) {
+      this.selectedSkill = this.activeHero.heroBase.skills[0];
+    }
+  }
+
+  getSkills(): HeroSkill[] {
+    return this.activeHero.heroBase.skills.filter(s => s.number === 1 || this.activeHero['skill' + s.number + 'Cooldown'] >= 0);
+  }
+
+  selectable(hero: BattleHero): boolean {
+    if (this.activeHero) {
+      if (hero && this.selectedSkill) {
+        if (this.isOpponent(hero)) {
+          return this.selectedSkill.target === 'OPPONENT' || this.selectedSkill.target === 'OPP_IGNORE_TAUNT';
+        } else {
+          if (hero.position === this.activeHero.position) {
+            return this.selectedSkill.target === 'SELF' || this.selectedSkill.target === 'ALL_OWN';
+          } else {
+            return this.selectedSkill.target === 'ALL_OWN';
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  isOpponent(hero: BattleHero): boolean {
+    if (this.activeHero) {
+      if (this.activeHero.position.startsWith('HERO')) {
+        return hero.position.startsWith('OPP');
+      } else {
+        return hero.position.startsWith('HERO');
+      }
+    }
+  }
+
+  selectTarget(hero: BattleHero) {
+    this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
+      this.battle = data;
+      this.setActiveHero();
+    });
   }
 
 }

@@ -4,28 +4,34 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="!model.ongoingBattle">
+<ion-content *ngIf="!battle">
   There is currently no battle going on
 </ion-content>
 
-<ion-content *ngIf="model.ongoingBattle">
+<ion-content *ngIf="battle">
   <ion-card>
     <ion-card-header>
-      <ion-card-title>{{model.ongoingBattle.playerId}} vs {{model.ongoingBattle.opponentId}}</ion-card-title>
+      <ion-card-title>{{battle.playerId}} vs {{battle.opponentId}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-row class="flex-space-around">
-        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.oppHero1"></battlefield-hero>
-        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.oppHero2"></battlefield-hero>
-        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.oppHero3"></battlefield-hero>
-        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.oppHero4"></battlefield-hero>
+        <battlefield-hero [battle]="battle" [hero]="battle.oppHero1" [targetable]="selectable(battle.oppHero1)" (selected)="selectTarget($event)"></battlefield-hero>
+        <battlefield-hero [battle]="battle" [hero]="battle.oppHero2" [targetable]="selectable(battle.oppHero2)" (selected)="selectTarget($event)"></battlefield-hero>
+        <battlefield-hero [battle]="battle" [hero]="battle.oppHero3" [targetable]="selectable(battle.oppHero3)" (selected)="selectTarget($event)"></battlefield-hero>
+        <battlefield-hero [battle]="battle" [hero]="battle.oppHero4" [targetable]="selectable(battle.oppHero4)" (selected)="selectTarget($event)"></battlefield-hero>
       </ion-row>
       <ion-row class="mt-4 flex-space-around">
-        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.hero1"></battlefield-hero>
-        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.hero2"></battlefield-hero>
-        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.hero3"></battlefield-hero>
-        <battlefield-hero [battle]="model.ongoingBattle" [hero]="model.ongoingBattle.hero4"></battlefield-hero>
+        <battlefield-hero [battle]="battle" [hero]="battle.hero1" [targetable]="selectable(battle.hero1)" (selected)="selectTarget($event)"></battlefield-hero>
+        <battlefield-hero [battle]="battle" [hero]="battle.hero2" [targetable]="selectable(battle.hero2)" (selected)="selectTarget($event)"></battlefield-hero>
+        <battlefield-hero [battle]="battle" [hero]="battle.hero3" [targetable]="selectable(battle.hero3)" (selected)="selectTarget($event)"></battlefield-hero>
+        <battlefield-hero [battle]="battle" [hero]="battle.hero4" [targetable]="selectable(battle.hero4)" (selected)="selectTarget($event)"></battlefield-hero>
       </ion-row>
+      <ion-row *ngIf="activeHero" class="mt-4 flex-space-around">
+        <ion-button *ngFor="let skill of getSkills()" [fill]="skill == selectedSkill ? 'solid' : 'outline'" (click)="this.selectedSkill = skill">
+          <i class="ra ra-battered-axe" *ngIf="skill.target == 'OPPONENT'"></i> {{skill.name}}
+        </ion-button>
+      </ion-row>
+      <ion-row *ngIf="selectedSkill" class="flex-space-around">{{selectedSkill.description}}</ion-row>
     </ion-card-content>
   </ion-card>
 </ion-content>
