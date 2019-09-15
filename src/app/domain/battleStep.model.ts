@@ -7,4 +7,6 @@ export class BattleStep {
     usedSkill: number;
     target: string;
     actions: BattleStepAction[];
+
+    expanded?: boolean;
 }

@@ -63,3 +63,43 @@
   height: 3px;
   background-color: #e0b516;
 }
+
+.buffs {
+  font-size: 0.7em;
+  display: flex;
+  .buff, .debuff {
+    width: 18px;
+    height: 18px;
+    margin-right: 2px;
+    position: relative;
+    &.int-1 {
+      color: white;
+    }
+    &.int-2 {
+      color: #000000;
+    }
+    &.int-3 {
+      color: #2643b1;
+    }
+    &.int-4 {
+      color: #852cb1;
+    }
+    &.int-5 {
+      color: #c4c412;
+    }
+  }
+  .buff {
+    background-color: #46b126;
+  }
+  .debuff {
+    background-color: #b12806;
+  }
+
+  .buff-duration {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 0.8em;
+    color: white;
+  }
+}

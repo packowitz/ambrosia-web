@@ -34,4 +34,22 @@
       <ion-row *ngIf="selectedSkill" class="flex-space-around">{{selectedSkill.description}}</ion-row>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-list>
+      <ion-item *ngFor="let step of steps">
+        <div class="flex-vert">
+          <div [class.strong]="lastKnownTurn < step.turn" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} used S{{step.usedSkill}} on {{step.target}}</div>
+          <div *ngIf="step.expanded">
+            <div *ngFor="let action of step.actions">
+              <div *ngIf="action.buff && !action.buffResisted">{{action.heroPosition}} got {{action.buffIntensity}}* {{action.buff}} for {{action.buffDuration}} turns</div>
+              <div *ngIf="action.buff && action.buffResisted">{{action.heroPosition}} resisted {{action.buffIntensity}}* {{action.buff}}</div>
+              <div *ngIf="!action.buff">{{action.heroPosition}}: <i [class.RED]="action.healthDiff < 0" [class.GREEN]="action.healthDiff > 0">{{action.healthDiff}}</i> health, <i [class.RED]="action.armorDiff < 0" [class.GREEN]="action.armorDiff > 0">{{action.armorDiff}}</i> armor </div>
+            </div>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
 </ion-content>

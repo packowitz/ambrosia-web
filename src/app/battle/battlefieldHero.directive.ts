@@ -13,7 +13,7 @@ import {Battle} from '../domain/battle.model';
              (click)="selectHero()">
             <div class="flex-start mt-1">
                 <div class="ml-1 level-bubble background-{{hero.color}}">{{hero.level}}</div>
-                <div class="flex-grow">
+                <div class="flex-grow" *ngIf="hero.status !== 'DEAD'">
                     <div class="ml-1 mr-1 health-bar">
                         <span class="health-bar-inner" [style.width]="(100 * hero.currentHp / hero.heroHp) + '%'"></span>
                     </div>
@@ -23,6 +23,16 @@ import {Battle} from '../domain/battle.model';
                     <div class="ml-1 mr-1">
                         <div class="speedbar" [style.width]="hero.currentSpeedBar > 10000 ? '100%' : (hero.currentSpeedBar / 100) + '%'"></div>
                     </div>
+                </div>
+                <div class="flex-grow" *ngIf="hero.status === 'DEAD'">
+                    <i class="color-orange">DEAD</i>
+                </div>
+            </div>
+            <div class="buffs ml-1 mr-1 mt-1">
+                <div *ngFor="let buff of hero.buffs" class="{{buff.type.toLowerCase()}} int-{{buff.intensity}} flex-center">
+                    <i *ngIf="buff.buff === 'ARMOR_BUFF'" class="ra ra-eye-shield"></i>
+                    <i *ngIf="buff.buff === 'STRENGTH_BUFF'" class="ra ra-muscle-up"></i>
+                    <div class="buff-duration">{{buff.duration}}</div>
                 </div>
             </div>
             <div class="flex-grow"></div>

@@ -4,6 +4,7 @@ import {Battle} from '../domain/battle.model';
 import {BattleHero} from '../domain/battleHero.model';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {BackendService} from '../services/backend.service';
+import {BattleStep} from '../domain/battleStep.model';
 
 @Component({
   selector: 'app-battle',
@@ -16,26 +17,30 @@ export class BattlePage implements OnInit {
   activeHero: BattleHero;
   selectedSkill: HeroSkill;
 
+  steps: BattleStep[] = [];
+  lastKnownTurn = 0;
+
   constructor(private model: Model, private backendService: BackendService) {}
 
   ngOnInit() {
-    this.battle = this.model.ongoingBattle;
-    if (this.battle) {
-      this.setActiveHero();
-    }
+    this.setActiveHero(this.model.ongoingBattle);
   }
 
-  setActiveHero() {
-    if (this.battle.status === 'WON' || this.battle.status === 'LOST') {
-      this.activeHero = null;
-    } else if (this.battle.hero1 && this.battle.hero1.position === this.battle.activeHero) {
-      this.activeHero = this.battle.hero1;
-    } else if (this.battle.hero2 && this.battle.hero2.position === this.battle.activeHero) {
-      this.activeHero = this.battle.hero2;
-    } else if (this.battle.hero3 && this.battle.hero3.position === this.battle.activeHero) {
-      this.activeHero = this.battle.hero3;
-    } else if (this.battle.hero4 && this.battle.hero4.position === this.battle.activeHero) {
-      this.activeHero = this.battle.hero4;
+  setActiveHero(battle: Battle) {
+    if (battle) {
+      this.battle = battle;
+      this.steps = battle.steps.sort((a, b) => b.turn - a.turn);
+      if (this.battle.status === 'WON' || this.battle.status === 'LOST') {
+        this.activeHero = null;
+      } else if (this.battle.hero1 && this.battle.hero1.position === this.battle.activeHero) {
+        this.activeHero = this.battle.hero1;
+      } else if (this.battle.hero2 && this.battle.hero2.position === this.battle.activeHero) {
+        this.activeHero = this.battle.hero2;
+      } else if (this.battle.hero3 && this.battle.hero3.position === this.battle.activeHero) {
+        this.activeHero = this.battle.hero3;
+      } else if (this.battle.hero4 && this.battle.hero4.position === this.battle.activeHero) {
+        this.activeHero = this.battle.hero4;
+      }
     }
 
     if (this.activeHero) {
@@ -75,9 +80,9 @@ export class BattlePage implements OnInit {
   }
 
   selectTarget(hero: BattleHero) {
+    this.lastKnownTurn = this.steps.length > 0 ? this.steps[0].turn : 0;
     this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
-      this.battle = data;
-      this.setActiveHero();
+      this.setActiveHero(data);
     });
   }
 
