@@ -11,7 +11,7 @@
 <ion-content *ngIf="battle">
   <ion-card>
     <ion-card-header>
-      <ion-card-title>{{battle.playerId}} vs {{battle.opponentId}}</ion-card-title>
+      <ion-card-title>#{{battle.playerId}} vs #{{battle.opponentId}} <span *ngIf="battle.status === 'WON'">You won</span><span *ngIf="battle.status === 'LOST'">You lost</span></ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-row class="flex-space-around">

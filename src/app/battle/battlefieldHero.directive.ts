@@ -32,7 +32,7 @@ import {Battle} from '../domain/battle.model';
                 <div *ngFor="let buff of hero.buffs" class="{{buff.type.toLowerCase()}} int-{{buff.intensity}} flex-center">
                     <i *ngIf="buff.buff === 'ARMOR_BUFF'" class="ra ra-eye-shield"></i>
                     <i *ngIf="buff.buff === 'STRENGTH_BUFF'" class="ra ra-muscle-up"></i>
-                    <div class="buff-duration">{{buff.duration}}</div>
+                    <div class="buff-duration" *ngIf="buff.duration > 0">{{buff.duration}}</div>
                 </div>
             </div>
             <div class="flex-grow"></div>

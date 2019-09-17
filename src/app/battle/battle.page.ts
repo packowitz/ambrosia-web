@@ -45,6 +45,8 @@ export class BattlePage implements OnInit {
 
     if (this.activeHero) {
       this.selectedSkill = this.activeHero.heroBase.skills[0];
+    } else {
+      this.selectedSkill = null;
     }
   }
 
