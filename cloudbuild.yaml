@@ -7,7 +7,7 @@ steps:
     args: ['install', '-g', 'ionic']
   # Build
   - name: 'gcr.io/cloud-builders/npm'
-    args: ['run', 'ionic:build', '--prod']
+    args: ['run', 'buildprod']
   # Deploy
   - name: 'gcr.io/$PROJECT_ID/firebase'
     args: ['deploy']
