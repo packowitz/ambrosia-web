@@ -10,4 +10,10 @@ steps:
     args: ['run', 'buildprod']
   # Deploy
   - name: 'gcr.io/$PROJECT_ID/firebase'
-    args: ['deploy']
+    args: ['deploy', '--project', 'ambrosia-ionic', '--token', '$$FIREBASE_TOKEN']
+    secretEnv: ['FIREBASE_TOKEN']
+
+secrets:
+  - kmsKeyName: projects/ambrosia-api/locations/global/keyRings/ambrosia-prod/cryptoKeys/secret
+    secretEnv:
+      FIREBASE_TOKEN: CiQAZpIlhgWj25Zk0n3CwBrp32935IVFVUCS0VFNxHENQCByz+cSVwAJq+oDYwqzENXxJsTar6V7bvIktVj8YU7k0ppMgXj1lfOpDs5o8knOk+s980DuY82UBWBUpA7jz+MLwcoLGpEXkkWdj9QxHqmuZYwfOX+dudgdKi48oQ==
