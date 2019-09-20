@@ -68,7 +68,7 @@ export class AppComponent {
         private platform: Platform,
         private backendService: BackendService,
         private propertyService: PropertyService,
-        private model: Model,
+        public model: Model,
         private router: Router,
         private activatedRoute: ActivatedRoute
     ) {

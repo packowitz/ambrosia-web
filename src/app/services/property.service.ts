@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 import {DynamicProperty} from '../domain/property.model';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {forEach} from '@angular-devkit/schematics';
+import {API_URL} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class PropertyService {
     if (this.properties[type]) {
       return Observable.create(obs => obs.next(this.properties[type]));
     } else {
-      return this.http.get<DynamicProperty[]>('http://localhost:8080/properties/type/' + type).pipe(map(p => {
+      return this.http.get<DynamicProperty[]>(API_URL + '/properties/type/' + type).pipe(map(p => {
         this.properties[type] = p;
         return p;
       }));
@@ -29,7 +29,7 @@ export class PropertyService {
 
   loadInitialProperties() {
     this.initialCategories.forEach(category => {
-      this.http.get<any>('http://localhost:8080/properties/category/' + category).subscribe(data => {
+      this.http.get<any>(API_URL + '/properties/category/' + category).subscribe(data => {
         // tslint:disable-next-line:forin
         for (let key in data) {
           this.properties[key] = data[key];
@@ -41,7 +41,7 @@ export class PropertyService {
   getJewelValue(type: string, level: number): number {
     let props = this.properties[type + '_JEWEL'];
     if (props) {
-      let jewelProperty = props.find((p: DynamicProperty) => p.level === level)
+      let jewelProperty = props.find((p: DynamicProperty) => p.level === level);
       if (jewelProperty) {
         return jewelProperty.value1;
       }
@@ -50,7 +50,7 @@ export class PropertyService {
   }
 
   saveProperties(type: string, properties: DynamicProperty[]): Observable<DynamicProperty[]> {
-    return this.http.post<DynamicProperty[]>('http://localhost:8080/admin/properties/type/' + type, properties).pipe(map(p => {
+    return this.http.post<DynamicProperty[]>(API_URL + '/admin/properties/type/' + type, properties).pipe(map(p => {
       this.properties[type] = p;
       return p;
     }));
@@ -58,7 +58,7 @@ export class PropertyService {
 
   deleteProperty(prop: DynamicProperty): Observable<DynamicProperty[]> {
     if (prop.id) {
-      return this.http.delete<DynamicProperty[]>('http://localhost:8080/admin/properties/type/' + prop.type + '/' + prop.id).pipe(map(p => {
+      return this.http.delete<DynamicProperty[]>(API_URL + '/admin/properties/type/' + prop.type + '/' + prop.id).pipe(map(p => {
         this.properties[prop.type] = p;
         return p;
       }));

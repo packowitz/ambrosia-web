@@ -14,7 +14,7 @@ export class PropertiesPage {
   type: PropertyType;
   properties: DynamicProperty[];
 
-  constructor(private enumService: EnumService, private propertyService: PropertyService) {}
+  constructor(public enumService: EnumService, private propertyService: PropertyService) {}
 
   categoryChanged(event) {
     this.category = event.detail.value;

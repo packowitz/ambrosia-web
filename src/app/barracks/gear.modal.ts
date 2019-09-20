@@ -22,7 +22,7 @@ export class GearModal {
     jewelries: Jewelry[] = [];
     jewelLevels = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
-    constructor(private converter: ConverterService,
+    constructor(public converter: ConverterService,
                 private jewelryService: JewelryService,
                 private backendService: BackendService,
                 private propertyService: PropertyService,

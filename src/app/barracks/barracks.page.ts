@@ -24,7 +24,7 @@ export class BarracksPage implements OnInit {
 
   constructor(private backendService: BackendService,
               private converter: ConverterService,
-              private model: Model,
+              public model: Model,
               private enumService: EnumService) {}
 
   ngOnInit(): void {

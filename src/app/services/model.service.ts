@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
-import {CanActivate} from '@angular/router';
+import {Injectable} from '@angular/core';
 import {Player} from '../domain/player.model';
 import {Hero} from '../domain/hero.model';
 import {Gear} from '../domain/gear.model';
 import {HeroBase} from '../domain/herobase.model';
-import {Jewelry} from '../domain/jewelry.model';
 import {PlayerActionResponse} from './backend.service';
 import {Team} from '../domain/team.model';
 import {Battle} from '../domain/battle.model';
+import {environment} from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +22,8 @@ export class Model {
 
     update(data: PlayerActionResponse) {
         if (data.token) {
-            localStorage.setItem('jwt', data.token);
+            let key = environment.production ? 'ambrosia-jwt' : 'jwt';
+            localStorage.setItem(key, data.token);
         }
         if (data.player) {
             this.player = data.player;
