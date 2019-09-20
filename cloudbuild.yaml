@@ -10,7 +10,7 @@ steps:
     args: ['run', 'buildprod']
   # Deploy
   - name: 'gcr.io/$PROJECT_ID/firebase'
-    args: ['deploy', '--project', 'ambrosia-ionic', '--token', '$$FIREBASE_TOKEN']
+    args: ['deploy', '--project', 'ambrosia-ionic']
     secretEnv: ['FIREBASE_TOKEN']
 
 secrets:
