@@ -84,6 +84,7 @@ export class BattlePage implements OnInit {
   selectTarget(hero: BattleHero) {
     this.lastKnownTurn = this.steps.length > 0 ? this.steps[0].turn : 0;
     this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
+      this.model.ongoingBattle = data;
       this.setActiveHero(data);
     });
   }

@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {HeroBase} from '../domain/herobase.model';
 import {BackendService} from '../services/backend.service';
 import {ConverterService} from '../services/converter.service';
-import {EnumService} from '../services/enum.service';
+import {EnumService, SkillActionEffect} from '../services/enum.service';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {HeroSkillLevel} from '../domain/heroSkillLevel.model';
 import {HeroSkillAction} from '../domain/heroSkillAction.model';
@@ -94,6 +94,18 @@ export class HerobaseEditPage implements OnInit {
         if (skill.skillLevel.length > maxSkill - 1) {
             skill.skillLevel = skill.skillLevel.slice(0, maxSkill - 1);
         }
+    }
+
+    getSkillActionEffects(action: HeroSkillAction): SkillActionEffect[] {
+        return this.enumService.getSkillActionEffects().filter(e => e.type === action.type);
+    }
+
+    skillActionChanged(action: HeroSkillAction) {
+        action.effect = null;
+    }
+
+    getSkillActionEffectDescription(action: HeroSkillAction): string {
+        return this.enumService.getSkillActionEffects().find(e => e.name === action.effect).description;
     }
 
     addSkillAction(skill: HeroSkill) {

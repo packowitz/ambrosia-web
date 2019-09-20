@@ -288,7 +288,7 @@
                     </ion-item>
                 </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row *ngIf="skill.number > 1">
                 <ion-col sizeMd="4">
                     <ion-item>
                         <ion-label>Cooldown</ion-label>
@@ -374,7 +374,7 @@
                         <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
                             <ion-item class="full-width">
                                 <ion-label position="fixed">Action Type</ion-label>
-                                <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.type" required>
+                                <ion-select slot="end" interface="popover" placeholder="Select" (ionChange)="skillActionChanged(action)" [(ngModel)]="action.type" required>
                                     <ion-select-option *ngFor="let type of enumService.getSkillActionTypes()" [value]="type">{{type}}</ion-select-option>
                                 </ion-select>
                             </ion-item>
@@ -391,7 +391,7 @@
                             <ion-item class="full-width">
                                 <ion-label position="fixed">Action Effect</ion-label>
                                 <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.effect" required>
-                                    <ion-select-option *ngFor="let effect of enumService.getSkillActionEffects()" [value]="effect">{{effect}}</ion-select-option>
+                                    <ion-select-option *ngFor="let effect of getSkillActionEffects(action)" [value]="effect.name">{{effect.name}}</ion-select-option>
                                 </ion-select>
                             </ion-item>
                         </ion-col>
@@ -406,6 +406,9 @@
                                 <ion-label position="fixed">E. Duration</ion-label>
                                 <ion-input slot="end" type="text" [(ngModel)]="action.effectDuration"></ion-input>
                             </ion-item>
+                        </ion-col>
+                        <ion-col sizeMd="12" *ngIf="skillActionsExpanded == action.position && action.effect">
+                            <div class="ml-2 mr-2">{{getSkillActionEffectDescription(action)}}</div>
                         </ion-col>
                     </ion-row>
                     <ion-row>

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {API_URL} from '../../environments/environment';
 
+export class SkillActionEffect { name: string; type: string; description: string; }
 export class PropertyType { name: string; category: string; description: string; }
 export class GearSet { name: string; pieces: number; description: string; }
 export class JewelType { name: string; slot: string; gearSet: string; }
@@ -19,7 +20,7 @@ export class EnumService {
     private skillActionTriggers: string[] = [];
     private skillActionTypes: string[] = [];
     private skillActionTargets: string[] = [];
-    private skillActionEffects: string[] = [];
+    private skillActionEffects: SkillActionEffect[] = [];
     private propertyCategories: string[] = [];
     private propertyTypes: PropertyType[] = [];
     private heroStats: string[] = [];
@@ -39,7 +40,7 @@ export class EnumService {
             this.skillActionTypes = data);
         this.http.get(API_URL + '/enum/skill_action_targets').subscribe((data: string[]) =>
             this.skillActionTargets = data);
-        this.http.get(API_URL + '/enum/skill_action_effects').subscribe((data: string[]) =>
+        this.http.get(API_URL + '/enum/skill_action_effects').subscribe((data: SkillActionEffect[]) =>
             this.skillActionEffects = data);
         this.http.get(API_URL + '/enum/property_categories').subscribe((data: string[]) =>
             this.propertyCategories = data);
@@ -85,7 +86,7 @@ export class EnumService {
         return this.skillActionTargets;
     }
 
-    getSkillActionEffects(): string[] {
+    getSkillActionEffects(): SkillActionEffect[] {
         return this.skillActionEffects;
     }
 
