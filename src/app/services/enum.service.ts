@@ -24,7 +24,7 @@ export class EnumService {
     private propertyCategories: string[] = [];
     private propertyTypes: PropertyType[] = [];
     private heroStats: string[] = [];
-    private gearSets: GearSet[] = [];
+    private gearSets: string[] = [];
     private jewelTypes: JewelType[] = [];
 
     constructor(private http: HttpClient) {
@@ -48,7 +48,7 @@ export class EnumService {
             this.propertyTypes = data);
         this.http.get(API_URL + '/enum/hero_stats').subscribe((data: string[]) =>
             this.heroStats = data);
-        this.http.get(API_URL + '/enum/gear_sets').subscribe((data: GearSet[]) =>
+        this.http.get(API_URL + '/enum/gear_sets').subscribe((data: string[]) =>
             this.gearSets = data);
         this.http.get(API_URL + '/enum/jewel_types').subscribe((data: JewelType[]) =>
             this.jewelTypes = data);
@@ -102,7 +102,7 @@ export class EnumService {
         return this.heroStats;
     }
 
-    getGearSets(): GearSet[] {
+    getGearSets(): string[] {
         return this.gearSets;
     }
 

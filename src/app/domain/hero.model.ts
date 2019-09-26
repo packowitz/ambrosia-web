@@ -1,5 +1,6 @@
 import {HeroBase} from './herobase.model';
 import {Gear} from './gear.model';
+import {HeroGearSet} from './heroGearSet.model';
 
 export class Hero {
     id: number;
@@ -43,7 +44,7 @@ export class Hero {
     dexterityTotal: number;
     resistanceTotal: number;
 
-    sets: String[];
+    sets: HeroGearSet[];
 
     strengthAbsBonus: number;
     strengthPercBonus: number;

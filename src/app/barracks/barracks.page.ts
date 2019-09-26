@@ -1,14 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {Hero} from '../domain/hero.model';
-import {HeroClassRarity} from '../herobase/herobase-list.page';
 import {ConverterService} from '../services/converter.service';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {Model} from '../services/model.service';
 import {Gear} from '../domain/gear.model';
-import {EnumService, GearSet} from '../services/enum.service';
-import {ModalController} from '@ionic/angular';
-import {GearModal} from './gear.modal';
 
 @Component({
   selector: 'barracks',
@@ -24,8 +20,7 @@ export class BarracksPage implements OnInit {
 
   constructor(private backendService: BackendService,
               private converter: ConverterService,
-              public model: Model,
-              private enumService: EnumService) {}
+              public model: Model) {}
 
   ngOnInit(): void {
     if (this.model.heroes.length > 0) {
@@ -49,16 +44,6 @@ export class BarracksPage implements OnInit {
 
   getSkillLevel(skill: HeroSkill): number {
     return this.selectedHero['skill' + skill.number];
-  }
-
-  getSetDescription(setName: string): string {
-    let set = this.enumService.getGearSets().find(s => s.name === setName);
-    return set ? set.description : "";
-  }
-
-  getSetPieces(setName: string): number {
-    let set = this.enumService.getGearSets().find(s => s.name === setName);
-    return set ? set.pieces : 0;
   }
 
   adminHeroLooseLevel() {

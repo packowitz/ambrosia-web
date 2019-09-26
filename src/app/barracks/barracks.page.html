@@ -144,8 +144,8 @@
               <ion-item><gear-list-item type="BOOTS" [hero]="selectedHero" [gear]="selectedHero.boots" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
             </ion-list>
             <ion-list *ngIf="selectedHero.sets" lines="none">
-              <ion-item>Completed sets</ion-item>
-              <ion-item *ngFor="let set of selectedHero.sets">{{converter.readableIdentifier(set)}}: {{getSetDescription(set)}} ({{getSetPieces(set)}} pieces)</ion-item>
+              <ion-item>Set bonuses</ion-item>
+              <ion-item *ngFor="let set of selectedHero.sets">{{converter.readableIdentifier(set.gearSet)}} ({{set.number}} pieces): {{set.description ? set.description : 'no bonus'}}</ion-item>
             </ion-list>
           </ion-col>
 
