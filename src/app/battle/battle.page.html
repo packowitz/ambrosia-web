@@ -30,8 +30,8 @@
         <battlefield-hero [battle]="battle" [hero]="battle.hero4" [targetable]="selectable(battle.hero4)" (selected)="selectTarget($event)"></battlefield-hero>
       </ion-row>
       <ion-row *ngIf="activeHero" class="mt-4 flex-space-around">
-        <ion-button *ngFor="let skill of getSkills()" [fill]="skill == selectedSkill ? 'solid' : 'outline'" (click)="this.selectedSkill = skill">
-          <i class="ra ra-battered-axe" *ngIf="skill.target == 'OPPONENT'"></i> {{skill.name}}
+        <ion-button *ngFor="let skill of getSkills()" [fill]="skill == selectedSkill ? 'solid' : 'outline'" (click)="selectSkill(skill)" [disabled]="skill.number != 1 && activeHero['skill' + skill.number + 'Cooldown'] > 0">
+          <i class="ra ra-battered-axe" *ngIf="skill.target == 'OPPONENT'"></i> {{skill.name}}{{skill.number != 1 && activeHero['skill' + skill.number + 'Cooldown'] > 0 ? '(' + activeHero['skill' + skill.number + 'Cooldown'] + ')' : ''}}
         </ion-button>
       </ion-row>
       <ion-row *ngIf="selectedSkill" class="flex-space-around">{{selectedSkill.description}}</ion-row>

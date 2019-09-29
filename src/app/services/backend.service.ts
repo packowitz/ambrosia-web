@@ -123,6 +123,16 @@ export class BackendService {
             .pipe(map(action => action.hero));
     }
 
+    adminHeroGainSkillLevel(hero: Hero, skillNumber: number): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/skill_up/' + skillNumber, null)
+            .pipe(map(action => action.hero));
+    }
+
+    adminHeroLooseSkillLevel(hero: Hero, skillNumber: number): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/skill_down/' + skillNumber, null)
+            .pipe(map(action => action.hero));
+    }
+
     upgradeJewel(type: string, level: number): Observable<Jewelry> {
         return this.http.post<PlayerActionResponse>(API_URL + '/jewelry/merge/' + type + '/' + level, {})
             .pipe(map(action => action.jewelries[0]));

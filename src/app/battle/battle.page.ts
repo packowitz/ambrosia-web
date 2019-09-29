@@ -51,14 +51,22 @@ export class BattlePage implements OnInit {
   }
 
   getSkills(): HeroSkill[] {
-    return this.activeHero.heroBase.skills.filter(s => s.number === 1 || this.activeHero['skill' + s.number + 'Cooldown'] >= 0);
+    return this.activeHero.heroBase.skills.filter(s => s.number === 1 || (this.activeHero['skill' + s.number + 'Level'] > 0 && this.activeHero['skill' + s.number + 'Cooldown'] >= 0));
+  }
+
+  selectSkill(skill: HeroSkill) {
+    this.selectedSkill = skill;
   }
 
   selectable(hero: BattleHero): boolean {
     if (this.activeHero) {
       if (hero && this.selectedSkill) {
         if (this.isOpponent(hero)) {
-          return this.selectedSkill.target === 'OPPONENT' || this.selectedSkill.target === 'OPP_IGNORE_TAUNT';
+          if (this.selectedSkill.target === 'OPP_IGNORE_TAUNT') {
+            return true;
+          } else if (this.selectedSkill.target === 'OPPONENT') {
+            return this.anyOpponentTaunting() ? this.isTaunting(hero) : true;
+          }
         } else {
           if (hero.position === this.activeHero.position) {
             return this.selectedSkill.target === 'SELF' || this.selectedSkill.target === 'ALL_OWN';
@@ -79,6 +87,21 @@ export class BattlePage implements OnInit {
         return hero.position.startsWith('HERO');
       }
     }
+  }
+
+  isTaunting(hero: BattleHero): boolean {
+    return hero && !!hero.buffs.find(b => b.type === 'TAUNT_BUFF');
+  }
+
+  isActive(hero: BattleHero): boolean {
+    return hero && hero.status === 'ACTIVE';
+  }
+
+  anyOpponentTaunting(): boolean {
+    return (this.isActive(this.battle.oppHero1) && this.isTaunting(this.battle.oppHero1)) ||
+        (this.isActive(this.battle.oppHero2) && this.isTaunting(this.battle.oppHero2)) ||
+        (this.isActive(this.battle.oppHero3) && this.isTaunting(this.battle.oppHero3)) ||
+        (this.isActive(this.battle.oppHero4) && this.isTaunting(this.battle.oppHero4));
   }
 
   selectTarget(hero: BattleHero) {

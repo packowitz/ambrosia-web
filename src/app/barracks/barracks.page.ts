@@ -58,6 +58,18 @@ export class BarracksPage implements OnInit {
     });
   }
 
+  adminHeroGainSkillLevel() {
+    this.backendService.adminHeroGainSkillLevel(this.selectedHero, this.selectedSkill.number).subscribe(data => {
+      this.selectHero(data);
+    });
+  }
+
+  adminHeroLooseSkillLevel() {
+    this.backendService.adminHeroLooseSkillLevel(this.selectedHero, this.selectedSkill.number).subscribe(data => {
+      this.selectHero(data);
+    });
+  }
+
   gearFilter(type: string) {
     let idx = this.gearTypeFilter.indexOf(type);
     if (idx >= 0) {

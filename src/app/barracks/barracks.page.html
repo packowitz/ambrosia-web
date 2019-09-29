@@ -128,6 +128,11 @@
           <div *ngIf="selectedSkill.skillLevel.length > 0" class="mt-2">
             <div *ngFor="let lvl of selectedSkill.skillLevel" [class.strong]="getSkillLevel(selectedSkill) >= lvl.level">L{{lvl.level}} {{lvl.description}}</div>
           </div>
+          <div *ngIf="model.player.admin" class="mt-2">
+            Modify skill level
+            <ion-button size="small" fill="clear" (click)="adminHeroLooseSkillLevel()"><ion-icon name="remove"></ion-icon></ion-button>
+            <ion-button size="small" fill="clear" (click)="adminHeroGainSkillLevel()"><ion-icon name="add"></ion-icon></ion-button>
+          </div>
         </div>
       </div>
 
