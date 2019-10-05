@@ -51,7 +51,7 @@ export class BattlePage implements OnInit {
   }
 
   getSkills(): HeroSkill[] {
-    return this.activeHero.heroBase.skills.filter(s => s.number === 1 || (this.activeHero['skill' + s.number + 'Level'] > 0 && this.activeHero['skill' + s.number + 'Cooldown'] >= 0));
+    return this.activeHero.heroBase.skills.filter(s => s.number === 1 || (this.activeHero['skill' + s.number + 'Lvl'] > 0 && this.activeHero['skill' + s.number + 'Cooldown'] >= 0));
   }
 
   selectSkill(skill: HeroSkill) {
@@ -90,11 +90,11 @@ export class BattlePage implements OnInit {
   }
 
   isTaunting(hero: BattleHero): boolean {
-    return hero && !!hero.buffs.find(b => b.type === 'TAUNT_BUFF');
+    return hero && !!hero.buffs.find(b => b.buff === 'TAUNT_BUFF');
   }
 
   isActive(hero: BattleHero): boolean {
-    return hero && hero.status === 'ACTIVE';
+    return hero && hero.status === 'ALIVE';
   }
 
   anyOpponentTaunting(): boolean {
