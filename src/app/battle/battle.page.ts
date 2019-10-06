@@ -20,6 +20,8 @@ export class BattlePage implements OnInit {
   steps: BattleStep[] = [];
   lastKnownTurn = 0;
 
+  autobattle = false;
+
   constructor(private model: Model, private backendService: BackendService) {}
 
   ngOnInit() {
@@ -45,8 +47,20 @@ export class BattlePage implements OnInit {
 
     if (this.activeHero) {
       this.selectedSkill = this.activeHero.heroBase.skills[0];
+      if (this.autobattle) {
+        this.takeAutoTurn();
+      }
     } else {
       this.selectedSkill = null;
+    }
+  }
+
+  toggleAutobattle() {
+    if (this.autobattle) {
+      this.autobattle = false;
+    } else {
+      this.autobattle = true;
+      this.takeAutoTurn();
     }
   }
 
@@ -110,6 +124,15 @@ export class BattlePage implements OnInit {
       this.model.ongoingBattle = data;
       this.setActiveHero(data);
     });
+  }
+
+  takeAutoTurn() {
+    if (this.battle.status === 'PLAYER_TURN') {
+      this.backendService.takeAutoTurn(this.battle, this.activeHero).subscribe(data => {
+        this.model.ongoingBattle = data;
+        this.setActiveHero(data);
+      });
+    }
   }
 
 }

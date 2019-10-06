@@ -184,4 +184,9 @@ export class BackendService {
         return this.http.post<Battle>(url, null);
     }
 
+    takeAutoTurn(battle: Battle, hero: BattleHero): Observable<Battle> {
+        let url = API_URL + '/battle/' + battle.id + '/' + hero.position + '/auto';
+        return this.http.post<Battle>(url, null);
+    }
+
 }

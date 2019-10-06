@@ -9,6 +9,7 @@ import {Battle} from '../domain/battle.model';
     template: `
         <div class="container flex-vert" *ngIf="hero" 
              [class.container-active]="isActive()" 
+             [class.container-dead]="hero.status === 'DEAD'" 
              [class.container-targetable]="targetable" 
              (click)="selectHero()">
             <div class="flex-start mt-1">

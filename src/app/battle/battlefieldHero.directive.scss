@@ -12,6 +12,11 @@
     border-color: #e0b516;
   }
 
+  &.container-dead {
+    border-width: 2px;
+    border-color: #9c0c14;
+  }
+
   &.container-targetable {
     outline: 2px solid #3e8011;
     outline-offset: 1px;
