@@ -21,6 +21,7 @@ export class BattlePage implements OnInit {
   lastKnownTurn = 0;
 
   autobattle = false;
+  loading = false;
 
   constructor(private model: Model, private backendService: BackendService) {}
 
@@ -120,17 +121,21 @@ export class BattlePage implements OnInit {
 
   selectTarget(hero: BattleHero) {
     this.lastKnownTurn = this.steps.length > 0 ? this.steps[0].turn : 0;
+    this.loading = true;
     this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
       this.model.ongoingBattle = data;
       this.setActiveHero(data);
+      this.loading = false;
     });
   }
 
   takeAutoTurn() {
     if (this.battle.status === 'PLAYER_TURN') {
+      this.loading = true;
       this.backendService.takeAutoTurn(this.battle, this.activeHero).subscribe(data => {
         this.model.ongoingBattle = data;
         this.setActiveHero(data);
+        this.loading = false;
       });
     }
   }

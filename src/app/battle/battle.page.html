@@ -11,8 +11,9 @@
   There is currently no battle going on
 </ion-content>
 
-<ion-content *ngIf="battle">
+<ion-content *ngIf="battle" class="loading-indicator-boundary">
   <ion-card>
+    <div *ngIf="loading" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
     <ion-card-header>
       <ion-card-title>#{{battle.playerId}} vs #{{battle.opponentId}} <span *ngIf="battle.status === 'WON'">You won</span><span *ngIf="battle.status === 'LOST'">You lost</span></ion-card-title>
     </ion-card-header>
