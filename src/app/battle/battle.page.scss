@@ -1,0 +1,83 @@
+.effect {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.effect-0 {
+  position: absolute;
+  left: 35%;
+  bottom: 40%;
+  animation-delay: 0s !important;
+}
+.effect-1 {
+  position: absolute;
+  left: 65%;
+  bottom: 40%;
+  animation-delay: 0.05s !important;
+}
+.effect-2 {
+  position: absolute;
+  left: 32%;
+  bottom: 40%;
+  animation-delay: 0.1s !important;
+}
+.effect-3 {
+  position: absolute;
+  left: 42%;
+  bottom: 40%;
+  animation-delay: 0.15s !important;
+}
+.effect-4 {
+  position: absolute;
+  left: 50%;
+  bottom: 40%;
+  animation-delay: 0.2s !important;
+}
+.effect-5 {
+  position: absolute;
+  left: 72%;
+  bottom: 40%;
+  animation-delay: 0.25s !important;
+}
+.effect-6 {
+  position: absolute;
+  left: 38%;
+  bottom: 40%;
+  animation-delay: 0.3s !important;
+}
+
+@keyframes explosion {
+  0% {
+    transform: scale(0.1);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.explosion {
+  animation: explosion 0.5s cubic-bezier(0.075, 0.820, 0.165, 1.000) both;
+}
+
+@keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -200%, 0);
+  }
+}
+
+.fadeOutUp {
+  animation-name: fadeOutUp;
+  animation-duration: 0.9s;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}

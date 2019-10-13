@@ -18,7 +18,9 @@ export class BattlePage implements OnInit {
   selectedSkill: HeroSkill;
 
   steps: BattleStep[] = [];
+  animateStep: BattleStep = null;
   lastKnownTurn = 0;
+  animationStepIdx = 0;
 
   autobattle = false;
   loading = false;
@@ -26,13 +28,32 @@ export class BattlePage implements OnInit {
   constructor(private model: Model, private backendService: BackendService) {}
 
   ngOnInit() {
-    this.setActiveHero(this.model.ongoingBattle);
+    setTimeout(() => this.initBattle(this.model.ongoingBattle), 1000);
   }
 
-  setActiveHero(battle: Battle) {
+  initBattle(battle: Battle) {
     if (battle) {
       this.battle = battle;
-      this.steps = battle.steps.sort((a, b) => b.turn - a.turn);
+      this.steps = battle.steps.sort((a, b) => b.id - a.id);
+      if (this.lastKnownTurn > 0) {
+        this.animationStepIdx = this.steps.findIndex(s => s.turn === this.lastKnownTurn && s.phase === 'MAIN');
+      } else {
+        this.animationStepIdx = this.steps.length;
+      }
+      this.setActiveHero();
+    }
+  }
+
+  setActiveHero() {
+    // animation
+    if (this.animationStepIdx > 0) {
+      this.animationStepIdx --;
+      console.log("animating step idx " + this.animationStepIdx + ". Battle has " + this.steps.length + " steps.");
+      this.animateStep = this.steps[this.animationStepIdx];
+      console.log("animating turn " + this.animateStep.turn + " phase " + this.animateStep.phase);
+      setTimeout(() => this.setActiveHero(), 1000);
+    } else {
+      this.animateStep = null;
       if (this.battle.status === 'WON' || this.battle.status === 'LOST') {
         this.activeHero = null;
       } else if (this.battle.hero1 && this.battle.hero1.position === this.battle.activeHero) {
@@ -44,15 +65,15 @@ export class BattlePage implements OnInit {
       } else if (this.battle.hero4 && this.battle.hero4.position === this.battle.activeHero) {
         this.activeHero = this.battle.hero4;
       }
-    }
 
-    if (this.activeHero) {
-      this.selectedSkill = this.activeHero.heroBase.skills[0];
-      if (this.autobattle) {
-        this.takeAutoTurn();
+      if (this.activeHero) {
+        this.selectedSkill = this.activeHero.heroBase.skills[0];
+        if (this.autobattle) {
+          this.takeAutoTurn();
+        }
+      } else {
+        this.selectedSkill = null;
       }
-    } else {
-      this.selectedSkill = null;
     }
   }
 
@@ -74,7 +95,7 @@ export class BattlePage implements OnInit {
   }
 
   selectable(hero: BattleHero): boolean {
-    if (this.activeHero) {
+    if (this.animateStep == null && this.activeHero) {
       if (hero && this.selectedSkill) {
         if (this.isOpponent(hero)) {
           if (this.selectedSkill.target === 'OPP_IGNORE_TAUNT') {
@@ -124,7 +145,7 @@ export class BattlePage implements OnInit {
     this.loading = true;
     this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
       this.model.ongoingBattle = data;
-      this.setActiveHero(data);
+      this.initBattle(data);
       this.loading = false;
     });
   }
@@ -134,10 +155,21 @@ export class BattlePage implements OnInit {
       this.loading = true;
       this.backendService.takeAutoTurn(this.battle, this.activeHero).subscribe(data => {
         this.model.ongoingBattle = data;
-        this.setActiveHero(data);
+        this.initBattle(data);
         this.loading = false;
       });
     }
+  }
+
+  getAnimateNumbers() {
+    let numbers = [];
+    this.animateStep.actions.forEach(a => {
+      if (a.healthDiff < 0) { numbers.push({css: 'RED', number: a.healthDiff}); }
+      if (a.healthDiff > 0) { numbers.push({css: 'GREEN', number: '+' + a.healthDiff}); }
+      if (a.armorDiff < 0) { numbers.push({css: 'BLUE', number: a.armorDiff}); }
+
+    });
+    return numbers;
   }
 
 }

@@ -32,14 +32,17 @@ import {Battle} from '../domain/battle.model';
             <div class="buffs ml-1 mr-1 mt-1">
                 <div *ngFor="let buff of hero.buffs" class="{{buff.type.toLowerCase()}} int-{{buff.intensity}} flex-center">
                     <i *ngIf="buff.buff === 'ARMOR_BUFF'" class="ra ra-eye-shield"></i>
+                    <i *ngIf="buff.buff === 'HEAL_OVER_TIME'" class="ra ra-health"></i>
                     <i *ngIf="buff.buff === 'STRENGTH_BUFF'" class="ra ra-muscle-up"></i>
                     <i *ngIf="buff.buff === 'TAUNT_BUFF'" class="ra ra-sheriff"></i>
+                    <i *ngIf="buff.buff === 'DAMAGE_OVER_TIME'" class="ra ra-droplet"></i>
                     <div class="buff-duration" *ngIf="buff.duration > 0">{{buff.duration}}</div>
                 </div>
             </div>
             <div class="flex-grow"></div>
             <div class="flex-center {{hero.color}}">{{hero.heroBase.name}}</div>
             <div class="flex-center mb-1"><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero.stars)"></ion-icon></div>
+            <ng-content></ng-content>
         </div>
         <div class="container container-empty" *ngIf="!hero"></div>
   `,

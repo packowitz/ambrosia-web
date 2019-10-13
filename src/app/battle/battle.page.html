@@ -19,13 +19,23 @@
     </ion-card-header>
     <ion-card-content>
       <ion-row class="flex-space-around">
-        <battlefield-hero [battle]="battle" [hero]="battle.oppHero1" [targetable]="selectable(battle.oppHero1)" (selected)="selectTarget($event)"></battlefield-hero>
+        <battlefield-hero [battle]="battle" [hero]="battle.oppHero1" [targetable]="selectable(battle.oppHero1)" (selected)="selectTarget($event)">
+            <img *ngIf="animateStep?.target == 'OPP1' && animateStep.phase == 'MAIN'" class="effect explosion" src="assets/img/explosion.png">
+            <div *ngIf="animateStep?.target == 'OPP1'" class="effect">
+                <div *ngFor="let number of getAnimateNumbers(); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+            </div>
+        </battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.oppHero2" [targetable]="selectable(battle.oppHero2)" (selected)="selectTarget($event)"></battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.oppHero3" [targetable]="selectable(battle.oppHero3)" (selected)="selectTarget($event)"></battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.oppHero4" [targetable]="selectable(battle.oppHero4)" (selected)="selectTarget($event)"></battlefield-hero>
       </ion-row>
       <ion-row class="mt-4 flex-space-around">
-        <battlefield-hero [battle]="battle" [hero]="battle.hero1" [targetable]="selectable(battle.hero1)" (selected)="selectTarget($event)"></battlefield-hero>
+        <battlefield-hero [battle]="battle" [hero]="battle.hero1" [targetable]="selectable(battle.hero1)" (selected)="selectTarget($event)">
+            <img *ngIf="animateStep?.target == 'HERO1' && animateStep.phase == 'MAIN'" class="effect explosion" src="assets/img/explosion.png">
+            <div *ngIf="animateStep?.target == 'HERO1'" class="effect">
+                <div *ngFor="let number of getAnimateNumbers(); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+            </div>
+        </battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.hero2" [targetable]="selectable(battle.hero2)" (selected)="selectTarget($event)"></battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.hero3" [targetable]="selectable(battle.hero3)" (selected)="selectTarget($event)"></battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.hero4" [targetable]="selectable(battle.hero4)" (selected)="selectTarget($event)"></battlefield-hero>
@@ -42,14 +52,19 @@
 
   <ion-card>
     <ion-list>
-      <ion-item *ngFor="let step of steps">
+      <ion-item *ngFor="let step of steps; let i = index">
         <div class="flex-vert">
-          <div [class.strong]="lastKnownTurn < step.turn" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} used S{{step.usedSkill}} on {{step.target}}</div>
+          <div [class.RED]="i == animationStepIdx" [class.strong]="lastKnownTurn < step.turn" *ngIf="step.phase == 'MAIN'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} used S{{step.usedSkill}} on {{step.target}}</div>
+          <div [class.RED]="i == animationStepIdx" [class.strong]="lastKnownTurn < step.turn" *ngIf="step.phase == 'PRE_TURN'" (click)="step.expanded = !step.expanded">{{step.turn}}. init {{step.actingHero}}'s turn</div>
           <div *ngIf="step.expanded">
             <div *ngFor="let action of step.actions">
-              <div *ngIf="action.buff && !action.buffResisted">{{action.heroPosition}} got {{action.buffIntensity}}* {{action.buff}} for {{action.buffDuration}} turns</div>
-              <div *ngIf="action.buff && action.buffResisted">{{action.heroPosition}} resisted {{action.buffIntensity}}* {{action.buff}}</div>
-              <div *ngIf="!action.buff">{{action.heroPosition}}: <i [class.RED]="action.healthDiff < 0" [class.GREEN]="action.healthDiff > 0">{{action.healthDiff}}</i> health, <i [class.RED]="action.armorDiff < 0" [class.GREEN]="action.armorDiff > 0">{{action.armorDiff}}</i> armor </div>
+              <div *ngIf="action.type == 'DAMAGE'">{{action.heroPosition}}: <i class="RED">{{action.healthDiff}}</i> health, <i class="RED">{{action.armorDiff}}</i> armor </div>
+              <div *ngIf="action.type == 'HEALING'">{{action.heroPosition}}: <i class="GREEN">{{action.healthDiff}}</i> health</div>
+              <div *ngIf="action.type == 'BUFF'">{{action.heroPosition}} got {{action.buffIntensity}}* {{action.buff}} for {{action.buffDuration}} turns</div>
+              <div *ngIf="action.type == 'BUFF_RESISTED'">{{action.heroPosition}} resisted {{action.buffIntensity}}* {{action.buff}}</div>
+              <div *ngIf="action.type == 'DOT'">{{action.heroPosition}}: damage per turn <i class="RED">{{action.healthDiff}}</i> health</div>
+              <div *ngIf="action.type == 'HOT'">{{action.heroPosition}}: healing per turn <i class="GREEN">{{action.healthDiff}}</i> health</div>
+              <div *ngIf="action.type == 'DEAD'">{{action.heroPosition}} died</div>
             </div>
           </div>
         </div>
