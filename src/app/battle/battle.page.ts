@@ -48,9 +48,7 @@ export class BattlePage implements OnInit {
     // animation
     if (this.animationStepIdx > 0) {
       this.animationStepIdx --;
-      console.log("animating step idx " + this.animationStepIdx + ". Battle has " + this.steps.length + " steps.");
       this.animateStep = this.steps[this.animationStepIdx];
-      console.log("animating turn " + this.animateStep.turn + " phase " + this.animateStep.phase);
       setTimeout(() => this.setActiveHero(), 1000);
     } else {
       this.animateStep = null;
