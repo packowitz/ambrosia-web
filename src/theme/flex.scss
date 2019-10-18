@@ -46,6 +46,12 @@
   justify-content: flex-start;
 }
 
+.flex-vert-reverse {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+}
+
 .flex-vert-space-between {
   display: flex;
   flex-direction: column;

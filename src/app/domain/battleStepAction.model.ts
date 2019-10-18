@@ -4,6 +4,9 @@ export class BattleStepAction {
     type: string;
     crit?: boolean;
     superCrit?: boolean;
+    baseDamage?: number;
+    targetArmor?: number;
+    targetHealth?: number;
     armorDiff?: number;
     healthDiff?: number;
     buff?: string;

@@ -17,10 +17,9 @@ export class BattlePage implements OnInit {
   activeHero: BattleHero;
   selectedSkill: HeroSkill;
 
-  steps: BattleStep[] = [];
   animateStep: BattleStep = null;
-  lastKnownTurn = 0;
-  animationStepIdx = 0;
+  lastKnownStepIdx = -1;
+  animationStepIdx = -1;
 
   autobattle = false;
   loading = false;
@@ -34,21 +33,15 @@ export class BattlePage implements OnInit {
   initBattle(battle: Battle) {
     if (battle) {
       this.battle = battle;
-      this.steps = battle.steps.sort((a, b) => b.id - a.id);
-      if (this.lastKnownTurn > 0) {
-        this.animationStepIdx = this.steps.findIndex(s => s.turn === this.lastKnownTurn && s.phase === 'MAIN');
-      } else {
-        this.animationStepIdx = this.steps.length;
-      }
       this.setActiveHero();
     }
   }
 
   setActiveHero() {
     // animation
-    if (this.animationStepIdx > 0) {
-      this.animationStepIdx --;
-      this.animateStep = this.steps[this.animationStepIdx];
+    if (this.animationStepIdx < this.battle.steps.length - 1) {
+      this.animationStepIdx ++;
+      this.animateStep = this.battle.steps[this.animationStepIdx];
       setTimeout(() => this.setActiveHero(), 1000);
     } else {
       this.animateStep = null;
@@ -139,7 +132,7 @@ export class BattlePage implements OnInit {
   }
 
   selectTarget(hero: BattleHero) {
-    this.lastKnownTurn = this.steps.length > 0 ? this.steps[0].turn : 0;
+    this.lastKnownStepIdx = this.battle.steps.length - 1;
     this.loading = true;
     this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
       this.model.ongoingBattle = data;
@@ -150,6 +143,7 @@ export class BattlePage implements OnInit {
 
   takeAutoTurn() {
     if (this.battle.status === 'PLAYER_TURN') {
+      this.lastKnownStepIdx = this.battle.steps.length - 1;
       this.loading = true;
       this.backendService.takeAutoTurn(this.battle, this.activeHero).subscribe(data => {
         this.model.ongoingBattle = data;

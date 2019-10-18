@@ -82,23 +82,27 @@
 
   <ion-card>
     <ion-list>
-      <ion-item *ngFor="let step of steps; let i = index">
-        <div class="flex-vert">
-          <div [class.RED]="i == animationStepIdx" [class.strong]="lastKnownTurn < step.turn" *ngIf="step.phase == 'MAIN'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} used S{{step.usedSkill}} on {{step.target}}</div>
-          <div [class.RED]="i == animationStepIdx" [class.strong]="lastKnownTurn < step.turn" *ngIf="step.phase == 'PRE_TURN'" (click)="step.expanded = !step.expanded">{{step.turn}}. init {{step.actingHero}}'s turn</div>
-          <div *ngIf="step.expanded">
-            <div *ngFor="let action of step.actions">
-              <div *ngIf="action.type == 'DAMAGE'">{{action.heroPosition}}: <i class="RED">{{action.healthDiff}}</i> health, <i class="RED">{{action.armorDiff}}</i> armor </div>
-              <div *ngIf="action.type == 'HEALING'">{{action.heroPosition}}: <i class="GREEN">{{action.healthDiff}}</i> health</div>
-              <div *ngIf="action.type == 'BUFF'">{{action.heroPosition}} got {{action.buffIntensity}}* {{action.buff}} for {{action.buffDuration}} turns</div>
-              <div *ngIf="action.type == 'BUFF_RESISTED'">{{action.heroPosition}} resisted {{action.buffIntensity}}* {{action.buff}}</div>
-              <div *ngIf="action.type == 'DOT'">{{action.heroPosition}}: damage per turn <i class="RED">{{action.healthDiff}}</i> health</div>
-              <div *ngIf="action.type == 'HOT'">{{action.heroPosition}}: healing per turn <i class="GREEN">{{action.healthDiff}}</i> health</div>
-              <div *ngIf="action.type == 'DEAD'">{{action.heroPosition}} died</div>
+      <div class="flex-vert-reverse">
+        <div *ngFor="let step of battle.steps; let i = index" class="flex-vert ma-2 pointer">
+          <div *ngIf="!animateStep || i <= animationStepIdx">
+            <div class="color-black">
+              <div [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'MAIN'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} used S{{step.usedSkill}} on {{step.target}}</div>
+              <div [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'PRE_TURN'" (click)="step.expanded = !step.expanded">{{step.turn}}. init {{step.actingHero}}'s turn</div>
+            </div>
+            <div *ngIf="step.expanded">
+              <div *ngFor="let action of step.actions">
+                <div *ngIf="action.type == 'DAMAGE'">{{action.heroPosition}}: <i class="RED">{{action.healthDiff}}</i> health, <i class="RED">{{action.armorDiff}}</i> armor, {{action.crit ? (action.superCrit ? 'SUPER_CRIT, ' : 'CRIT, ') : ''}}{{action.baseDamage}} base damage, {{action.targetArmor}} target armor before, {{action.targetHealth}} target HP before</div>
+                <div *ngIf="action.type == 'HEALING'">{{action.heroPosition}}: <i class="GREEN">{{action.healthDiff}}</i> health</div>
+                <div *ngIf="action.type == 'BUFF'">{{action.heroPosition}} got {{action.buffIntensity}}* {{action.buff}} for {{action.buffDuration}} turns</div>
+                <div *ngIf="action.type == 'BUFF_RESISTED'">{{action.heroPosition}} resisted {{action.buffIntensity}}* {{action.buff}}</div>
+                <div *ngIf="action.type == 'DOT'">{{action.heroPosition}}: damage per turn <i class="RED">{{action.healthDiff}}</i> health</div>
+                <div *ngIf="action.type == 'HOT'">{{action.heroPosition}}: healing per turn <i class="GREEN">{{action.healthDiff}}</i> health</div>
+                <div *ngIf="action.type == 'DEAD'">{{action.heroPosition}} died</div>
+              </div>
             </div>
           </div>
         </div>
-      </ion-item>
+      </div>
     </ion-list>
   </ion-card>
 
