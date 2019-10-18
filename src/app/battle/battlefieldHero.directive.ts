@@ -8,7 +8,7 @@ import {Battle} from '../domain/battle.model';
     selector: 'battlefield-hero',
     template: `
         <div class="container flex-vert" *ngIf="hero" 
-             [class.container-active]="isActive()" 
+             [class.container-active]="active" 
              [class.container-dead]="hero.status === 'DEAD'" 
              [class.container-targetable]="targetable" 
              (click)="selectHero()">
@@ -50,18 +50,12 @@ import {Battle} from '../domain/battle.model';
 })
 export class BattlefieldHero {
     @Input() battle: Battle;
+    @Input() active: boolean;
     @Input() hero: BattleHero;
     @Input() targetable: boolean;
     @Output() selected = new EventEmitter();
 
     constructor(private converter: ConverterService) { }
-
-    isActive(): boolean {
-        if (this.battle.status !== 'WON' && this.battle.status !== 'LOST') {
-            return this.hero && this.battle.activeHero === this.hero.position;
-        }
-        return false;
-    }
 
     selectHero() {
         if (this.targetable) {

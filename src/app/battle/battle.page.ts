@@ -106,6 +106,17 @@ export class BattlePage implements OnInit {
     return false;
   }
 
+  isActive(hero: BattleHero): boolean {
+    if (hero) {
+      if (this.animateStep) {
+        return this.animateStep.actingHero === hero.position;
+      } else {
+        return this.battle.activeHero === hero.position;
+      }
+    }
+    return false;
+  }
+
   isOpponent(hero: BattleHero): boolean {
     if (this.activeHero) {
       if (this.activeHero.position.startsWith('HERO')) {
@@ -120,15 +131,15 @@ export class BattlePage implements OnInit {
     return hero && !!hero.buffs.find(b => b.buff === 'TAUNT_BUFF');
   }
 
-  isActive(hero: BattleHero): boolean {
+  isAlive(hero: BattleHero): boolean {
     return hero && hero.status === 'ALIVE';
   }
 
   anyOpponentTaunting(): boolean {
-    return (this.isActive(this.battle.oppHero1) && this.isTaunting(this.battle.oppHero1)) ||
-        (this.isActive(this.battle.oppHero2) && this.isTaunting(this.battle.oppHero2)) ||
-        (this.isActive(this.battle.oppHero3) && this.isTaunting(this.battle.oppHero3)) ||
-        (this.isActive(this.battle.oppHero4) && this.isTaunting(this.battle.oppHero4));
+    return (this.isAlive(this.battle.oppHero1) && this.isTaunting(this.battle.oppHero1)) ||
+        (this.isAlive(this.battle.oppHero2) && this.isTaunting(this.battle.oppHero2)) ||
+        (this.isAlive(this.battle.oppHero3) && this.isTaunting(this.battle.oppHero3)) ||
+        (this.isAlive(this.battle.oppHero4) && this.isTaunting(this.battle.oppHero4));
   }
 
   selectTarget(hero: BattleHero) {
