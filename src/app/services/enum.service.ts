@@ -26,6 +26,7 @@ export class EnumService {
     private heroStats: string[] = [];
     private gearSets: string[] = [];
     private jewelTypes: JewelType[] = [];
+    private passiveSkillTriggers: string[] = [];
 
     constructor(private http: HttpClient) {
         this.http.get(API_URL + '/enum/colors').subscribe((data: string[]) => this.colors = data);
@@ -52,6 +53,8 @@ export class EnumService {
             this.gearSets = data);
         this.http.get(API_URL + '/enum/jewel_types').subscribe((data: JewelType[]) =>
             this.jewelTypes = data);
+        this.http.get(API_URL + '/enum/passive_skill_triggers').subscribe((data: string[]) =>
+            this.passiveSkillTriggers = data);
     }
 
     getColors(): string[] {
@@ -108,5 +111,9 @@ export class EnumService {
 
     getJewelTypes(): JewelType[] {
         return this.jewelTypes;
+    }
+
+    getPassiveSkillTriggers(): string[] {
+        return this.passiveSkillTriggers;
     }
 }

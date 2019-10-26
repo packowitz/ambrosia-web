@@ -270,6 +270,22 @@
                     </ion-item>
                 </ion-col>
             </ion-row>
+            <ion-row *ngIf="skill.passive">
+                <ion-col sizeMd="6">
+                    <ion-item>
+                        <ion-label>Passive Trigger</ion-label>
+                        <ion-select interface="popover" placeholder="Select" [(ngModel)]="skill.passiveSkillTrigger" [required]="skill.passive">
+                            <ion-select-option *ngFor="let passiveTrigger of enumService.getPassiveSkillTriggers()" [value]="passiveTrigger">{{passiveTrigger}}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col sizeMd="6">
+                    <ion-item>
+                        <ion-label>Passive Trigger Value</ion-label>
+                        <ion-input type="number" [(ngModel)]="skill.passiveSkillTriggerValue"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
             <ion-row>
                 <ion-col sizeMd="6">
                     <ion-item>

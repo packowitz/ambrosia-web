@@ -6,6 +6,8 @@ export class HeroSkill {
     number: number;
     name: number;
     passive: boolean;
+    passiveSkillTrigger?: string;
+    passiveSkillTriggerValue?: number;
     skillActiveTrigger: string;
     initCooldown: number;
     cooldown: number;
