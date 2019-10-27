@@ -124,7 +124,7 @@
           <div><strong>{{selectedSkill.name}}</strong></div>
           <div>{{selectedSkill.description}}</div>
           <div *ngIf="selectedSkill.cooldown > 1">Cooldown of {{selectedSkill.cooldown}}</div>
-          <div *ngIf="selectedSkill.initCooldown > 1">Initial Cooldown of {{selectedSkill.cooldown}}</div>
+          <div *ngIf="selectedSkill.initCooldown > 1">Initial Cooldown of {{selectedSkill.initCooldown}}</div>
           <div *ngIf="selectedSkill.skillLevel.length > 0" class="mt-2">
             <div *ngFor="let lvl of selectedSkill.skillLevel" [class.strong]="getSkillLevel(selectedSkill) >= lvl.level">L{{lvl.level}} {{lvl.description}}</div>
           </div>
