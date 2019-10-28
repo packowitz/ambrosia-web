@@ -189,4 +189,9 @@ export class BackendService {
         return this.http.post<Battle>(url, null);
     }
 
+    surrender(battle: Battle): Observable<Battle> {
+        let url = API_URL + '/battle/' + battle.id + '/surrender';
+        return this.http.post<Battle>(url, null);
+    }
+
 }

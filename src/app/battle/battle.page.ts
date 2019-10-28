@@ -181,6 +181,24 @@ export class BattlePage implements OnInit {
     }
   }
 
+  surrender() {
+    if (this.battle.status === 'PLAYER_TURN') {
+      this.loading = true;
+      this.backendService.surrender(this.battle).subscribe(data => {
+        this.model.ongoingBattle = data;
+        this.initBattle(data);
+        this.loading = false;
+      }, error => {
+        this.loading = false;
+        this.alertCtrl.create({
+          header: 'Server error',
+          message: error.error.message,
+          buttons: [{text: 'Okay'}]
+        }).then(data => data.present());
+      });
+    }
+  }
+
   getAnimateNumbers() {
     let numbers = [];
     this.animateStep.actions.forEach(a => {

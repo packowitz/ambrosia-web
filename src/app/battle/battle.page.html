@@ -14,8 +14,9 @@
 <ion-content *ngIf="battle" class="loading-indicator-boundary">
   <ion-card>
     <div *ngIf="loading" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
-    <ion-card-header>
+    <ion-card-header class="flex-space-between">
       <ion-card-title>#{{battle.playerId}} vs #{{battle.opponentId}} <span *ngIf="battle.status === 'WON'">You won</span><span *ngIf="battle.status === 'LOST'">You lost</span></ion-card-title>
+      <ion-button [disabled]="animateStep || battle.status != 'PLAYER_TURN'" (click)="surrender()">Surrender</ion-button>
     </ion-card-header>
     <ion-card-content>
       <ion-row class="flex-space-around">
@@ -83,8 +84,8 @@
   <ion-card>
     <ion-list>
       <div class="flex-vert-reverse">
-        <div *ngFor="let step of battle.steps; let i = index" class="flex-vert ma-2 pointer">
-          <div *ngIf="!animateStep || i <= animationStepIdx">
+        <div *ngFor="let step of battle.steps; let i = index">
+          <div *ngIf="!animateStep || i <= animationStepIdx" class="flex-vert ma-2 pointer">
             <div class="color-black">
               <div [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'MAIN'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} used S{{step.usedSkill}} on {{step.target}}</div>
               <div [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'PRE_TURN'" (click)="step.expanded = !step.expanded">{{step.turn}}. init {{step.actingHero}}'s turn</div>
