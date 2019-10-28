@@ -11,7 +11,8 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="hero">
+<ion-content *ngIf="hero" class="loading-indicator-boundary">
+    <div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
     <ion-card>
         <ion-card-header>
             <ion-card-title>
@@ -260,7 +261,7 @@
                 </ion-col>
                 <ion-col sizeMd="5">
                     <ion-item>
-                        <ion-input type="text" [(ngModel)]="skill.name"></ion-input>
+                        <ion-input type="text" [(ngModel)]="skill.name" required></ion-input>
                     </ion-item>
                 </ion-col>
                 <ion-col sizeMd="4">

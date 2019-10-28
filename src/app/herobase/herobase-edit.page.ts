@@ -7,6 +7,7 @@ import {EnumService, SkillActionEffect} from '../services/enum.service';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {HeroSkillLevel} from '../domain/heroSkillLevel.model';
 import {HeroSkillAction} from '../domain/heroSkillAction.model';
+import {AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'herobase-edit',
@@ -23,7 +24,8 @@ export class HerobaseEditPage implements OnInit {
     constructor(private route: ActivatedRoute,
                 private backendService: BackendService,
                 private converter: ConverterService,
-                private enumService: EnumService) {}
+                private enumService: EnumService,
+                private alertCtrl: AlertController) {}
 
     ngOnInit() {
         let id = this.route.snapshot.paramMap.get('id');
@@ -68,6 +70,13 @@ export class HerobaseEditPage implements OnInit {
         this.backendService.saveHeroBase(this.hero).subscribe(data => {
             this.hero = data;
             this.saving = false;
+        }, error => {
+            this.saving = false;
+            this.alertCtrl.create({
+                header: 'Save failed',
+                message: error.error.message,
+                buttons: [{text: 'Okay'}]
+            }).then(data => data.present());
         });
     }
 
