@@ -5,6 +5,7 @@ import {BattleHero} from '../domain/battleHero.model';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {BackendService} from '../services/backend.service';
 import {BattleStep} from '../domain/battleStep.model';
+import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'app-battle',
@@ -24,7 +25,9 @@ export class BattlePage implements OnInit {
   autobattle = false;
   loading = false;
 
-  constructor(private model: Model, private backendService: BackendService) {}
+  constructor(private model: Model,
+              private backendService: BackendService,
+              private alertCtrl: AlertController) {}
 
   ngOnInit() {
     setTimeout(() => this.initBattle(this.model.ongoingBattle), 1000);
@@ -149,6 +152,13 @@ export class BattlePage implements OnInit {
       this.model.ongoingBattle = data;
       this.initBattle(data);
       this.loading = false;
+    }, error => {
+      this.loading = false;
+      this.alertCtrl.create({
+        header: 'Server error',
+        message: error.error.message,
+        buttons: [{text: 'Okay'}]
+      }).then(data => data.present());
     });
   }
 
@@ -160,6 +170,13 @@ export class BattlePage implements OnInit {
         this.model.ongoingBattle = data;
         this.initBattle(data);
         this.loading = false;
+      }, error => {
+        this.loading = false;
+        this.alertCtrl.create({
+          header: 'Server error',
+          message: error.error.message,
+          buttons: [{text: 'Okay'}]
+        }).then(data => data.present());
       });
     }
   }
