@@ -11,8 +11,8 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="hero" class="loading-indicator-boundary">
-    <div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<ion-content *ngIf="hero">
     <ion-card>
         <ion-card-header>
             <ion-card-title>
