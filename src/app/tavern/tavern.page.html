@@ -9,6 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
 <ion-content>
   <ion-card>
     <ion-card-header>
@@ -41,6 +42,88 @@
         </ion-col>
         <ion-col sizeMd="3">
           <ion-button (click)="buyJewel()"><ion-icon name="pricetag"></ion-icon>Get Jewel</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="model.player.admin && specificGear">
+    <ion-card-header>
+      <ion-card-title class="flex-space-between">
+        Specify your gear
+        <ion-button (click)="craftSpecificGear()"><i class="ra ra-anvil"></i>Craft</ion-button>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Set</ion-label>
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="specificGear.set" required>
+              <ion-select-option *ngFor="let gearSet of enumService.getGearSets()" [value]="gearSet">{{gearSet}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Type</ion-label>
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="specificGear.type" required>
+              <ion-select-option value="WEAPON">WEAPON</ion-select-option>
+              <ion-select-option value="SHIELD">SHIELD</ion-select-option>
+              <ion-select-option value="HELMET">HELMET</ion-select-option>
+              <ion-select-option value="ARMOR">ARMOR</ion-select-option>
+              <ion-select-option value="PANTS">PANTS</ion-select-option>
+              <ion-select-option value="BOOTS">BOOTS</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Rarity</ion-label>
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="specificGear.rarity" required>
+              <ion-select-option *ngFor="let rarity of enumService.getRarities()" [value]="rarity">{{rarity}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Stat</ion-label>
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="specificGear.stat" required>
+              <ion-select-option *ngFor="let stat of enumService.getHeroStats()" [value]="stat">{{stat}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>StatValue</ion-label>
+            <ion-input type="number" [(ngModel)]="specificGear.statValue" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>SpecialJewel</ion-label>
+            <ion-checkbox slot="end" [(ngModel)]="specificGear.specialJewelSlot"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="3" *ngFor="let slot of specificGearSlots; let i = index">
+          <ion-item><ion-badge>{{slot}} <ion-icon name="close" class="pointer" (click)="removeSpecificGearSlot(i)"></ion-icon></ion-badge></ion-item>
+        </ion-col>
+        <ion-col sizeMd="3" *ngIf="specificGearSlots.length < 4">
+          <ion-item>
+            <ion-label>Add Jewel</ion-label>
+            <ion-select interface="popover" placeholder="Select" (ionChange)="addSpecificGearSlot($event)" [(ngModel)]="selectJewelSlotValue">
+              <ion-select-option value="STRENGTH">STRENGTH</ion-select-option>
+              <ion-select-option value="HP">HP</ion-select-option>
+              <ion-select-option value="ARMOR">ARMOR</ion-select-option>
+              <ion-select-option value="BUFFING">BUFFING</ion-select-option>
+              <ion-select-option value="SPEED">SPEED</ion-select-option>
+              <ion-select-option value="CRIT">CRIT</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
       </ion-row>
     </ion-card-content>

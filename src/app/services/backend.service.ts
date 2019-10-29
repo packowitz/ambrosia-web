@@ -95,6 +95,11 @@ export class BackendService {
         return this.http.get<Jewelry[]>(API_URL + '/jewelry');
     }
 
+    craftGear(gear: Gear): Observable<Gear> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/gear/create', gear)
+            .pipe(map(action => action.gear));
+    }
+
     equipGear(hero: Hero, gear: Gear): Observable<Hero> {
         let request = {
             heroId: hero.id,
