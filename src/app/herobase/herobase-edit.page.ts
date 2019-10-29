@@ -17,6 +17,7 @@ export class HerobaseEditPage implements OnInit {
 
     hero: HeroBase;
     skill: HeroSkill;
+    selectedSkill = 1;
     saving = false;
 
     skillActionsExpanded = 0;
@@ -34,7 +35,7 @@ export class HerobaseEditPage implements OnInit {
             if(this.hero.skills.length === 0) {
                 this.addNewSkill();
             } else {
-                this.skill = this.hero.skills[0];
+                this.selectedSkill = 1;
             }
         });
     }
@@ -62,7 +63,7 @@ export class HerobaseEditPage implements OnInit {
         newSkill.skillLevel = [];
         newSkill.actions = [];
         this.hero.skills.push(newSkill);
-        this.skill = newSkill;
+        this.selectedSkill = newSkill.number;
     }
 
     editHero() {
@@ -84,8 +85,7 @@ export class HerobaseEditPage implements OnInit {
         if (event.detail.value === 'add') {
             this.addNewSkill();
         } else {
-            let selected = Number(event.detail.value);
-            this.skill = this.hero.skills.find(s => s.number === selected);
+            this.selectedSkill = Number(event.detail.value);
         }
         this.skillActionsExpanded = 0;
     }
@@ -105,6 +105,10 @@ export class HerobaseEditPage implements OnInit {
         }
     }
 
+    getSelectedSkill(): HeroSkill {
+        return this.hero.skills.find(s => s.number === this.selectedSkill);
+    }
+
     getSkillActionEffects(action: HeroSkillAction): SkillActionEffect[] {
         return this.enumService.getSkillActionEffects().filter(e => e.type === action.type);
     }
@@ -119,6 +123,8 @@ export class HerobaseEditPage implements OnInit {
 
     addSkillAction(skill: HeroSkill) {
         let action = new HeroSkillAction();
+        action.trigger = "S" + this.selectedSkill + "_LVL";
+        action.triggerChance = 100;
         action.position = skill.actions.length + 1;
         skill.actions.push(action);
         this.skillActionsExpanded = action.position;
@@ -133,12 +139,13 @@ export class HerobaseEditPage implements OnInit {
     }
 
     moveAction(action: HeroSkillAction, move: number) {
+        let skill = this.getSelectedSkill();
         let newPos = action.position + move;
-        if (newPos >= 1 && newPos <= this.skill.actions.length) {
+        if (newPos >= 1 && newPos <= skill.actions.length) {
             let oldPos = action.position;
-            this.skill.actions.find(a => a.position === newPos).position = oldPos;
+            skill.actions.find(a => a.position === newPos).position = oldPos;
             action.position = newPos;
-            this.skill.actions.sort((a, b) => a.position - b.position);
+            skill.actions.sort((a, b) => a.position - b.position);
             if (this.skillActionsExpanded === oldPos) {
                 this.skillActionsExpanded = newPos;
             } else if (this.skillActionsExpanded === newPos) {
@@ -148,8 +155,9 @@ export class HerobaseEditPage implements OnInit {
     }
 
     dropAction(action: HeroSkillAction) {
-        let idx = this.skill.actions.indexOf(action);
-        this.skill.actions.filter(a => a.position > action.position).forEach(a => a.position--);
-        this.skill.actions.splice(idx, 1);
+        let skill = this.getSelectedSkill();
+        let idx = skill.actions.indexOf(action);
+        skill.actions.filter(a => a.position > action.position).forEach(a => a.position--);
+        skill.actions.splice(idx, 1);
     }
 }

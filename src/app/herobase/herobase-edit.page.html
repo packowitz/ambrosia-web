@@ -243,7 +243,7 @@
             <ion-card-title>Skills</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            <ion-segment (ionChange)="setSkill($event)" [ngModel]="skill.number">
+            <ion-segment (ionChange)="setSkill($event)" [ngModel]="selectedSkill">
                 <ion-segment-button *ngFor="let skill of hero.skills" [value]="skill.number">
                     <ion-label>Skill {{skill.number}}</ion-label>
                 </ion-segment-button>
@@ -252,7 +252,7 @@
                 </ion-segment-button>
             </ion-segment>
         </ion-card-content>
-        <div *ngIf="skill">
+        <div *ngFor="let skill of [getSelectedSkill()]">
             <ion-row>
                 <ion-col sizeMd="3">
                     <ion-item>
