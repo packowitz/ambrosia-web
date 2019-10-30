@@ -20,8 +20,8 @@ export class TavernPage {
   constructor(private backendService: BackendService,
               private alertCtrl: AlertController,
               private converter: ConverterService,
-              private model: Model,
-              private enumService: EnumService) {
+              public model: Model,
+              public enumService: EnumService) {
     this.specificGear = new Gear();
   }
 
