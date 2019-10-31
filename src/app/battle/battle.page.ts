@@ -210,4 +210,10 @@ export class BattlePage implements OnInit {
     return numbers;
   }
 
+  getAnimationHeroState(position: string) {
+    if (this.animateStep) {
+      return this.animateStep.heroStates.find(s => s.position === position);
+    }
+  }
+
 }
