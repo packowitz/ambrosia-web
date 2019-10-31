@@ -84,11 +84,12 @@
   <ion-card>
     <ion-list>
       <div class="flex-vert-reverse">
-        <div *ngFor="let step of battle.steps; let i = index">
-          <div *ngIf="!animateStep || i <= animationStepIdx" class="flex-vert ma-2 pointer">
-            <div class="color-black">
-              <div [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'MAIN'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} used S{{step.usedSkill}} on {{step.target}}</div>
-              <div [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'PRE_TURN'" (click)="step.expanded = !step.expanded">{{step.turn}}. init {{step.actingHero}}'s turn</div>
+        <div *ngFor="let step of battle.steps; let i = index" class="hover-grey">
+          <div *ngIf="!animateStep || i <= animationStepIdx" class="flex-vert ma-2">
+            <div class="color-black flex-space-between">
+              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'MAIN'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} used S{{step.usedSkill}} on {{step.target}}</div>
+              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'PRE_TURN'" (click)="step.expanded = !step.expanded">{{step.turn}}. init {{step.actingHero}}'s turn</div>
+              <div class="pointer" (click)="replay(i)">Replay from here</div>
             </div>
             <div *ngIf="step.expanded">
               <div *ngFor="let action of step.actions">

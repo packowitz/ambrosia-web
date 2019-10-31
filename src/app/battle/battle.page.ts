@@ -216,4 +216,11 @@ export class BattlePage implements OnInit {
     }
   }
 
+  replay(index: number) {
+    this.animationStepIdx = index - 1;
+    setTimeout(() => {
+      this.setActiveHero();
+    }, 10);
+  }
+
 }
