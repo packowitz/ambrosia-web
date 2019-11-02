@@ -199,15 +199,24 @@ export class BattlePage implements OnInit {
     }
   }
 
-  getAnimateNumbers() {
+  getAnimateNumbers(position: string) {
     let numbers = [];
-    this.animateStep.actions.forEach(a => {
-      if (a.healthDiff < 0) { numbers.push({css: 'RED', number: a.healthDiff}); }
-      if (a.healthDiff > 0) { numbers.push({css: 'GREEN', number: '+' + a.healthDiff}); }
-      if (a.armorDiff < 0) { numbers.push({css: 'BLUE', number: a.armorDiff}); }
+    if (this.animateStep) {
+      this.animateStep.actions.filter(a => a.heroPosition === position).forEach(a => {
+        if (a.healthDiff < 0) { numbers.push({css: 'RED', number: a.healthDiff}); }
+        if (a.healthDiff > 0) { numbers.push({css: 'GREEN', number: '+' + a.healthDiff}); }
+        if (a.armorDiff < 0) { numbers.push({css: 'BLUE', number: a.armorDiff}); }
 
-    });
+      });
+    }
     return numbers;
+  }
+
+  showExplosion(position: string): boolean {
+    if (this.animateStep && this.animateStep.phase === 'MAIN') {
+      return !!this.animateStep.actions.find(a => a.heroPosition === position && a.type === 'DAMAGE');
+    }
+    return false;
   }
 
   getAnimationHeroState(position: string) {

@@ -21,54 +21,54 @@
     <ion-card-content>
       <ion-row class="flex-space-around">
         <battlefield-hero [battle]="battle" [hero]="battle.oppHero1" [heroState]="getAnimationHeroState('OPP1')" [active]="isActive(battle.oppHero1)" [targetable]="selectable(battle.oppHero1)" (selected)="selectTarget($event)">
-            <img *ngIf="animateStep?.target == 'OPP1' && animateStep.phase == 'MAIN'" class="effect explosion" src="assets/img/explosion.png">
-            <div *ngIf="animateStep?.target == 'OPP1'" class="effect">
-                <div *ngFor="let number of getAnimateNumbers(); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+            <img *ngIf="showExplosion('OPP1')" class="effect explosion" src="assets/img/explosion.png">
+            <div class="effect">
+                <div *ngFor="let number of getAnimateNumbers('OPP1'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
             </div>
         </battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.oppHero2" [heroState]="getAnimationHeroState('OPP2')" [active]="isActive(battle.oppHero2)" [targetable]="selectable(battle.oppHero2)" (selected)="selectTarget($event)">
-          <img *ngIf="animateStep?.target == 'OPP2' && animateStep.phase == 'MAIN'" class="effect explosion" src="assets/img/explosion.png">
-          <div *ngIf="animateStep?.target == 'OPP2'" class="effect">
-            <div *ngFor="let number of getAnimateNumbers(); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
-          </div>
+            <img *ngIf="showExplosion('OPP2')" class="effect explosion" src="assets/img/explosion.png">
+            <div class="effect">
+                <div *ngFor="let number of getAnimateNumbers('OPP2'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+            </div>
         </battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.oppHero3" [heroState]="getAnimationHeroState('OPP3')" [active]="isActive(battle.oppHero3)" [targetable]="selectable(battle.oppHero3)" (selected)="selectTarget($event)">
-          <img *ngIf="animateStep?.target == 'OPP3' && animateStep.phase == 'MAIN'" class="effect explosion" src="assets/img/explosion.png">
-          <div *ngIf="animateStep?.target == 'OPP3'" class="effect">
-            <div *ngFor="let number of getAnimateNumbers(); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
-          </div>
+            <img *ngIf="showExplosion('OPP3')" class="effect explosion" src="assets/img/explosion.png">
+            <div class="effect">
+                <div *ngFor="let number of getAnimateNumbers('OPP3'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+            </div>
         </battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.oppHero4" [heroState]="getAnimationHeroState('OPP4')" [active]="isActive(battle.oppHero4)" [targetable]="selectable(battle.oppHero4)" (selected)="selectTarget($event)">
-          <img *ngIf="animateStep?.target == 'OPP4' && animateStep.phase == 'MAIN'" class="effect explosion" src="assets/img/explosion.png">
-          <div *ngIf="animateStep?.target == 'OPP4'" class="effect">
-            <div *ngFor="let number of getAnimateNumbers(); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
-          </div>
+            <img *ngIf="showExplosion('OPP4')" class="effect explosion" src="assets/img/explosion.png">
+            <div class="effect">
+                <div *ngFor="let number of getAnimateNumbers('OPP4'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+            </div>
         </battlefield-hero>
       </ion-row>
       <ion-row class="mt-4 flex-space-around">
         <battlefield-hero [battle]="battle" [hero]="battle.hero1" [heroState]="getAnimationHeroState('HERO1')" [active]="isActive(battle.hero1)" [targetable]="selectable(battle.hero1)" (selected)="selectTarget($event)">
-            <img *ngIf="animateStep?.target == 'HERO1' && animateStep.phase == 'MAIN'" class="effect explosion" src="assets/img/explosion.png">
-            <div *ngIf="animateStep?.target == 'HERO1'" class="effect">
-                <div *ngFor="let number of getAnimateNumbers(); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+            <img *ngIf="showExplosion('HERO1')" class="effect explosion" src="assets/img/explosion.png">
+            <div class="effect">
+                <div *ngFor="let number of getAnimateNumbers('HERO1'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
             </div>
         </battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.hero2" [heroState]="getAnimationHeroState('HERO2')" [active]="isActive(battle.hero2)" [targetable]="selectable(battle.hero2)" (selected)="selectTarget($event)">
-          <img *ngIf="animateStep?.target == 'HERO2' && animateStep.phase == 'MAIN'" class="effect explosion" src="assets/img/explosion.png">
-          <div *ngIf="animateStep?.target == 'HERO2'" class="effect">
-            <div *ngFor="let number of getAnimateNumbers(); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
-          </div>
+            <img *ngIf="showExplosion('HERO2')" class="effect explosion" src="assets/img/explosion.png">
+            <div class="effect">
+                <div *ngFor="let number of getAnimateNumbers('HERO2'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+            </div>
         </battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.hero3" [heroState]="getAnimationHeroState('HERO3')" [active]="isActive(battle.hero3)" [targetable]="selectable(battle.hero3)" (selected)="selectTarget($event)">
-          <img *ngIf="animateStep?.target == 'HERO3' && animateStep.phase == 'MAIN'" class="effect explosion" src="assets/img/explosion.png">
-          <div *ngIf="animateStep?.target == 'HERO3'" class="effect">
-            <div *ngFor="let number of getAnimateNumbers(); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
-          </div>
+            <img *ngIf="showExplosion('HERO3')" class="effect explosion" src="assets/img/explosion.png">
+            <div class="effect">
+                <div *ngFor="let number of getAnimateNumbers('HERO3'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+            </div>
         </battlefield-hero>
         <battlefield-hero [battle]="battle" [hero]="battle.hero4" [heroState]="getAnimationHeroState('HERO4')" [active]="isActive(battle.hero4)" [targetable]="selectable(battle.hero4)" (selected)="selectTarget($event)">
-          <img *ngIf="animateStep?.target == 'HERO4' && animateStep.phase == 'MAIN'" class="effect explosion" src="assets/img/explosion.png">
-          <div *ngIf="animateStep?.target == 'HERO4'" class="effect">
-            <div *ngFor="let number of getAnimateNumbers(); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
-          </div>
+            <img *ngIf="showExplosion('HERO4')" class="effect explosion" src="assets/img/explosion.png">
+            <div class="effect">
+                <div *ngFor="let number of getAnimateNumbers('HERO4'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+            </div>
         </battlefield-hero>
       </ion-row>
       <ion-row *ngIf="activeHero" class="mt-4 flex-space-around">
