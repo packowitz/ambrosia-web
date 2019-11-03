@@ -206,7 +206,7 @@ export class BattlePage implements OnInit {
         if (a.healthDiff < 0) { numbers.push({css: 'RED', number: a.healthDiff}); }
         if (a.healthDiff > 0) { numbers.push({css: 'GREEN', number: '+' + a.healthDiff}); }
         if (a.armorDiff < 0) { numbers.push({css: 'BLUE', number: a.armorDiff}); }
-
+        if (a.type === 'DODGED') { numbers.push({css: 'color-orange', number: 'dodged'}); }
       });
     }
     return numbers;
