@@ -88,7 +88,8 @@
           <div *ngIf="!animateStep || i <= animationStepIdx" class="flex-vert ma-2">
             <div class="color-black flex-space-between">
               <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'MAIN'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} used S{{step.usedSkill}} on {{step.target}}</div>
-              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'PRE_TURN'" (click)="step.expanded = !step.expanded">{{step.turn}}. init {{step.actingHero}}'s turn</div>
+              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'A_PRE_TURN'" (click)="step.expanded = !step.expanded">{{step.turn}}. init {{step.actingHero}}'s turn</div>
+              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase.startsWith('Z_COUNTER')" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} counters {{step.target}}</div>
               <div class="pointer" (click)="replay(i)">Replay from here</div>
             </div>
             <div *ngIf="step.expanded">
@@ -97,7 +98,8 @@
                 <div *ngIf="action.type == 'DODGED'">{{action.heroPosition}} dodged and received no damage</div>
                 <div *ngIf="action.type == 'HEALING'">{{action.heroPosition}}: <i class="GREEN">{{action.healthDiff}}</i> health</div>
                 <div *ngIf="action.type == 'BUFF'">{{action.heroPosition}} got {{action.buffIntensity}}* {{action.buff}} for {{action.buffDuration}} turns</div>
-                <div *ngIf="action.type == 'BUFF_RESISTED'">{{action.heroPosition}} resisted {{action.buffIntensity}}* {{action.buff}}</div>
+                <div *ngIf="action.type == 'BLOCKED'">{{action.heroPosition}} resisted {{action.buffIntensity}}* {{action.buff}}</div>
+                <div *ngIf="action.type == 'BUFF_CLEANED'">{{action.heroPosition}} got {{action.buff}} cleaned</div>
                 <div *ngIf="action.type == 'DOT'">{{action.heroPosition}}: damage per turn <i class="RED">{{action.healthDiff}}</i> health</div>
                 <div *ngIf="action.type == 'HOT'">{{action.heroPosition}}: healing per turn <i class="GREEN">{{action.healthDiff}}</i> health</div>
                 <div *ngIf="action.type == 'DEAD'">{{action.heroPosition}} died</div>
