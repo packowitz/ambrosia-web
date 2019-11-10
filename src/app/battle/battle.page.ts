@@ -81,7 +81,7 @@ export class BattlePage implements OnInit {
   }
 
   getSkills(): HeroSkill[] {
-    return this.activeHero.heroBase.skills.filter(s => s.number === 1 || (this.activeHero['skill' + s.number + 'Lvl'] > 0 && this.activeHero['skill' + s.number + 'Cooldown'] >= 0));
+    return this.activeHero.heroBase.skills.filter(s => s.number === 1 || (!s.passive && this.activeHero['skill' + s.number + 'Lvl'] > 0 && this.activeHero['skill' + s.number + 'Cooldown'] >= 0));
   }
 
   selectSkill(skill: HeroSkill) {
@@ -92,10 +92,12 @@ export class BattlePage implements OnInit {
     if (this.animateStep == null && this.activeHero) {
       if (hero && this.selectedSkill) {
         if (this.isOpponent(hero)) {
-          if (this.selectedSkill.target === 'OPP_IGNORE_TAUNT') {
-            return true;
-          } else if (this.selectedSkill.target === 'OPPONENT') {
-            return this.anyOpponentTaunting() ? this.isTaunting(hero) : true;
+          if (hero.status !== 'DEAD') {
+            if (this.selectedSkill.target === 'OPP_IGNORE_TAUNT') {
+              return true;
+            } else if (this.selectedSkill.target === 'OPPONENT') {
+              return this.anyOpponentTaunting() ? this.isTaunting(hero) : true;
+            }
           }
         } else {
           if (hero.position === this.activeHero.position) {
