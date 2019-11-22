@@ -15,7 +15,7 @@
   <ion-card>
     <div *ngIf="loading" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
     <ion-card-header class="flex-space-between">
-      <ion-card-title>#{{battle.playerId}} vs #{{battle.opponentId}} <span *ngIf="battle.status === 'WON'">You won</span><span *ngIf="battle.status === 'LOST'">You lost</span></ion-card-title>
+      <ion-card-title>{{battle.playerName}}#{{battle.playerId}} vs {{battle.opponentName}}#{{battle.opponentId}} <span *ngIf="battle.status === 'WON'">You won</span><span *ngIf="battle.status === 'LOST'">You lost</span></ion-card-title>
       <ion-button [disabled]="animateStep || battle.status != 'PLAYER_TURN'" (click)="surrender()">Surrender</ion-button>
     </ion-card-header>
     <ion-card-content>
@@ -87,23 +87,23 @@
         <div *ngFor="let step of battle.steps; let i = index" class="hover-grey">
           <div *ngIf="!animateStep || i <= animationStepIdx" class="flex-vert ma-2">
             <div class="color-black flex-space-between">
-              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'MAIN'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} used S{{step.usedSkill}} on {{step.target}}</div>
-              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'A_PRE_TURN'" (click)="step.expanded = !step.expanded">{{step.turn}}. init {{step.actingHero}}'s turn</div>
-              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'PASSIVE'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}}'s passive S{{step.usedSkill}} triggered</div>
-              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'Z_COUNTER'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHero}} counters {{step.target}}</div>
+              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'MAIN'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHeroName}}({{step.actingHero}}) used {{step.usedSkillName}}(S{{step.usedSkill}}) on {{step.targetName}}({{step.target}})</div>
+              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'A_PRE_TURN'" (click)="step.expanded = !step.expanded">{{step.turn}}. init {{step.actingHeroName}}({{step.actingHero}})'s turn</div>
+              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'PASSIVE'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHeroName}}({{step.actingHero}})'s passive {{step.usedSkillName}}(S{{step.usedSkill}}) triggered</div>
+              <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'Z_COUNTER'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHeroName}}({{step.actingHero}}) counters {{step.targetName}}({{step.target}})</div>
               <div class="pointer" (click)="replay(i)">Replay from here</div>
             </div>
             <div *ngIf="step.expanded">
               <div *ngFor="let action of step.actions">
-                <div *ngIf="action.type == 'DAMAGE'">{{action.heroPosition}}: <i class="RED">{{action.healthDiff}}</i> health, <i class="RED">{{action.armorDiff}}</i> armor, {{action.crit ? (action.superCrit ? 'SUPER_CRIT, ' : 'CRIT, ') : ''}}{{action.baseDamage}} base damage, {{action.targetArmor}} target armor before, {{action.targetHealth}} target HP before</div>
-                <div *ngIf="action.type == 'DODGED'">{{action.heroPosition}} dodged and received no damage</div>
-                <div *ngIf="action.type == 'HEALING'">{{action.heroPosition}}: <i class="GREEN">{{action.healthDiff}}</i> health</div>
-                <div *ngIf="action.type == 'BUFF'">{{action.heroPosition}} got {{action.buffIntensity}}* {{action.buff}} for {{action.buffDuration}} turns</div>
-                <div *ngIf="action.type == 'BLOCKED'">{{action.heroPosition}} resisted {{action.buffIntensity}}* {{action.buff}}</div>
-                <div *ngIf="action.type == 'BUFF_CLEANED'">{{action.heroPosition}} got {{action.buff}} cleaned</div>
-                <div *ngIf="action.type == 'DOT'">{{action.heroPosition}}: damage per turn <i class="RED">{{action.healthDiff}}</i> health</div>
-                <div *ngIf="action.type == 'HOT'">{{action.heroPosition}}: healing per turn <i class="GREEN">{{action.healthDiff}}</i> health</div>
-                <div *ngIf="action.type == 'DEAD'">{{action.heroPosition}} died</div>
+                <div *ngIf="action.type == 'DAMAGE'">{{action.heroName}}({{action.heroPosition}}): <i class="RED">{{action.healthDiff}}</i> health, <i class="RED">{{action.armorDiff}}</i> armor, {{action.crit ? (action.superCrit ? 'SUPER_CRIT, ' : 'CRIT, ') : ''}}{{action.baseDamage}} base damage, {{action.targetArmor}} target armor before, {{action.targetHealth}} target HP before</div>
+                <div *ngIf="action.type == 'DODGED'">{{action.heroName}}({{action.heroPosition}}) dodged and received no damage</div>
+                <div *ngIf="action.type == 'HEALING'">{{action.heroName}}({{action.heroPosition}}): <i class="GREEN">{{action.healthDiff}}</i> health</div>
+                <div *ngIf="action.type == 'BUFF'">{{action.heroName}}({{action.heroPosition}}) got {{action.buffIntensity}}* {{action.buff}} for {{action.buffDuration}} turns</div>
+                <div *ngIf="action.type == 'BLOCKED'">{{action.heroName}}({{action.heroPosition}}) resisted {{action.buffIntensity}}* {{action.buff}}</div>
+                <div *ngIf="action.type == 'BUFF_CLEANED'">{{action.heroName}}({{action.heroPosition}}) got {{action.buff}} cleaned</div>
+                <div *ngIf="action.type == 'DOT'">{{action.heroName}}({{action.heroPosition}}): damage per turn <i class="RED">{{action.healthDiff}}</i> health</div>
+                <div *ngIf="action.type == 'HOT'">{{action.heroName}}({{action.heroPosition}}): healing per turn <i class="GREEN">{{action.healthDiff}}</i> health</div>
+                <div *ngIf="action.type == 'DEAD'">{{action.heroName}}({{action.heroPosition}}) died</div>
               </div>
             </div>
           </div>

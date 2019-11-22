@@ -1,6 +1,7 @@
 export class BattleStepAction {
     id: number;
     heroPosition: string;
+    heroName: string;
     type: string;
     crit?: boolean;
     superCrit?: boolean;

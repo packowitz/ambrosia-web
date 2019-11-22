@@ -6,7 +6,9 @@ export class Battle {
     type: string;
     status: string;
     playerId: number;
+    playerName: number;
     opponentId: number;
+    opponentName: number;
     started: string;
     lastAction: string;
     activeHero: string;
