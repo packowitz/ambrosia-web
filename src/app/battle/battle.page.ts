@@ -102,6 +102,8 @@ export class BattlePage implements OnInit {
         } else {
           if (hero.position === this.activeHero.position) {
             return this.selectedSkill.target === 'SELF' || this.selectedSkill.target === 'ALL_OWN';
+          } else if (hero.status === 'DEAD') {
+            return this.selectedSkill.target === 'DEAD';
           } else {
             return this.selectedSkill.target === 'ALL_OWN';
           }
