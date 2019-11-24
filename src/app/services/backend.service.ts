@@ -13,6 +13,7 @@ import {Battle} from '../domain/battle.model';
 import {BattleHero} from '../domain/battleHero.model';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {API_URL} from '../../environments/environment';
+import {GearSet, JewelType} from './enum.service';
 
 
 export class PlayerActionResponse {
@@ -77,8 +78,8 @@ export class BackendService {
         return this.http.get<Hero[]>(API_URL + '/hero');
     }
 
-    getRandomGear(): Observable<Gear> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/gear/open/something', null)
+    getGear(amount: number, set: string): Observable<Gear> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/gear/open/' + set + '/' + amount, null)
             .pipe(map(action => action.gear));
     }
 
@@ -86,8 +87,8 @@ export class BackendService {
         return this.http.get<Gear[]>(API_URL + '/gear');
     }
 
-    getRandomJewel(): Observable<Jewelry> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/jewelry/open/something', null)
+    getJewel(amount: number, type: JewelType): Observable<Jewelry> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/jewelry/open/' + type.name + '/' + amount, null)
             .pipe(map(action => action.jewelries[0]));
     }
 

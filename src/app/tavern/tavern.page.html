@@ -37,8 +37,38 @@
     </ion-card-header>
     <ion-card-content>
       <ion-row>
-        <ion-col sizeMd="3">
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Amount</ion-label>
+            <ion-input type="number" [(ngModel)]="gearAmount"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Set</ion-label>
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="gearSet">
+              <ion-select-option *ngFor="let gearSet of enumService.getGearSets()" [value]="gearSet">{{gearSet}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
           <ion-button (click)="buyGear()"><ion-icon name="pricetag"></ion-icon>Get Gear</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Amount</ion-label>
+            <ion-input type="number" [(ngModel)]="jewelAmount"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Type</ion-label>
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="jewelType">
+              <ion-select-option *ngFor="let type of enumService.getJewelTypes()" [value]="type">{{type.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
         <ion-col sizeMd="3">
           <ion-button (click)="buyJewel()"><ion-icon name="pricetag"></ion-icon>Get Jewel</ion-button>

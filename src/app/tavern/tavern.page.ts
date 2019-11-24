@@ -3,7 +3,7 @@ import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
 import {ConverterService} from '../services/converter.service';
 import {Model} from '../services/model.service';
-import {EnumService} from '../services/enum.service';
+import {EnumService, GearSet, JewelType} from '../services/enum.service';
 import {Gear} from '../domain/gear.model';
 
 @Component({
@@ -13,6 +13,13 @@ import {Gear} from '../domain/gear.model';
 export class TavernPage {
 
   saving = false;
+
+  gearAmount = 10;
+  gearSet: string = null;
+
+  jewelAmount = 10;
+  jewelType: JewelType = null;
+
   specificGear: Gear;
   specificGearSlots: string[] = [];
   selectJewelSlotValue;
@@ -22,6 +29,8 @@ export class TavernPage {
               private converter: ConverterService,
               public model: Model,
               public enumService: EnumService) {
+    this.gearSet = enumService.getGearSets()[0];
+    this.jewelType = enumService.getJewelTypes()[0];
     this.specificGear = new Gear();
   }
 
@@ -38,23 +47,15 @@ export class TavernPage {
 
   buyGear() {
     this.saving = true;
-    this.backendService.getRandomGear().subscribe(gear => {
+    this.backendService.getGear(this.gearAmount, this.gearSet).subscribe(gear => {
       this.saving = false;
-      this.alertCtrl.create({
-        header: 'You got ' + gear.set + ' ' + gear.type + ' ' + ' (' + this.converter.rarityStars(gear.rarity) + '*)',
-        buttons: [{text: 'Okay'}]
-      }).then(data => data.present());
     });
   }
 
   buyJewel() {
     this.saving = true;
-    this.backendService.getRandomJewel().subscribe(jewelry => {
+    this.backendService.getJewel(this.jewelAmount, this.jewelType).subscribe(jewelry => {
       this.saving = false;
-      this.alertCtrl.create({
-        header: 'You got a jewel of type ' + jewelry.type,
-        buttons: [{text: 'Okay'}]
-      }).then(data => data.present());
     });
   }
 
