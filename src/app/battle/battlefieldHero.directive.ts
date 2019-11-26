@@ -39,6 +39,7 @@ import {BattleStepHeroState} from '../domain/battleStepHeroState.model';
                     <i *ngIf="buff.buff === 'HEAL_OVER_TIME'" class="ra ra-health"></i>
                     <i *ngIf="buff.buff === 'STRENGTH_BUFF'" class="ra ra-muscle-up"></i>
                     <i *ngIf="buff.buff === 'TAUNT_BUFF'" class="ra ra-sheriff"></i>
+                    <i *ngIf="buff.buff === 'SHIELD'" class="ra ra-omega"></i>
                     <i *ngIf="buff.buff === 'DAMAGE_OVER_TIME'" class="ra ra-droplet"></i>
                     <div class="buff-duration" *ngIf="buff.duration > 0">{{buff.duration}}</div>
                 </div>

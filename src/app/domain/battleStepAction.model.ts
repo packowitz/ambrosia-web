@@ -10,6 +10,7 @@ export class BattleStepAction {
     targetHealth?: number;
     armorDiff?: number;
     healthDiff?: number;
+    shieldAbsorb?: number;
     buff?: string;
     buffIntensity?: number;
     buffDuration?: number;
