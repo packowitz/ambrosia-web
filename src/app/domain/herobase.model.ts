@@ -7,6 +7,7 @@ export class HeroBase {
     heroClass: string;
     color: string;
     heroType: string;
+    avatar: string;
     strengthBase: number;
     strengthFull: number;
     hpBase: number;

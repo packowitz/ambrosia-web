@@ -89,7 +89,7 @@ export class BattlePage implements OnInit {
   }
 
   selectable(hero: BattleHero): boolean {
-    if (this.animateStep == null && this.activeHero) {
+    if (this.animateStep == null && this.activeHero && (this.selectedSkill.number === 1 || this.activeHero['skill' + this.selectedSkill.number + 'Cooldown'] === 0)) {
       if (hero && this.selectedSkill) {
         if (this.isOpponent(hero)) {
           if (hero.status !== 'DEAD') {

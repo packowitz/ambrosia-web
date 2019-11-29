@@ -245,6 +245,7 @@
         <ion-card-content>
             <ion-segment (ionChange)="setSkill($event)" [ngModel]="selectedSkill">
                 <ion-segment-button *ngFor="let skill of hero.skills" [value]="skill.number">
+                    <ion-img [src]="'assets/img/skills/' + skill.icon + '.png'" class="skill_icon" (click)="changeSkillIcon($event, skill)"></ion-img>
                     <ion-label>Skill {{skill.number}}</ion-label>
                 </ion-segment-button>
                 <ion-segment-button value="add">

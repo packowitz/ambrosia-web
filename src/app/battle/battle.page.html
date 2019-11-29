@@ -73,11 +73,12 @@
       </ion-row>
       <ion-row *ngIf="activeHero" class="mt-4 flex-space-around">
         <ion-button fill="clear" (click)="toggleAutobattle()" [color]="autobattle? 'success' : 'dark'">Autobattle {{autobattle? 'on' : 'off'}}</ion-button>
-        <ion-button *ngFor="let skill of getSkills()" [fill]="skill == selectedSkill ? 'solid' : 'outline'" (click)="selectSkill(skill)" [disabled]="skill.number != 1 && activeHero['skill' + skill.number + 'Cooldown'] > 0">
-          <i class="ra ra-battered-axe" *ngIf="skill.target == 'OPPONENT'"></i> {{skill.name}}{{skill.number != 1 && activeHero['skill' + skill.number + 'Cooldown'] > 0 ? '(' + activeHero['skill' + skill.number + 'Cooldown'] + ')' : ''}}
-        </ion-button>
+        <ion-img *ngFor="let skill of getSkills()" [src]="'assets/img/skills/' + skill.icon + '.png'" class="skill_icon pointer" [class.skill_selected]="skill == selectedSkill" (click)="selectSkill(skill)"></ion-img>
+<!--        <ion-button *ngFor="let skill of getSkills()" [fill]="skill == selectedSkill ? 'solid' : 'outline'" (click)="selectSkill(skill)" [disabled]="skill.number != 1 && activeHero['skill' + skill.number + 'Cooldown'] > 0">-->
+<!--            <i class="ra ra-battered-axe" *ngIf="skill.target == 'OPPONENT'"></i> {{skill.name}}{{skill.number != 1 && activeHero['skill' + skill.number + 'Cooldown'] > 0 ? '(' + activeHero['skill' + skill.number + 'Cooldown'] + ')' : ''}}-->
+<!--        </ion-button>-->
       </ion-row>
-      <ion-row *ngIf="selectedSkill" class="flex-space-around">{{selectedSkill.description}}</ion-row>
+        <ion-row *ngIf="selectedSkill" class="flex-space-around"><strong>{{selectedSkill.name}}:</strong><i *ngIf="activeHero['skill' + selectedSkill.number + 'Cooldown'] > 0">cooldown {{activeHero['skill' + selectedSkill.number + 'Cooldown']}}</i> {{selectedSkill.description}}</ion-row>
     </ion-card-content>
   </ion-card>
 

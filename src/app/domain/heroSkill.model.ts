@@ -5,6 +5,7 @@ export class HeroSkill {
     id?: number;
     number: number;
     name: number;
+    icon: string;
     passive: boolean;
     passiveSkillTrigger?: string;
     passiveSkillTriggerValue?: number;

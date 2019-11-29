@@ -7,7 +7,8 @@ import {EnumService, SkillActionEffect} from '../services/enum.service';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {HeroSkillLevel} from '../domain/heroSkillLevel.model';
 import {HeroSkillAction} from '../domain/heroSkillAction.model';
-import {AlertController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
+import {SkillIconModal} from './skillIcon.modal';
 
 @Component({
     selector: 'herobase-edit',
@@ -26,7 +27,8 @@ export class HerobaseEditPage implements OnInit {
                 private backendService: BackendService,
                 private converter: ConverterService,
                 private enumService: EnumService,
-                private alertCtrl: AlertController) {}
+                private alertCtrl: AlertController,
+                private modalCtrl: ModalController) {}
 
     ngOnInit() {
         let id = this.route.snapshot.paramMap.get('id');
@@ -55,6 +57,7 @@ export class HerobaseEditPage implements OnInit {
     addNewSkill() {
         let newSkill = new HeroSkill();
         newSkill.number = this.hero.skills.length + 1;
+        newSkill.icon = 'default';
         newSkill.initCooldown = 0;
         newSkill.cooldown = 0;
         newSkill.skillActiveTrigger = 'ALWAYS';
@@ -88,6 +91,24 @@ export class HerobaseEditPage implements OnInit {
             this.selectedSkill = Number(event.detail.value);
         }
         this.skillActionsExpanded = 0;
+    }
+
+    changeSkillIcon(event, skill) {
+        event.stopPropagation();
+        this.modalCtrl.create({
+            component: SkillIconModal,
+            componentProps: {
+                currentIcon: skill.icon,
+                color: this.hero.color
+            }
+        }).then(modal => {
+            modal.onDidDismiss().then((dataReturned) => {
+                if (dataReturned !== null && dataReturned.data) {
+                    skill.icon = dataReturned.data;
+                }
+            });
+            modal.present();
+        });
     }
 
     skillMaxLevelChanged(skill: HeroSkill, event) {

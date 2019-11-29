@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router';
 import {HerobaseCreatePage} from './herobase-create.page';
 import {HerobaseListPage} from './herobase-list.page';
 import {HerobaseEditPage} from './herobase-edit.page';
+import {SkillIconModal} from './skillIcon.modal';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import {HerobaseEditPage} from './herobase-edit.page';
       }
     ])
   ],
-  declarations: [HerobaseCreatePage, HerobaseListPage, HerobaseEditPage]
+  declarations: [HerobaseCreatePage, HerobaseListPage, HerobaseEditPage, SkillIconModal],
+  entryComponents: [SkillIconModal]
 })
 export class HerobaseModule {}
