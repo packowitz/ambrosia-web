@@ -7,6 +7,7 @@ import {HerobaseCreatePage} from './herobase-create.page';
 import {HerobaseListPage} from './herobase-list.page';
 import {HerobaseEditPage} from './herobase-edit.page';
 import {SkillIconModal} from './skillIcon.modal';
+import {HeroAvatarModal} from './heroavatar.modal';
 
 @NgModule({
   imports: [
@@ -28,7 +29,7 @@ import {SkillIconModal} from './skillIcon.modal';
       }
     ])
   ],
-  declarations: [HerobaseCreatePage, HerobaseListPage, HerobaseEditPage, SkillIconModal],
-  entryComponents: [SkillIconModal]
+  declarations: [HerobaseCreatePage, HerobaseListPage, HerobaseEditPage, SkillIconModal, HeroAvatarModal],
+  entryComponents: [SkillIconModal, HeroAvatarModal]
 })
 export class HerobaseModule {}

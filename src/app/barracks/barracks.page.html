@@ -18,10 +18,10 @@
     </ion-card-header>
     <ion-card-content>
       <div class="scrollable-list">
-        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile flex-vert-center" [class.selected-tile]="hero.id == selectedHero.id">
-          <div [class]="hero.heroBase.color">{{hero.heroBase.name}}</div>
-          <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero.stars)"></ion-icon></div>
-          <div>Lvl {{hero.level}}</div>
+        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center pointer mr-2" [class.selected-tile]="hero.id == selectedHero.id">
+          <ion-img [src]="'assets/img/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+          <div class="top-left-bubble level-bubble background-{{hero.heroBase.color}}">{{hero.level}}</div>
+          <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
         </div>
       </div>
     </ion-card-content>

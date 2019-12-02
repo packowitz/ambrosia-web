@@ -9,6 +9,7 @@ import {HeroSkillLevel} from '../domain/heroSkillLevel.model';
 import {HeroSkillAction} from '../domain/heroSkillAction.model';
 import {AlertController, ModalController} from '@ionic/angular';
 import {SkillIconModal} from './skillIcon.modal';
+import {HeroAvatarModal} from './heroavatar.modal';
 
 @Component({
     selector: 'herobase-edit',
@@ -93,22 +94,42 @@ export class HerobaseEditPage implements OnInit {
         this.skillActionsExpanded = 0;
     }
 
-    changeSkillIcon(event, skill) {
+    changeAvatar(event) {
         event.stopPropagation();
         this.modalCtrl.create({
-            component: SkillIconModal,
+            component: HeroAvatarModal,
             componentProps: {
-                currentIcon: skill.icon,
+                currentIcon: this.hero.avatar,
                 color: this.hero.color
             }
         }).then(modal => {
             modal.onDidDismiss().then((dataReturned) => {
                 if (dataReturned !== null && dataReturned.data) {
-                    skill.icon = dataReturned.data;
+                    this.hero.avatar = dataReturned.data;
                 }
             });
             modal.present();
         });
+    }
+
+    changeSkillIcon(event, skill) {
+        if (skill === this.selectedSkill) {
+            event.stopPropagation();
+            this.modalCtrl.create({
+                component: SkillIconModal,
+                componentProps: {
+                    currentIcon: skill.icon,
+                    color: this.hero.color
+                }
+            }).then(modal => {
+                modal.onDidDismiss().then((dataReturned) => {
+                    if (dataReturned !== null && dataReturned.data) {
+                        skill.icon = dataReturned.data;
+                    }
+                });
+                modal.present();
+            });
+        }
     }
 
     skillMaxLevelChanged(skill: HeroSkill, event) {

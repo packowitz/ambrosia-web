@@ -1,441 +1,474 @@
 <script src="../../../../../pacworx/atp-app/src/app/app.module.ts"></script>
 <ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title *ngIf="hero">
-            Edit {{converter.rarityStars(hero.rarity)}}<ion-icon name="star"></ion-icon> ({{hero.rarity}}) <strong [class]="hero.color">{{hero.name}}</strong>, {{hero.heroClass}}
-            <ion-button (click)="editHero()" float-end size="small" [disabled]="saving">Save changes</ion-button>
-        </ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title *ngIf="hero">
+      Edit {{converter.rarityStars(hero.rarity)}}
+      <ion-icon name="star"></ion-icon>
+      ({{hero.rarity}}) <strong [class]="hero.color">{{hero.name}}</strong>, {{hero.heroClass}}
+      <ion-button (click)="editHero()" float-end size="small" [disabled]="saving">Save changes</ion-button>
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
 <ion-content *ngIf="hero">
-    <ion-card>
-        <ion-card-header>
-            <ion-card-title>
-                <div class="flex-space-between">
-                    General attributes
-                    <ion-button (click)="recruit()">Recruit</ion-button>
-                </div>
-            </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <ion-row>
-                <ion-col sizeMd="6">
-                    <ion-item>
-                        <ion-label position="floating">Hero name</ion-label>
-                        <ion-input name="name" type="text" [(ngModel)]="hero.name" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="6">
-                    <ion-item>
-                        <ion-label position="floating">Hero class</ion-label>
-                        <ion-input name="heroClass" type="text" [(ngModel)]="hero.heroClass" required></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col sizeMd="6">
-                    <ion-item>
-                        <ion-label>Hero Type</ion-label>
-                        <ion-select name="heroType" interface="popover" placeholder="Select" [(ngModel)]="hero.heroType" required>
-                            <ion-select-option *ngFor="let heroType of enumService.getHeroTypes()" [value]="heroType">{{heroType}}</ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="6">
-                    <ion-item>
-                        <ion-label>Recruitable</ion-label>
-                        <ion-checkbox [(ngModel)]="hero.recruitable"></ion-checkbox>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-        </ion-card-content>
-    </ion-card>
-    <ion-card>
-        <ion-card-header>
-            <ion-card-title>Stats</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <ion-row>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Strength base</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="strengthBase" type="number" [(ngModel)]="hero.strengthBase" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Strength full</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="strengthFull" type="number" [(ngModel)]="hero.strengthFull" required></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Hitpoints base</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="hphBase" type="number" [(ngModel)]="hero.hpBase" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Hitpoints full</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="hpFull" type="number" [(ngModel)]="hero.hpFull" required></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Armor base</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="armorBase" type="number" [(ngModel)]="hero.armorBase" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Armor full</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="armorFull" type="number" [(ngModel)]="hero.armorFull" required></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Crit</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="crit" type="number" [(ngModel)]="hero.crit" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Crit ascended</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="critAsc" type="number" [(ngModel)]="hero.critAsc" required></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>CritMult</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="critMult" type="number" [(ngModel)]="hero.critMult" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>CritMult ascended</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="critMultAsc" type="number" [(ngModel)]="hero.critMultAsc" required></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Dexterity</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="dexterity" type="number" [(ngModel)]="hero.dexterity" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Dexterity ascended</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="dexterityAsc" type="number" [(ngModel)]="hero.dexterityAsc" required></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Resistance</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="resistance" type="number" [(ngModel)]="hero.resistance" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Resistance ascended</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="resistanceAsc" type="number" [(ngModel)]="hero.resistanceAsc" required></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Initiative</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="speed" type="number" [(ngModel)]="hero.initiative" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="4">
-                    <ion-item lines="none">
-                        <ion-label>Initiative ascended</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input name="speedAsc" type="number" [(ngModel)]="hero.initiativeAsc" required></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-        </ion-card-content>
-    </ion-card>
-    <ion-card>
-        <ion-card-header>
-            <ion-card-title>Skills</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <ion-segment (ionChange)="setSkill($event)" [ngModel]="selectedSkill">
-                <ion-segment-button *ngFor="let skill of hero.skills" [value]="skill.number">
-                    <ion-img [src]="'assets/img/skills/' + skill.icon + '.png'" class="skill_icon" (click)="changeSkillIcon($event, skill)"></ion-img>
-                    <ion-label>Skill {{skill.number}}</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="add">
-                    <ion-label>New Skill</ion-label>
-                </ion-segment-button>
-            </ion-segment>
-        </ion-card-content>
-        <div *ngFor="let skill of [getSelectedSkill()]">
-            <ion-row>
-                <ion-col sizeMd="3">
-                    <ion-item>
-                        <ion-label>Skill name</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="5">
-                    <ion-item>
-                        <ion-input type="text" [(ngModel)]="skill.name" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="4">
-                    <ion-item>
-                        <ion-label>Passive</ion-label>
-                        <ion-checkbox slot="end" [(ngModel)]="skill.passive"></ion-checkbox>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="skill.passive">
-                <ion-col sizeMd="6">
-                    <ion-item>
-                        <ion-label>Passive Trigger</ion-label>
-                        <ion-select interface="popover" placeholder="Select" [(ngModel)]="skill.passiveSkillTrigger" [required]="skill.passive">
-                            <ion-select-option *ngFor="let passiveTrigger of enumService.getPassiveSkillTriggers()" [value]="passiveTrigger">{{passiveTrigger}}</ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="6">
-                    <ion-item>
-                        <ion-label>Passive Trigger Value</ion-label>
-                        <ion-input type="number" [(ngModel)]="skill.passiveSkillTriggerValue"></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col sizeMd="6">
-                    <ion-item>
-                        <ion-label>Active</ion-label>
-                        <ion-select interface="popover" placeholder="Select" [(ngModel)]="skill.skillActiveTrigger" required>
-                            <ion-select-option *ngFor="let trigger of enumService.getSkillActiveTriggers()" [value]="trigger">{{trigger}}</ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="6">
-                    <ion-item>
-                        <ion-label>Skill Target</ion-label>
-                        <ion-select interface="popover" placeholder="Select" [(ngModel)]="skill.target" required>
-                            <ion-select-option *ngFor="let target of enumService.getSkillTargets()" [value]="target">{{target}}</ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="skill.number > 1">
-                <ion-col sizeMd="4">
-                    <ion-item>
-                        <ion-label>Cooldown</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input type="number" min="0" max="10" [(ngModel)]="skill.cooldown" required></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="4">
-                    <ion-item>
-                        <ion-label>Init Cooldown</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeMd="2">
-                    <ion-item>
-                        <ion-input type="number" min="0" max="10" [(ngModel)]="skill.initCooldown" required></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col sizeMd="12">
-                    <ion-item>
-                        <ion-label position="floating">Description</ion-label>
-                        <ion-textarea [(ngModel)]="skill.description" required></ion-textarea>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-row>
-                        <ion-item>
-                            <ion-label><strong>Max Level</strong></ion-label>
-                            <ion-input name="maxLevel" type="number" min="1" max="9" (ionChange)="skillMaxLevelChanged(skill, $event)" [(ngModel)]="skill.maxLevel" required></ion-input>
-                        </ion-item>
-                    </ion-row>
-                    <ion-row *ngFor="let skillLevel of skill.skillLevel">
-                        <ion-item class="full-width">
-                            <ion-label>Lvl {{skillLevel.level}}</ion-label>
-                            <ion-input [name]="'skillLevel' + skillLevel.level" type="text" [(ngModel)]="skillLevel.description" required></ion-input>
-                        </ion-item>
-                    </ion-row>
-                </ion-col>
-            </ion-row>
-            <ion-row class="mt-4">
-                <ion-col>
-                    <ion-row>
-                        <ion-item><strong>Skill Actions</strong></ion-item>
-                    </ion-row>
-                    <ion-row *ngFor="let action of skill.actions" class="mt-4">
-                        <ion-col sizeMd="12">
-                            <div class="flex-space-between ml-2 mr-2">
-                                <div>{{action.position}}. {{action.triggerChance}}% {{action.type}} {{action.effect}} ({{action.effectValue}}) on {{action.target}}<span *ngIf="action.effectDuration"> for {{action.effectDuration}} turn(s)</span></div>
-                                <div class="flex-grow"></div>
-                                <ion-button (click)="dropAction(action)" size="small" fill="outline" color="danger"><ion-icon name="trash"></ion-icon></ion-button>
-                                <ion-button (click)="moveAction(action, -1)" size="small" fill="outline" [disabled]="action.position <= 1"><ion-icon name="arrow-dropup-circle"></ion-icon></ion-button>
-                                <ion-button (click)="moveAction(action, 1)" size="small" fill="outline" [disabled]="action.position >= skill.actions.length"><ion-icon name="arrow-dropdown-circle"></ion-icon></ion-button>
-                                <ion-button *ngIf="skillActionsExpanded != action.position" size="small" fill="clear" (click)="toggleExpandAction(action.position)"><ion-icon name="arrow-dropdown"></ion-icon></ion-button>
-                                <ion-button *ngIf="skillActionsExpanded == action.position" size="small" fill="clear" (click)="toggleExpandAction(action.position)"><ion-icon name="arrow-dropup"></ion-icon></ion-button>
-                            </div>
-                        </ion-col>
-                        <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
-                            <ion-item class="full-width">
-                                <ion-label position="fixed">Trigger</ion-label>
-                                <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.trigger" required>
-                                    <ion-select-option *ngFor="let trigger of enumService.getSkillActionTriggers()" [value]="trigger">{{trigger}}</ion-select-option>
-                                </ion-select>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col sizeMd="3" *ngIf="skillActionsExpanded == action.position">
-                            <ion-item class="full-width">
-                                <ion-label position="fixed">Tr. Value</ion-label>
-                                <ion-input slot="end" type="text" [(ngModel)]="action.triggerValue"></ion-input>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col sizeMd="4" *ngIf="skillActionsExpanded == action.position">
-                            <ion-item class="full-width">
-                                <ion-label position="fixed">Tr. Chance</ion-label>
-                                <ion-input slot="end" type="text" [(ngModel)]="action.triggerChance" required></ion-input>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
-                            <ion-item class="full-width">
-                                <ion-label position="fixed">Action Type</ion-label>
-                                <ion-select slot="end" interface="popover" placeholder="Select" (ionChange)="skillActionChanged(action)" [(ngModel)]="action.type" required>
-                                    <ion-select-option *ngFor="let type of enumService.getSkillActionTypes()" [value]="type">{{type}}</ion-select-option>
-                                </ion-select>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
-                            <ion-item class="full-width">
-                                <ion-label position="fixed">Action Target</ion-label>
-                                <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.target" required>
-                                    <ion-select-option *ngFor="let target of enumService.getSkillActionTargets()" [value]="target">{{target}}</ion-select-option>
-                                </ion-select>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
-                            <ion-item class="full-width">
-                                <ion-label position="fixed">Action Effect</ion-label>
-                                <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.effect" required>
-                                    <ion-select-option *ngFor="let effect of getSkillActionEffects(action)" [value]="effect.name">{{effect.name}}</ion-select-option>
-                                </ion-select>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col sizeMd="3" *ngIf="skillActionsExpanded == action.position">
-                            <ion-item class="full-width">
-                                <ion-label position="fixed">E. Value</ion-label>
-                                <ion-input slot="end" type="text" [(ngModel)]="action.effectValue" required></ion-input>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col sizeMd="4" *ngIf="skillActionsExpanded == action.position">
-                            <ion-item class="full-width">
-                                <ion-label position="fixed">E. Duration</ion-label>
-                                <ion-input slot="end" type="text" [(ngModel)]="action.effectDuration"></ion-input>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col sizeMd="12" *ngIf="skillActionsExpanded == action.position && action.effect">
-                            <div class="ml-2 mr-2">{{getSkillActionEffectDescription(action)}}</div>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-item lines="none">
-                            <ion-button (click)="addSkillAction(skill)"><ion-icon name="add"></ion-icon></ion-button>
-                        </ion-item>
-                    </ion-row>
-                </ion-col>
-            </ion-row>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="flex-space-between">
+          General attributes
+          <ion-button (click)="recruit()">Recruit</ion-button>
         </div>
-    </ion-card>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="flex-start">
+        <div class="flex-center mr-2">
+          <ion-img [src]="'assets/img/chars/' + hero.avatar + '.png'" class="hero-avatar pointer border-grey" (click)="changeAvatar($event)"></ion-img>
+        </div>
+        <div class="flex-grow">
+          <ion-row>
+            <ion-col sizeMd="6">
+              <ion-item>
+                <ion-label position="floating">Hero name</ion-label>
+                <ion-input name="name" type="text" [(ngModel)]="hero.name" required></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="6">
+              <ion-item>
+                <ion-label position="floating">Hero class</ion-label>
+                <ion-input name="heroClass" type="text" [(ngModel)]="hero.heroClass" required></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col sizeMd="6">
+              <ion-item>
+                <ion-label>Hero Type</ion-label>
+                <ion-select name="heroType" interface="popover" placeholder="Select" [(ngModel)]="hero.heroType" required>
+                  <ion-select-option *ngFor="let heroType of enumService.getHeroTypes()"
+                                     [value]="heroType">{{heroType}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="6">
+              <ion-item>
+                <ion-label>Recruitable</ion-label>
+                <ion-checkbox [(ngModel)]="hero.recruitable"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Stats</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Strength base</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="strengthBase" type="number" [(ngModel)]="hero.strengthBase" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Strength full</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="strengthFull" type="number" [(ngModel)]="hero.strengthFull" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Hitpoints base</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="hphBase" type="number" [(ngModel)]="hero.hpBase" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Hitpoints full</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="hpFull" type="number" [(ngModel)]="hero.hpFull" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Armor base</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="armorBase" type="number" [(ngModel)]="hero.armorBase" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Armor full</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="armorFull" type="number" [(ngModel)]="hero.armorFull" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Crit</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="crit" type="number" [(ngModel)]="hero.crit" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Crit ascended</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="critAsc" type="number" [(ngModel)]="hero.critAsc" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>CritMult</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="critMult" type="number" [(ngModel)]="hero.critMult" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>CritMult ascended</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="critMultAsc" type="number" [(ngModel)]="hero.critMultAsc" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Dexterity</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="dexterity" type="number" [(ngModel)]="hero.dexterity" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Dexterity ascended</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="dexterityAsc" type="number" [(ngModel)]="hero.dexterityAsc" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Resistance</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="resistance" type="number" [(ngModel)]="hero.resistance" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Resistance ascended</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="resistanceAsc" type="number" [(ngModel)]="hero.resistanceAsc" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Initiative</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="speed" type="number" [(ngModel)]="hero.initiative" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item lines="none">
+            <ion-label>Initiative ascended</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input name="speedAsc" type="number" [(ngModel)]="hero.initiativeAsc" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Skills</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-segment (ionChange)="setSkill($event)" [ngModel]="selectedSkill">
+        <ion-segment-button *ngFor="let skill of hero.skills" [value]="skill.number">
+          <ion-img [src]="'assets/img/skills/' + skill.icon + '.png'" class="skill_icon" (click)="changeSkillIcon($event, skill)"></ion-img>
+          <ion-label>Skill {{skill.number}}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="add">
+          <ion-label>New Skill</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-card-content>
+    <div *ngFor="let skill of [getSelectedSkill()]">
+      <ion-row>
+        <ion-col sizeMd="3">
+          <ion-item>
+            <ion-label>Skill name</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="5">
+          <ion-item>
+            <ion-input type="text" [(ngModel)]="skill.name" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Passive</ion-label>
+            <ion-checkbox slot="end" [(ngModel)]="skill.passive"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="skill.passive">
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Passive Trigger</ion-label>
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="skill.passiveSkillTrigger" [required]="skill.passive">
+              <ion-select-option *ngFor="let passiveTrigger of enumService.getPassiveSkillTriggers()" [value]="passiveTrigger">{{passiveTrigger}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Passive Trigger Value</ion-label>
+            <ion-input type="number" [(ngModel)]="skill.passiveSkillTriggerValue"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Active</ion-label>
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="skill.skillActiveTrigger" required>
+              <ion-select-option *ngFor="let trigger of enumService.getSkillActiveTriggers()" [value]="trigger">{{trigger}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Skill Target</ion-label>
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="skill.target" required>
+              <ion-select-option *ngFor="let target of enumService.getSkillTargets()" [value]="target">{{target}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="skill.number > 1">
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Cooldown</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input type="number" min="0" max="10" [(ngModel)]="skill.cooldown" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Init Cooldown</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
+          <ion-item>
+            <ion-input type="number" min="0" max="10" [(ngModel)]="skill.initCooldown" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="12">
+          <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-textarea [(ngModel)]="skill.description" required></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-row>
+            <ion-item>
+              <ion-label><strong>Max Level</strong></ion-label>
+              <ion-input name="maxLevel" type="number" min="1" max="9" (ionChange)="skillMaxLevelChanged(skill, $event)" [(ngModel)]="skill.maxLevel" required></ion-input>
+            </ion-item>
+          </ion-row>
+          <ion-row *ngFor="let skillLevel of skill.skillLevel">
+            <ion-item class="full-width">
+              <ion-label>Lvl {{skillLevel.level}}</ion-label>
+              <ion-input [name]="'skillLevel' + skillLevel.level" type="text" [(ngModel)]="skillLevel.description" required></ion-input>
+            </ion-item>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mt-4">
+        <ion-col>
+          <ion-row>
+            <ion-item><strong>Skill Actions</strong></ion-item>
+          </ion-row>
+          <ion-row *ngFor="let action of skill.actions" class="mt-4">
+            <ion-col sizeMd="12">
+              <div class="flex-space-between ml-2 mr-2">
+                <div>{{action.position}}. {{action.triggerChance}}% {{action.type}} {{action.effect}}
+                  ({{action.effectValue}}) on {{action.target}}<span
+                      *ngIf="action.effectDuration"> for {{action.effectDuration}} turn(s)</span></div>
+                <div class="flex-grow"></div>
+                <ion-button (click)="dropAction(action)" size="small" fill="outline" color="danger">
+                  <ion-icon name="trash"></ion-icon>
+                </ion-button>
+                <ion-button (click)="moveAction(action, -1)" size="small" fill="outline"
+                            [disabled]="action.position <= 1">
+                  <ion-icon name="arrow-dropup-circle"></ion-icon>
+                </ion-button>
+                <ion-button (click)="moveAction(action, 1)" size="small" fill="outline"
+                            [disabled]="action.position >= skill.actions.length">
+                  <ion-icon name="arrow-dropdown-circle"></ion-icon>
+                </ion-button>
+                <ion-button *ngIf="skillActionsExpanded != action.position" size="small" fill="clear"
+                            (click)="toggleExpandAction(action.position)">
+                  <ion-icon name="arrow-dropdown"></ion-icon>
+                </ion-button>
+                <ion-button *ngIf="skillActionsExpanded == action.position" size="small" fill="clear"
+                            (click)="toggleExpandAction(action.position)">
+                  <ion-icon name="arrow-dropup"></ion-icon>
+                </ion-button>
+              </div>
+            </ion-col>
+            <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
+              <ion-item class="full-width">
+                <ion-label position="fixed">Trigger</ion-label>
+                <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.trigger" required>
+                  <ion-select-option *ngFor="let trigger of enumService.getSkillActionTriggers()"
+                                     [value]="trigger">{{trigger}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="3" *ngIf="skillActionsExpanded == action.position">
+              <ion-item class="full-width">
+                <ion-label position="fixed">Tr. Value</ion-label>
+                <ion-input slot="end" type="text" [(ngModel)]="action.triggerValue"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="4" *ngIf="skillActionsExpanded == action.position">
+              <ion-item class="full-width">
+                <ion-label position="fixed">Tr. Chance</ion-label>
+                <ion-input slot="end" type="text" [(ngModel)]="action.triggerChance" required></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
+              <ion-item class="full-width">
+                <ion-label position="fixed">Action Type</ion-label>
+                <ion-select slot="end" interface="popover" placeholder="Select" (ionChange)="skillActionChanged(action)"
+                            [(ngModel)]="action.type" required>
+                  <ion-select-option *ngFor="let type of enumService.getSkillActionTypes()"
+                                     [value]="type">{{type}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
+              <ion-item class="full-width">
+                <ion-label position="fixed">Action Target</ion-label>
+                <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.target" required>
+                  <ion-select-option *ngFor="let target of enumService.getSkillActionTargets()"
+                                     [value]="target">{{target}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
+              <ion-item class="full-width">
+                <ion-label position="fixed">Action Effect</ion-label>
+                <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.effect" required>
+                  <ion-select-option *ngFor="let effect of getSkillActionEffects(action)"
+                                     [value]="effect.name">{{effect.name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="3" *ngIf="skillActionsExpanded == action.position">
+              <ion-item class="full-width">
+                <ion-label position="fixed">E. Value</ion-label>
+                <ion-input slot="end" type="text" [(ngModel)]="action.effectValue" required></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="4" *ngIf="skillActionsExpanded == action.position">
+              <ion-item class="full-width">
+                <ion-label position="fixed">E. Duration</ion-label>
+                <ion-input slot="end" type="text" [(ngModel)]="action.effectDuration"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="12" *ngIf="skillActionsExpanded == action.position && action.effect">
+              <div class="ml-2 mr-2">{{getSkillActionEffectDescription(action)}}</div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-item lines="none">
+              <ion-button (click)="addSkillAction(skill)">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-card>
 </ion-content>

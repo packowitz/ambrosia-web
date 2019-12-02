@@ -16,10 +16,10 @@
     </ion-card-header>
     <ion-card-content>
       <div class="scrollable-list">
-        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile flex-vert-center" [class.selected-tile]="isHeroSelected(hero)">
-          <div [class]="hero.heroBase.color">{{hero.heroBase.name}}</div>
-          <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero.stars)"></ion-icon></div>
-          <div>Lvl {{hero.level}}</div>
+        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center pointer mr-2" [class.selected-tile]="isHeroSelected(hero)">
+          <ion-img [src]="'assets/img/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+          <div class="top-left-bubble level-bubble background-{{hero.heroBase.color}}">{{hero.level}}</div>
+          <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
         </div>
       </div>
     </ion-card-content>
@@ -31,44 +31,52 @@
           <div>Your Team</div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="hero1">
-          <div (click)="selectHero(hero1)" class="hero-tile flex-vert-center selected-tile">
-            <div [class]="hero1.heroBase.color">{{hero1.heroBase.name}}</div>
-            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero1.stars)"></ion-icon></div>
-            <div>Lvl {{hero1.level}}</div>
+          <div (click)="selectHero(hero1)" class="hero-tile-small border-grey pointer flex-vert-center">
+            <ion-img [src]="'assets/img/chars/' + hero1.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <div class="top-left-bubble level-bubble background-{{hero1.heroBase.color}}">{{hero1.level}}</div>
+            <ion-img [src]="'assets/img/star_' + hero1.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!hero1">
-          <div class="hero-tile flex-vert-center selected-tile"></div>
+          <div class="hero-tile-small border-grey">
+            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+          </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="hero2">
-          <div (click)="selectHero(hero2)" class="hero-tile flex-vert-center selected-tile">
-            <div [class]="hero2.heroBase.color">{{hero2.heroBase.name}}</div>
-            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero2.stars)"></ion-icon></div>
-            <div>Lvl {{hero2.level}}</div>
+          <div (click)="selectHero(hero2)" class="hero-tile-small border-grey pointer flex-vert-center">
+            <ion-img [src]="'assets/img/chars/' + hero2.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <div class="top-left-bubble level-bubble background-{{hero2.heroBase.color}}">{{hero2.level}}</div>
+            <ion-img [src]="'assets/img/star_' + hero2.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!hero2">
-          <div class="hero-tile flex-vert-center selected-tile"></div>
+          <div class="hero-tile-small border-grey">
+            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+          </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="hero3">
-          <div (click)="selectHero(hero3)" class="hero-tile flex-vert-center selected-tile">
-            <div [class]="hero3.heroBase.color">{{hero3.heroBase.name}}</div>
-            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero3.stars)"></ion-icon></div>
-            <div>Lvl {{hero3.level}}</div>
+          <div (click)="selectHero(hero3)" class="hero-tile-small border-grey pointer flex-vert-center">
+            <ion-img [src]="'assets/img/chars/' + hero3.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <div class="top-left-bubble level-bubble background-{{hero3.heroBase.color}}">{{hero3.level}}</div>
+            <ion-img [src]="'assets/img/star_' + hero3.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!hero3">
-          <div class="hero-tile flex-vert-center selected-tile"></div>
+          <div class="hero-tile-small border-grey">
+            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+          </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="hero4">
-          <div (click)="selectHero(hero4)" class="hero-tile flex-vert-center selected-tile">
-            <div [class]="hero4.heroBase.color">{{hero4.heroBase.name}}</div>
-            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(hero4.stars)"></ion-icon></div>
-            <div>Lvl {{hero4.level}}</div>
+          <div (click)="selectHero(hero4)" class="hero-tile-small border-grey pointer flex-vert-center">
+            <ion-img [src]="'assets/img/chars/' + hero4.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <div class="top-left-bubble level-bubble background-{{hero4.heroBase.color}}">{{hero4.level}}</div>
+            <ion-img [src]="'assets/img/star_' + hero4.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!hero4">
-          <div class="hero-tile flex-vert-center selected-tile"></div>
+          <div class="hero-tile-small border-grey">
+            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+          </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
           <ion-button color="success" (click)="saveTeam()">default</ion-button>
@@ -87,44 +95,52 @@
           <div>{{otherTeam.playerName}}</div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="otherTeam.hero1">
-          <div class="hero-tile flex-vert-center selected-tile">
-            <div [class]="otherTeam.hero1.heroBase.color">{{otherTeam.hero1.heroBase.name}}</div>
-            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(otherTeam.hero1.stars)"></ion-icon></div>
-            <div>Lvl {{otherTeam.hero1.level}}</div>
+          <div class="hero-tile-small border-grey pointer flex-vert-center">
+            <ion-img [src]="'assets/img/chars/' + otherTeam.hero1.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <div class="top-left-bubble level-bubble background-{{otherTeam.hero1.heroBase.color}}">{{otherTeam.hero1.level}}</div>
+            <ion-img [src]="'assets/img/star_' + otherTeam.hero1.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!otherTeam.hero1">
-          <div class="hero-tile flex-vert-center selected-tile"></div>
+          <div class="hero-tile-small border-grey">
+            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+          </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="otherTeam.hero2">
-          <div class="hero-tile flex-vert-center selected-tile">
-            <div [class]="otherTeam.hero2.heroBase.color">{{otherTeam.hero2.heroBase.name}}</div>
-            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(otherTeam.hero2.stars)"></ion-icon></div>
-            <div>Lvl {{otherTeam.hero2.level}}</div>
+          <div class="hero-tile-small border-grey pointer flex-vert-center">
+            <ion-img [src]="'assets/img/chars/' + otherTeam.hero2.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <div class="top-left-bubble level-bubble background-{{otherTeam.hero2.heroBase.color}}">{{otherTeam.hero2.level}}</div>
+            <ion-img [src]="'assets/img/star_' + otherTeam.hero2.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!otherTeam.hero2">
-          <div class="hero-tile flex-vert-center selected-tile"></div>
+          <div class="hero-tile-small border-grey">
+            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+          </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="otherTeam.hero3">
-          <div class="hero-tile flex-vert-center selected-tile">
-            <div [class]="otherTeam.hero3.heroBase.color">{{otherTeam.hero3.heroBase.name}}</div>
-            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(otherTeam.hero3.stars)"></ion-icon></div>
-            <div>Lvl {{otherTeam.hero3.level}}</div>
+          <div class="hero-tile-small border-grey pointer flex-vert-center">
+            <ion-img [src]="'assets/img/chars/' + otherTeam.hero3.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <div class="top-left-bubble level-bubble background-{{otherTeam.hero3.heroBase.color}}">{{otherTeam.hero3.level}}</div>
+            <ion-img [src]="'assets/img/star_' + otherTeam.hero3.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!otherTeam.hero3">
-          <div class="hero-tile flex-vert-center selected-tile"></div>
+          <div class="hero-tile-small border-grey">
+            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+          </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="otherTeam.hero4">
-          <div class="hero-tile flex-vert-center selected-tile">
-            <div [class]="otherTeam.hero4.heroBase.color">{{otherTeam.hero4.heroBase.name}}</div>
-            <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(otherTeam.hero4.stars)"></ion-icon></div>
-            <div>Lvl {{otherTeam.hero4.level}}</div>
+          <div class="hero-tile-small border-grey pointer flex-vert-center">
+            <ion-img [src]="'assets/img/chars/' + otherTeam.hero4.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <div class="top-left-bubble level-bubble background-{{otherTeam.hero4.heroBase.color}}">{{otherTeam.hero4.level}}</div>
+            <ion-img [src]="'assets/img/star_' + otherTeam.hero4.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!otherTeam.hero4">
-          <div class="hero-tile flex-vert-center selected-tile"></div>
+          <div class="hero-tile-small border-grey">
+            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+          </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
           <ion-button color="danger" (click)="fight(otherTeam)">fight</ion-button>

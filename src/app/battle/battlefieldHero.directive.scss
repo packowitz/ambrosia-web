@@ -25,12 +25,11 @@
   }
 }
 
-.level-bubble {
-  color: white;
-  border-radius: 10px;
-  width: 20px;
-  text-align: center;
-  font-size: 0.8em;
+.bars {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 100%;
 }
 
 .health-bar {
@@ -71,6 +70,9 @@
 }
 
 .buffs {
+  position: absolute;
+  top: 10%;
+  left: 0;
   font-size: 0.7em;
   display: flex;
   .buff, .debuff {
@@ -108,4 +110,15 @@
     font-size: 0.8em;
     color: white;
   }
+}
+
+.death-skull {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 4em;
+  background-color: rgba(167,4,4,0.2);
+  color: #e8dcbe;
 }
