@@ -23,10 +23,20 @@
 }
 
 .skill-tile {
-  width: 80px;
-  height: 80px;
   cursor: pointer;
   position: relative;
+  border: 2px solid grey;
+
+  &.selected-skill {
+    border: 2px solid gold;
+  }
+
+  .skill-level {
+    position: absolute;
+    right: 1px;
+    bottom: -2px;
+    color: white;
+  }
 
   .locked {
     position: absolute;

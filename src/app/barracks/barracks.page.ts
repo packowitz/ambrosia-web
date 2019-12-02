@@ -43,7 +43,7 @@ export class BarracksPage implements OnInit {
   }
 
   getSkillLevel(skill: HeroSkill): number {
-    return this.selectedHero['skill' + skill.number];
+    return this.selectedHero['skill' + skill.number] || 0;
   }
 
   adminHeroLooseLevel() {

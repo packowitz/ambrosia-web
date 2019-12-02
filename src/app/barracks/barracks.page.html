@@ -114,9 +114,9 @@
 
       <div *ngIf="tab == 'skills'">
         <div class="skill-list">
-          <div *ngFor="let skill of selectedHero.heroBase.skills" (click)="selectSkill(skill.number)" class="skill-tile flex-vert-center" [class.selected-tile]="skill.number == selectedSkill.number">
-            <div>{{skill.name}}</div>
-            <div *ngIf="getSkillLevel(skill) > 0">Lvl {{getSkillLevel(skill)}}</div>
+          <div *ngFor="let skill of selectedHero.heroBase.skills" (click)="selectSkill(skill.number)" class="skill-tile flex-vert-center mr-2" [class.selected-skill]="skill.number == selectedSkill.number">
+            <ion-img [src]="'assets/img/skills/' + skill.icon + '.png'" class="skill_icon pointer"></ion-img>
+            <div *ngIf="getSkillLevel(skill) > 0" class="skill-level">{{getSkillLevel(skill)}}</div>
             <div *ngIf="getSkillLevel(skill) == 0" class="locked"><ion-icon name="lock"></ion-icon></div>
           </div>
         </div>
