@@ -1,13 +1,14 @@
 .gear-icon-box {
   position: relative;
+  max-width: 40px;
   .gear-icon {
     font-size: 2em;
   }
   .gear-special-icon {
     position: absolute;
     font-size: 1em;
-    top: 0.5em;
-    left: 0.5em;
+    top: 33%;
+    left: 33%;
     &.inner {
       color: white;
     }
@@ -25,4 +26,24 @@
   height: 40px;
   width: 20px;
   padding: 0 4px;
+}
+
+.border_0 {
+  border: 1px solid grey;
+}
+
+.border_1 {
+  border: 2px solid #1da252;
+}
+
+.border_2 {
+  border: 2px solid #3880ff;
+}
+
+.border_3 {
+  border: 2px solid #7b5ce0;
+}
+
+.border_4 {
+  border: 2px solid #f1c718;
 }
