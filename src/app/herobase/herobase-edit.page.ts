@@ -112,8 +112,8 @@ export class HerobaseEditPage implements OnInit {
         });
     }
 
-    changeSkillIcon(event, skill) {
-        if (skill === this.selectedSkill) {
+    changeSkillIcon(event, skill: HeroSkill) {
+        if (skill.number === this.selectedSkill) {
             event.stopPropagation();
             this.modalCtrl.create({
                 component: SkillIconModal,
