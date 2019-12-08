@@ -43,11 +43,11 @@ export class HeroAvatarModal implements OnInit {
     currentIcon = "";
     tab = "BLUE";
 
-    blueIconCount = 10;
+    blueIconCount = 16;
     blueIcons = [];
-    greenIconCount = 6;
+    greenIconCount = 9;
     greenIcons = [];
-    redIconCount = 10;
+    redIconCount = 14;
     redIcons = [];
     neutralIconCount = 4;
     neutralIcons = [];
