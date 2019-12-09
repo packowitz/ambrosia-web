@@ -44,6 +44,7 @@ import {BattleStepHeroState} from '../domain/battleStepHeroState.model';
             <i *ngIf="buff.buff === 'TAUNT_BUFF'" class="ra ra-sheriff"></i>
             <i *ngIf="buff.buff === 'SHIELD'" class="ra ra-omega"></i>
             <i *ngIf="buff.buff === 'DAMAGE_OVER_TIME'" class="ra ra-droplet"></i>
+            <i *ngIf="buff.buff === 'STUN'" class="ra ra-poison-cloud"></i>
             <div class="buff-duration" *ngIf="buff.duration > 0">{{buff.duration}}</div>
           </div>
         </div>
