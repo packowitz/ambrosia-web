@@ -4,7 +4,7 @@ import {ModalController, NavParams} from '@ionic/angular';
 @Component({
     selector: 'skill-icon-modal',
     template: `
-        <div>
+        <div class="scrollable-vert">
             <div class="flex-center mt-2">
                 <ion-img [src]="'assets/img/chars/' + currentIcon + '.png'" class="hero-avatar-small pointer border-grey" (click)="closeModal(currentIcon)"></ion-img>
                 <div class="ml-4">Current Avatar</div>
