@@ -39,12 +39,17 @@ import {BattleStepHeroState} from '../domain/battleStepHeroState.model';
           <div *ngFor="let buff of heroState ? heroState.buffs : hero.buffs"
                class="{{buff.type.toLowerCase()}} int-{{buff.intensity}} flex-center">
             <i *ngIf="buff.buff === 'ARMOR_BUFF'" class="ra ra-eye-shield"></i>
+            <i *ngIf="buff.buff === 'COUNTERATTACK'" class="ra ra-scythe"></i>
+            <i *ngIf="buff.buff === 'DEATHSHIELD'" class="ra ra-bone-bite"></i>
             <i *ngIf="buff.buff === 'HEAL_OVER_TIME'" class="ra ra-health"></i>
             <i *ngIf="buff.buff === 'STRENGTH_BUFF'" class="ra ra-muscle-up"></i>
             <i *ngIf="buff.buff === 'TAUNT_BUFF'" class="ra ra-sheriff"></i>
             <i *ngIf="buff.buff === 'SHIELD'" class="ra ra-omega"></i>
             <i *ngIf="buff.buff === 'DAMAGE_OVER_TIME'" class="ra ra-droplet"></i>
+            <i *ngIf="buff.buff === 'HEAL_BLOCK'" class="ra ra-bleeding-hearts"></i>
             <i *ngIf="buff.buff === 'STUN'" class="ra ra-poison-cloud"></i>
+            <i *ngIf="buff.buff === 'CONFUSE'" class="ra ra-doubled"></i>
+            <i *ngIf="buff.buff === 'WEAK'" class="ra ra-muscle-up"></i>
             <div class="buff-duration" *ngIf="buff.duration > 0">{{buff.duration}}</div>
           </div>
         </div>
