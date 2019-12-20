@@ -5,7 +5,7 @@
         <ion-toolbar>
           <div class="flex-space-between">
             <ion-title>Menu</ion-title>
-            <ion-select *ngIf="model.player.admin" [(ngModel)]="model.activeAccountId" (ionChange)="loadAccountData()">
+            <ion-select *ngIf="model.player.admin" [(ngModel)]="model.activeAccountId" (ionChange)="loadAccountData()" [interfaceOptions]="{subHeader: 'Select Account'}">
               <ion-select-option [value]="model.playerId">{{model.playerName}}</ion-select-option>
               <ion-select-option *ngFor="let serviceAcc of model.serviceAccounts" [value]="serviceAcc.id">{{serviceAcc.name}}</ion-select-option>
             </ion-select>
