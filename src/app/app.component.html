@@ -3,7 +3,14 @@
     <ion-menu *ngIf="model.player">
       <ion-header>
         <ion-toolbar>
-          <ion-title>Menu</ion-title>
+          <div class="flex-space-between">
+            <ion-title>Menu</ion-title>
+            <ion-select *ngIf="model.player.admin" [(ngModel)]="model.activeAccountId" (ionChange)="loadAccountData()">
+              <ion-select-option [value]="model.playerId">{{model.playerName}}</ion-select-option>
+              <ion-select-option *ngFor="let serviceAcc of model.serviceAccounts" [value]="serviceAcc.id">{{serviceAcc.name}}</ion-select-option>
+            </ion-select>
+            <ion-button *ngIf="model.player.admin" color="success" size="small" (click)="addServiceAccount()"><ion-icon name="add"></ion-icon></ion-button>
+          </div>
         </ion-toolbar>
       </ion-header>
       <ion-content>

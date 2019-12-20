@@ -12,6 +12,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AdminGuard} from './services/auth-guard.service';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
 import {PlayerActionInterceptor} from './interceptors/player-action.interceptor';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import {PlayerActionInterceptor} from './interceptors/player-action.interceptor'
         BrowserModule,
         HttpClientModule,
         IonicModule.forRoot(),
-        AppRoutingModule
+        AppRoutingModule,
+        FormsModule
     ],
     providers: [
         AdminGuard,

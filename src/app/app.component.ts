@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {Platform} from '@ionic/angular';
+import {AlertController, Platform} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BackendService} from './services/backend.service';
 import {Model} from './services/model.service';
@@ -70,6 +70,7 @@ export class AppComponent {
         private propertyService: PropertyService,
         public model: Model,
         private router: Router,
+        private alertCtrl: AlertController,
         private activatedRoute: ActivatedRoute
     ) {
         this.initializeApp();
@@ -77,8 +78,16 @@ export class AppComponent {
 
     initializeApp() {
         this.platform.ready().then(() => {
-            this.backendService.getPlayer().subscribe(() => {
+            this.backendService.getPlayer().subscribe(playerAction => {
                 this.propertyService.loadInitialProperties();
+                this.model.playerName = playerAction.player.name;
+                this.model.playerId = playerAction.player.id;
+                this.model.activeAccountId = playerAction.player.id;
+                if (playerAction.player.admin) {
+                    this.backendService.getAllServiceAccounts().subscribe(data => {
+                        this.model.serviceAccounts = data;
+                    });
+                }
                 let path: string = window.location.pathname;
                 this.pages.forEach(p => {
                     if (p.path && path.startsWith(p.path)) {
@@ -91,5 +100,47 @@ export class AppComponent {
             });
 
         });
+    }
+
+    addServiceAccount() {
+        this.alertCtrl.create({
+            subHeader: 'New Service Account',
+            inputs: [
+                {
+                    name: 'name',
+                    label: 'Name',
+                    type: 'text'
+                }],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Ok',
+                    handler: (data) => {
+                        if (data.name) {
+                            this.backendService.createServiceAccount(data.name);
+                        }
+                    }
+                }
+            ]
+        }).then(alert => {
+            alert.present();
+        });
+    }
+
+    loadAccountData() {
+        this.model.reset();
+        if (this.model.playerId === this.model.activeAccountId) {
+            this.model.player.serviceAccount = false;
+            this.backendService.getPlayer().subscribe(data => {
+                console.log("Using player account " + data.player.name + " #" + data.player.id);
+            });
+        } else {
+            this.backendService.useServiceAccount(this.model.activeAccountId).subscribe(data => {
+                console.log("Using service account " + data.player.name + " #" + data.player.id);
+            });
+        }
     }
 }

@@ -13,20 +13,34 @@ import {environment} from '../../environments/environment';
 })
 export class Model {
 
+    playerName: string;
+    playerId: number;
+    activeAccountId: number;
     player: Player;
     baseHeroes: HeroBase[];
     heroes: Hero[];
     gears: Gear[];
     teams: Team[];
     ongoingBattle?: Battle;
+    serviceAccounts: Player[] = [];
+
+    reset() {
+        this.heroes = null;
+        this.gears = null;
+        this.teams = null;
+        this.ongoingBattle = null;
+    }
 
     update(data: PlayerActionResponse) {
-        if (data.token) {
-            let key = environment.production ? 'ambrosia-jwt' : 'jwt';
-            localStorage.setItem(key, data.token);
-        }
         if (data.player) {
             this.player = data.player;
+        }
+        if (data.token) {
+            let key = environment.production ? 'ambrosia-jwt' : 'jwt';
+            if (this.player.serviceAccount) {
+                key += '-service';
+            }
+            localStorage.setItem(key, data.token);
         }
         if (data.hero) {
             this.updateHero(data.hero);

@@ -13,7 +13,8 @@ import {Battle} from '../domain/battle.model';
 import {BattleHero} from '../domain/battleHero.model';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {API_URL} from '../../environments/environment';
-import {GearSet, JewelType} from './enum.service';
+import {JewelType} from './enum.service';
+import {Model} from './model.service';
 
 
 export class PlayerActionResponse {
@@ -34,7 +35,7 @@ export class PlayerActionResponse {
 })
 export class BackendService {
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private model: Model) {}
 
     getPlayer(): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/player', null);
@@ -199,5 +200,20 @@ export class BackendService {
         let url = API_URL + '/battle/' + battle.id + '/surrender';
         return this.http.post<Battle>(url, null);
     }
+
+    createServiceAccount(name: string) {
+        this.http.post<Player>(API_URL + '/admin/service_account/new/' + name, {})
+            .subscribe(data => this.model.serviceAccounts.push(data));
+    }
+
+    getAllServiceAccounts(): Observable<Player[]> {
+        return this.http.get<Player[]>(API_URL + '/admin/service_account');
+    }
+
+    useServiceAccount(id: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/service_account/use/' + id, {});
+    }
+
+
 
 }
