@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        Dungeons
+        <div class="flex font-small">
+          <ion-select [(ngModel)]="serviceAccount" placeholder="select service account">
+            <ion-select-option *ngFor="let serviceAcc of model.serviceAccounts" [value]="serviceAcc">{{serviceAcc.name}}</ion-select-option>
+          </ion-select>
+          <ion-button color="success" size="small" (click)="newDungeon()" [disabled]="!serviceAccount">New Dungeon</ion-button>
+        </div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<ion-content *ngIf="model.dungeons">
+  <ion-list>
+    <ion-item *ngFor="let dungeon of model.dungeons" (click)="gotoDungeonDetails(dungeon)" detail class="pointer">
+      <ion-label>{{dungeon.name}} - {{dungeon.stages.length}} stages</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

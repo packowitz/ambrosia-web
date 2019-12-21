@@ -7,6 +7,7 @@ import {PlayerActionResponse} from './backend.service';
 import {Team} from '../domain/team.model';
 import {Battle} from '../domain/battle.model';
 import {environment} from '../../environments/environment';
+import {Dungeon} from '../domain/dungeon.model';
 
 @Injectable({
     providedIn: 'root'
@@ -23,6 +24,7 @@ export class Model {
     teams: Team[];
     ongoingBattle?: Battle;
     serviceAccounts: Player[] = [];
+    dungeons: Dungeon[];
 
     reset() {
         this.heroes = null;

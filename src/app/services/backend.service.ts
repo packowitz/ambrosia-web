@@ -15,6 +15,9 @@ import {HeroSkill} from '../domain/heroSkill.model';
 import {API_URL} from '../../environments/environment';
 import {JewelType} from './enum.service';
 import {Model} from './model.service';
+import {Dungeon} from '../domain/dungeon.model';
+import {DungeonResolved} from '../domain/dungeonResolved.model';
+import {DungeonStage} from '../domain/dungeonStage.model';
 
 
 export class PlayerActionResponse {
@@ -214,6 +217,43 @@ export class BackendService {
         return this.http.post<PlayerActionResponse>(API_URL + '/admin/service_account/use/' + id, {});
     }
 
+    getServiceAccountHeroes(id: number): Observable<Hero[]> {
+        return this.http.get<Hero[]>(API_URL + '/admin/service_account/' + id + '/heroes');
+    }
 
+    loadDungeons(): Observable<Dungeon[]> {
+        return this.http.get<Dungeon[]>(API_URL + '/admin/dungeon');
+    }
+
+    createDungeon(name: string, serviceAccount: Player): Observable<Dungeon> {
+        let request = {
+            name: name,
+            serviceAccountId: serviceAccount.id
+        };
+        return this.http.post<Dungeon>(API_URL + '/admin/dungeon/new', request);
+    }
+
+    getDungeon(id): Observable<DungeonResolved> {
+        return this.http.get<DungeonResolved>(API_URL + '/admin/dungeon/' + id);
+    }
+
+    saveDungeon(dungeon: DungeonResolved): Observable<DungeonResolved> {
+        let request: Dungeon = {
+            id: dungeon.id,
+            name: dungeon.name,
+            serviceAccountId: dungeon.serviceAccount.id,
+            stages: dungeon.stages.map(s => {
+                return {
+                    id: s.id,
+                    stage: s.stage,
+                    hero1Id: s.hero1 ? s.hero1.id : null,
+                    hero2Id: s.hero2 ? s.hero2.id : null,
+                    hero3Id: s.hero3 ? s.hero3.id : null,
+                    hero4Id: s.hero4 ? s.hero4.id : null,
+                };
+            })
+        };
+        return this.http.put<DungeonResolved>(API_URL + '/admin/dungeon/' + dungeon.id, request);
+    }
 
 }

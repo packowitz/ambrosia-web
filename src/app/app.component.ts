@@ -43,6 +43,12 @@ export class AppComponent {
             ]
         },
         {
+            title: 'Dungeons',
+            url: '/dungeons',
+            icon: 'hydra',
+            admin: true
+        },
+        {
             title: 'Tavern',
             url: '/tavern',
             icon: 'beer'
