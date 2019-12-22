@@ -59,6 +59,11 @@ export class AppComponent {
             icon: 'muscle-fat'
         },
         {
+            title: 'Campaign',
+            url: '/campaign',
+            icon: 'rune-stone'
+        },
+        {
             title: 'Training',
             url: '/training',
             icon: 'crossed-axes'

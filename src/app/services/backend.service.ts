@@ -222,7 +222,7 @@ export class BackendService {
     }
 
     loadDungeons(): Observable<Dungeon[]> {
-        return this.http.get<Dungeon[]>(API_URL + '/admin/dungeon');
+        return this.http.get<Dungeon[]>(API_URL + '/dungeon');
     }
 
     createDungeon(name: string, serviceAccount: Player): Observable<Dungeon> {
@@ -234,7 +234,7 @@ export class BackendService {
     }
 
     getDungeon(id): Observable<DungeonResolved> {
-        return this.http.get<DungeonResolved>(API_URL + '/admin/dungeon/' + id);
+        return this.http.get<DungeonResolved>(API_URL + '/dungeon/' + id);
     }
 
     saveDungeon(dungeon: DungeonResolved): Observable<DungeonResolved> {
