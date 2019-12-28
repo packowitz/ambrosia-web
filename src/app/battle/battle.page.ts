@@ -25,6 +25,9 @@ export class BattlePage implements OnInit {
   autobattle = false;
   loading = false;
 
+  nextStageBattle: Battle = null;
+  loadingNextStageInitiated = false;
+
   constructor(private model: Model,
               private backendService: BackendService,
               private alertCtrl: AlertController) {}
@@ -36,6 +39,9 @@ export class BattlePage implements OnInit {
   initBattle(battle: Battle) {
     if (battle) {
       this.battle = battle;
+      if (this.battle.nextBattleId) {
+        this.activateNextStageBattle();
+      }
       this.setActiveHero();
     }
   }
@@ -48,6 +54,9 @@ export class BattlePage implements OnInit {
       setTimeout(() => this.setActiveHero(), 1000);
     } else {
       this.animateStep = null;
+      if (this.battle.status === 'STAGE_PASSED') {
+        this.activateNextStageBattle();
+      }
       if (this.battle.status === 'WON' || this.battle.status === 'LOST') {
         this.activeHero = null;
       } else if (this.battle.hero1 && this.battle.hero1.position === this.battle.activeHero) {
@@ -67,6 +76,29 @@ export class BattlePage implements OnInit {
         }
       } else {
         this.selectedSkill = null;
+      }
+    }
+  }
+
+  activateNextStageBattle() {
+    if (!this.nextStageBattle && !this.loadingNextStageInitiated) {
+      this.loadingNextStageInitiated = true;
+      this.backendService.getBattle(this.battle.nextBattleId).subscribe(data => {
+        this.nextStageBattle = data;
+        this.loadingNextStageInitiated = false;
+        this.activateNextStageBattle();
+      });
+    } else {
+      if (!this.animateStep) {
+        setTimeout(() => {
+          this.battle = this.nextStageBattle;
+          this.activeHero = null;
+          this.selectedSkill = null;
+          this.lastKnownStepIdx = -1;
+          this.animationStepIdx = -1;
+          this.nextStageBattle = null;
+          this.initBattle(this.battle);
+        }, 1000);
       }
     }
   }

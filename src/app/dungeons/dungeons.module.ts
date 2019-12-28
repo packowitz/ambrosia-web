@@ -24,4 +24,4 @@ import {DungeonDetailsPage} from './dungeonDetails.page';
   ],
   declarations: [DungeonsPage, DungeonDetailsPage]
 })
-export class DungeonsPageModule {}
+export class DungeonsModule {}

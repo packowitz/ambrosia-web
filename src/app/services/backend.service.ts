@@ -173,6 +173,10 @@ export class BackendService {
         return this.http.get<OtherTeam[]>(API_URL + '/teams/type/' + type);
     }
 
+    getBattle(battleId): Observable<Battle> {
+        return this.http.get<Battle>(API_URL + '/battle/' + battleId);
+    }
+
     startDuell(otherTeam: OtherTeam, ownTeam: Team): Observable<Battle> {
         let request = {
             type: 'DUELL',
@@ -254,6 +258,16 @@ export class BackendService {
             })
         };
         return this.http.put<DungeonResolved>(API_URL + '/admin/dungeon/' + dungeon.id, request);
+    }
+
+    startDungeon(dungeonId: number, team: Team): Observable<Battle> {
+        let request = {
+            hero1Id: team.hero1Id,
+            hero2Id: team.hero2Id,
+            hero3Id: team.hero3Id,
+            hero4Id: team.hero4Id
+        };
+        return this.http.post<Battle>(API_URL + '/battle/dungeon/' + dungeonId, request);
     }
 
 }

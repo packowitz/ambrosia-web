@@ -1,15 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
-import {AlertController} from '@ionic/angular';
 import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
-import {Player} from '../domain/player.model';
-import {Dungeon} from '../domain/dungeon.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Hero} from '../domain/hero.model';
-import {DungeonStage} from '../domain/dungeonStage.model';
 import {DungeonResolved} from '../domain/dungeonResolved.model';
-import {DungeonStageResolved} from '../domain/dungeonStageResolved.model';
 import {Team} from '../domain/team.model';
 
 @Component({
@@ -29,7 +24,7 @@ export class EnterDungeonPage implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private backendService: BackendService,
-              private alertCtrl: AlertController,
+              private router: Router,
               public model: Model,
               public enumService: EnumService) {
   }
@@ -104,8 +99,9 @@ export class EnterDungeonPage implements OnInit {
   }
 
   start() {
-    this.alertCtrl.create({
-      subHeader: 'Coming soon. Stay tuned.'
-    }).then(alert => alert.present());
+    this.backendService.startDungeon(this.dungeon.id, this.team).subscribe(data => {
+      this.model.ongoingBattle = data;
+      this.router.navigateByUrl('/battle');
+    });
   }
 }
