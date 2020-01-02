@@ -8,6 +8,7 @@ import {Team} from '../domain/team.model';
 import {Battle} from '../domain/battle.model';
 import {environment} from '../../environments/environment';
 import {Dungeon} from '../domain/dungeon.model';
+import {Map} from '../domain/map.model';
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +26,7 @@ export class Model {
     ongoingBattle?: Battle;
     serviceAccounts: Player[] = [];
     dungeons: Dungeon[];
+    maps: Map[];
 
     reset() {
         this.heroes = null;
@@ -93,6 +95,17 @@ export class Model {
                 this.gears[idx] = gear;
             } else {
                 this.gears.push(gear);
+            }
+        }
+    }
+
+    updateMap(map?: Map) {
+        if (map) {
+            let idx = this.maps.findIndex(g => g.id === map.id);
+            if (idx >= 0) {
+                this.maps[idx] = map;
+            } else {
+                this.maps.push(map);
             }
         }
     }

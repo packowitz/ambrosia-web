@@ -49,6 +49,11 @@ export class AppComponent {
             admin: true
         },
         {
+            title: 'Maps',
+            url: '/maps',
+            icon: 'honeycomb'
+        },
+        {
             title: 'Tavern',
             url: '/tavern',
             icon: 'beer'

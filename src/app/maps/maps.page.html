@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        Maps
+        <ion-button color="success" size="small" (click)="newMap()">New Map</ion-button>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<ion-content *ngIf="model.maps">
+  <ion-list>
+    <ion-item *ngFor="let map of model.maps" (click)="mapDetails(map)" detail class="pointer">
+      <ion-label>{{map.name}} - {{map.maxX - map.minX + 1}}x{{map.maxY - map.minY + 1}}{{map.startingMap ? ' - STARTING MAP' : ''}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -33,7 +33,6 @@ export class CampaignPage implements OnInit {
   }
 
   enterDungeon(dungeon: Dungeon) {
-    console.log(dungeon);
     this.router.navigateByUrl('/campaign/' + dungeon.id);
   }
 }

@@ -1,0 +1,93 @@
+.map-container-outer {
+  display: flex;
+}
+
+.map-container-inner {
+  background-color: #0f7b1c;
+  padding: 4px 4px 14px 4px;
+  .map-row:nth-child(odd) {
+    margin-left: 20px;
+  }
+  .map-row:nth-child(even) {
+    margin: -10px 0;
+  }
+}
+
+.map-row {
+  display: flex;
+}
+
+.map-hexagon-wrapper {
+  position: relative;
+  width:40px;
+  height: 46px;
+  margin-right: 2px;
+  transform: rotate(-60deg) skewY(30deg);
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.map-hexagon-wrapper * {
+  visibility: visible;
+}
+
+.map-hexagon {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: skewY(-30deg) rotate(60deg);
+
+  img {
+    min-width: 50px;
+  }
+
+}
+
+.map-hexagon-overlay {
+  position: absolute;
+  z-index: 10;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: skewY(-30deg) rotate(60deg);
+
+  &:hover {
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  &.selected {
+    background-color: rgba(0,0,0,0.25);
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    &.to-front {
+      z-index: 100;
+    }
+
+    &.structure {
+      top: 7px;
+      left: 5px;
+      width: 30px;
+      height: 30px;
+    }
+
+    &.monster {
+      z-index: 20;
+      top: 7px;
+      left: 5px;
+      width: 30px;
+      height: 30px;
+    }
+  }
+}

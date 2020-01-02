@@ -18,6 +18,7 @@ import {Model} from './model.service';
 import {Dungeon} from '../domain/dungeon.model';
 import {DungeonResolved} from '../domain/dungeonResolved.model';
 import {DungeonStage} from '../domain/dungeonStage.model';
+import {Map} from '../domain/map.model';
 
 
 export class PlayerActionResponse {
@@ -268,6 +269,23 @@ export class BackendService {
             hero4Id: team.hero4Id
         };
         return this.http.post<Battle>(API_URL + '/battle/dungeon/' + dungeonId, request);
+    }
+
+    loadMaps(): Observable<Map[]> {
+        return this.http.get<Map[]>(API_URL + '/map');
+    }
+
+    createMap(name: string, width: number, height: number): Observable<Map> {
+        let request = {
+            name: name,
+            width: width,
+            height: height
+        };
+        return this.http.post<Map>(API_URL + '/admin/map/new', request);
+    }
+
+    saveMap(map: Map): Observable<Map> {
+        return this.http.put<Map>(API_URL + '/admin/map/' + map.id, map);
     }
 
 }

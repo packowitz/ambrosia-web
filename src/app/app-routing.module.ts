@@ -28,6 +28,11 @@ const routes: Routes = [
         canActivate: [AdminGuard]
     },
     {
+        path: 'maps',
+        loadChildren: './maps/maps.module#MapsModule',
+        canActivate: [AdminGuard]
+    },
+    {
         path: 'tavern',
         loadChildren: './tavern/tavern.module#TavernModule',
         canActivate: [AdminGuard]

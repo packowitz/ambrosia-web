@@ -27,6 +27,9 @@ export class EnumService {
     private gearSets: string[] = [];
     private jewelTypes: JewelType[] = [];
     private passiveSkillTriggers: string[] = [];
+    private mapTileTypes: string[] = [];
+    private mapTileStructures: string[] = [];
+    private mapTileFightIcons: string[] = [];
 
     constructor(private http: HttpClient) {
         this.http.get(API_URL + '/enum/colors').subscribe((data: string[]) => this.colors = data);
@@ -55,6 +58,12 @@ export class EnumService {
             this.jewelTypes = data);
         this.http.get(API_URL + '/enum/passive_skill_triggers').subscribe((data: string[]) =>
             this.passiveSkillTriggers = data);
+        this.http.get(API_URL + '/enum/map_tile_types').subscribe((data: string[]) =>
+            this.mapTileTypes = data);
+        this.http.get(API_URL + '/enum/map_tile_structures').subscribe((data: string[]) =>
+            this.mapTileStructures = data);
+        this.http.get(API_URL + '/enum/map_tile_fight_icons').subscribe((data: string[]) =>
+            this.mapTileFightIcons = data);
     }
 
     getColors(): string[] {
@@ -115,5 +124,17 @@ export class EnumService {
 
     getPassiveSkillTriggers(): string[] {
         return this.passiveSkillTriggers;
+    }
+
+    getMapTileTypes(): string[] {
+        return this.mapTileTypes;
+    }
+
+    getMapTileStructures(): string[] {
+        return this.mapTileStructures;
+    }
+
+    getMapTileFightIcons(): string[] {
+        return this.mapTileFightIcons;
     }
 }

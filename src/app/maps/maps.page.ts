@@ -6,16 +6,15 @@ import {EnumService} from '../services/enum.service';
 import {Player} from '../domain/player.model';
 import {Router} from '@angular/router';
 import {Dungeon} from '../domain/dungeon.model';
+import {Map} from '../domain/map.model';
 
 @Component({
-  selector: 'dungeons',
-  templateUrl: 'dungeons.page.html'
+  selector: 'maps',
+  templateUrl: 'maps.page.html'
 })
-export class DungeonsPage implements OnInit {
+export class MapsPage implements OnInit {
 
   saving = false;
-
-  serviceAccount: Player;
 
   constructor(private backendService: BackendService,
               private alertCtrl: AlertController,
@@ -25,28 +24,35 @@ export class DungeonsPage implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.model.dungeons) {
+    if (!this.model.maps) {
       this.saving = true;
-      this.backendService.loadDungeons().subscribe(data => {
-        this.model.dungeons = data;
+      this.backendService.loadMaps().subscribe(data => {
+        this.model.maps = data;
         this.saving = false;
       });
     }
   }
 
-  gotoDungeonDetails(dungeon: Dungeon) {
-    this.router.navigateByUrl('/dungeons/' + dungeon.id);
-  }
-
-  newDungeon() {
+  newMap() {
     this.alertCtrl.create({
-      subHeader: 'New dungeon using service account ' + this.serviceAccount.name,
+      subHeader: 'New map',
       inputs: [
         {
           name: 'name',
           placeholder: 'Name',
           type: 'text'
-        }],
+        },
+        {
+          name: 'width',
+          placeholder: 'Width',
+          type: 'number'
+        },
+        {
+          name: 'height',
+          placeholder: 'Height',
+          type: 'number'
+        }
+      ],
       buttons: [
         {
           text: 'Cancel',
@@ -55,10 +61,10 @@ export class DungeonsPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (data) => {
-            if (data.name) {
+            if (data.name && data.width && data.height) {
               this.saving = true;
-              this.backendService.createDungeon(data.name, this.serviceAccount).subscribe(dungeon => {
-                this.model.dungeons.push(dungeon);
+              this.backendService.createMap(data.name, data.width, data.height).subscribe(map => {
+                this.model.maps.push(map);
                 this.saving = false;
               });
             }
@@ -68,5 +74,9 @@ export class DungeonsPage implements OnInit {
     }).then(alert => {
       alert.present();
     });
+  }
+
+  mapDetails(map: Map) {
+    this.router.navigateByUrl('/maps/' + map.id);
   }
 }
