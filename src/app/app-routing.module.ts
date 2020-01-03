@@ -3,10 +3,14 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {AdminGuard} from './services/auth-guard.service';
 
 const routes: Routes = [
+    // {
+    //     path: '',
+    //     redirectTo: 'loading',
+    //     pathMatch: 'full'
+    // },
     {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
+        path: 'loading',
+        loadChildren: './loading/loading.module#LoadingPageModule'
     },
     {
         path: 'home',

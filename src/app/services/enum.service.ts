@@ -12,6 +12,10 @@ export class JewelType { name: string; slot: string; gearSet: string; }
 })
 export class EnumService {
 
+    enumsLoaded = 0;
+    enumsTotal = 18;
+    enumsFailed = false;
+
     private colors: string[] = [];
     private rarities: string[] = [];
     private heroTypes: string[] = [];
@@ -32,38 +36,78 @@ export class EnumService {
     private mapTileFightIcons: string[] = [];
 
     constructor(private http: HttpClient) {
-        this.http.get(API_URL + '/enum/colors').subscribe((data: string[]) => this.colors = data);
-        this.http.get(API_URL + '/enum/rarities').subscribe((data: string[]) => this.rarities = data);
-        this.http.get(API_URL + '/enum/hero_types').subscribe((data: string[]) => this.heroTypes = data);
-        this.http.get(API_URL + '/enum/skill_active_triggers').subscribe((data: string[]) =>
-            this.skillActiveTriggers = data);
-        this.http.get(API_URL + '/enum/skill_targets').subscribe((data: string[]) => this.skillTargets = data);
-        this.http.get(API_URL + '/enum/skill_action_triggers').subscribe((data: string[]) =>
-            this.skillActionTriggers = data);
-        this.http.get(API_URL + '/enum/skill_action_types').subscribe((data: string[]) =>
-            this.skillActionTypes = data);
-        this.http.get(API_URL + '/enum/skill_action_targets').subscribe((data: string[]) =>
-            this.skillActionTargets = data);
-        this.http.get(API_URL + '/enum/skill_action_effects').subscribe((data: SkillActionEffect[]) =>
-            this.skillActionEffects = data);
-        this.http.get(API_URL + '/enum/property_categories').subscribe((data: string[]) =>
-            this.propertyCategories = data);
-        this.http.get(API_URL + '/enum/property_types').subscribe((data: PropertyType[]) =>
-            this.propertyTypes = data);
-        this.http.get(API_URL + '/enum/hero_stats').subscribe((data: string[]) =>
-            this.heroStats = data);
-        this.http.get(API_URL + '/enum/gear_sets').subscribe((data: string[]) =>
-            this.gearSets = data);
-        this.http.get(API_URL + '/enum/jewel_types').subscribe((data: JewelType[]) =>
-            this.jewelTypes = data);
-        this.http.get(API_URL + '/enum/passive_skill_triggers').subscribe((data: string[]) =>
-            this.passiveSkillTriggers = data);
-        this.http.get(API_URL + '/enum/map_tile_types').subscribe((data: string[]) =>
-            this.mapTileTypes = data);
-        this.http.get(API_URL + '/enum/map_tile_structures').subscribe((data: string[]) =>
-            this.mapTileStructures = data);
-        this.http.get(API_URL + '/enum/map_tile_fight_icons').subscribe((data: string[]) =>
-            this.mapTileFightIcons = data);
+        this.http.get(API_URL + '/enum/colors').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.colors = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/rarities').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.rarities = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/hero_types').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.heroTypes = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/skill_active_triggers').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.skillActiveTriggers = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/skill_targets').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.skillTargets = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/skill_action_triggers').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.skillActionTriggers = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/skill_action_types').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.skillActionTypes = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/skill_action_targets').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.skillActionTargets = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/skill_action_effects').subscribe((data: SkillActionEffect[]) => {
+            this.enumsLoaded ++;
+            this.skillActionEffects = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/property_categories').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.propertyCategories = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/property_types').subscribe((data: PropertyType[]) => {
+            this.enumsLoaded ++;
+            this.propertyTypes = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/hero_stats').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.heroStats = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/gear_sets').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.gearSets = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/jewel_types').subscribe((data: JewelType[]) => {
+            this.enumsLoaded ++;
+            this.jewelTypes = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/passive_skill_triggers').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.passiveSkillTriggers = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/map_tile_types').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.mapTileTypes = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/map_tile_structures').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.mapTileStructures = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/map_tile_fight_icons').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.mapTileFightIcons = data;
+        }, error => this.enumsFailed = true);
     }
 
     getColors(): string[] {

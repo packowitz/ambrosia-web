@@ -21,6 +21,7 @@ export class MapsPage implements OnInit {
               public model: Model,
               public enumService: EnumService,
               private router: Router) {
+    console.log("MapsPage.constructor");
   }
 
   ngOnInit(): void {

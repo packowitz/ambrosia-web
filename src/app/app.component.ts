@@ -1,10 +1,9 @@
 import {Component} from '@angular/core';
 
 import {AlertController, Platform} from '@ionic/angular';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {BackendService} from './services/backend.service';
 import {Model} from './services/model.service';
-import {PropertyService} from './services/property.service';
 
 @Component({
     selector: 'app-root',
@@ -83,37 +82,26 @@ export class AppComponent {
     constructor(
         private platform: Platform,
         private backendService: BackendService,
-        private propertyService: PropertyService,
         public model: Model,
         private router: Router,
-        private alertCtrl: AlertController,
-        private activatedRoute: ActivatedRoute
+        private alertCtrl: AlertController
     ) {
         this.initializeApp();
     }
 
     initializeApp() {
         this.platform.ready().then(() => {
-            this.backendService.getPlayer().subscribe(playerAction => {
-                this.propertyService.loadInitialProperties();
-                this.model.playerName = playerAction.player.name;
-                this.model.playerId = playerAction.player.id;
-                this.model.activeAccountId = playerAction.player.id;
-                if (playerAction.player.admin) {
-                    this.backendService.getAllServiceAccounts().subscribe(data => {
-                        this.model.serviceAccounts = data;
-                    });
+            console.log("App.initializeApp");
+            let path: string = window.location.pathname;
+            console.log("App.detected path: " + path);
+            this.pages.forEach(p => {
+                if (p.path && path.startsWith(p.path)) {
+                    p.open = true;
                 }
-                let path: string = window.location.pathname;
-                this.pages.forEach(p => {
-                    if (p.path && path.startsWith(p.path)) {
-                        p.open = true;
-                    }
-                });
-            }, error => {
-                console.log('auth failed goto login page');
-                this.router.navigateByUrl('/login');
             });
+            localStorage.setItem('ambrosia-page-requested', path);
+
+            this.router.navigateByUrl('/loading');
 
         });
     }

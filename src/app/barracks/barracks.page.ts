@@ -20,9 +20,12 @@ export class BarracksPage implements OnInit {
 
   constructor(private backendService: BackendService,
               private converter: ConverterService,
-              public model: Model) {}
+              public model: Model) {
+    console.log("BarracksPage.constructor");
+  }
 
   ngOnInit(): void {
+    console.log("BarracksPage.ngOnInit");
     if (this.model.heroes.length > 0) {
       this.selectedHero = this.model.heroes[0];
       this.selectSkill(1);
