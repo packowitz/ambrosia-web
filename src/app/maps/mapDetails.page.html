@@ -23,21 +23,38 @@
         </ion-item>
         <ion-item>
           <ion-label>Starting Map</ion-label>
-          <ion-checkbox [(ngModel)]="map.startingMap" slot="start"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="map.startingMap" [disabled]="isCurrentStartingMap" slot="start"></ion-checkbox>
         </ion-item>
       </div>
-      <ion-item lines="none">
-        <ion-button color="success" (click)="addTopRow()">+ top row</ion-button>
-        <ion-button color="success" (click)="addBottomRow()">+ bottom row</ion-button>
-        <ion-button color="danger" (click)="removeTopRow()">- top row</ion-button>
-        <ion-button color="danger" (click)="removeBottomRow()">- bottom row</ion-button>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-button color="success" (click)="addLeftColumn()">+ left column</ion-button>
-        <ion-button color="success" (click)="addRightColumn()">+ right column</ion-button>
-        <ion-button color="danger" (click)="removeLeftColumn()">- left column</ion-button>
-        <ion-button color="danger" (click)="removeRightColumn()">- right column</ion-button>
-      </ion-item>
+      <div class="flex">
+        <div class="flex-grow">
+          <ion-item>
+            <ion-label>Background</ion-label>
+            <ion-select [(ngModel)]="map.background">
+              <ion-select-option *ngFor="let bg of enumService.getMapBackgrounds()" [value]="bg">{{bg}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <img src="/assets/img/backgrounds/{{map.background}}.png" class="sample-bg-img">
+        </div>
+        <div>
+          <ion-item lines="none">
+            <ion-button color="success" (click)="addTopRow()">+ top row</ion-button>
+            <ion-button color="success" (click)="addBottomRow()">+ bottom row</ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-button color="danger" (click)="removeTopRow()">- top row</ion-button>
+            <ion-button color="danger" (click)="removeBottomRow()">- bottom row</ion-button>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-button color="success" (click)="addLeftColumn()">+ left col</ion-button>
+            <ion-button color="success" (click)="addRightColumn()">+ right col</ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-button color="danger" (click)="removeLeftColumn()">- left col</ion-button>
+            <ion-button color="danger" (click)="removeRightColumn()">- right col</ion-button>
+          </ion-item>
+        </div>
+      </div>
     </ion-card-content>
   </ion-card>
 
@@ -110,8 +127,8 @@
   <ion-card>
     <ion-card-content>
       <div class="map-container-outer scrollable-vert">
-        <div class="map-container-inner">
-          <div *ngFor="let y of rows" class="map-row">
+        <div class="map-container-inner" [class.first-row-even]="isEven(rows[0])" [class.last-row-even]="isEven(rows[rows.length - 1])">
+          <div *ngFor="let y of rows" class="map-row" [class.even]="isEven(y)" [class.odd]="!isEven(y)">
             <div *ngFor="let tile of getRow(y)" class="map-hexagon-wrapper">
               <div class="map-hexagon-overlay pointer" [class.selected]="isSelected(tile)" (click)="selectTile(tile)">
                 <img *ngIf="tile.redAlwaysRevealed" src="assets/img/red_dot.png" class="to-front">

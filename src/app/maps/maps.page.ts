@@ -27,7 +27,7 @@ export class MapsPage implements OnInit {
   ngOnInit(): void {
     if (!this.model.maps) {
       this.saving = true;
-      this.backendService.loadMaps().subscribe(data => {
+      this.backendService.loadAllMaps().subscribe(data => {
         this.model.maps = data;
         this.saving = false;
       });

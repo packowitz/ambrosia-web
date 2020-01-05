@@ -6,4 +6,6 @@ export class Player {
     xp: number;
     maxXp: number;
     level: number;
+    color: string;
+    currentMapId: number;
 }

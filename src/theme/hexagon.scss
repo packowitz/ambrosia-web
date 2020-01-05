@@ -4,24 +4,101 @@
 
 .map-container-inner {
   background-color: #0f7b1c;
-  padding: 4px 4px 14px 4px;
-  .map-row:nth-child(odd) {
-    margin-left: 20px;
+  padding: 4px 4px 4px 4px;
+  &.first-row-even {
+    padding-top: 14px;
   }
-  .map-row:nth-child(even) {
-    margin: -10px 0;
+  &.last-row-even {
+    padding-bottom: 14px;
+  }
+
+  .map-row {
+    &.even {
+      margin: -10px 0;
+    }
+    &.odd {
+      margin-left: 20px;
+    }
+  }
+
+  .map-hexagon-wrapper {
+    margin-right: 2px;
+  }
+
+  .map-hexagon-overlay {
+    &:hover {
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    &.selected {
+      background-color: rgba(0,0,0,0.25);
+    }
+  }
+}
+
+.player-map-container-inner {
+  background-position: center;
+  background-repeat: repeat;
+  overflow: hidden;
+  color: black;
+
+  &.BLUE_SKY {
+    background-image: url(assets/img/backgrounds/BLUE_SKY.png);
+  }
+  &.RED_SKY {
+    background-image: url(assets/img/backgrounds/RED_SKY.png);
+  }
+  &.BLACK_BRICKS {
+    background-image: url(assets/img/backgrounds/BLACK_BRICKS.png);
+  }
+  &.RED_BRICKS {
+    background-image: url(assets/img/backgrounds/RED_BRICKS.png);
+  }
+  &.DRY_CLAY {
+    background-image: url(assets/img/backgrounds/DRY_CLAY.png);
+  }
+  &.DUNGEON_WALL {
+    background-image: url(assets/img/backgrounds/DUNGEON_WALL.png);
+  }
+
+  .map-row {
+    margin-right: -22px;
+    &.even {
+      margin: -12px -21px;
+    }
+  }
+
+  .map-row:first-child {
+    margin-top: -11px;
+  }
+  .map-row:last-child {
+    margin-bottom: -11px;
+  }
+
+  .costs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 46px;
+  }
+
+  .hover {
+    &:hover {
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+    }
   }
 }
 
 .map-row {
   display: flex;
+
 }
 
 .map-hexagon-wrapper {
   position: relative;
   width:40px;
   height: 46px;
-  margin-right: 2px;
   transform: rotate(-60deg) skewY(30deg);
   overflow: hidden;
   visibility: hidden;
@@ -55,14 +132,6 @@
   height: 100%;
   overflow: hidden;
   transform: skewY(-30deg) rotate(60deg);
-
-  &:hover {
-    background-color: rgba(0,0,0,0.5);
-  }
-
-  &.selected {
-    background-color: rgba(0,0,0,0.25);
-  }
 
   img {
     position: absolute;

@@ -9,6 +9,7 @@ import {Battle} from '../domain/battle.model';
 import {environment} from '../../environments/environment';
 import {Dungeon} from '../domain/dungeon.model';
 import {Map} from '../domain/map.model';
+import {PlayerMap} from '../domain/playerMap.model';
 
 @Injectable({
     providedIn: 'root'
@@ -27,6 +28,7 @@ export class Model {
     serviceAccounts: Player[] = [];
     dungeons: Dungeon[];
     maps: Map[];
+    playerMaps: PlayerMap[];
 
     reset() {
         this.heroes = null;
@@ -106,6 +108,17 @@ export class Model {
                 this.maps[idx] = map;
             } else {
                 this.maps.push(map);
+            }
+        }
+    }
+
+    updatePlayerMap(map?: PlayerMap) {
+        if (map) {
+            let idx = this.playerMaps.findIndex(g => g.mapId === map.mapId);
+            if (idx >= 0) {
+                this.playerMaps[idx] = map;
+            } else {
+                this.playerMaps.push(map);
             }
         }
     }

@@ -14,6 +14,9 @@ import {EnumService} from '../services/enum.service';
 export class LoadingPage {
 
   playerLoaded = false;
+  serviceAccountsLoaded = false;
+  playerChecked = false;
+  playerMapsLoaded = false;
   status = "Initializing Ambrosia";
 
   constructor(private backendService: BackendService,
@@ -28,6 +31,10 @@ export class LoadingPage {
   initApp() {
     if (!this.playerLoaded) {
       this.loadPlayer();
+    } else if (this.model.player.admin && !this.serviceAccountsLoaded) {
+      this.loadServiceAccounts();
+    } else if (!this.playerChecked) {
+      this.checkPlayer();
     } else if (this.enumService.enumsLoaded < this.enumService.enumsTotal) {
       this.status = 'Waiting for static content to get loaded';
       while (this.enumService.enumsLoaded < this.enumService.enumsTotal && !this.enumService.enumsFailed) {
@@ -38,9 +45,11 @@ export class LoadingPage {
           subHeader: 'Failed to load static content from ambrosia server. Please reload page.'
         }).then(alert => alert.present());
       }
+    } else if(!this.playerMapsLoaded) {
+      this.loadPlayerMaps();
     } else {
       let path = localStorage.getItem('ambrosia-page-requested');
-      if (path && path.length > 0 && path.startsWith('/') && path !== '/loading') {
+      if (path && path.length > 1 && path.startsWith('/') && path !== '/loading' && path !== '/login') {
         this.router.navigateByUrl(path);
       } else {
         this.router.navigateByUrl('/home');
@@ -49,17 +58,12 @@ export class LoadingPage {
   }
 
   loadPlayer() {
-    this.status = 'Loading Player Data';
+    this.status = 'Loading player data';
     this.backendService.getPlayer().subscribe(playerAction => {
       this.propertyService.loadInitialProperties();
       this.model.playerName = playerAction.player.name;
       this.model.playerId = playerAction.player.id;
       this.model.activeAccountId = playerAction.player.id;
-      if (playerAction.player.admin) {
-        this.backendService.getAllServiceAccounts().subscribe(data => {
-          this.model.serviceAccounts = data;
-        });
-      }
       this.playerLoaded = true;
       console.log("LoadingPage.LoadPlayer successfully completed");
       this.initApp();
@@ -69,6 +73,45 @@ export class LoadingPage {
     });
   }
 
+  loadServiceAccounts() {
+    this.status = 'Loading service accounts';
+    this.backendService.getAllServiceAccounts().subscribe(data => {
+      this.model.serviceAccounts = data;
+      this.serviceAccountsLoaded = true;
+      this.initApp();
+    });
+  }
 
+  checkPlayer() {
+    if (!this.model.player.color) {
+      this.alertCtrl.create({
+        subHeader: 'Select your hero color',
+        buttons: [
+          {text: 'Red', cssClass: 'RED', handler: () => this.saveColor('RED') },
+          {text: 'Green', cssClass: 'GREEN', handler: () => this.saveColor('GREEN') },
+          {text: 'Blue', cssClass: 'BLUE', handler: () => this.saveColor('BLUE') }
+        ]
+      }).then(alert => alert.present());
+    } else {
+      this.playerChecked = true;
+      this.initApp();
+    }
+  }
+
+  saveColor(color: string) {
+    this.status = 'Updating player';
+    this.backendService.selectPlayerColor(color).subscribe(data => {
+      this.initApp();
+    });
+  }
+
+  loadPlayerMaps() {
+    this.status = "Loading maps";
+    this.backendService.loadPlayerMaps().subscribe(data => {
+      this.model.playerMaps = data;
+      this.playerMapsLoaded = true;
+      this.initApp();
+    });
+  }
 
 }

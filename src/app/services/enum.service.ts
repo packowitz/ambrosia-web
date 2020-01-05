@@ -13,7 +13,7 @@ export class JewelType { name: string; slot: string; gearSet: string; }
 export class EnumService {
 
     enumsLoaded = 0;
-    enumsTotal = 18;
+    enumsTotal = 19;
     enumsFailed = false;
 
     private colors: string[] = [];
@@ -34,6 +34,7 @@ export class EnumService {
     private mapTileTypes: string[] = [];
     private mapTileStructures: string[] = [];
     private mapTileFightIcons: string[] = [];
+    private mapBackgrounds: string[] = [];
 
     constructor(private http: HttpClient) {
         this.http.get(API_URL + '/enum/colors').subscribe((data: string[]) => {
@@ -108,6 +109,10 @@ export class EnumService {
             this.enumsLoaded ++;
             this.mapTileFightIcons = data;
         }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/map_backgrounds').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.mapBackgrounds = data;
+        }, error => this.enumsFailed = true);
     }
 
     getColors(): string[] {
@@ -180,5 +185,9 @@ export class EnumService {
 
     getMapTileFightIcons(): string[] {
         return this.mapTileFightIcons;
+    }
+
+    getMapBackgrounds(): string[] {
+        return this.mapBackgrounds;
     }
 }

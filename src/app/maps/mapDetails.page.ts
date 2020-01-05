@@ -16,9 +16,9 @@ export class MapDetailsPage implements OnInit {
   saving = false;
 
   map: Map;
+  isCurrentStartingMap = false;
 
   rows: number[] = [];
-  columns: number[] = [];
 
   tile: MapTile;
   tileHasStructure = false;
@@ -34,7 +34,7 @@ export class MapDetailsPage implements OnInit {
     let id = Number(this.route.snapshot.paramMap.get('id'));
     if (!this.model.maps) {
       this.saving = true;
-      this.backendService.loadMaps().subscribe(data => {
+      this.backendService.loadAllMaps().subscribe(data => {
         this.model.maps = data;
         this.setMap(this.model.maps.find(m => m.id === id));
         this.saving = false;
@@ -51,8 +51,8 @@ export class MapDetailsPage implements OnInit {
 
   private setMap(map: Map) {
     this.map = map;
+    this.isCurrentStartingMap = this.map.startingMap;
     this.rows = Array.from({length: (map.maxY - map.minY + 1)}, (v, k) => k + map.minY);
-    this.columns = Array.from({length: (map.maxX - map.minX + 1)}, (v, k) => k + map.minX);
     if (this.tile) {
       this.selectTile(this.map.tiles.find(t => t.posX === this.tile.posX && t.posY === this.tile.posY));
     }
@@ -60,6 +60,10 @@ export class MapDetailsPage implements OnInit {
 
   getRow(y: number): MapTile[] {
     return this.map.tiles.filter(t => t.posY === y).sort((a, b) => a.posX - b.posX);
+  }
+
+  isEven(row: number): boolean {
+    return Math.abs(row) % 2 === 0;
   }
 
   selectTile(tile: MapTile) {
@@ -116,7 +120,6 @@ export class MapDetailsPage implements OnInit {
 
   addLeftColumn() {
     this.map.minX--;
-    this.columns.unshift(this.map.minX);
     let y;
     for (y = this.map.minY; y <= this.map.maxY; y++) {
       this.map.tiles.push(this.newTile(this.map.minX, y));
@@ -126,13 +129,11 @@ export class MapDetailsPage implements OnInit {
   removeLeftColumn() {
     let removedX = this.map.minX;
     this.map.minX++;
-    this.columns.shift();
     this.map.tiles = this.map.tiles.filter(t => t.posX !== removedX);
   }
 
   addRightColumn() {
     this.map.maxX++;
-    this.columns.push(this.map.maxX);
     let y;
     for (y = this.map.minY; y <= this.map.maxY; y++) {
       this.map.tiles.push(this.newTile(this.map.maxX, y));
@@ -142,7 +143,6 @@ export class MapDetailsPage implements OnInit {
   removeRightColumn() {
     let removedX = this.map.maxX;
     this.map.maxX--;
-    this.columns.pop();
     this.map.tiles = this.map.tiles.filter(t => t.posX !== removedX);
   }
 

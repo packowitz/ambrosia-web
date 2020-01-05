@@ -1,13 +1,13 @@
 .RED {
-  color: #a32324;
+  color: #a32324 !important;
 }
 
 .GREEN {
-  color: #2f9b34;
+  color: #2f9b34 !important;
 }
 
 .BLUE {
-  color: #1b76ef;
+  color: #1b76ef !important;
 }
 
 .NEUTRAL {
@@ -24,6 +24,10 @@
 
 .background-BLUE {
   background-color: #1b76ef;
+}
+
+.background-NEUTRAL {
+  background-color: #777777;
 }
 
 .background-grey {
@@ -285,4 +289,8 @@ ion-row.table-row {
   left: 0;
   bottom: 5%;
   background-color: #4a4242;
+}
+
+.sample-bg-img {
+  width: 220px !important;
 }

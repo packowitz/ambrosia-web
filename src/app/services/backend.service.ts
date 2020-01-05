@@ -17,8 +17,8 @@ import {JewelType} from './enum.service';
 import {Model} from './model.service';
 import {Dungeon} from '../domain/dungeon.model';
 import {DungeonResolved} from '../domain/dungeonResolved.model';
-import {DungeonStage} from '../domain/dungeonStage.model';
 import {Map} from '../domain/map.model';
+import {PlayerMap} from '../domain/playerMap.model';
 
 
 export class PlayerActionResponse {
@@ -43,6 +43,10 @@ export class BackendService {
 
     getPlayer(): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/player', null);
+    }
+
+    selectPlayerColor(color: string): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/player/color', {color: color});
     }
 
     login(email: string, password: string): Observable<PlayerActionResponse> {
@@ -271,8 +275,8 @@ export class BackendService {
         return this.http.post<Battle>(API_URL + '/battle/dungeon/' + dungeonId, request);
     }
 
-    loadMaps(): Observable<Map[]> {
-        return this.http.get<Map[]>(API_URL + '/map');
+    loadAllMaps(): Observable<Map[]> {
+        return this.http.get<Map[]>(API_URL + '/admin/map');
     }
 
     createMap(name: string, width: number, height: number): Observable<Map> {
@@ -286,6 +290,19 @@ export class BackendService {
 
     saveMap(map: Map): Observable<Map> {
         return this.http.put<Map>(API_URL + '/admin/map/' + map.id, map);
+    }
+
+    loadPlayerMaps(): Observable<PlayerMap[]> {
+        return this.http.get<PlayerMap[]>(API_URL + '/map');
+    }
+
+    discoverMapTile(mapId: number, posX: number, posY: number): Observable<PlayerMap> {
+        let request = {
+            mapId: mapId,
+            posX: posX,
+            posY: posY
+        };
+        return this.http.post<PlayerMap>(API_URL + '/map/discover', request);
     }
 
 }

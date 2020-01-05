@@ -8,5 +8,6 @@ export class Map {
     maxX: number;
     minY: number;
     maxY: number;
+    background: string;
     tiles: MapTile[];
 }
