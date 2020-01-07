@@ -17,6 +17,7 @@ export class LoadingPage {
   serviceAccountsLoaded = false;
   playerChecked = false;
   playerMapsLoaded = false;
+  playerCurrentMapLoaded = false;
   status = "Initializing Ambrosia";
 
   constructor(private backendService: BackendService,
@@ -47,6 +48,8 @@ export class LoadingPage {
       }
     } else if(!this.playerMapsLoaded) {
       this.loadPlayerMaps();
+    } else if(!this.playerCurrentMapLoaded) {
+      this.loadCurrentPlayerMap();
     } else {
       let path = localStorage.getItem('ambrosia-page-requested');
       if (path && path.length > 1 && path.startsWith('/') && path !== '/loading' && path !== '/login') {
@@ -100,7 +103,7 @@ export class LoadingPage {
 
   saveColor(color: string) {
     this.status = 'Updating player';
-    this.backendService.selectPlayerColor(color).subscribe(data => {
+    this.backendService.selectPlayerColor(color).subscribe(() => {
       this.initApp();
     });
   }
@@ -110,6 +113,15 @@ export class LoadingPage {
     this.backendService.loadPlayerMaps().subscribe(data => {
       this.model.playerMaps = data;
       this.playerMapsLoaded = true;
+      this.initApp();
+    });
+  }
+
+  loadCurrentPlayerMap() {
+    this.status = "Loading current map";
+    this.backendService.loadCurrentPlayerMap().subscribe(data => {
+      this.model.updatePlayerMap(data);
+      this.playerCurrentMapLoaded = true;
       this.initApp();
     });
   }

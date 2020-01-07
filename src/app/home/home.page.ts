@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Model} from '../services/model.service';
-import {PlayerMap} from '../domain/playerMap.model';
 import {PlayerMapTile} from '../domain/playerMapTile.model';
 import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
+import {PlayerMap} from '../domain/playerMap.model';
 
 @Component({
   selector: 'app-home',
@@ -16,14 +16,27 @@ export class HomePage implements OnInit {
   map: PlayerMap;
   rows: number[];
 
-  constructor(private model: Model,
+  constructor(public model: Model,
               private backendService: BackendService,
               private alertCtrl: AlertController) {}
 
   ngOnInit(): void {
-    this.map = this.model.playerMaps.find(m => m.mapId === this.model.player.currentMapId);
+    if (!this.model.currentMap) {
+      this.saving = true;
+      this.backendService.loadCurrentPlayerMap().subscribe(data => {
+        this.model.updatePlayerMap(data);
+        this.map = data;
+        this.calcRows();
+        this.saving = false;
+      });
+    } else {
+      this.map = this.model.currentMap;
+      this.calcRows();
+    }
+  }
+
+  private calcRows() {
     this.rows = Array.from({length: (this.map.maxY - this.map.minY + 1)}, (v, k) => k + this.map.minY);
-    console.log(this.rows);
   }
 
   getRow(y: number): PlayerMapTile[] {
@@ -38,8 +51,8 @@ export class HomePage implements OnInit {
     if (tile.discoverable) {
       this.saving = true;
       this.backendService.discoverMapTile(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
-        this.map = data;
         this.model.updatePlayerMap(data);
+        this.map = data;
         this.saving = false;
       }, error => {
         this.saving = false;
@@ -53,7 +66,33 @@ export class HomePage implements OnInit {
       // initiate fight
     } else if (tile.structure) {
       if (tile.portalToMapId) {
-        // jump to map
+        // change map to portalToMapId
+        this.saving = true;
+        let toMap = this.model.playerMaps.find(m => m.mapId === tile.portalToMapId);
+        if (toMap) {
+          this.backendService.setCurrentMap(toMap.mapId).subscribe(() => {
+            if (toMap.tiles) {
+              this.model.currentMap = toMap;
+              this.map = toMap;
+              this.calcRows();
+              this.saving = false;
+            } else {
+              this.backendService.getPlayerMap(toMap.mapId).subscribe(data => {
+                this.model.currentMap = data;
+                this.map = data;
+                this.calcRows();
+                this.saving = false;
+              });
+            }
+          });
+        } else {
+          this.backendService.discoverMap(tile.portalToMapId).subscribe(data => {
+            this.model.updatePlayerMap(data);
+            this.calcRows();
+            this.saving = false;
+          });
+        }
+
       } else {
         // goto building
       }

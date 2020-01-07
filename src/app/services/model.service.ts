@@ -29,12 +29,15 @@ export class Model {
     dungeons: Dungeon[];
     maps: Map[];
     playerMaps: PlayerMap[];
+    currentMap: PlayerMap;
 
     reset() {
         this.heroes = null;
         this.gears = null;
         this.teams = null;
         this.ongoingBattle = null;
+        this.playerMaps = [];
+        this.currentMap = null;
     }
 
     update(data: PlayerActionResponse) {
@@ -119,6 +122,9 @@ export class Model {
                 this.playerMaps[idx] = map;
             } else {
                 this.playerMaps.push(map);
+            }
+            if (map.mapId === this.player.currentMapId) {
+                this.currentMap = map;
             }
         }
     }

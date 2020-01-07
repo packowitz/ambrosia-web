@@ -141,6 +141,9 @@ export class AppComponent {
             this.backendService.getPlayer().subscribe(data => {
                 console.log("Using player account " + data.player.name + " #" + data.player.id);
             });
+            this.backendService.loadPlayerMaps().subscribe(data => {
+               this.model.playerMaps = data;
+            });
         } else {
             this.backendService.useServiceAccount(this.model.activeAccountId).subscribe(data => {
                 console.log("Using service account " + data.player.name + " #" + data.player.id);

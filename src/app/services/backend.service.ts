@@ -293,7 +293,23 @@ export class BackendService {
     }
 
     loadPlayerMaps(): Observable<PlayerMap[]> {
-        return this.http.get<PlayerMap[]>(API_URL + '/map');
+        return this.http.get<PlayerMap[]>(API_URL + '/map/simple');
+    }
+
+    loadCurrentPlayerMap(): Observable<PlayerMap> {
+        return this.http.get<PlayerMap>(API_URL + '/map/current');
+    }
+
+    discoverMap(mapId: number): Observable<PlayerMap> {
+        return this.http.post<PlayerMap>(API_URL + '/map/' + mapId + '/discover', null);
+    }
+
+    setCurrentMap(mapId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/map/' + mapId + '/current', null);
+    }
+
+    getPlayerMap(mapId: number): Observable<PlayerMap> {
+        return this.http.get<PlayerMap>(API_URL + '/map/' + mapId);
     }
 
     discoverMapTile(mapId: number, posX: number, posY: number): Observable<PlayerMap> {
