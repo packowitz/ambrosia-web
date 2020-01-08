@@ -4,7 +4,10 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Enter Dungeon {{dungeon ? dungeon.name : ''}}
+      <div class="flex-space-between">
+        Fightng on {{map ? map.name : ''}} {{tile? tile.posX + 'x' + tile.posY: ''}}
+        <ion-icon name="close" class="pointer" (click)="close()"></ion-icon>
+      </div>
     </ion-title>
   </ion-toolbar>
 </ion-header>

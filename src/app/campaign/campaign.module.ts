@@ -3,8 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
-import {CampaignPage} from './campaign.page';
-import {EnterDungeonPage} from './enterDungeon.page';
+import {CampaignFightPage} from './campaignFight.page';
 
 @NgModule({
   imports: [
@@ -13,15 +12,11 @@ import {EnterDungeonPage} from './enterDungeon.page';
     IonicModule,
     RouterModule.forChild([
       {
-        path: '',
-        component: CampaignPage
-      },
-      {
-        path: ':id',
-        component: EnterDungeonPage
+        path: ':mapId/:posX/:posY',
+        component: CampaignFightPage
       }
     ])
   ],
-  declarations: [CampaignPage, EnterDungeonPage]
+  declarations: [CampaignFightPage]
 })
 export class CampaignModule {}

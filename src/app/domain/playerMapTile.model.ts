@@ -6,6 +6,7 @@ export class PlayerMapTile {
     discoverable: boolean;
     structure: string;
     fightIcon: string;
+    fightId: number;
     fightRepeatable: boolean;
     portalToMapId: number;
 }

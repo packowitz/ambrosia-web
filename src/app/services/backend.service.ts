@@ -275,6 +275,16 @@ export class BackendService {
         return this.http.post<Battle>(API_URL + '/battle/dungeon/' + dungeonId, request);
     }
 
+    startCampaignFight(mapId: number, posX: number, posY: number, team: Team): Observable<Battle> {
+        let request = {
+            hero1Id: team.hero1Id,
+            hero2Id: team.hero2Id,
+            hero3Id: team.hero3Id,
+            hero4Id: team.hero4Id
+        };
+        return this.http.post<Battle>(API_URL + '/battle/campaign/' + mapId + '/' + posX + '/' + posY, request);
+    }
+
     loadAllMaps(): Observable<Map[]> {
         return this.http.get<Map[]>(API_URL + '/admin/map');
     }

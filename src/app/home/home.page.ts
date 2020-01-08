@@ -4,6 +4,7 @@ import {PlayerMapTile} from '../domain/playerMapTile.model';
 import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
 import {PlayerMap} from '../domain/playerMap.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ export class HomePage implements OnInit {
 
   constructor(public model: Model,
               private backendService: BackendService,
-              private alertCtrl: AlertController) {}
+              private alertCtrl: AlertController,
+              private router: Router) {}
 
   ngOnInit(): void {
     if (!this.model.currentMap) {
@@ -63,7 +65,7 @@ export class HomePage implements OnInit {
         }).then(data => data.present());
       });
     } else if (tile.fightIcon) {
-      // initiate fight
+      this.router.navigateByUrl('/campaign/' + this.map.mapId + '/' + tile.posX + '/' + tile.posY);
     } else if (tile.structure) {
       if (tile.portalToMapId) {
         // change map to portalToMapId

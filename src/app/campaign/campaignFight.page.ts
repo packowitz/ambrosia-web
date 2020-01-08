@@ -6,14 +6,20 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Hero} from '../domain/hero.model';
 import {DungeonResolved} from '../domain/dungeonResolved.model';
 import {Team} from '../domain/team.model';
+import {PlayerMap} from '../domain/playerMap.model';
+import {PlayerMapTile} from '../domain/playerMapTile.model';
+import {Location} from '@angular/common';
 
 @Component({
-  selector: 'enter-dungeon',
-  templateUrl: 'enterDungeon.page.html'
+  selector: 'campaign-fight',
+  templateUrl: 'campaignFight.page.html'
 })
-export class EnterDungeonPage implements OnInit {
+export class CampaignFightPage implements OnInit {
 
   saving = false;
+
+  map: PlayerMap;
+  tile: PlayerMapTile;
 
   dungeon: DungeonResolved;
   team: Team;
@@ -26,12 +32,17 @@ export class EnterDungeonPage implements OnInit {
               private backendService: BackendService,
               private router: Router,
               public model: Model,
-              public enumService: EnumService) {
+              public enumService: EnumService,
+              private location: Location) {
   }
 
   ngOnInit() {
-    let id = this.route.snapshot.paramMap.get('id');
-    this.backendService.getDungeon(id).subscribe(data => {
+    let mapId = Number(this.route.snapshot.paramMap.get('mapId'));
+    let posX = Number(this.route.snapshot.paramMap.get('posX'));
+    let posY = Number(this.route.snapshot.paramMap.get('posY'));
+    this.map = this.model.playerMaps.find(m => m.mapId === mapId);
+    this.tile = this.map.tiles.find(t => t.posX === posX && t.posY === posY);
+    this.backendService.getDungeon(this.tile.fightId).subscribe(data => {
       this.dungeon = data;
     });
     if (!this.model.teams) {
@@ -42,6 +53,10 @@ export class EnterDungeonPage implements OnInit {
     } else {
       this.initTeam();
     }
+  }
+
+  close() {
+    this.location.back();
   }
 
   initTeam() {
@@ -99,7 +114,7 @@ export class EnterDungeonPage implements OnInit {
   }
 
   start() {
-    this.backendService.startDungeon(this.dungeon.id, this.team).subscribe(data => {
+    this.backendService.startCampaignFight(this.map.mapId, this.tile.posX, this.tile.posY, this.team).subscribe(data => {
       this.model.ongoingBattle = data;
       this.router.navigateByUrl('/battle');
     });
