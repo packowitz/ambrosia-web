@@ -10,6 +10,9 @@ export class Battle {
     nextBattleId?: number;
     dungeon?: Dungeon;
     dungeonStage?: number;
+    mapId?: number;
+    mapPosX?: number;
+    mapPosY?: number;
     playerId: number;
     playerName: number;
     opponentId: number;

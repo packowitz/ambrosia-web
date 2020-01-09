@@ -36,7 +36,7 @@ export class Model {
         this.gears = null;
         this.teams = null;
         this.ongoingBattle = null;
-        this.playerMaps = [];
+        this.playerMaps = null;
         this.currentMap = null;
     }
 
@@ -77,8 +77,22 @@ export class Model {
         if (data.gearIdsRemovedFromArmory && this.gears) {
             this.gears = this.gears.filter(g => data.gearIdsRemovedFromArmory.findIndex(i => i === g.id) === -1);
         }
+        if (data.playerMaps) {
+            if (this.playerMaps) {
+                data.playerMaps.forEach(m => this.updatePlayerMap(m));
+            } else {
+                this.playerMaps = data.playerMaps;
+            }
+        }
+        if (data.currentMap) {
+            this.updatePlayerMap(data.currentMap);
+        }
         if (data.ongoingBattle) {
-            this.ongoingBattle = data.ongoingBattle;
+            if (data.ongoingBattle.status === 'WON' || data.ongoingBattle.status === 'LOST') {
+                this.ongoingBattle = null;
+            } else {
+                this.ongoingBattle = data.ongoingBattle;
+            }
         }
     }
 

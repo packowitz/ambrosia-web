@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
 import {Model} from '../services/model.service';
@@ -16,8 +16,6 @@ export class LoadingPage {
   playerLoaded = false;
   serviceAccountsLoaded = false;
   playerChecked = false;
-  playerMapsLoaded = false;
-  playerCurrentMapLoaded = false;
   status = "Initializing Ambrosia";
 
   constructor(private backendService: BackendService,
@@ -46,10 +44,6 @@ export class LoadingPage {
           subHeader: 'Failed to load static content from ambrosia server. Please reload page.'
         }).then(alert => alert.present());
       }
-    } else if(!this.playerMapsLoaded) {
-      this.loadPlayerMaps();
-    } else if(!this.playerCurrentMapLoaded) {
-      this.loadCurrentPlayerMap();
     } else {
       let path = localStorage.getItem('ambrosia-page-requested');
       if (path && path.length > 1 && path.startsWith('/') && path !== '/loading' && path !== '/login') {
@@ -104,24 +98,6 @@ export class LoadingPage {
   saveColor(color: string) {
     this.status = 'Updating player';
     this.backendService.selectPlayerColor(color).subscribe(() => {
-      this.initApp();
-    });
-  }
-
-  loadPlayerMaps() {
-    this.status = "Loading maps";
-    this.backendService.loadPlayerMaps().subscribe(data => {
-      this.model.playerMaps = data;
-      this.playerMapsLoaded = true;
-      this.initApp();
-    });
-  }
-
-  loadCurrentPlayerMap() {
-    this.status = "Loading current map";
-    this.backendService.loadCurrentPlayerMap().subscribe(data => {
-      this.model.updatePlayerMap(data);
-      this.playerCurrentMapLoaded = true;
       this.initApp();
     });
   }

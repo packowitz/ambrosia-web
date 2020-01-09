@@ -31,6 +31,8 @@ export class PlayerActionResponse {
     gears?: Gear[];
     gearIdsRemovedFromArmory?: number[];
     jewelries?: Jewelry[];
+    playerMaps?: PlayerMap[];
+    currentMap?: PlayerMap;
     ongoingBattle?: Battle;
 }
 
@@ -178,11 +180,11 @@ export class BackendService {
         return this.http.get<OtherTeam[]>(API_URL + '/teams/type/' + type);
     }
 
-    getBattle(battleId): Observable<Battle> {
-        return this.http.get<Battle>(API_URL + '/battle/' + battleId);
+    getBattle(battleId): Observable<PlayerActionResponse> {
+        return this.http.get<PlayerActionResponse>(API_URL + '/battle/' + battleId);
     }
 
-    startDuell(otherTeam: OtherTeam, ownTeam: Team): Observable<Battle> {
+    startDuell(otherTeam: OtherTeam, ownTeam: Team): Observable<PlayerActionResponse> {
         let request = {
             type: 'DUELL',
             oppPlayerId: otherTeam.playerId,
@@ -195,22 +197,22 @@ export class BackendService {
             oppHero3Id: otherTeam.hero3 ? otherTeam.hero3.id : null,
             oppHero4Id: otherTeam.hero4 ? otherTeam.hero4.id : null
         };
-        return this.http.post<Battle>(API_URL + '/battle', request);
+        return this.http.post<PlayerActionResponse>(API_URL + '/battle', request);
     }
 
-    takeTurn(battle: Battle, hero: BattleHero, skill: HeroSkill, target: BattleHero): Observable<Battle> {
+    takeTurn(battle: Battle, hero: BattleHero, skill: HeroSkill, target: BattleHero): Observable<PlayerActionResponse> {
         let url = API_URL + '/battle/' + battle.id + '/' + hero.position + '/' + skill.number + '/' + target.position;
-        return this.http.post<Battle>(url, null);
+        return this.http.post<PlayerActionResponse>(url, null);
     }
 
-    takeAutoTurn(battle: Battle, hero: BattleHero): Observable<Battle> {
+    takeAutoTurn(battle: Battle, hero: BattleHero): Observable<PlayerActionResponse> {
         let url = API_URL + '/battle/' + battle.id + '/' + hero.position + '/auto';
-        return this.http.post<Battle>(url, null);
+        return this.http.post<PlayerActionResponse>(url, null);
     }
 
-    surrender(battle: Battle): Observable<Battle> {
+    surrender(battle: Battle): Observable<PlayerActionResponse> {
         let url = API_URL + '/battle/' + battle.id + '/surrender';
-        return this.http.post<Battle>(url, null);
+        return this.http.post<PlayerActionResponse>(url, null);
     }
 
     createServiceAccount(name: string) {
@@ -265,24 +267,14 @@ export class BackendService {
         return this.http.put<DungeonResolved>(API_URL + '/admin/dungeon/' + dungeon.id, request);
     }
 
-    startDungeon(dungeonId: number, team: Team): Observable<Battle> {
+    startCampaignFight(mapId: number, posX: number, posY: number, team: Team): Observable<PlayerActionResponse> {
         let request = {
             hero1Id: team.hero1Id,
             hero2Id: team.hero2Id,
             hero3Id: team.hero3Id,
             hero4Id: team.hero4Id
         };
-        return this.http.post<Battle>(API_URL + '/battle/dungeon/' + dungeonId, request);
-    }
-
-    startCampaignFight(mapId: number, posX: number, posY: number, team: Team): Observable<Battle> {
-        let request = {
-            hero1Id: team.hero1Id,
-            hero2Id: team.hero2Id,
-            hero3Id: team.hero3Id,
-            hero4Id: team.hero4Id
-        };
-        return this.http.post<Battle>(API_URL + '/battle/campaign/' + mapId + '/' + posX + '/' + posY, request);
+        return this.http.post<PlayerActionResponse>(API_URL + '/battle/campaign/' + mapId + '/' + posX + '/' + posY, request);
     }
 
     loadAllMaps(): Observable<Map[]> {
@@ -298,20 +290,12 @@ export class BackendService {
         return this.http.post<Map>(API_URL + '/admin/map/new', request);
     }
 
-    saveMap(map: Map): Observable<Map> {
-        return this.http.put<Map>(API_URL + '/admin/map/' + map.id, map);
+    saveMap(aMap: Map): Observable<Map> {
+        return this.http.put<Map>(API_URL + '/admin/map/' + aMap.id, aMap);
     }
 
-    loadPlayerMaps(): Observable<PlayerMap[]> {
-        return this.http.get<PlayerMap[]>(API_URL + '/map/simple');
-    }
-
-    loadCurrentPlayerMap(): Observable<PlayerMap> {
-        return this.http.get<PlayerMap>(API_URL + '/map/current');
-    }
-
-    discoverMap(mapId: number): Observable<PlayerMap> {
-        return this.http.post<PlayerMap>(API_URL + '/map/' + mapId + '/discover', null);
+    discoverMap(mapId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/map/' + mapId + '/discover', null);
     }
 
     setCurrentMap(mapId: number): Observable<PlayerActionResponse> {
@@ -322,13 +306,13 @@ export class BackendService {
         return this.http.get<PlayerMap>(API_URL + '/map/' + mapId);
     }
 
-    discoverMapTile(mapId: number, posX: number, posY: number): Observable<PlayerMap> {
+    discoverMapTile(mapId: number, posX: number, posY: number): Observable<PlayerActionResponse> {
         let request = {
             mapId: mapId,
             posX: posX,
             posY: posY
         };
-        return this.http.post<PlayerMap>(API_URL + '/map/discover', request);
+        return this.http.post<PlayerActionResponse>(API_URL + '/map/discover', request);
     }
 
 }

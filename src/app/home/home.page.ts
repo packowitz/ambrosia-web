@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss']
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
   saving = false;
   map: PlayerMap;
@@ -22,19 +22,9 @@ export class HomePage implements OnInit {
               private alertCtrl: AlertController,
               private router: Router) {}
 
-  ngOnInit(): void {
-    if (!this.model.currentMap) {
-      this.saving = true;
-      this.backendService.loadCurrentPlayerMap().subscribe(data => {
-        this.model.updatePlayerMap(data);
-        this.map = data;
-        this.calcRows();
-        this.saving = false;
-      });
-    } else {
-      this.map = this.model.currentMap;
-      this.calcRows();
-    }
+  ionViewWillEnter(): void {
+    this.map = this.model.currentMap;
+    this.calcRows();
   }
 
   private calcRows() {
@@ -53,8 +43,7 @@ export class HomePage implements OnInit {
     if (tile.discoverable) {
       this.saving = true;
       this.backendService.discoverMapTile(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
-        this.model.updatePlayerMap(data);
-        this.map = data;
+        this.map = data.currentMap;
         this.saving = false;
       }, error => {
         this.saving = false;
@@ -73,23 +62,13 @@ export class HomePage implements OnInit {
         let toMap = this.model.playerMaps.find(m => m.mapId === tile.portalToMapId);
         if (toMap) {
           this.backendService.setCurrentMap(toMap.mapId).subscribe(() => {
-            if (toMap.tiles) {
-              this.model.currentMap = toMap;
-              this.map = toMap;
-              this.calcRows();
-              this.saving = false;
-            } else {
-              this.backendService.getPlayerMap(toMap.mapId).subscribe(data => {
-                this.model.currentMap = data;
-                this.map = data;
-                this.calcRows();
-                this.saving = false;
-              });
-            }
+            this.map = this.model.currentMap;
+            this.calcRows();
+            this.saving = false;
           });
         } else {
           this.backendService.discoverMap(tile.portalToMapId).subscribe(data => {
-            this.model.updatePlayerMap(data);
+            this.map = data.currentMap;
             this.calcRows();
             this.saving = false;
           });

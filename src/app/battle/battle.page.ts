@@ -6,6 +6,7 @@ import {HeroSkill} from '../domain/heroSkill.model';
 import {BackendService} from '../services/backend.service';
 import {BattleStep} from '../domain/battleStep.model';
 import {AlertController} from '@ionic/angular';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-battle',
@@ -30,7 +31,8 @@ export class BattlePage implements OnInit {
 
   constructor(private model: Model,
               private backendService: BackendService,
-              private alertCtrl: AlertController) {}
+              private alertCtrl: AlertController,
+              private router: Router) {}
 
   ngOnInit() {
     setTimeout(() => this.initBattle(this.model.ongoingBattle), 1000);
@@ -84,7 +86,7 @@ export class BattlePage implements OnInit {
     if (!this.nextStageBattle && !this.loadingNextStageInitiated) {
       this.loadingNextStageInitiated = true;
       this.backendService.getBattle(this.battle.nextBattleId).subscribe(data => {
-        this.nextStageBattle = data;
+        this.nextStageBattle = data.ongoingBattle;
         this.loadingNextStageInitiated = false;
         this.activateNextStageBattle();
       });
@@ -185,8 +187,7 @@ export class BattlePage implements OnInit {
     this.lastKnownStepIdx = this.battle.steps.length - 1;
     this.loading = true;
     this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
-      this.model.ongoingBattle = data;
-      this.initBattle(data);
+      this.initBattle(data.ongoingBattle);
       this.loading = false;
     }, error => {
       this.loading = false;
@@ -203,8 +204,7 @@ export class BattlePage implements OnInit {
       this.lastKnownStepIdx = this.battle.steps.length - 1;
       this.loading = true;
       this.backendService.takeAutoTurn(this.battle, this.activeHero).subscribe(data => {
-        this.model.ongoingBattle = data;
-        this.initBattle(data);
+        this.initBattle(data.ongoingBattle);
         this.loading = false;
       }, error => {
         this.loading = false;
@@ -221,8 +221,7 @@ export class BattlePage implements OnInit {
     if (this.battle.status === 'PLAYER_TURN') {
       this.loading = true;
       this.backendService.surrender(this.battle).subscribe(data => {
-        this.model.ongoingBattle = data;
-        this.initBattle(data);
+        this.initBattle(data.ongoingBattle);
         this.loading = false;
       }, error => {
         this.loading = false;
@@ -268,4 +267,7 @@ export class BattlePage implements OnInit {
     }, 10);
   }
 
+  leaveBattle() {
+    this.router.navigateByUrl('/home');
+  }
 }
