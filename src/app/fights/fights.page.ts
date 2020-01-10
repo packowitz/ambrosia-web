@@ -5,13 +5,13 @@ import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
 import {Player} from '../domain/player.model';
 import {Router} from '@angular/router';
-import {Dungeon} from '../domain/dungeon.model';
+import {Fight} from '../domain/fight.model';
 
 @Component({
-  selector: 'dungeons',
-  templateUrl: 'dungeons.page.html'
+  selector: 'fights',
+  templateUrl: 'fights.page.html'
 })
-export class DungeonsPage implements OnInit {
+export class FightsPage implements OnInit {
 
   saving = false;
 
@@ -25,22 +25,22 @@ export class DungeonsPage implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.model.dungeons) {
+    if (!this.model.fights) {
       this.saving = true;
-      this.backendService.loadDungeons().subscribe(data => {
-        this.model.dungeons = data;
+      this.backendService.loadFights().subscribe(data => {
+        this.model.fights = data;
         this.saving = false;
       });
     }
   }
 
-  gotoDungeonDetails(dungeon: Dungeon) {
-    this.router.navigateByUrl('/dungeons/' + dungeon.id);
+  gotoFightDetails(fight: Fight) {
+    this.router.navigateByUrl('/fights/' + fight.id);
   }
 
-  newDungeon() {
+  newFight() {
     this.alertCtrl.create({
-      subHeader: 'New dungeon using service account ' + this.serviceAccount.name,
+      subHeader: 'New fight using service account ' + this.serviceAccount.name,
       inputs: [
         {
           name: 'name',
@@ -57,8 +57,8 @@ export class DungeonsPage implements OnInit {
           handler: (data) => {
             if (data.name) {
               this.saving = true;
-              this.backendService.createDungeon(data.name, this.serviceAccount).subscribe(dungeon => {
-                this.model.dungeons.push(dungeon);
+              this.backendService.createFight(data.name, this.serviceAccount).subscribe(fight => {
+                this.model.fights.push(fight);
                 this.saving = false;
               });
             }

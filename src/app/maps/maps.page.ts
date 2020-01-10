@@ -5,7 +5,7 @@ import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
 import {Player} from '../domain/player.model';
 import {Router} from '@angular/router';
-import {Dungeon} from '../domain/dungeon.model';
+import {Fight} from '../domain/fight.model';
 import {Map} from '../domain/map.model';
 
 @Component({

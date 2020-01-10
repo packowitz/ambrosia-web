@@ -108,16 +108,16 @@
         </ion-item>
         <ion-item>
           <ion-label>Icon</ion-label>
-          <ion-select [(ngModel)]="tile.fightIcon" placeholder="select" [required]="tile.dungeonId" (ionChange)="fightIconChanged()">
+          <ion-select [(ngModel)]="tile.fightIcon" placeholder="select" [required]="tile.fightId" (ionChange)="fightIconChanged()">
             <ion-select-option [value]="null">NONE</ion-select-option>
             <ion-select-option *ngFor="let icon of enumService.getMapTileFightIcons()" [value]="icon">{{icon}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label>Fight</ion-label>
-          <ion-select [(ngModel)]="tile.dungeonId" placeholder="select" [required]="tile.fightIcon" (ionChange)="dungeonChanged()">
+          <ion-select [(ngModel)]="tile.fightId" placeholder="select" [required]="tile.fightIcon" (ionChange)="fightChanged()">
             <ion-select-option [value]="null">NONE</ion-select-option>
-            <ion-select-option *ngFor="let dungeon of model.dungeons" [value]="dungeon.id">{{dungeon.name}}</ion-select-option>
+            <ion-select-option *ngFor="let fight of model.fights" [value]="fight.id">{{fight.name}}</ion-select-option>
           </ion-select>
         </ion-item>
       </div>

@@ -15,8 +15,8 @@ import {HeroSkill} from '../domain/heroSkill.model';
 import {API_URL} from '../../environments/environment';
 import {JewelType} from './enum.service';
 import {Model} from './model.service';
-import {Dungeon} from '../domain/dungeon.model';
-import {DungeonResolved} from '../domain/dungeonResolved.model';
+import {Fight} from '../domain/fight.model';
+import {FightResolved} from '../domain/fightResolved.model';
 import {Map} from '../domain/map.model';
 import {PlayerMap} from '../domain/playerMap.model';
 
@@ -232,28 +232,28 @@ export class BackendService {
         return this.http.get<Hero[]>(API_URL + '/admin/service_account/' + id + '/heroes');
     }
 
-    loadDungeons(): Observable<Dungeon[]> {
-        return this.http.get<Dungeon[]>(API_URL + '/dungeon');
+    loadFights(): Observable<Fight[]> {
+        return this.http.get<Fight[]>(API_URL + '/fight');
     }
 
-    createDungeon(name: string, serviceAccount: Player): Observable<Dungeon> {
+    createFight(name: string, serviceAccount: Player): Observable<Fight> {
         let request = {
             name: name,
             serviceAccountId: serviceAccount.id
         };
-        return this.http.post<Dungeon>(API_URL + '/admin/dungeon/new', request);
+        return this.http.post<Fight>(API_URL + '/admin/fight/new', request);
     }
 
-    getDungeon(id): Observable<DungeonResolved> {
-        return this.http.get<DungeonResolved>(API_URL + '/dungeon/' + id);
+    getFight(id): Observable<FightResolved> {
+        return this.http.get<FightResolved>(API_URL + '/fight/' + id);
     }
 
-    saveDungeon(dungeon: DungeonResolved): Observable<DungeonResolved> {
-        let request: Dungeon = {
-            id: dungeon.id,
-            name: dungeon.name,
-            serviceAccountId: dungeon.serviceAccount.id,
-            stages: dungeon.stages.map(s => {
+    saveFight(fight: FightResolved): Observable<FightResolved> {
+        let request: Fight = {
+            id: fight.id,
+            name: fight.name,
+            serviceAccountId: fight.serviceAccount.id,
+            stages: fight.stages.map(s => {
                 return {
                     id: s.id,
                     stage: s.stage,
@@ -264,7 +264,7 @@ export class BackendService {
                 };
             })
         };
-        return this.http.put<DungeonResolved>(API_URL + '/admin/dungeon/' + dungeon.id, request);
+        return this.http.put<FightResolved>(API_URL + '/admin/fight/' + fight.id, request);
     }
 
     startCampaignFight(mapId: number, posX: number, posY: number, team: Team): Observable<PlayerActionResponse> {

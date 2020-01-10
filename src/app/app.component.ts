@@ -42,8 +42,8 @@ export class AppComponent {
             ]
         },
         {
-            title: 'Dungeons',
-            url: '/dungeons',
+            title: 'Fights',
+            url: '/fights',
             icon: 'hydra',
             admin: true
         },

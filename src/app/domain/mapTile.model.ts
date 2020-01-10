@@ -7,7 +7,7 @@ export class MapTile {
     greenAlwaysRevealed: boolean;
     blueAlwaysRevealed: boolean;
     structure: string;
-    dungeonId: number;
+    fightId: number;
     fightIcon: string;
     fightRepeatable: boolean;
     portalToMapId: number;

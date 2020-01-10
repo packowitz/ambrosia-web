@@ -7,7 +7,7 @@ import {PlayerActionResponse} from './backend.service';
 import {Team} from '../domain/team.model';
 import {Battle} from '../domain/battle.model';
 import {environment} from '../../environments/environment';
-import {Dungeon} from '../domain/dungeon.model';
+import {Fight} from '../domain/fight.model';
 import {Map} from '../domain/map.model';
 import {PlayerMap} from '../domain/playerMap.model';
 
@@ -26,7 +26,7 @@ export class Model {
     teams: Team[];
     ongoingBattle?: Battle;
     serviceAccounts: Player[] = [];
-    dungeons: Dungeon[];
+    fights: Fight[];
     maps: Map[];
     playerMaps: PlayerMap[];
     currentMap: PlayerMap;

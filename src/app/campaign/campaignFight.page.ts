@@ -4,7 +4,7 @@ import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Hero} from '../domain/hero.model';
-import {DungeonResolved} from '../domain/dungeonResolved.model';
+import {FightResolved} from '../domain/fightResolved.model';
 import {Team} from '../domain/team.model';
 import {PlayerMap} from '../domain/playerMap.model';
 import {PlayerMapTile} from '../domain/playerMapTile.model';
@@ -21,7 +21,7 @@ export class CampaignFightPage implements OnInit {
   map: PlayerMap;
   tile: PlayerMapTile;
 
-  dungeon: DungeonResolved;
+  fight: FightResolved;
   team: Team;
   hero1?: Hero;
   hero2?: Hero;
@@ -42,8 +42,8 @@ export class CampaignFightPage implements OnInit {
     let posY = Number(this.route.snapshot.paramMap.get('posY'));
     this.map = this.model.playerMaps.find(m => m.mapId === mapId);
     this.tile = this.map.tiles.find(t => t.posX === posX && t.posY === posY);
-    this.backendService.getDungeon(this.tile.fightId).subscribe(data => {
-      this.dungeon = data;
+    this.backendService.getFight(this.tile.fightId).subscribe(data => {
+      this.fight = data;
     });
     if (!this.model.teams) {
       this.backendService.getOwnTeams().subscribe(data => {

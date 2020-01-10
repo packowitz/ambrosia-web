@@ -1,6 +1,6 @@
 import {BattleHero} from './battleHero.model';
 import {BattleStep} from './battleStep.model';
-import {Dungeon} from './dungeon.model';
+import {Fight} from './fight.model';
 
 export class Battle {
     id: number;
@@ -8,8 +8,8 @@ export class Battle {
     status: string;
     previousBattleId?: number;
     nextBattleId?: number;
-    dungeon?: Dungeon;
-    dungeonStage?: number;
+    fight?: Fight;
+    fightStage?: number;
     mapId?: number;
     mapPosX?: number;
     mapPosY?: number;

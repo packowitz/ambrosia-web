@@ -27,8 +27,8 @@ const routes: Routes = [
         canActivate: [AdminGuard]
     },
     {
-        path: 'dungeons',
-        loadChildren: './dungeons/dungeons.module#DungeonsModule',
+        path: 'fights',
+        loadChildren: './fights/fights.module#FightsModule',
         canActivate: [AdminGuard]
     },
     {

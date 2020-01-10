@@ -1,4 +1,4 @@
-export class DungeonStage {
+export class FightStage {
     id: number;
     stage: number;
     hero1Id?: number;

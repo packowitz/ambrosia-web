@@ -4,25 +4,23 @@ import {AlertController} from '@ionic/angular';
 import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
 import {Player} from '../domain/player.model';
-import {Dungeon} from '../domain/dungeon.model';
 import {ActivatedRoute} from '@angular/router';
 import {Hero} from '../domain/hero.model';
-import {DungeonStage} from '../domain/dungeonStage.model';
-import {DungeonResolved} from '../domain/dungeonResolved.model';
-import {DungeonStageResolved} from '../domain/dungeonStageResolved.model';
+import {FightResolved} from '../domain/fightResolved.model';
+import {FightStageResolved} from '../domain/fightStageResolved.model';
 
 @Component({
-  selector: 'dungeon-details',
-  templateUrl: 'dungeonDetails.page.html'
+  selector: 'fight-details',
+  templateUrl: 'fightDetails.page.html'
 })
-export class DungeonDetailsPage implements OnInit {
+export class FightDetailsPage implements OnInit {
 
   saving = false;
 
-  dungeon: DungeonResolved;
+  fight: FightResolved;
   serviceAccount: Player;
   heroes: Hero[];
-  stage: DungeonStageResolved;
+  stage: FightStageResolved;
 
   constructor(private route: ActivatedRoute,
               private backendService: BackendService,
@@ -33,8 +31,8 @@ export class DungeonDetailsPage implements OnInit {
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
-    this.backendService.getDungeon(id).subscribe(data => {
-      this.dungeon = data;
+    this.backendService.getFight(id).subscribe(data => {
+      this.fight = data;
       this.serviceAccount = data.serviceAccount;
       this.backendService.getServiceAccountHeroes(this.serviceAccount.id).subscribe(heroes => {
         this.heroes = heroes;
@@ -43,20 +41,20 @@ export class DungeonDetailsPage implements OnInit {
   }
 
   addStage() {
-    let stage = new DungeonStageResolved();
-    stage.stage = this.dungeon.stages.length + 1;
-    this.dungeon.stages.push(stage);
+    let stage = new FightStageResolved();
+    stage.stage = this.fight.stages.length + 1;
+    this.fight.stages.push(stage);
     this.stage = stage;
   }
 
   removeLastStage() {
-    this.dungeon.stages.splice(this.dungeon.stages.length - 1, 1);
-    if (this.stage.stage >= this.dungeon.stages.length) {
+    this.fight.stages.splice(this.fight.stages.length - 1, 1);
+    if (this.stage.stage >= this.fight.stages.length) {
       this.stage = null;
     }
   }
 
-  selectStage(toSelect: DungeonStageResolved) {
+  selectStage(toSelect: FightStageResolved) {
     this.stage = toSelect;
   }
 
@@ -82,11 +80,11 @@ export class DungeonDetailsPage implements OnInit {
     }
   }
 
-  saveDungeon() {
+  saveFight() {
     this.saving = true;
     this.stage = null;
-    this.backendService.saveDungeon(this.dungeon).subscribe(data => {
-      this.dungeon = data;
+    this.backendService.saveFight(this.fight).subscribe(data => {
+      this.fight = data;
       this.saving = false;
     });
   }

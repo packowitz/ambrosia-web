@@ -42,9 +42,9 @@ export class MapDetailsPage implements OnInit {
     } else {
       this.setMap(this.model.maps.find(m => m.id === id));
     }
-    if (!this.model.dungeons) {
-      this.backendService.loadDungeons().subscribe(data => {
-        this.model.dungeons = data;
+    if (!this.model.fights) {
+      this.backendService.loadFights().subscribe(data => {
+        this.model.fights = data;
       });
     }
   }
@@ -154,12 +154,12 @@ export class MapDetailsPage implements OnInit {
 
   fightIconChanged() {
     if (!this.tile.fightIcon) {
-      this.tile.dungeonId = null;
+      this.tile.fightId = null;
     }
   }
 
-  dungeonChanged() {
-    if (!this.tile.dungeonId) {
+  fightChanged() {
+    if (!this.tile.fightId) {
       this.tile.fightIcon = null;
     }
   }
