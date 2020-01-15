@@ -5,6 +5,8 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {FightsPage} from './fights.page';
 import {FightDetailsPage} from './fightDetails.page';
+import {FightStageConfigsPage} from './fightStageConfigs.page';
+import {FightStageConfigModal} from './fightStageConfig.modal';
 
 @NgModule({
   imports: [
@@ -17,11 +19,16 @@ import {FightDetailsPage} from './fightDetails.page';
         component: FightsPage
       },
       {
+        path: 'configs',
+        component: FightStageConfigsPage
+      },
+      {
         path: ':id',
         component: FightDetailsPage
       }
     ])
   ],
-  declarations: [FightsPage, FightDetailsPage]
+  declarations: [FightsPage, FightDetailsPage, FightStageConfigsPage, FightStageConfigModal],
+  entryComponents: [FightStageConfigModal]
 })
 export class FightsModule {}

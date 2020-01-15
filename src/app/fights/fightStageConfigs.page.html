@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        Fight Stage Configs
+        <ion-button color="success" size="small" (click)="newConfig()">New Config</ion-button>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<ion-content *ngIf="model.fightStageConfigs">
+  <ion-list>
+    <ion-list-header>Define what happens after succeeding a stage</ion-list-header>
+    <ion-item *ngFor="let config of model.fightStageConfigs" (click)="showConfig(config)" detail class="pointer">
+      <ion-label>{{config.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

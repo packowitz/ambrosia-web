@@ -24,6 +24,7 @@ export class AppComponent {
         },
         {
             title: 'Base heroes',
+            url: '/herobase/list',
             path: '/herobase/',
             admin: true,
             open: false,
@@ -33,11 +34,6 @@ export class AppComponent {
                     title: 'Create',
                     url: '/herobase/create',
                     icon: 'person-add'
-                },
-                {
-                    title: 'List',
-                    url: '/herobase/list',
-                    icon: 'list'
                 }
             ]
         },
@@ -45,7 +41,15 @@ export class AppComponent {
             title: 'Fights',
             url: '/fights',
             icon: 'hydra',
-            admin: true
+            admin: true,
+            open: false,
+            children: [
+                {
+                    title: 'Configs',
+                    url: '/fights/configs',
+                    icon: 'cog'
+                }
+            ]
         },
         {
             title: 'Maps',

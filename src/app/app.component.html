@@ -18,20 +18,22 @@
         <div *ngFor="let p of pages">
           <div *ngIf="!p.admin || model.player.admin">
             <ion-menu-toggle *ngIf="p.url" autoHide="false">
-              <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active">
+              <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active" (click)="p.open = !p.open">
                 <i class="ra ra-{{p.icon}}" slot="start"></i>
+                <ion-icon slot="end" name="arrow-forward" *ngIf="p.children?.length > 0 && !p.open"></ion-icon>
+                <ion-icon slot="end" name="arrow-down" *ngIf="p.children?.length > 0 && p.open"></ion-icon>
                 <ion-label>{{p.title}}</ion-label>
               </ion-item>
             </ion-menu-toggle>
 
-            <ion-item button *ngIf="p.children?.length > 0" (click)="p.open = !p.open" [class.parent-active]="p.open" detail="false">
+            <ion-item button *ngIf="!p.url && p.children?.length > 0" (click)="p.open = !p.open" [class.parent-active]="p.open" detail="false">
               <i class="ra ra-{{p.icon}}" slot="start"></i>
               <ion-icon slot="end" name="arrow-forward" *ngIf="!p.open"></ion-icon>
               <ion-icon slot="end" name="arrow-down" *ngIf="p.open"></ion-icon>
               <ion-label>{{p.title}}</ion-label>
             </ion-item>
 
-            <ion-list *ngIf="p.open">
+            <ion-list *ngIf="p.open && p.children?.length > 0">
               <ion-menu-toggle autoHide="false">
                 <ion-item *ngFor="let sub of p.children" class="sub-item" [routerLink]="sub.url" routerDirection="root" routerLinkActive="active">
                   <i *ngIf="sub.icon" class="ra ra-{{sub.icon}}" slot="start"></i>

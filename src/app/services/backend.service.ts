@@ -19,6 +19,7 @@ import {Fight} from '../domain/fight.model';
 import {FightResolved} from '../domain/fightResolved.model';
 import {Map} from '../domain/map.model';
 import {PlayerMap} from '../domain/playerMap.model';
+import {FightStageConfig} from '../domain/fightStageConfig.model';
 
 
 export class PlayerActionResponse {
@@ -265,6 +266,21 @@ export class BackendService {
             })
         };
         return this.http.put<FightResolved>(API_URL + '/admin/fight/' + fight.id, request);
+    }
+
+    loadFightStageConfigs(): Observable<FightStageConfig[]> {
+        return this.http.get<FightStageConfig[]>(API_URL + '/admin/fight_stage_config');
+    }
+
+    createFightStageConfig(name: string): Observable<FightStageConfig> {
+        let request = {
+            name: name
+        };
+        return this.http.post<FightStageConfig>(API_URL + '/admin/fight_stage_config/new', request);
+    }
+
+    updateFightStageConfig(config: FightStageConfig): Observable<FightStageConfig> {
+        return this.http.put<FightStageConfig>(API_URL + '/admin/fight_stage_config/' + config.id, config);
     }
 
     startCampaignFight(mapId: number, posX: number, posY: number, team: Team): Observable<PlayerActionResponse> {

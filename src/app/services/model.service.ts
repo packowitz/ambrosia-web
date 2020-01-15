@@ -10,6 +10,7 @@ import {environment} from '../../environments/environment';
 import {Fight} from '../domain/fight.model';
 import {Map} from '../domain/map.model';
 import {PlayerMap} from '../domain/playerMap.model';
+import {FightStageConfig} from '../domain/fightStageConfig.model';
 
 @Injectable({
     providedIn: 'root'
@@ -27,6 +28,7 @@ export class Model {
     ongoingBattle?: Battle;
     serviceAccounts: Player[] = [];
     fights: Fight[];
+    fightStageConfigs: FightStageConfig[];
     maps: Map[];
     playerMaps: PlayerMap[];
     currentMap: PlayerMap;
