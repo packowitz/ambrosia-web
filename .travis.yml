@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "11.0"
+branches:
+  only:
+    - master
+before_script:
+  - npm install -g ionic
+script:
+  - npm install
+  - ionic build --prod
+deploy:
+  skip_cleanup: true
+  provider: firebase
+  token:
+    secure: ""
