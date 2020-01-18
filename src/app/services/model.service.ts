@@ -145,4 +145,15 @@ export class Model {
         }
     }
 
+    updateFightStageConfig(config?: FightStageConfig) {
+        if (config) {
+            let idx = this.fightStageConfigs.findIndex(g => g.id === config.id);
+            if (idx >= 0) {
+                this.fightStageConfigs[idx] = config;
+            } else {
+                this.fightStageConfigs.push(config);
+            }
+        }
+    }
+
 }

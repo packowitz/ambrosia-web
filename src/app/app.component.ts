@@ -45,9 +45,14 @@ export class AppComponent {
             open: false,
             children: [
                 {
-                    title: 'Configs',
+                    title: 'Stage Configs',
                     url: '/fights/configs',
                     icon: 'cog'
+                },
+                {
+                    title: 'Environments',
+                    url: '/fights/environments',
+                    icon: 'defibrillate'
                 }
             ]
         },

@@ -1,3 +1,50 @@
-<ion-content>
-    {{config.name}} Modal
+<ion-content class="loading-indicator-boundary">
+    <div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+    <ion-row>
+        <ion-col sizeMd="12">
+            <ion-item>
+                <ion-button fill="clear" (click)="dismiss()" color="medium"><ion-icon name="close"></ion-icon></ion-button>
+                <div class="full-width flex-center">
+                    <div>{{config.name}} stage config</div>
+                </div>
+                <ion-button slot="end" color="success" (click)="save()">Save</ion-button>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input [(ngModel)]="config.name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Remove all debuffs</ion-label>
+            <ion-checkbox slot="start" [(ngModel)]="config.debuffsRemoved"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label position="start">Debuffs duration change</ion-label>
+            <ion-input [(ngModel)]="config.debuffDurationChange"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Remove all buffs</ion-label>
+            <ion-checkbox slot="start" [(ngModel)]="config.buffsRemoved"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label position="start">Buffs duration change</ion-label>
+            <ion-input [(ngModel)]="config.buffDurationChange"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="start">HP healing (0-100 %)</ion-label>
+            <ion-input [(ngModel)]="config.hpHealing"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="start">Armor repairing (0-100 %)</ion-label>
+            <ion-input [(ngModel)]="config.armorRepair"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="start">Speedbar change</ion-label>
+            <ion-select [(ngModel)]="config.speedBarChange">
+                <ion-select-option *ngFor="let change of enumService.getFightSpeedbarChanges()" [value]="change">{{change}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
 </ion-content>
