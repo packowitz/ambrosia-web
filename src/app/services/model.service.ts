@@ -11,6 +11,7 @@ import {Fight} from '../domain/fight.model';
 import {Map} from '../domain/map.model';
 import {PlayerMap} from '../domain/playerMap.model';
 import {FightStageConfig} from '../domain/fightStageConfig.model';
+import {FightEnvironment} from '../domain/fightEnvironment.model';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,7 @@ export class Model {
     serviceAccounts: Player[] = [];
     fights: Fight[];
     fightStageConfigs: FightStageConfig[];
+    fightEnvironments: FightEnvironment[];
     maps: Map[];
     playerMaps: PlayerMap[];
     currentMap: PlayerMap;
@@ -147,11 +149,22 @@ export class Model {
 
     updateFightStageConfig(config?: FightStageConfig) {
         if (config) {
-            let idx = this.fightStageConfigs.findIndex(g => g.id === config.id);
+            let idx = this.fightStageConfigs.findIndex(c => c.id === config.id);
             if (idx >= 0) {
                 this.fightStageConfigs[idx] = config;
             } else {
                 this.fightStageConfigs.push(config);
+            }
+        }
+    }
+
+    updateFightEnvironment(env?: FightEnvironment) {
+        if (env) {
+            let idx = this.fightEnvironments.findIndex(e => e.id === env.id);
+            if (idx >= 0) {
+                this.fightEnvironments[idx] = env;
+            } else {
+                this.fightEnvironments.push(env);
             }
         }
     }

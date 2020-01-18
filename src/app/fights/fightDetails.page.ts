@@ -38,6 +38,24 @@ export class FightDetailsPage implements OnInit {
         this.heroes = heroes;
       });
     });
+    if (!this.model.fightStageConfigs) {
+      this.backendService.loadFightStageConfigs().subscribe(data => {
+        this.model.fightStageConfigs = data;
+      });
+    }
+    if (!this.model.fightEnvironments) {
+      this.backendService.loadFightEnvironments().subscribe(data => {
+        this.model.fightEnvironments = data;
+      });
+    }
+  }
+
+  selectStageConfig(event) {
+    this.fight.stageConfig = event.detail.value;
+  }
+
+  selectEnvironment(event) {
+    this.fight.environment = event.detail.value;
   }
 
   addStage() {

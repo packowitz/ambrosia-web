@@ -14,6 +14,26 @@
 
 <div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
 <ion-content *ngIf="fight">
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input [(ngModel)]="fight.name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label slot="start">Finishing Stage Config</ion-label>
+        <ion-select (ionChange)="selectStageConfig($event)">
+          <ion-select-option *ngFor="let config of model.fightStageConfigs" [value]="config" [selected]="config.id == fight.stageConfig.id">{{config.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label slot="start">Fight environment</ion-label>
+        <ion-select (ionChange)="selectEnvironment($event)">
+          <ion-select-option *ngFor="let environment of model.fightEnvironments" [value]="environment" [selected]="environment.id == fight.environment.id">{{environment.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
   <ion-card *ngIf="heroes">
     <ion-card-header>
       <ion-card-title>

@@ -20,6 +20,7 @@ import {FightResolved} from '../domain/fightResolved.model';
 import {Map} from '../domain/map.model';
 import {PlayerMap} from '../domain/playerMap.model';
 import {FightStageConfig} from '../domain/fightStageConfig.model';
+import {FightEnvironment} from '../domain/fightEnvironment.model';
 
 
 export class PlayerActionResponse {
@@ -254,6 +255,8 @@ export class BackendService {
             id: fight.id,
             name: fight.name,
             serviceAccountId: fight.serviceAccount.id,
+            stageConfig: fight.stageConfig,
+            environment: fight.environment,
             stages: fight.stages.map(s => {
                 return {
                     id: s.id,
@@ -281,6 +284,21 @@ export class BackendService {
 
     updateFightStageConfig(config: FightStageConfig): Observable<FightStageConfig> {
         return this.http.put<FightStageConfig>(API_URL + '/admin/fight_stage_config/' + config.id, config);
+    }
+
+    loadFightEnvironments(): Observable<FightEnvironment[]> {
+        return this.http.get<FightEnvironment[]>(API_URL + '/admin/fight_environment');
+    }
+
+    createFightEnvironment(name: string): Observable<FightEnvironment> {
+        let request = {
+            name: name
+        };
+        return this.http.post<FightEnvironment>(API_URL + '/admin/fight_environment/new', request);
+    }
+
+    updateFightEnvironment(env: FightEnvironment): Observable<FightEnvironment> {
+        return this.http.put<FightEnvironment>(API_URL + '/admin/fight_environment/' + env.id, env);
     }
 
     startCampaignFight(mapId: number, posX: number, posY: number, team: Team): Observable<PlayerActionResponse> {

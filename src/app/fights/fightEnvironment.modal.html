@@ -1,0 +1,64 @@
+<ion-content class="loading-indicator-boundary">
+    <div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+    <ion-row>
+        <ion-col sizeMd="12">
+            <ion-item>
+                <ion-button fill="clear" (click)="dismiss()" color="medium"><ion-icon name="close"></ion-icon></ion-button>
+                <div class="full-width flex-center">
+                    <div>{{environment.name}} stage config</div>
+                </div>
+                <ion-button slot="end" color="success" (click)="save()">Save</ion-button>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input [(ngModel)]="environment.name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="number-input-label" position="start">Player healing decrease (0-100 %)</ion-label>
+            <ion-input class="number-input" type="number" min="0" max="100" [(ngModel)]="environment.playerHealingDec"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Player HOT blocked</ion-label>
+            <ion-checkbox slot="start" [(ngModel)]="environment.playerHotBlocked"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label class="number-input-label" position="start">Player DOT damage increase (0-&infin; %)</ion-label>
+            <ion-input class="number-input" type="number" min="0" [(ngModel)]="environment.playerDotDmgInc"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="number-input-label" position="start">Opponent DOT damage decrease (0-100 %)</ion-label>
+            <ion-input class="number-input" type="number" min="0" max="100" [(ngModel)]="environment.oppDotDmgDec"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="number-input-label" position="start">Player green damage increase (0-&infin; %)</ion-label>
+            <ion-input class="number-input" type="number" min="0" [(ngModel)]="environment.playerGreenDmgInc"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="number-input-label" position="start">Player red damage increase (0-&infin; %)</ion-label>
+            <ion-input class="number-input" type="number" min="0" [(ngModel)]="environment.playerRedDmgInc"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="number-input-label" position="start">Player blue damage increase (0-&infin; %)</ion-label>
+            <ion-input class="number-input" type="number" min="0" [(ngModel)]="environment.playerBlueDmgInc"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="number-input-label" position="start">Opp green damage decrease (0-100 %)</ion-label>
+            <ion-input class="number-input" type="number" min="0" max="100" [(ngModel)]="environment.oppGreenDmgDec"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="number-input-label" position="start">Opp red damage decrease (0-100 %)</ion-label>
+            <ion-input class="number-input" type="number" min="0" max="100" [(ngModel)]="environment.oppRedDmgDec"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="number-input-label" position="start">Player speed bar slowed (0-100 %)</ion-label>
+            <ion-input class="number-input" type="number" min="0" max="100" [(ngModel)]="environment.playerSpeedBarSlowed"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="number-input-label" position="start">Opponent speed bar speed up (0-&infin; %)</ion-label>
+            <ion-input class="number-input" type="number" min="0" [(ngModel)]="environment.oppSpeedBarFastened"></ion-input>
+        </ion-item>
+    </ion-list>
+</ion-content>

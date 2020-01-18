@@ -4,14 +4,15 @@ import {ModalController} from '@ionic/angular';
 import {FightStageConfig} from '../domain/fightStageConfig.model';
 import {EnumService} from '../services/enum.service';
 import {Model} from '../services/model.service';
+import {FightEnvironment} from '../domain/fightEnvironment.model';
 
 @Component({
-    selector: 'fight-stage-config-modal',
-    templateUrl: 'fightStageConfig.modal.html'
+    selector: 'fight-environment-modal',
+    templateUrl: 'fightEnvironment.modal.html'
 })
-export class FightStageConfigModal {
+export class FightEnvironmentModal {
 
-    @Input() config: FightStageConfig;
+    @Input() environment: FightEnvironment;
     saving = false;
 
     constructor(private backendService: BackendService,
@@ -23,9 +24,9 @@ export class FightStageConfigModal {
 
     save() {
         this.saving = true;
-        this.backendService.updateFightStageConfig(this.config).subscribe(data => {
-            this.config = data;
-            this.model.updateFightStageConfig(data);
+        this.backendService.updateFightEnvironment(this.environment).subscribe(data => {
+            this.environment = data;
+            this.model.updateFightEnvironment(data);
             this.saving = false;
             this.dismiss();
         });

@@ -2,15 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {AlertController, ModalController} from '@ionic/angular';
 import {Model} from '../services/model.service';
-import {FightStageConfig} from '../domain/fightStageConfig.model';
-import {GearModal} from '../barracks/gear.modal';
-import {FightStageConfigModal} from './fightStageConfig.modal';
+import {FightEnvironment} from '../domain/fightEnvironment.model';
+import {FightEnvironmentModal} from './fightEnvironment.modal';
 
 @Component({
-  selector: 'fight-stage-configs',
-  templateUrl: 'fightStageConfigs.page.html'
+  selector: 'fight-stage-environments',
+  templateUrl: 'fightEnvironments.page.html'
 })
-export class FightStageConfigsPage implements OnInit {
+export class FightEnvironmentsPage implements OnInit {
 
   saving = false;
 
@@ -21,27 +20,27 @@ export class FightStageConfigsPage implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.model.fightStageConfigs) {
+    if (!this.model.fightEnvironments) {
       this.saving = true;
-      this.backendService.loadFightStageConfigs().subscribe(data => {
-        this.model.fightStageConfigs = data;
+      this.backendService.loadFightEnvironments().subscribe(data => {
+        this.model.fightEnvironments = data;
         this.saving = false;
       });
     }
   }
 
-  showConfig(config: FightStageConfig) {
+  showEnvironment(env: FightEnvironment) {
     this.modalCtrl.create({
-      component: FightStageConfigModal,
+      component: FightEnvironmentModal,
       componentProps: {
-        config: config
+        environment: env
       }
     }).then(modal => modal.present());
   }
 
-  newConfig() {
+  newEnvironment() {
     this.alertCtrl.create({
-      subHeader: 'New fight stage config',
+      subHeader: 'New fight environment',
       inputs: [
         {
           name: 'name',
@@ -58,8 +57,8 @@ export class FightStageConfigsPage implements OnInit {
           handler: (data) => {
             if (data.name) {
               this.saving = true;
-              this.backendService.createFightStageConfig(data.name).subscribe(config => {
-                this.model.updateFightStageConfig(config);
+              this.backendService.createFightEnvironment(data.name).subscribe(config => {
+                this.model.updateFightEnvironment(config);
                 this.saving = false;
               });
             }

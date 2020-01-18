@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        Fight Environments
+        <ion-button color="success" size="small" (click)="newEnvironment()">New Environment</ion-button>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<ion-content *ngIf="model.fightEnvironments">
+  <ion-list>
+    <ion-list-header>Define some extravagant behaviour for your fight</ion-list-header>
+    <ion-item *ngFor="let environment of model.fightEnvironments" (click)="showEnvironment(environment)" detail class="pointer">
+      <ion-label>{{environment.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

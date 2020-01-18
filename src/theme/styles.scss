@@ -294,3 +294,13 @@ ion-row.table-row {
 .sample-bg-img {
   width: 220px !important;
 }
+
+.number-input {
+  width: 20%;
+  max-width: 100px;
+}
+
+.number-input-label {
+  max-width: inherit !important;
+  flex-grow: 1 !important;
+}

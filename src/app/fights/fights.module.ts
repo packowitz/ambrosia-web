@@ -7,6 +7,8 @@ import {FightsPage} from './fights.page';
 import {FightDetailsPage} from './fightDetails.page';
 import {FightStageConfigsPage} from './fightStageConfigs.page';
 import {FightStageConfigModal} from './fightStageConfig.modal';
+import {FightEnvironmentsPage} from './fightEnvironments.page';
+import {FightEnvironmentModal} from './fightEnvironment.modal';
 
 @NgModule({
   imports: [
@@ -23,12 +25,16 @@ import {FightStageConfigModal} from './fightStageConfig.modal';
         component: FightStageConfigsPage
       },
       {
+        path: 'environments',
+        component: FightEnvironmentsPage
+      },
+      {
         path: ':id',
         component: FightDetailsPage
       }
     ])
   ],
-  declarations: [FightsPage, FightDetailsPage, FightStageConfigsPage, FightStageConfigModal],
-  entryComponents: [FightStageConfigModal]
+  declarations: [FightsPage, FightDetailsPage, FightStageConfigsPage, FightStageConfigModal, FightEnvironmentsPage, FightEnvironmentModal],
+  entryComponents: [FightStageConfigModal, FightEnvironmentModal]
 })
 export class FightsModule {}
