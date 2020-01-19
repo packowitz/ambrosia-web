@@ -21,6 +21,7 @@ import {Map} from '../domain/map.model';
 import {PlayerMap} from '../domain/playerMap.model';
 import {FightStageConfig} from '../domain/fightStageConfig.model';
 import {FightEnvironment} from '../domain/fightEnvironment.model';
+import {Building} from '../domain/building.model';
 
 
 export class PlayerActionResponse {
@@ -33,6 +34,7 @@ export class PlayerActionResponse {
     gears?: Gear[];
     gearIdsRemovedFromArmory?: number[];
     jewelries?: Jewelry[];
+    buildings?: Building[];
     playerMaps?: PlayerMap[];
     currentMap?: PlayerMap;
     ongoingBattle?: Battle;

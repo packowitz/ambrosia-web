@@ -196,6 +196,13 @@ ion-row.table-row {
   max-width: 80px;
 }
 
+.building-avatar {
+  border-radius: 500px;
+  width: 80px;
+  overflow: hidden;
+  box-shadow: 0 0 0 2px #ce7f45, 0 0 0 5px #a9650d, 0 0 0 7px #7d4e0a;
+}
+
 .empty-hero-tile {
   width: 80px;
   height: 80px;

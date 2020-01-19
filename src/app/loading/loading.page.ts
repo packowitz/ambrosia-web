@@ -46,10 +46,20 @@ export class LoadingPage {
       }
     } else {
       let path = localStorage.getItem('ambrosia-page-requested');
-      if (path && path.length > 1 && path.startsWith('/') && path !== '/loading' && path !== '/login') {
-        this.router.navigateByUrl(path);
+      if (!path.startsWith('/battle') && this.model.ongoingBattle) {
+        this.alertCtrl.create({
+          subHeader: 'You an unfinished battle',
+          backdropDismiss: false,
+          buttons: [
+            {text: 'Got to battle', handler: () => this.router.navigateByUrl('/battle')}
+          ]
+        }).then(alert => alert.present());
       } else {
-        this.router.navigateByUrl('/home');
+        if (path && path.length > 1 && path.startsWith('/') && path !== '/loading' && path !== '/login') {
+          this.router.navigateByUrl(path);
+        } else {
+          this.router.navigateByUrl('/home');
+        }
       }
     }
   }

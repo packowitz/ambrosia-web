@@ -4,20 +4,19 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Home
+      {{model.player.name}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
 <ion-content>
-  <ion-card class="welcome-card">
-    <ion-card-header>
-      <ion-card-title>Welcome to Ambrosia</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Please use the menu to navigate to the right page.</p>
-    </ion-card-content>
+  <ion-card>
+    <div class="scrollable-list pa-2">
+      <div *ngIf="barracks" class="building-avatar mr-2">
+        <ion-img src="assets/img/buildings/BARRACKS.png" alt="Barracks" class="pointer" (click)="gotoBuilding(barracks.type)"></ion-img>
+      </div>
+    </div>
   </ion-card>
 
   <ion-card *ngIf="map">

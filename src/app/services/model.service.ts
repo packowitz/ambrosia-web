@@ -12,6 +12,7 @@ import {Map} from '../domain/map.model';
 import {PlayerMap} from '../domain/playerMap.model';
 import {FightStageConfig} from '../domain/fightStageConfig.model';
 import {FightEnvironment} from '../domain/fightEnvironment.model';
+import {Building} from '../domain/building.model';
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +32,7 @@ export class Model {
     fights: Fight[];
     fightStageConfigs: FightStageConfig[];
     fightEnvironments: FightEnvironment[];
+    buildings: Building[];
     maps: Map[];
     playerMaps: PlayerMap[];
     currentMap: PlayerMap;
@@ -81,6 +83,13 @@ export class Model {
         if (data.gearIdsRemovedFromArmory && this.gears) {
             this.gears = this.gears.filter(g => data.gearIdsRemovedFromArmory.findIndex(i => i === g.id) === -1);
         }
+        if (data.buildings) {
+            if (this.buildings) {
+                data.buildings.forEach(b => this.updateBuilding(b));
+            } else {
+                this.buildings = data.buildings;
+            }
+        }
         if (data.playerMaps) {
             if (this.playerMaps) {
                 data.playerMaps.forEach(m => this.updatePlayerMap(m));
@@ -118,6 +127,17 @@ export class Model {
                 this.gears[idx] = gear;
             } else {
                 this.gears.push(gear);
+            }
+        }
+    }
+
+    updateBuilding(building?: Building) {
+        if (building) {
+            let idx = this.buildings.findIndex(g => g.id === building.id);
+            if (idx >= 0) {
+                this.buildings[idx] = building;
+            } else {
+                this.buildings.push(building);
             }
         }
     }

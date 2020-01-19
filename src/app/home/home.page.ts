@@ -5,6 +5,7 @@ import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
 import {PlayerMap} from '../domain/playerMap.model';
 import {Router} from '@angular/router';
+import {Building} from '../domain/building.model';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,9 @@ import {Router} from '@angular/router';
 export class HomePage {
 
   saving = false;
+
+  barracks: Building;
+
   map: PlayerMap;
   rows: number[];
 
@@ -25,6 +29,7 @@ export class HomePage {
   ionViewWillEnter(): void {
     this.map = this.model.currentMap;
     this.calcRows();
+    this.barracks = this.model.buildings.find(b => b.type === 'BARRACKS');
   }
 
   private calcRows() {
@@ -77,6 +82,16 @@ export class HomePage {
       } else {
         // goto building
       }
+    }
+  }
+
+  gotoBuilding(type: string) {
+    switch(type) {
+      case 'BARRACKS':
+        this.router.navigateByUrl('/barracks');
+        break;
+      default:
+        break;
     }
   }
 

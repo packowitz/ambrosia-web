@@ -5,6 +5,8 @@ import {ConverterService} from '../services/converter.service';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {Model} from '../services/model.service';
 import {Gear} from '../domain/gear.model';
+import {Location} from '@angular/common';
+import {Building} from '../domain/building.model';
 
 @Component({
   selector: 'barracks',
@@ -18,9 +20,12 @@ export class BarracksPage implements OnInit {
   selectedSkill: HeroSkill;
   gearTypeFilter: string[] = [];
 
+  building: Building;
+
   constructor(private backendService: BackendService,
               private converter: ConverterService,
-              public model: Model) {
+              public model: Model,
+              private location: Location) {
     console.log("BarracksPage.constructor");
   }
 
@@ -30,7 +35,14 @@ export class BarracksPage implements OnInit {
       this.selectedHero = this.model.heroes[0];
       this.selectSkill(1);
     }
+  }
 
+  ionViewWillEnter() {
+    this.building = this.model.buildings.find(b => b.type === 'BARRACKS');
+  }
+
+  close() {
+    this.location.back();
   }
 
   selectHero(hero: Hero) {
