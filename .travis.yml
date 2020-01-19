@@ -1,16 +1,16 @@
 language: node_js
 node_js:
-  - "11.0"
+- '11.0'
 branches:
   only:
-    - master
+  - master
 before_script:
-  - npm install -g ionic
+- npm install -g ionic
 script:
-  - npm install
-  - ionic build --prod
+- npm install
+- ionic build --prod
 deploy:
   skip_cleanup: true
   provider: firebase
   token:
-    secure: ""
+    secure: FMv14jAOMnN2NnXnMB0igGR978t2rFdMx+PW9sliYaxlf8ci2qXg/VbIqQFsAZOaZp0OVRONX1m9hEz73/wCnGWxR+NCF0zs/GKpzuEho80K/CyO+uETT9WfwC9BWImlT48ccsaVyplGx3iJy3cgByeRL4rwOw74YgDwCs7FWipbC7KOUdlfZfXWZr5+TZDrnSppx0OtOSzfYFa3cMQzp7ijCT7iBCTfHwsQnOJSGTfwyATPn/Q3EymVxuppOo/Yxhun6fQmRBATu6pVJdZH2gPI3MP3wmfb8BLV+fnqWAy2KUMeXs9dOuDBFjGngsWVfdhvYxCX9fjBuLlRKK00YnCMHIgNPmg90U1mnKG40GC8PHMcCfzaQ8CVshCTr3r6QyvMtnZAObvImSfOrmTrT6YjfvZrZxuDjQY6fTzYidrb4QyG//GyUacJCA+QoFP2G0Q7UXi93HnN7ntF9/5zTv8RkuVbDO7xt65pLGLsgx/NZN/1X/Vyz5QoNrAELgsB0VEDysv4FmwvGGT8hmuofJ9rq5w1qcoxJ3/T5whXIQ72SVESKp/dn3sFEdbZsvKh+xirnGvVe2QtDfzFOnvX3SRM+WfkSqyOVbjyLl1mssCIg3WDq8YUArh/eDNAE/m/EU9M5CBoM+CkBxPnRCj8myg/SL5weLprqLNLF0HS10I=
