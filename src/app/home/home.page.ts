@@ -6,6 +6,7 @@ import {AlertController} from '@ionic/angular';
 import {PlayerMap} from '../domain/playerMap.model';
 import {Router} from '@angular/router';
 import {Building} from '../domain/building.model';
+import {ConverterService} from '../services/converter.service';
 
 @Component({
   selector: 'app-home',
@@ -16,10 +17,7 @@ export class HomePage {
 
   saving = false;
 
-  academy: Building;
-  armory: Building;
-  barracks: Building;
-  storage: Building;
+  buildings: Building[];
 
   map: PlayerMap;
   rows: number[];
@@ -27,7 +25,8 @@ export class HomePage {
   constructor(public model: Model,
               private backendService: BackendService,
               private alertCtrl: AlertController,
-              private router: Router) {}
+              private router: Router,
+              private converter: ConverterService) {}
 
   ionViewWillEnter(): void {
     this.map = this.model.currentMap;
@@ -40,10 +39,22 @@ export class HomePage {
   }
 
   private calcBuildings() {
-    this.academy = this.model.buildings.find(b => b.type === 'ACADEMY');
-    this.armory = this.model.buildings.find(b => b.type === 'ARMORY');
-    this.barracks = this.model.buildings.find(b => b.type === 'BARRACKS');
-    this.storage = this.model.buildings.find(b => b.type === 'STORAGE_0');
+    this.buildings = [];
+    this.addBuilding(this.model.buildings.find(b => b.type === 'BARRACKS'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'ACADEMY'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'LABORATORY'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'GARAGE'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'BLACKSMITH'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'BAZAAR'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'ARMORY'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'JEWELRY'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'STORAGE_0'));
+  }
+
+  private addBuilding(building?: Building) {
+    if (building) {
+      this.buildings.push(building);
+    }
   }
 
   getRow(y: number): PlayerMapTile[] {

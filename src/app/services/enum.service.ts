@@ -6,6 +6,7 @@ export class SkillActionEffect { name: string; type: string; description: string
 export class PropertyType { name: string; category: string; description: string; }
 export class GearSet { name: string; pieces: number; description: string; }
 export class JewelType { name: string; slot: string; gearSet: string; }
+export class MapTileStructure { name: string; type: string; }
 
 @Injectable({
     providedIn: 'root'
@@ -32,7 +33,7 @@ export class EnumService {
     private jewelTypes: JewelType[] = [];
     private passiveSkillTriggers: string[] = [];
     private mapTileTypes: string[] = [];
-    private mapTileStructures: string[] = [];
+    private mapTileStructures: MapTileStructure[] = [];
     private mapTileFightIcons: string[] = [];
     private mapBackgrounds: string[] = [];
     private fightConfigSpeedbarChanges: string[] = [];
@@ -103,7 +104,7 @@ export class EnumService {
             this.enumsLoaded ++;
             this.mapTileTypes = data;
         }, error => this.enumsFailed = true);
-        this.http.get(API_URL + '/enum/map_tile_structures').subscribe((data: string[]) => {
+        this.http.get(API_URL + '/enum/map_tile_structures').subscribe((data: MapTileStructure[]) => {
             this.enumsLoaded ++;
             this.mapTileStructures = data;
         }, error => this.enumsFailed = true);
@@ -189,7 +190,7 @@ export class EnumService {
         return this.mapTileTypes;
     }
 
-    getMapTileStructures(): string[] {
+    getMapTileStructures(): MapTileStructure[] {
         return this.mapTileStructures;
     }
 

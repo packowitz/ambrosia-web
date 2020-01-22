@@ -13,29 +13,11 @@
 <ion-content>
   <ion-card>
     <div class="scrollable-list pa-2">
-      <div *ngIf="barracks" class="flex-vert-center mr-4">
+      <div *ngFor="let building of buildings" class="flex-vert-center mr-4">
         <div class="building-avatar">
-          <ion-img src="assets/img/buildings/BARRACKS.png" alt="Barracks" class="pointer" (click)="gotoBuilding(barracks.type)"></ion-img>
+          <ion-img src="assets/img/buildings/{{building.type}}.png" alt="Barracks" class="pointer" (click)="gotoBuilding(building.type)"></ion-img>
         </div>
-        <div class="mt-1">Barracks</div>
-      </div>
-      <div *ngIf="armory" class="flex-vert-center mr-4">
-        <div class="building-avatar">
-          <ion-img src="assets/img/buildings/ARMORY.png" alt="Barracks" class="pointer" (click)="gotoBuilding(armory.type)"></ion-img>
-        </div>
-        <div class="mt-1">Armory</div>
-      </div>
-      <div *ngIf="academy" class="flex-vert-center mr-4">
-        <div class="building-avatar">
-          <ion-img src="assets/img/buildings/ACADEMY.png" alt="Barracks" class="pointer" (click)="gotoBuilding(academy.type)"></ion-img>
-        </div>
-        <div class="mt-1">Academy</div>
-      </div>
-      <div *ngIf="storage" class="flex-vert-center mr-4">
-        <div class="building-avatar">
-          <ion-img src="assets/img/buildings/STORAGE.png" alt="Barracks" class="pointer" (click)="gotoBuilding(storage.type)"></ion-img>
-        </div>
-        <div class="mt-1">Storage</div>
+        <div class="mt-1">{{converter.readableIdentifier(building.type)}}</div>
       </div>
     </div>
   </ion-card>

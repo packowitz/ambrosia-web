@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {Model} from '../services/model.service';
-import {EnumService} from '../services/enum.service';
+import {EnumService, MapTileStructure} from '../services/enum.service';
 import {ActivatedRoute} from '@angular/router';
 import {Map} from '../domain/map.model';
 import {MapTile} from '../domain/mapTile.model';
@@ -164,10 +164,12 @@ export class MapDetailsPage implements OnInit {
     }
   }
 
-  structureTypeChanged() {
-    this.tile.structure = null;
-    this.tile.portalToMapId = null;
-    this.tile.buildingType = null;
+  portalIcons(): MapTileStructure[] {
+    return this.enumService.getMapTileStructures().filter(s => s.type === 'PORTAL');
+  }
+
+  buildingIcons(): MapTileStructure[] {
+    return this.enumService.getMapTileStructures().filter(s => s.type === 'BUILDING');
   }
 
   save() {
