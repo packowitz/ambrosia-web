@@ -87,22 +87,6 @@
       </ion-radio-group>
       <div class="flex-space-between">
         <ion-item>
-          <ion-label>Structure</ion-label>
-          <ion-checkbox [(ngModel)]="tileHasStructure" (ionChange)="toggleStructure()" slot="start"></ion-checkbox>
-        </ion-item>
-        <ion-select [(ngModel)]="tile.structure" placeholder="select" [disabled]="!tileHasStructure">
-          <ion-select-option *ngFor="let struct of enumService.getMapTileStructures()" [value]="struct">{{struct}}</ion-select-option>
-        </ion-select>
-        <ion-item>
-          <ion-label>To other map</ion-label>
-          <ion-select [(ngModel)]="tile.portalToMapId" placeholder="select">
-            <ion-select-option [value]="null">NONE</ion-select-option>
-            <ion-select-option *ngFor="let mapTo of model.maps" [value]="mapTo.id">{{mapTo.name}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </div>
-      <div class="flex-space-between">
-        <ion-item>
           <ion-label>Fight Repeatable</ion-label>
           <ion-checkbox [(ngModel)]="tile.fightRepeatable" slot="start"></ion-checkbox>
         </ion-item>
@@ -121,6 +105,56 @@
           </ion-select>
         </ion-item>
       </div>
+      <div class="flex">
+        <ion-radio-group [(ngModel)]="tileStructureType" (ionChange)="structureTypeChanged()">
+          <div class="flex-space-between">
+            <ion-item>
+              <ion-label>Portal</ion-label>
+              <ion-radio slot="start" value="portal"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Building</ion-label>
+              <ion-radio slot="start" value="building"></ion-radio>
+            </ion-item>
+          </div>
+        </ion-radio-group>
+      </div>
+      <ion-row *ngIf="tileStructureType == 'portal'">
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Icon</ion-label>
+            <ion-select [(ngModel)]="tile.structure" placeholder="select">
+              <ion-select-option *ngFor="let struct of enumService.getMapTileStructures()" [value]="struct">{{struct}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Portal to map</ion-label>
+            <ion-select [(ngModel)]="tile.portalToMapId" placeholder="select">
+              <ion-select-option *ngFor="let mapTo of model.maps" [value]="mapTo.id">{{mapTo.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="tileStructureType == 'building'">
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Icon</ion-label>
+            <ion-select [(ngModel)]="tile.structure" placeholder="select">
+              <ion-select-option *ngFor="let struct of enumService.getMapTileStructures()" [value]="struct">{{struct}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Building Type</ion-label>
+            <ion-select [(ngModel)]="tile.buildingType" placeholder="select">
+              <ion-select-option *ngFor="let buildingType of enumService.getBuildingTypes()" [value]="buildingType">{{buildingType}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
     </ion-card-content>
   </ion-card>
 

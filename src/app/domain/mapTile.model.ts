@@ -11,4 +11,5 @@ export class MapTile {
     fightIcon: string;
     fightRepeatable: boolean;
     portalToMapId: number;
+    buildingType: string;
 }

@@ -351,4 +351,13 @@ export class BackendService {
         return this.http.post<PlayerActionResponse>(API_URL + '/map/discover', request);
     }
 
+    discoverBuilding(mapId: number, posX: number, posY: number): Observable<PlayerActionResponse> {
+        let request = {
+            mapId: mapId,
+            posX: posX,
+            posY: posY
+        };
+        return this.http.post<PlayerActionResponse>(API_URL + '/map/new_building', request);
+    }
+
 }

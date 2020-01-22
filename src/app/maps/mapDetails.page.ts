@@ -21,7 +21,7 @@ export class MapDetailsPage implements OnInit {
   rows: number[] = [];
 
   tile: MapTile;
-  tileHasStructure = false;
+  tileStructureType: string;
 
   constructor(private route: ActivatedRoute,
               private backendService: BackendService,
@@ -68,7 +68,13 @@ export class MapDetailsPage implements OnInit {
 
   selectTile(tile: MapTile) {
     this.tile = tile;
-    this.tileHasStructure = !!this.tile.structure;
+    if (tile.portalToMapId) {
+      this.tileStructureType = 'portal';
+    } else if (tile.buildingType) {
+      this.tileStructureType = 'building';
+    } else {
+      this.tileStructureType = null;
+    }
   }
 
   isSelected(tile: MapTile): boolean {
@@ -146,12 +152,6 @@ export class MapDetailsPage implements OnInit {
     this.map.tiles = this.map.tiles.filter(t => t.posX !== removedX);
   }
 
-  toggleStructure() {
-    if (!this.tileHasStructure) {
-      this.tile.structure = null;
-    }
-  }
-
   fightIconChanged() {
     if (!this.tile.fightIcon) {
       this.tile.fightId = null;
@@ -162,6 +162,12 @@ export class MapDetailsPage implements OnInit {
     if (!this.tile.fightId) {
       this.tile.fightIcon = null;
     }
+  }
+
+  structureTypeChanged() {
+    this.tile.structure = null;
+    this.tile.portalToMapId = null;
+    this.tile.buildingType = null;
   }
 
   save() {

@@ -16,7 +16,10 @@ export class HomePage {
 
   saving = false;
 
+  academy: Building;
+  armory: Building;
   barracks: Building;
+  storage: Building;
 
   map: PlayerMap;
   rows: number[];
@@ -29,11 +32,18 @@ export class HomePage {
   ionViewWillEnter(): void {
     this.map = this.model.currentMap;
     this.calcRows();
-    this.barracks = this.model.buildings.find(b => b.type === 'BARRACKS');
+    this.calcBuildings();
   }
 
   private calcRows() {
     this.rows = Array.from({length: (this.map.maxY - this.map.minY + 1)}, (v, k) => k + this.map.minY);
+  }
+
+  private calcBuildings() {
+    this.academy = this.model.buildings.find(b => b.type === 'ACADEMY');
+    this.armory = this.model.buildings.find(b => b.type === 'ARMORY');
+    this.barracks = this.model.buildings.find(b => b.type === 'BARRACKS');
+    this.storage = this.model.buildings.find(b => b.type === 'STORAGE_0');
   }
 
   getRow(y: number): PlayerMapTile[] {
@@ -79,8 +89,22 @@ export class HomePage {
           });
         }
 
-      } else {
-        // goto building
+      } else if (tile.buildingType) {
+        if (this.model.buildings.find(b => b.type === tile.buildingType)) {
+          this.gotoBuilding(tile.buildingType);
+        } else {
+          this.saving = true;
+          this.backendService.discoverBuilding(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
+            this.saving = false;
+            this.calcBuildings();
+            this.alertCtrl.create({
+              subHeader: 'You discovered a new building: The ' + tile.buildingType + '. Go and check it out',
+              buttons: [
+                {text: 'Check it out', handler: () => this.gotoBuilding(tile.buildingType)}
+              ]
+            }).then(alert => alert.present());
+          });
+        }
       }
     }
   }
@@ -91,6 +115,9 @@ export class HomePage {
         this.router.navigateByUrl('/barracks');
         break;
       default:
+        this.alertCtrl.create({
+          subHeader: type + ' will be implemented soon.'
+        }).then(alert => alert.present());
         break;
     }
   }
