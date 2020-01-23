@@ -15,7 +15,7 @@
     <div class="scrollable-list pa-2">
       <div *ngFor="let building of buildings" class="flex-vert-center mr-4">
         <div class="building-avatar">
-          <ion-img src="assets/img/buildings/{{building.type}}.png" alt="Barracks" class="pointer" (click)="gotoBuilding(building.type)"></ion-img>
+          <ion-img src="assets/img/buildings/{{building.type}}.png" class="pointer" (click)="gotoBuilding(building.type)"></ion-img>
         </div>
         <div class="mt-1">{{converter.readableIdentifier(building.type)}}</div>
       </div>
