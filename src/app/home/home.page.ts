@@ -41,12 +41,12 @@ export class HomePage {
   private calcBuildings() {
     this.buildings = [];
     this.addBuilding(this.model.buildings.find(b => b.type === 'BARRACKS'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'ARENA'));
     this.addBuilding(this.model.buildings.find(b => b.type === 'ACADEMY'));
     this.addBuilding(this.model.buildings.find(b => b.type === 'LABORATORY'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'FORGE'));
     this.addBuilding(this.model.buildings.find(b => b.type === 'GARAGE'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'BLACKSMITH'));
     this.addBuilding(this.model.buildings.find(b => b.type === 'BAZAAR'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'ARMORY'));
     this.addBuilding(this.model.buildings.find(b => b.type === 'JEWELRY'));
     this.addBuilding(this.model.buildings.find(b => b.type === 'STORAGE_0'));
   }
