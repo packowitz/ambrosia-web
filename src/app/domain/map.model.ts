@@ -4,6 +4,7 @@ export class Map {
     id: number;
     name: string;
     startingMap: boolean;
+    discoverySteamCost: number;
     minX: number;
     maxX: number;
     minY: number;

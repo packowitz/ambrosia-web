@@ -17,7 +17,7 @@
           <ion-item>
             <ion-label>Category</ion-label>
             <ion-select interface="popover" slot="end" placeholder="Select" (ionChange)="categoryChanged($event)" required>
-              <ion-select-option *ngFor="let category of enumService.getPropertyCategories()" [value]="category">{{category}}</ion-select-option>
+              <ion-select-option *ngFor="let category of enumService.getPropertyCategories()" [value]="category">{{category.name}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -36,10 +36,11 @@
     </ion-card-header>
     <ion-card-content *ngIf="properties">
       <ion-row>
-        <ion-col sizeMd="2">Level</ion-col>
-        <ion-col sizeMd="3">Stat</ion-col>
-        <ion-col sizeMd="2">Value1</ion-col>
-        <ion-col sizeMd="2">Value2</ion-col>
+        <ion-col sizeMd="2">{{category.levelName}}</ion-col>
+        <ion-col sizeMd="3" *ngIf="category.showStat">Stat</ion-col>
+        <ion-col sizeMd="3" *ngIf="category.showResources">Resource</ion-col>
+        <ion-col sizeMd="2">{{category.value1name}}</ion-col>
+        <ion-col sizeMd="2" *ngIf="category.showValue2">{{category.value2name}}</ion-col>
         <ion-col sizeMd="1">Delete</ion-col>
       </ion-row>
       <ion-row *ngFor="let prop of properties">
@@ -48,11 +49,19 @@
             <ion-input type="number" [(ngModel)]="prop.level"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col sizeMd="3">
+        <ion-col sizeMd="3" *ngIf="category.showStat">
           <ion-item class="full-width">
             <ion-select interface="popover" placeholder="Select" [(ngModel)]="prop.stat" [selectedText]="prop.stat" class="full-width no-max-width">
               <ion-select-option [value]="null">none</ion-select-option>
               <ion-select-option *ngFor="let stat of enumService.getHeroStats()" [value]="stat">{{stat}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="3" *ngIf="category.showResources">
+          <ion-item class="full-width">
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="prop.resourceType" [selectedText]="prop.resourceType" class="full-width no-max-width">
+              <ion-select-option [value]="null">none</ion-select-option>
+              <ion-select-option *ngFor="let res of enumService.getResourceTypes()" [value]="res.name">{{res.name}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -61,7 +70,7 @@
             <ion-input type="number" [(ngModel)]="prop.value1"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col sizeMd="2">
+        <ion-col sizeMd="2" *ngIf="category.showValue2">
           <ion-item class="full-width">
             <ion-input type="number" [(ngModel)]="prop.value2"></ion-input>
           </ion-item>

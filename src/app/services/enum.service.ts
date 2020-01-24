@@ -3,10 +3,12 @@ import {HttpClient} from '@angular/common/http';
 import {API_URL} from '../../environments/environment';
 
 export class SkillActionEffect { name: string; type: string; description: string; }
+export class PropertyCategory { name: string; levelName: string; value1name: string; showStat: boolean; showResources: boolean; showValue2: boolean; value2name: string; }
 export class PropertyType { name: string; category: string; description: string; }
 export class GearSet { name: string; pieces: number; description: string; }
 export class JewelType { name: string; slot: string; gearSet: string; }
 export class MapTileStructure { name: string; type: string; }
+export class ResourceType { name: string; category: string; }
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +16,7 @@ export class MapTileStructure { name: string; type: string; }
 export class EnumService {
 
     enumsLoaded = 0;
-    enumsTotal = 21;
+    enumsTotal = 22;
     enumsFailed = false;
 
     private colors: string[] = [];
@@ -26,7 +28,7 @@ export class EnumService {
     private skillActionTypes: string[] = [];
     private skillActionTargets: string[] = [];
     private skillActionEffects: SkillActionEffect[] = [];
-    private propertyCategories: string[] = [];
+    private propertyCategories: PropertyCategory[] = [];
     private propertyTypes: PropertyType[] = [];
     private heroStats: string[] = [];
     private gearSets: string[] = [];
@@ -38,6 +40,7 @@ export class EnumService {
     private mapBackgrounds: string[] = [];
     private fightConfigSpeedbarChanges: string[] = [];
     private buildingTypes: string[] = [];
+    private resourceTypes: ResourceType[] = [];
 
     constructor(private http: HttpClient) {
         this.http.get(API_URL + '/enum/colors').subscribe((data: string[]) => {
@@ -76,7 +79,7 @@ export class EnumService {
             this.enumsLoaded ++;
             this.skillActionEffects = data;
         }, error => this.enumsFailed = true);
-        this.http.get(API_URL + '/enum/property_categories').subscribe((data: string[]) => {
+        this.http.get(API_URL + '/enum/property_categories').subscribe((data: PropertyCategory[]) => {
             this.enumsLoaded ++;
             this.propertyCategories = data;
         }, error => this.enumsFailed = true);
@@ -124,6 +127,10 @@ export class EnumService {
             this.enumsLoaded ++;
             this.buildingTypes = data;
         }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/resource_types').subscribe((data: ResourceType[]) => {
+            this.enumsLoaded ++;
+            this.resourceTypes = data;
+        }, error => this.enumsFailed = true);
     }
 
     getColors(): string[] {
@@ -162,7 +169,7 @@ export class EnumService {
         return this.skillActionEffects;
     }
 
-    getPropertyCategories(): string[] {
+    getPropertyCategories(): PropertyCategory[] {
         return this.propertyCategories;
     }
 
@@ -208,5 +215,9 @@ export class EnumService {
 
     getBuildingTypes(): string[] {
         return this.buildingTypes;
+    }
+
+    getResourceTypes(): ResourceType[] {
+        return this.resourceTypes;
     }
 }

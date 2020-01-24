@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {EnumService, PropertyType} from '../services/enum.service';
+import {EnumService, PropertyCategory, PropertyType} from '../services/enum.service';
 import {DynamicProperty} from '../domain/property.model';
 import {PropertyService} from '../services/property.service';
 
@@ -9,7 +9,7 @@ import {PropertyService} from '../services/property.service';
 })
 export class PropertiesPage {
 
-  category: string;
+  category: PropertyCategory;
   types: PropertyType[] = [];
   type: PropertyType;
   properties: DynamicProperty[];
@@ -20,7 +20,7 @@ export class PropertiesPage {
     this.category = event.detail.value;
     this.properties = null;
     this.type = null;
-    this.types = this.enumService.getPropertyTypes().filter(t => t.category === this.category);
+    this.types = this.enumService.getPropertyTypes().filter(t => t.category === this.category.name);
   }
 
   typeChanged(event) {
@@ -34,7 +34,7 @@ export class PropertiesPage {
   addProperty() {
     if (this.properties) {
       let prop = new DynamicProperty();
-      prop.category = this.category;
+      prop.category = this.category.name;
       prop.type = this.type.name;
       this.properties.push(prop);
     }

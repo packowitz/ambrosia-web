@@ -48,10 +48,10 @@ export class LoadingPage {
       let path = localStorage.getItem('ambrosia-page-requested');
       if (!path.startsWith('/battle') && this.model.ongoingBattle) {
         this.alertCtrl.create({
-          subHeader: 'You an unfinished battle',
+          subHeader: 'You have an unfinished battle',
           backdropDismiss: false,
           buttons: [
-            {text: 'Got to battle', handler: () => this.router.navigateByUrl('/battle')}
+            {text: 'Go to battle', handler: () => this.router.navigateByUrl('/battle')}
           ]
         }).then(alert => alert.present());
       } else {
