@@ -6,6 +6,8 @@ export class Fight {
     id: number;
     name: string;
     serviceAccountId: number;
+    resourceType: string;
+    costs: number;
     stageConfig: FightStageConfig;
     environment: FightEnvironment;
     stages: FightStage[];

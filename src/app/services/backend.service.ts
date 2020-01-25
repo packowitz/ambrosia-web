@@ -259,6 +259,8 @@ export class BackendService {
             id: fight.id,
             name: fight.name,
             serviceAccountId: fight.serviceAccount.id,
+            resourceType: fight.resourceType,
+            costs: fight.costs,
             stageConfig: fight.stageConfig,
             environment: fight.environment,
             stages: fight.stages.map(s => {

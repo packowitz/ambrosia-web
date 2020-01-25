@@ -85,7 +85,9 @@
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-button color="success" (click)="start()" [disabled]="!hero1 && !hero2 && !hero3 && !hero4">Start</ion-button>
+          <ion-button color="success" (click)="start()" [disabled]="!hero1 && !hero2 && !hero3 && !hero4">
+            {{fight.costs}}<ion-img src="assets/img/resources/{{fight.resourceType}}.png" class="resource-icon"></ion-img>
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-card-content>
