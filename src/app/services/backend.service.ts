@@ -22,11 +22,13 @@ import {PlayerMap} from '../domain/playerMap.model';
 import {FightStageConfig} from '../domain/fightStageConfig.model';
 import {FightEnvironment} from '../domain/fightEnvironment.model';
 import {Building} from '../domain/building.model';
+import {Resources} from '../domain/resources.model';
 
 
 export class PlayerActionResponse {
     player?: Player;
     token?: string;
+    resources: Resources;
     hero?: Hero;
     heroes?: Hero[];
     heroIdsRemoved?: number[];

@@ -22,6 +22,10 @@
           <ion-input [(ngModel)]="map.name"></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label>Discovery costs <i class="ra ra-site"></i></ion-label>
+          <ion-input type="number" [(ngModel)]="map.discoverySteamCost"></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label>Starting Map</ion-label>
           <ion-checkbox [(ngModel)]="map.startingMap" [disabled]="isCurrentStartingMap" slot="start"></ion-checkbox>
         </ion-item>

@@ -17,6 +17,10 @@ export class HomePage {
 
   saving = false;
 
+  steamTimer = false;
+  cogwheelsTimer = false;
+  tokensTimer = false;
+
   buildings: Building[];
 
   map: PlayerMap;

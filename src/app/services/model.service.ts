@@ -6,13 +6,15 @@ import {HeroBase} from '../domain/herobase.model';
 import {PlayerActionResponse} from './backend.service';
 import {Team} from '../domain/team.model';
 import {Battle} from '../domain/battle.model';
-import {environment} from '../../environments/environment';
+import {API_URL, environment} from '../../environments/environment';
 import {Fight} from '../domain/fight.model';
 import {Map} from '../domain/map.model';
 import {PlayerMap} from '../domain/playerMap.model';
 import {FightStageConfig} from '../domain/fightStageConfig.model';
 import {FightEnvironment} from '../domain/fightEnvironment.model';
 import {Building} from '../domain/building.model';
+import {Resources} from '../domain/resources.model';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -23,6 +25,7 @@ export class Model {
     playerId: number;
     activeAccountId: number;
     player: Player;
+    resources: Resources;
     baseHeroes: HeroBase[];
     heroes: Hero[];
     gears: Gear[];
@@ -37,6 +40,10 @@ export class Model {
     playerMaps: PlayerMap[];
     currentMap: PlayerMap;
 
+    interval: number;
+
+    constructor(private http: HttpClient) {}
+
     reset() {
         this.heroes = null;
         this.gears = null;
@@ -44,6 +51,35 @@ export class Model {
         this.ongoingBattle = null;
         this.playerMaps = null;
         this.currentMap = null;
+    }
+
+    startInterval() {
+        this.interval = setInterval(() => {
+            let needUpdate = false;
+            if (this.resources.steam < this.resources.steamMax) {
+                this.resources.steamProduceIn --;
+                needUpdate = needUpdate || this.resources.steamProduceIn <= 0;
+            }
+            if (this.resources.cogwheels < this.resources.cogwheelsMax) {
+                this.resources.cogwheelsProduceIn --;
+                needUpdate = needUpdate || this.resources.cogwheelsProduceIn <= 0;
+            }
+            if (this.resources.tokens < this.resources.tokensMax) {
+                this.resources.tokensProduceIn --;
+                needUpdate = needUpdate || this.resources.tokensProduceIn <= 0;
+            }
+
+            if (needUpdate) {
+                this.updateResources();
+            }
+        }, 1000);
+    }
+
+    updateResources() {
+        this.http.get<Resources>(API_URL + '/resources').subscribe(data => {
+            this.resources = data;
+            console.log('resources updated');
+        });
     }
 
     update(data: PlayerActionResponse) {
@@ -56,6 +92,12 @@ export class Model {
                 key += '-service';
             }
             localStorage.setItem(key, data.token);
+        }
+        if (data.resources) {
+            this.resources = data.resources;
+            if (!this.interval) {
+                this.startInterval();
+            }
         }
         if (data.hero) {
             this.updateHero(data.hero);

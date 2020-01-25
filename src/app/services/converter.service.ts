@@ -37,4 +37,22 @@ export class ConverterService {
             return str.slice(0,1).toUpperCase() + str.slice(1,str.length);
         }).join(' ');
     }
+
+    time(sec: number): string {
+        if (sec <= 0) {
+            return '0:00';
+        }
+        if (sec < 10) {
+            return '0:0' + sec;
+        }
+        let secs = sec % 60;
+        let mins = (sec - secs) / 60;
+        if (mins < 10) {
+            return  mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+        let hours = Math.floor(mins / 60);
+        mins = mins % 60;
+        return hours + ':' + (mins < 10 ? '0' : '') + mins;
+    }
+
 }

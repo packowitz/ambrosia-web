@@ -1,0 +1,37 @@
+export class Resources {
+    playerId: number;
+    steam: number;
+    steamMax: number;
+    steamProduceIn: number;
+    cogwheels: number;
+    cogwheelsMax: number;
+    cogwheelsProduceIn: number;
+    tokens: number;
+    tokensMax: number;
+    tokensProduceIn: number;
+    premiumSteam: number;
+    premiumSteamMax: number;
+    premiumCogwheels: number;
+    premiumCogwheelsMax: number;
+    premiumTokens: number;
+    premiumTokensMax: number;
+    rubies: number;
+    coins: number;
+    metal: number;
+    metalMax: number;
+    iron: number;
+    ironMax: number;
+    steal: number;
+    stealMax: number;
+    wood: number;
+    woodMax: number;
+    brownCoal: number;
+    brownCoalMax: number;
+    blackCoal: number;
+    blackCoalMax: number;
+    simpleGenome: number;
+    commonGenome: number;
+    uncommonGenome: number;
+    rareGenome: number;
+    epicGenome: number;
+}
