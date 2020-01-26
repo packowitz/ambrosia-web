@@ -30,7 +30,7 @@ export class HomePage {
               private backendService: BackendService,
               private alertCtrl: AlertController,
               private router: Router,
-              private converter: ConverterService) {}
+              public converter: ConverterService) {}
 
   ionViewWillEnter(): void {
     this.map = this.model.currentMap;

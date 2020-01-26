@@ -41,6 +41,7 @@ export class Model {
     currentMap: PlayerMap;
 
     interval: number;
+    updateInProgress = false;
 
     constructor(private http: HttpClient) {}
 
@@ -76,10 +77,17 @@ export class Model {
     }
 
     updateResources() {
-        this.http.get<Resources>(API_URL + '/resources').subscribe(data => {
-            this.resources = data;
-            console.log('resources updated');
-        });
+        if (!this.updateInProgress) {
+            this.updateInProgress = true;
+            this.http.get<Resources>(API_URL + '/resources').subscribe(data => {
+                this.resources = data;
+                this.updateInProgress = false;
+                console.log('resources updated');
+            }, () => {
+                this.updateInProgress = false;
+                console.log('resource update failed');
+            });
+        }
     }
 
     update(data: PlayerActionResponse) {
