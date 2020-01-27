@@ -17,6 +17,7 @@ export class Hero {
     skill5: number;
     skill6: number;
     skill7: number;
+    skillPoints: number;
     ascLvl: number;
     ascPoints: number;
     ascPointsMax: number;

@@ -146,13 +146,23 @@ export class BackendService {
             .pipe(map(action => action.hero));
     }
 
-    adminHeroGainSkillLevel(hero: Hero, skillNumber: number): Observable<Hero> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/skill_up/' + skillNumber, null)
+    adminHeroGainAscLevel(hero: Hero): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/gain_asc_level', null)
             .pipe(map(action => action.hero));
     }
 
-    adminHeroLooseSkillLevel(hero: Hero, skillNumber: number): Observable<Hero> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/skill_down/' + skillNumber, null)
+    adminHeroLooseAscLevel(hero: Hero): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/loose_asc_level', null)
+            .pipe(map(action => action.hero));
+    }
+
+    heroGainSkillLevel(hero: Hero, skillNumber: number): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/hero/' + hero.id + '/skill_up/' + skillNumber, null)
+            .pipe(map(action => action.hero));
+    }
+
+    heroResetSkills(hero: Hero): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/hero/' + hero.id + '/reset_skills', null)
             .pipe(map(action => action.hero));
     }
 
@@ -261,6 +271,9 @@ export class BackendService {
             serviceAccountId: fight.serviceAccount.id,
             resourceType: fight.resourceType,
             costs: fight.costs,
+            xp: fight.xp,
+            level: fight.level,
+            ascPoints: fight.ascPoints,
             stageConfig: fight.stageConfig,
             environment: fight.environment,
             stages: fight.stages.map(s => {

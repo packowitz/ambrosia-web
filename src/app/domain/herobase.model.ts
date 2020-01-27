@@ -25,5 +25,6 @@ export class HeroBase {
     resistance: number;
     resistanceAsc: number;
     recruitable: boolean;
+    maxAscLevel: number;
     skills: HeroSkill[];
 }

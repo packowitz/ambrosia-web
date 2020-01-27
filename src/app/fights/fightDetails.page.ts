@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
 import {Model} from '../services/model.service';
-import {EnumService} from '../services/enum.service';
+import {EnumService, ResourceType} from '../services/enum.service';
 import {Player} from '../domain/player.model';
 import {ActivatedRoute} from '@angular/router';
 import {Hero} from '../domain/hero.model';
@@ -56,6 +56,10 @@ export class FightDetailsPage implements OnInit {
 
   selectEnvironment(event) {
     this.fight.environment = event.detail.value;
+  }
+
+  getResourceTypes(): ResourceType[] {
+    return this.enumService.getResourceTypes().filter(r => r.category === 'BATTLE_FEE' && !r.name.startsWith('PREMIUM'));
   }
 
   addStage() {

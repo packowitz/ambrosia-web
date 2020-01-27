@@ -16,22 +16,46 @@
 <ion-content *ngIf="fight">
   <ion-card>
     <ion-card-content>
-      <div class="flex-space-between">
-        <ion-item class="flex-grow">
-          <ion-label position="floating">Name</ion-label>
-          <ion-input [(ngModel)]="fight.name"></ion-input>
-        </ion-item>
-        <ion-item class="flex-grow ml-2 mr-2">
-          <ion-label position="floating">Resource</ion-label>
-          <ion-select [(ngModel)]="fight.resourceType">
-            <ion-select-option *ngFor="let res of enumService.getResourceTypes()" [value]="res.name">{{res.name}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item class="flex-grow">
-          <ion-label position="floating">Costs</ion-label>
-          <ion-input [(ngModel)]="fight.costs" type="number"></ion-input>
-        </ion-item>
-      </div>
+      <ion-row>
+        <ion-col sizeXs="4" sizeSm="2">
+          <ion-item class="flex-grow">
+            <ion-label position="floating">Name</ion-label>
+            <ion-input [(ngModel)]="fight.name"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeXs="4" sizeSm="2">
+          <ion-item class="flex-grow ml-2 mr-2">
+            <ion-label position="floating">Resource</ion-label>
+            <ion-select [(ngModel)]="fight.resourceType">
+              <ion-select-option *ngFor="let res of getResourceTypes()" [value]="res.name">{{res.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeXs="4" sizeSm="2">
+          <ion-item class="flex-grow">
+            <ion-label position="floating">Costs</ion-label>
+            <ion-input [(ngModel)]="fight.costs" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeXs="4" sizeSm="2">
+          <ion-item class="flex-grow">
+            <ion-label position="floating">Level</ion-label>
+            <ion-input [(ngModel)]="fight.level" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeXs="4" sizeSm="2">
+          <ion-item class="flex-grow">
+            <ion-label position="floating">XP</ion-label>
+            <ion-input [(ngModel)]="fight.xp" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeXs="4" sizeSm="2">
+          <ion-item class="flex-grow">
+            <ion-label position="floating">Asc Points</ion-label>
+            <ion-input [(ngModel)]="fight.ascPoints" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
       <ion-item>
         <ion-label slot="start">Finishing Stage Config</ion-label>
         <ion-select (ionChange)="selectStageConfig($event)">

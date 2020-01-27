@@ -8,6 +8,9 @@ export class Fight {
     serviceAccountId: number;
     resourceType: string;
     costs: number;
+    xp: number;
+    level: number;
+    ascPoints: number;
     stageConfig: FightStageConfig;
     environment: FightEnvironment;
     stages: FightStage[];

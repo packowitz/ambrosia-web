@@ -56,8 +56,8 @@
         </ion-segment-button>
       </ion-segment>
       <div *ngIf="tab == 'stats'">
-        <div class="flex-start mt-2 ml-1 mr-1">
-          <span>Lvl {{selectedHero.level}}</span>
+        <ion-row class="flex-start mt-2 ml-1 mr-1">
+          <span style="width: 120px;">Lvl {{selectedHero.level}}</span>
           <span class="flex-grow bar-outer ml-2">
             <span class="bar-inner" [style.width]="(100 * selectedHero.xp / selectedHero.maxXp) + '%'">&nbsp;</span>
             <span class="bar-text">{{selectedHero.xp == selectedHero.maxXp ? 'MAX' : selectedHero.xp + ' / ' + selectedHero.maxXp + ' XP'}}</span>
@@ -67,6 +67,19 @@
             Modify level
             <ion-button size="small" fill="clear" (click)="adminHeroLooseLevel()"><ion-icon name="remove"></ion-icon></ion-button>
             <ion-button size="small" fill="clear" (click)="adminHeroGainLevel()"><ion-icon name="add"></ion-icon></ion-button>
+          </span>
+        </ion-row>
+        <div class="flex-start mt-2 ml-1 mr-1">
+          <span style="width: 120px;">Ascension Level {{selectedHero.ascLvl}}</span>
+          <span class="flex-grow bar-outer ml-2">
+            <span class="bar-inner" [style.width]="(100 * selectedHero.ascPoints / selectedHero.ascPointsMax) + '%'">&nbsp;</span>
+            <span class="bar-text">{{selectedHero.ascPoints == selectedHero.ascPointsMax ? 'MAX' : selectedHero.ascPoints + ' / ' + selectedHero.ascPointsMax + ' pts'}}</span>
+            &nbsp;
+          </span>
+          <span *ngIf="model.player.admin" class="ml-4">
+            Modify asc level
+            <ion-button size="small" fill="clear" (click)="adminHeroLooseAscLevel()"><ion-icon name="remove"></ion-icon></ion-button>
+            <ion-button size="small" fill="clear" (click)="adminHeroGainAscLevel()"><ion-icon name="add"></ion-icon></ion-button>
           </span>
         </div>
         <div class="mt-1 ml-1 mr-1 mb-2 border-bottom flex-space-between">
@@ -131,11 +144,8 @@
           <div *ngIf="selectedSkill.skillLevel.length > 0" class="mt-2">
             <div *ngFor="let lvl of selectedSkill.skillLevel" [class.strong]="getSkillLevel(selectedSkill) >= lvl.level">L{{lvl.level}} {{lvl.description}}</div>
           </div>
-          <div *ngIf="model.player.admin" class="mt-2">
-            Modify skill level
-            <ion-button size="small" fill="clear" (click)="adminHeroLooseSkillLevel()"><ion-icon name="remove"></ion-icon></ion-button>
-            <ion-button size="small" fill="clear" (click)="adminHeroGainSkillLevel()"><ion-icon name="add"></ion-icon></ion-button>
-          </div>
+          <ion-button size="small" color="success" (click)="heroGainSkillLevel()" [disabled]="selectedHero.skillPoints <= 0">Skill up ({{selectedHero.skillPoints}})</ion-button>
+          <ion-button size="small" color="warning" (click)="heroResetSkills()">Reset skills</ion-button>
         </div>
       </div>
 

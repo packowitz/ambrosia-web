@@ -4,6 +4,7 @@ import {BattleHeroBuff} from './battleHeroBuff.model';
 export class BattleHero {
     id: number;
     playerId: number;
+    heroId: number;
     status: string;
     heroBase: HeroBase;
     position: string;
