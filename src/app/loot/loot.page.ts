@@ -52,7 +52,7 @@ export class LootPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (data) => {
-            if (data.name && data.width && data.height) {
+            if (data.name) {
               this.saving = true;
               this.backendService.saveLootBox({name: data.name}).subscribe(lootBox => {
                 this.model.lootBoxes.push(lootBox);
