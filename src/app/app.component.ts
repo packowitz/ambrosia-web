@@ -62,14 +62,14 @@ export class AppComponent {
             icon: 'honeycomb'
         },
         {
+            title: 'Loot',
+            url: '/loot',
+            icon: 'trophy'
+        },
+        {
             title: 'Tavern',
             url: '/tavern',
             icon: 'beer'
-        },
-        {
-            title: 'Barracks',
-            url: '/barracks',
-            icon: 'muscle-fat'
         },
         {
             title: 'Training',

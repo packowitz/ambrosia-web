@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        Loot Box {{lootBox ? lootBox.name : ''}}
+        <ion-button color="success" (click)="save()">Save</ion-button>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<ion-content *ngIf="lootBox">
+  <ion-card>
+    <ion-card-content>
+      <div *ngFor="let item of lootBox.items">
+        <div class="flex-space-between">
+          <div class="flex-center">
+            Slot {{item.slotNumber}}
+            <ion-icon *ngIf="item.slotNumber > 1" class="pointer" name="arrow-dropup-circle" (click)="slotDown(item)"></ion-icon>
+            <ion-icon *ngIf="!isLastSlot(item.slotNumber)" class="pointer" name="arrow-dropdown-circle" (click)="slotUp(item)"></ion-icon>
+          </div>
+          <div class="flex-center">
+            Pos {{item.itemOrder}}
+            <ion-icon *ngIf="item.itemOrder > 1" class="pointer" name="arrow-dropup-circle" (click)="posDown(item)"></ion-icon>
+            <ion-icon *ngIf="!isLastInSlot(item.slotNumber, item.itemOrder)" class="pointer" name="arrow-dropdown-circle" (click)="posUp(item)"></ion-icon>
+          </div>
+          <div class="flex-center">
+            Chance (1-100)
+            <ion-item lines="none">
+              <ion-input type="number" [(ngModel)]="item.chance" style="max-width: 50px;"></ion-input>
+            </ion-item>
+          </div>
+          <div class="flex-center" *ngIf="item.type == 'RESOURCE'">
+            Res
+            <ion-item lines="none">
+              <ion-input type="number" [(ngModel)]="item.resourceAmount" style="max-width: 50px;"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-select [(ngModel)]="item.resourceType" style="max-width: 100%">
+                <ion-select-option *ngFor="let type of getResourceTypes()" [value]="type.name">{{type.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <div class="flex-center" *ngIf="item.type == 'HERO'">
+            Hero
+            <ion-item lines="none">
+              <ion-select [(ngModel)]="item.heroBaseId" style="max-width: 100%">
+                <ion-select-option *ngFor="let hero of model.baseHeroes" [value]="hero.id">#{{hero.id}} {{hero.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <div class="flex-center" *ngIf="item.type == 'GEAR'">
+            Gear
+            <ion-item lines="none">
+              <ion-select [(ngModel)]="item.gearLootId" style="max-width: 100%">
+                <ion-select-option *ngFor="let gear of model.gearLoots" [value]="gear.id">{{gear.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <div>
+            <ion-button fill="clear" [color]="item.type == 'RESOURCE' ? 'primary' : 'dark'" (click)="item.type = 'RESOURCE'">Res</ion-button>
+            <ion-button fill="clear" [color]="item.type == 'HERO' ? 'primary' : 'dark'" (click)="item.type = 'HERO'">Hero</ion-button>
+            <ion-button fill="clear" [color]="item.type == 'GEAR' ? 'primary' : 'dark'" (click)="item.type = 'GEAR'">Gear</ion-button>
+            <ion-button fill="clear" color="danger" (click)="deleteItem(item)"><ion-icon name="trash"></ion-icon></ion-button>
+          </div>
+        </div>
+      </div>
+      <div class="flex-center">
+        <ion-button color="success" (click)="newItem()">Add Line</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

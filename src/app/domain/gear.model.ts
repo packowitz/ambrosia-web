@@ -7,6 +7,7 @@ export class Gear {
     type: string;
     stat: string;
     statValue: number;
+    statQuality: number;
     jewelSlot1?: string;
     jewel1Type?: string;
     jewel1Level?: number;

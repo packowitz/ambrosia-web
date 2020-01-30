@@ -15,6 +15,8 @@ import {FightEnvironment} from '../domain/fightEnvironment.model';
 import {Building} from '../domain/building.model';
 import {Resources} from '../domain/resources.model';
 import {HttpClient} from '@angular/common/http';
+import {LootBox} from '../domain/lootBox.model';
+import {GearLoot} from '../domain/gearLoot.model';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +38,8 @@ export class Model {
     fightStageConfigs: FightStageConfig[];
     fightEnvironments: FightEnvironment[];
     buildings: Building[];
+    lootBoxes: LootBox[];
+    gearLoots: GearLoot[];
     maps: Map[];
     playerMaps: PlayerMap[];
     currentMap: PlayerMap;
@@ -235,6 +239,17 @@ export class Model {
                 this.fightEnvironments[idx] = env;
             } else {
                 this.fightEnvironments.push(env);
+            }
+        }
+    }
+
+    updateLootBox(lootBox?: LootBox) {
+        if (lootBox) {
+            let idx = this.lootBoxes.findIndex(l => l.id === lootBox.id);
+            if (idx >= 0) {
+                this.lootBoxes[idx] = lootBox;
+            } else {
+                this.lootBoxes.push(lootBox);
             }
         }
     }

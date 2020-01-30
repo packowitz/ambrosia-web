@@ -3,11 +3,6 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {AdminGuard} from './services/auth-guard.service';
 
 const routes: Routes = [
-    // {
-    //     path: '',
-    //     redirectTo: 'loading',
-    //     pathMatch: 'full'
-    // },
     {
         path: 'loading',
         loadChildren: './loading/loading.module#LoadingPageModule'
@@ -34,6 +29,11 @@ const routes: Routes = [
     {
         path: 'maps',
         loadChildren: './maps/maps.module#MapsModule',
+        canActivate: [AdminGuard]
+    },
+    {
+        path: 'loot',
+        loadChildren: './loot/loot.module#LootModule',
         canActivate: [AdminGuard]
     },
     {

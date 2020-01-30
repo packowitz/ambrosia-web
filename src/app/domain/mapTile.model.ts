@@ -12,4 +12,5 @@ export class MapTile {
     fightRepeatable: boolean;
     portalToMapId: number;
     buildingType: string;
+    lootBoxId: number;
 }

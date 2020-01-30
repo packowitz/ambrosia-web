@@ -3,6 +3,7 @@ export class PlayerMapTile {
     posY: number;
     type: string;
     discovered: boolean;
+    chestOpened: boolean;
     discoverable: boolean;
     structure: string;
     fightIcon: string;

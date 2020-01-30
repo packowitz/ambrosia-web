@@ -2,6 +2,7 @@ import {Player} from './player.model';
 import {FightStageResolved} from './fightStageResolved.model';
 import {FightStageConfig} from './fightStageConfig.model';
 import {FightEnvironment} from './fightEnvironment.model';
+import {LootBox} from './lootBox.model';
 
 export class FightResolved {
     id: number;
@@ -15,4 +16,5 @@ export class FightResolved {
     stages: FightStageResolved[];
     stageConfig: FightStageConfig;
     environment: FightEnvironment;
+    lootBox: LootBox;
 }

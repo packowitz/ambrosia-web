@@ -59,7 +59,7 @@ export class FightDetailsPage implements OnInit {
   }
 
   getResourceTypes(): ResourceType[] {
-    return this.enumService.getResourceTypes().filter(r => r.category === 'BATTLE_FEE' && !r.name.startsWith('PREMIUM'));
+    return this.enumService.getResourceTypes().filter(r => r.category === 'BATTLE_FEE');
   }
 
   addStage() {

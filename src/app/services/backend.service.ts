@@ -23,6 +23,8 @@ import {FightStageConfig} from '../domain/fightStageConfig.model';
 import {FightEnvironment} from '../domain/fightEnvironment.model';
 import {Building} from '../domain/building.model';
 import {Resources} from '../domain/resources.model';
+import {LootBox} from '../domain/lootBox.model';
+import {GearLoot} from '../domain/gearLoot.model';
 
 
 export class PlayerActionResponse {
@@ -276,6 +278,7 @@ export class BackendService {
             ascPoints: fight.ascPoints,
             stageConfig: fight.stageConfig,
             environment: fight.environment,
+            lootBox: fight.lootBox,
             stages: fight.stages.map(s => {
                 return {
                     id: s.id,
@@ -375,6 +378,22 @@ export class BackendService {
             posY: posY
         };
         return this.http.post<PlayerActionResponse>(API_URL + '/map/new_building', request);
+    }
+
+    loadAllLootBoxes(): Observable<LootBox[]> {
+        return this.http.get<LootBox[]>(API_URL + '/admin/loot/box');
+    }
+
+    saveLootBox(lootBox: LootBox): Observable<LootBox> {
+        return this.http.post<LootBox>(API_URL + '/admin/loot/box', lootBox);
+    }
+
+    loadAllGearLoots(): Observable<GearLoot[]> {
+        return this.http.get<GearLoot[]>(API_URL + '/admin/loot/gear');
+    }
+
+    saveGearLoot(gearLoot: GearLoot): Observable<LootBox> {
+        return this.http.post<GearLoot>(API_URL + '/admin/loot/gear', gearLoot);
     }
 
 }

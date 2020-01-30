@@ -1,6 +1,7 @@
 import {FightStage} from './fightStage.model';
 import {FightStageConfig} from './fightStageConfig.model';
 import {FightEnvironment} from './fightEnvironment.model';
+import {LootBox} from './lootBox.model';
 
 export class Fight {
     id: number;
@@ -13,5 +14,6 @@ export class Fight {
     ascPoints: number;
     stageConfig: FightStageConfig;
     environment: FightEnvironment;
+    lootBox: LootBox;
     stages: FightStage[];
 }
