@@ -92,7 +92,7 @@ export class LootBoxPage implements OnInit {
 
   newItem() {
     let item = new LootItem();
-    item.slotNumber = this.lootBox.items ? this.lootBox.items[this.lootBox.items.length - 1].slotNumber + 1 : 1;
+    item.slotNumber = this.lootBox.items.length > 0 ? this.lootBox.items[this.lootBox.items.length - 1].slotNumber + 1 : 1;
     item.itemOrder = 1;
     item.chance = 100;
     item.type = 'RESOURCE';
