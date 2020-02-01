@@ -284,4 +284,15 @@ export class Model {
         }
     }
 
+    updateTeam(team?: Team) {
+        if (team) {
+            let idx = this.teams.findIndex(t => t.type === team.type);
+            if (idx >= 0) {
+                this.teams[idx] = team;
+            } else {
+                this.teams.push(team);
+            }
+        }
+    }
+
 }

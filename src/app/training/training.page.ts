@@ -128,7 +128,7 @@ export class TrainingPage implements OnInit {
   }
 
   fight(otherTeam: OtherTeam) {
-    this.backendService.startDuell(otherTeam, this.team).subscribe(data => {
+    this.backendService.startTestDuell(otherTeam, this.team).subscribe(data => {
       this.router.navigateByUrl('/battle');
     });
   }

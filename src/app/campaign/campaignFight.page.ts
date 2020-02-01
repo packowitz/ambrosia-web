@@ -133,6 +133,7 @@ export class CampaignFightPage implements OnInit {
   }
 
   start() {
+    this.model.updateTeam(this.team);
     if (this.map) {
       this.backendService.startCampaignFight(this.map.mapId, this.tile.posX, this.tile.posY, this.team).subscribe(() => {
         this.router.navigateByUrl('/battle');

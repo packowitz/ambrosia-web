@@ -18,7 +18,10 @@
       <div class="color-white font-large bold">Stage {{battle.fightStage}} cleared</div>
     </div>
     <div *ngIf="!animateStep && (battle.status == 'LOST' || battle.status == 'WON')" class="loading-indicator flex-center pointer" (click)="leaveBattle()">
-      <div class="color-white font-large bold" *ngIf="!looted">You {{battle.status}}</div>
+      <div class="color-white font-large bold flex-vert-center" *ngIf="!looted">
+        You {{battle.status}}
+        <ion-button *ngIf="battle.type == 'TEST'" (click)="repeatBattle($event)">Repeat</ion-button>
+      </div>
       <div class="loot-window pa-2" *ngIf="looted">
         <div class="flex-center">You received</div>
         <div class="flex-space-between mt-1">

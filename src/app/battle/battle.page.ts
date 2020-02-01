@@ -39,6 +39,16 @@ export class BattlePage implements OnInit {
     setTimeout(() => this.initBattle(this.model.ongoingBattle), 1000);
   }
 
+  resetBattle(battle: Battle) {
+    this.battle = this.nextStageBattle;
+    this.activeHero = null;
+    this.selectedSkill = null;
+    this.lastKnownStepIdx = -1;
+    this.animationStepIdx = -1;
+    this.nextStageBattle = null;
+    this.initBattle(battle);
+  }
+
   initBattle(battle: Battle, looted?: Looted[]) {
     if (battle) {
       this.battle = battle;
@@ -95,13 +105,7 @@ export class BattlePage implements OnInit {
     } else {
       if (!this.animateStep) {
         setTimeout(() => {
-          this.battle = this.nextStageBattle;
-          this.activeHero = null;
-          this.selectedSkill = null;
-          this.lastKnownStepIdx = -1;
-          this.animationStepIdx = -1;
-          this.nextStageBattle = null;
-          this.initBattle(this.battle);
+          this.resetBattle(this.nextStageBattle);
         }, 1000);
       }
     }
@@ -275,5 +279,22 @@ export class BattlePage implements OnInit {
     } else {
       this.router.navigateByUrl('/home');
     }
+  }
+
+  repeatBattle(event) {
+    event.stopPropagation();
+    this.loading = true;
+    this.backendService.repeatTestFight(this.battle.id).subscribe(data => {
+      this.autobattle = false;
+      this.resetBattle(data.ongoingBattle);
+      this.loading = false;
+    }, error => {
+      this.loading = false;
+      this.alertCtrl.create({
+        header: 'Server error',
+        message: error.error.message,
+        buttons: [{text: 'Okay'}]
+      }).then(data => data.present());
+    });
   }
 }

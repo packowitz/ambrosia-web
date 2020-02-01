@@ -207,9 +207,9 @@ export class BackendService {
         return this.http.get<PlayerActionResponse>(API_URL + '/battle/' + battleId);
     }
 
-    startDuell(otherTeam: OtherTeam, ownTeam: Team): Observable<PlayerActionResponse> {
+    startTestDuell(otherTeam: OtherTeam, ownTeam: Team): Observable<PlayerActionResponse> {
         let request = {
-            type: 'DUELL',
+            type: 'TEST',
             oppPlayerId: otherTeam.playerId,
             hero1Id: ownTeam.hero1Id,
             hero2Id: ownTeam.hero2Id,
@@ -334,6 +334,10 @@ export class BackendService {
 
     startTestFight(fightId: number, team: Team): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/battle/campaign/test/' + fightId, team);
+    }
+
+    repeatTestFight(battleId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/battle/repeat/test/' + battleId, null);
     }
 
     loadAllMaps(): Observable<Map[]> {
