@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        Gear Loot {{gearLoot ? gearLoot.name : ''}}
+        <div>
+          <ion-button color="medium" fill="clean" (click)="cancel()">Cancel</ion-button>
+          <ion-button color="success" (click)="save()" [disabled]="!gearLoot || gearLoot.sets.length == 0 || gearLoot.types.length == 0">Save</ion-button>
+        </div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<ion-content *ngIf="gearLoot">
+  <ion-card>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label>Name</ion-label>
+        <ion-input type="text" [(ngModel)]="gearLoot.name"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="flex-space-between-wrap full-width">
+          Sets: <ion-button fill="outline" [color]="setEnabled(set) ? 'primary' : 'medium'" *ngFor="let set of enumService.getGearSets()" (click)="toggleSet(set)">{{set}}</ion-button>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="flex-space-between-wrap full-width">
+          Gear Types: <ion-button fill="outline" [color]="typeEnabled(type) ? 'primary' : 'medium'" *ngFor="let type of enumService.getGearTypes()" (click)="toggleType(type)">{{type}}</ion-button>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="flex-space-between-wrap full-width">
+          <div class="flex-center">
+            Legendary
+            <ion-input type="number" [(ngModel)]="gearLoot.legendaryChance" style="max-width: 50px;" class="ml-1"></ion-input>%
+          </div>
+          <div class="flex-center">
+            Epic
+            <ion-input type="number" [(ngModel)]="gearLoot.epicChance" style="max-width: 50px;" class="ml-1"></ion-input>%
+          </div>
+          <div class="flex-center">
+            Rare
+            <ion-input type="number" [(ngModel)]="gearLoot.rareChance" style="max-width: 50px;" class="ml-1"></ion-input>%
+          </div>
+          <div class="flex-center">
+            Uncommon
+            <ion-input type="number" [(ngModel)]="gearLoot.uncommonChance" style="max-width: 50px;" class="ml-1"></ion-input>%
+          </div>
+          <div class="flex-center">
+            Common
+            <ion-input type="number" [(ngModel)]="gearLoot.commonChance" style="max-width: 50px;" class="ml-1"></ion-input>%
+          </div>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="flex-space-between-wrap full-width">
+          <div class="flex-center">
+            four jewels
+            <ion-input type="number" [(ngModel)]="gearLoot.jewel4chance" style="max-width: 50px;" class="ml-1"></ion-input>%
+          </div>
+          <div class="flex-center">
+            three jewels
+            <ion-input type="number" [(ngModel)]="gearLoot.jewel3chance" style="max-width: 50px;" class="ml-1"></ion-input>%
+          </div>
+          <div class="flex-center">
+            two jewels
+            <ion-input type="number" [(ngModel)]="gearLoot.jewel2chance" style="max-width: 50px;" class="ml-1"></ion-input>%
+          </div>
+          <div class="flex-center">
+            one jewel
+            <ion-input type="number" [(ngModel)]="gearLoot.jewel1chance" style="max-width: 50px;" class="ml-1"></ion-input>%
+          </div>
+          <div class="flex-center">
+            special jewel
+            <ion-input type="number" [(ngModel)]="gearLoot.specialJewelChance" style="max-width: 50px;" class="ml-1"></ion-input>%
+          </div>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Min stat quality in %</ion-label>
+        <ion-input type="number" [(ngModel)]="gearLoot.statFrom" style="max-width: 50px;" class="ml-1"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Max stat quality in %</ion-label>
+        <ion-input type="number" [(ngModel)]="gearLoot.statTo" style="max-width: 50px;" class="ml-1"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

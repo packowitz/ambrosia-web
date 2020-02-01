@@ -4,10 +4,11 @@ import {AlertController} from '@ionic/angular';
 import {Model} from '../services/model.service';
 import {EnumService, ResourceType} from '../services/enum.service';
 import {Player} from '../domain/player.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Hero} from '../domain/hero.model';
 import {FightResolved} from '../domain/fightResolved.model';
 import {FightStageResolved} from '../domain/fightStageResolved.model';
+import {ConverterService} from '../services/converter.service';
 
 @Component({
   selector: 'fight-details',
@@ -26,13 +27,15 @@ export class FightDetailsPage implements OnInit {
               private backendService: BackendService,
               private alertCtrl: AlertController,
               public model: Model,
-              public enumService: EnumService) {
+              private router: Router,
+              public enumService: EnumService,
+              private converter: ConverterService) {
   }
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
     this.backendService.getFight(id).subscribe(data => {
-      this.fight = data;
+      this.fight = this.converter.dataClone(data);
       this.serviceAccount = data.serviceAccount;
       this.backendService.getServiceAccountHeroes(this.serviceAccount.id).subscribe(heroes => {
         this.heroes = heroes;
@@ -48,6 +51,15 @@ export class FightDetailsPage implements OnInit {
         this.model.fightEnvironments = data;
       });
     }
+    if (!this.model.lootBoxes) {
+      this.backendService.loadAllLootBoxes().subscribe(data => {
+        this.model.lootBoxes = data;
+      });
+    }
+  }
+
+  cancel() {
+    this.router.navigateByUrl('/fights');
   }
 
   selectStageConfig(event) {
@@ -56,6 +68,10 @@ export class FightDetailsPage implements OnInit {
 
   selectEnvironment(event) {
     this.fight.environment = event.detail.value;
+  }
+
+  selectLoot(event) {
+    this.fight.lootBox = event.detail.value;
   }
 
   getResourceTypes(): ResourceType[] {
@@ -106,8 +122,12 @@ export class FightDetailsPage implements OnInit {
     this.saving = true;
     this.stage = null;
     this.backendService.saveFight(this.fight).subscribe(data => {
-      this.fight = data;
+      this.fight = this.converter.dataClone(data);
       this.saving = false;
     });
+  }
+
+  testFight() {
+    this.router.navigateByUrl('/campaign/' + this.fight.id);
   }
 }

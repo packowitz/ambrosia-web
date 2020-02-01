@@ -6,7 +6,10 @@
     <ion-title>
       <div class="flex-space-between">
         Loot Box {{lootBox ? lootBox.name : ''}}
-        <ion-button color="success" (click)="save()">Save</ion-button>
+        <div>
+          <ion-button color="medium" fill="clean" (click)="cancel()">Cancel</ion-button>
+          <ion-button color="success" (click)="save()">Save</ion-button>
+        </div>
       </div>
     </ion-title>
   </ion-toolbar>

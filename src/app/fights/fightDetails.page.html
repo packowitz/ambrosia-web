@@ -6,7 +6,11 @@
     <ion-title>
       <div class="flex-space-between">
         Fight Details{{fight ? ' - ' + fight.name : ''}}
-        <ion-button size="small" color="success" (click)="saveFight()">Save</ion-button>
+        <div>
+          <ion-button size="small" color="danger" (click)="testFight()">Test</ion-button>
+          <ion-button size="small" color="medium" fill="clean" (click)="cancel()">Cancel</ion-button>
+          <ion-button size="small" color="success" (click)="saveFight()">Save</ion-button>
+        </div>
       </div>
     </ion-title>
   </ion-toolbar>
@@ -66,6 +70,12 @@
         <ion-label slot="start">Fight environment</ion-label>
         <ion-select (ionChange)="selectEnvironment($event)">
           <ion-select-option *ngFor="let environment of model.fightEnvironments" [value]="environment" [selected]="environment.id == fight.environment.id">{{environment.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label slot="start">Loot</ion-label>
+        <ion-select (ionChange)="selectLoot($event)">
+          <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot" [selected]="loot.id == fight.lootBox.id">{{loot.name}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-card-content>

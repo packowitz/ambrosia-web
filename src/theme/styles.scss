@@ -191,9 +191,18 @@ ion-row.table-row {
   width: 80px;
 }
 
+.hero-avatar-very-small {
+  width: 40px;
+}
+
 .hero-tile-small {
   position: relative;
   max-width: 80px;
+}
+
+.hero-tile-very-small {
+  position: relative;
+  max-width: 40px;
 }
 
 .building-avatar {
@@ -320,4 +329,14 @@ ion-row.table-row {
 
 .resource-icon {
   width: 16px;
+}
+
+.loot-window {
+  background-color: white;
+  .loot-item {
+    margin: 0 12px;
+  }
+  .loot-image {
+    width: 40px;
+  }
 }

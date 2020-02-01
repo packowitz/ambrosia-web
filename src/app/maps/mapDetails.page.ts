@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {Model} from '../services/model.service';
 import {EnumService, MapTileStructure} from '../services/enum.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Map} from '../domain/map.model';
 import {MapTile} from '../domain/mapTile.model';
 import {AlertController} from '@ionic/angular';
+import {ConverterService} from '../services/converter.service';
 
 @Component({
   selector: 'map-details',
@@ -27,7 +28,9 @@ export class MapDetailsPage implements OnInit {
               private backendService: BackendService,
               public model: Model,
               public enumService: EnumService,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              private converter: ConverterService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -47,15 +50,24 @@ export class MapDetailsPage implements OnInit {
         this.model.fights = data;
       });
     }
+    if (!this.model.lootBoxes) {
+      this.backendService.loadAllLootBoxes().subscribe(data => {
+        this.model.lootBoxes = data;
+      });
+    }
   }
 
   private setMap(map: Map) {
-    this.map = map;
+    this.map = this.converter.dataClone(map);
     this.isCurrentStartingMap = this.map.startingMap;
     this.rows = Array.from({length: (map.maxY - map.minY + 1)}, (v, k) => k + map.minY);
     if (this.tile) {
       this.selectTile(this.map.tiles.find(t => t.posX === this.tile.posX && t.posY === this.tile.posY));
     }
+  }
+
+  cancel() {
+    this.router.navigateByUrl('/maps');
   }
 
   getRow(y: number): MapTile[] {
@@ -72,6 +84,8 @@ export class MapDetailsPage implements OnInit {
       this.tileStructureType = 'portal';
     } else if (tile.buildingType) {
       this.tileStructureType = 'building';
+    } else if (tile.lootBoxId) {
+      this.tileStructureType = 'chest';
     } else {
       this.tileStructureType = null;
     }
@@ -170,6 +184,10 @@ export class MapDetailsPage implements OnInit {
 
   buildingIcons(): MapTileStructure[] {
     return this.enumService.getMapTileStructures().filter(s => s.type === 'BUILDING');
+  }
+
+  chestIcons(): MapTileStructure[] {
+    return this.enumService.getMapTileStructures().filter(s => s.type === 'CHEST');
   }
 
   save() {

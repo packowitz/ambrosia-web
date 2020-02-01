@@ -5,7 +5,8 @@
     </ion-buttons>
     <ion-title>
       <div class="flex-space-between">
-        Fighting on {{map ? map.name : ''}} {{tile? tile.posX + 'x' + tile.posY: ''}}
+        <div *ngIf="map">Fighting on {{map.name}} {{tile? tile.posX + 'x' + tile.posY: ''}}</div>
+        <div *ngIf="testFight && fight">Testing Fight #{{fight.id}}</div>
         <ion-icon name="close" class="pointer" (click)="close()"></ion-icon>
       </div>
     </ion-title>
@@ -86,7 +87,8 @@
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
           <ion-button color="success" (click)="start()" [disabled]="!hero1 && !hero2 && !hero3 && !hero4">
-            {{fight.costs}}<ion-img src="assets/img/resources/{{fight.resourceType}}.png" class="resource-icon"></ion-img>
+            <div *ngIf="!testFight" class="flex-center">{{fight.costs}}<ion-img src="assets/img/resources/{{fight.resourceType}}.png" class="resource-icon ml-1"></ion-img></div>
+            <div *ngIf="testFight">Start</div>
           </ion-button>
         </ion-col>
       </ion-row>

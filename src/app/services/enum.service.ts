@@ -16,7 +16,7 @@ export class ResourceType { name: string; category: string; }
 export class EnumService {
 
     enumsLoaded = 0;
-    enumsTotal = 22;
+    enumsTotal = 23;
     enumsFailed = false;
 
     private colors: string[] = [];
@@ -32,6 +32,7 @@ export class EnumService {
     private propertyTypes: PropertyType[] = [];
     private heroStats: string[] = [];
     private gearSets: string[] = [];
+    private gearTypes: string[] = [];
     private jewelTypes: JewelType[] = [];
     private passiveSkillTriggers: string[] = [];
     private mapTileTypes: string[] = [];
@@ -94,6 +95,10 @@ export class EnumService {
         this.http.get(API_URL + '/enum/gear_sets').subscribe((data: string[]) => {
             this.enumsLoaded ++;
             this.gearSets = data;
+        }, error => this.enumsFailed = true);
+        this.http.get(API_URL + '/enum/gear_types').subscribe((data: string[]) => {
+            this.enumsLoaded ++;
+            this.gearTypes = data;
         }, error => this.enumsFailed = true);
         this.http.get(API_URL + '/enum/jewel_types').subscribe((data: JewelType[]) => {
             this.enumsLoaded ++;
@@ -183,6 +188,10 @@ export class EnumService {
 
     getGearSets(): string[] {
         return this.gearSets;
+    }
+
+    getGearTypes(): string[] {
+        return this.gearTypes;
     }
 
     getJewelTypes(): JewelType[] {

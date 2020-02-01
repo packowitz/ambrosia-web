@@ -55,4 +55,8 @@ export class ConverterService {
         return hours + ':' + (mins < 10 ? '0' : '') + mins;
     }
 
+    dataClone(orig) {
+        return JSON.parse(JSON.stringify(orig));
+    }
+
 }

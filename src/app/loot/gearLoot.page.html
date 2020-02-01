@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        Gear Loot
+        <ion-button color="success" size="small" (click)="newGearLootBox()">New Gear Loot</ion-button>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<ion-content *ngIf="model.gearLoots">
+  <ion-list>
+    <ion-item *ngFor="let gearLoot of model.gearLoots" (click)="gearLootDetails(gearLoot)" detail class="pointer">
+      <ion-label>#{{gearLoot.id}} {{gearLoot.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

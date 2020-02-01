@@ -6,7 +6,10 @@
     <ion-title>
       <div class="flex-space-between">
         Map {{map ? map.name + ' ' + (map.maxX - map.minX + 1) + 'x' + (map.maxY - map.minY + 1) : ''}}
-        <ion-button color="success" (click)="save()">Save</ion-button>
+        <div>
+          <ion-button color="medium" fill="clean" (click)="cancel()">Cancel</ion-button>
+          <ion-button color="success" (click)="save()">Save</ion-button>
+        </div>
       </div>
     </ion-title>
   </ion-toolbar>
@@ -120,6 +123,10 @@
               <ion-label>Building</ion-label>
               <ion-radio slot="start" value="building"></ion-radio>
             </ion-item>
+            <ion-item>
+              <ion-label>Chest</ion-label>
+              <ion-radio slot="start" value="chest"></ion-radio>
+            </ion-item>
           </div>
         </ion-radio-group>
       </div>
@@ -155,6 +162,24 @@
             <ion-label>Building Type</ion-label>
             <ion-select [(ngModel)]="tile.buildingType" placeholder="select">
               <ion-select-option *ngFor="let buildingType of enumService.getBuildingTypes()" [value]="buildingType">{{buildingType}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="tileStructureType == 'chest'">
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Icon</ion-label>
+            <ion-select [(ngModel)]="tile.structure" placeholder="select">
+              <ion-select-option *ngFor="let struct of chestIcons()" [value]="struct.name">{{struct.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <ion-item>
+            <ion-label>Loot Box</ion-label>
+            <ion-select [(ngModel)]="tile.lootBoxId" placeholder="select">
+              <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>

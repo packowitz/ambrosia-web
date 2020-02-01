@@ -2,41 +2,44 @@ import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {Model} from '../services/model.service';
 import {EnumService, MapTileStructure, ResourceType} from '../services/enum.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Map} from '../domain/map.model';
 import {MapTile} from '../domain/mapTile.model';
 import {AlertController} from '@ionic/angular';
 import {LootBox} from '../domain/lootBox.model';
 import {LootItem} from '../domain/lootItem.model';
+import {ConverterService} from '../services/converter.service';
 
 @Component({
   selector: 'loot-box',
   templateUrl: 'lootBox.page.html'
 })
-export class LootBoxPage implements OnInit {
+export class LootBoxPage {
 
   saving = false;
 
   lootBox: LootBox;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private backendService: BackendService,
               public model: Model,
               public enumService: EnumService,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              private converter: ConverterService) {
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     let id = Number(this.route.snapshot.paramMap.get('id'));
     if (!this.model.lootBoxes) {
       this.saving = true;
       this.backendService.loadAllLootBoxes().subscribe(data => {
         this.model.lootBoxes = data;
-        this.lootBox = this.model.lootBoxes.find(m => m.id === id);
+        this.lootBox = this.converter.dataClone(this.model.lootBoxes.find(m => m.id === id));
         this.saving = false;
       });
     } else {
-      this.lootBox = this.model.lootBoxes.find(m => m.id === id);
+      this.lootBox = this.converter.dataClone(this.model.lootBoxes.find(m => m.id === id));
     }
     if (!this.model.gearLoots) {
       this.backendService.loadAllGearLoots().subscribe(data => {
@@ -63,7 +66,7 @@ export class LootBoxPage implements OnInit {
   save() {
     this.saving = true;
     this.backendService.saveLootBox(this.lootBox).subscribe(data => {
-      this.lootBox = data;
+      this.lootBox = this.converter.dataClone(data);
       this.model.updateLootBox(data);
       this.saving = false;
     }, error => {
@@ -74,6 +77,10 @@ export class LootBoxPage implements OnInit {
         buttons: [{text: 'Okay'}]
       }).then(data => data.present());
     });
+  }
+
+  cancel() {
+    this.router.navigateByUrl('/loot');
   }
 
   isLastSlot(number: number): boolean {

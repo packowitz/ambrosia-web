@@ -10,6 +10,7 @@ import {HeroSkillAction} from '../domain/heroSkillAction.model';
 import {AlertController, ModalController} from '@ionic/angular';
 import {SkillIconModal} from './skillIcon.modal';
 import {HeroAvatarModal} from './heroavatar.modal';
+import {Model} from '../services/model.service';
 
 @Component({
     selector: 'herobase-edit',
@@ -25,6 +26,7 @@ export class HerobaseEditPage implements OnInit {
     skillActionsExpanded = 0;
 
     constructor(private route: ActivatedRoute,
+                public model: Model,
                 private backendService: BackendService,
                 private converter: ConverterService,
                 private enumService: EnumService,
@@ -34,7 +36,7 @@ export class HerobaseEditPage implements OnInit {
     ngOnInit() {
         let id = this.route.snapshot.paramMap.get('id');
         this.backendService.getHeroBase(id).subscribe(data => {
-            this.hero = data;
+            this.hero = this.converter.dataClone(data);
             if(this.hero.skills.length === 0) {
                 this.addNewSkill();
             } else {
@@ -73,7 +75,8 @@ export class HerobaseEditPage implements OnInit {
     editHero() {
         this.saving = true;
         this.backendService.saveHeroBase(this.hero).subscribe(data => {
-            this.hero = data;
+            this.model.updateBaseHero(data);
+            this.hero = this.converter.dataClone(data);
             this.saving = false;
         }, error => {
             this.saving = false;

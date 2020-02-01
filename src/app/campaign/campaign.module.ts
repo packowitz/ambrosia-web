@@ -14,6 +14,10 @@ import {CampaignFightPage} from './campaignFight.page';
       {
         path: ':mapId/:posX/:posY',
         component: CampaignFightPage
+      },
+      {
+        path: ':fightId',
+        component: CampaignFightPage
       }
     ])
   ],

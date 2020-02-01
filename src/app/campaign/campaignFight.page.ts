@@ -28,6 +28,8 @@ export class CampaignFightPage implements OnInit {
   hero3?: Hero;
   hero4?: Hero;
 
+  testFight = false;
+
   constructor(private route: ActivatedRoute,
               private backendService: BackendService,
               private router: Router,
@@ -37,14 +39,17 @@ export class CampaignFightPage implements OnInit {
   }
 
   ngOnInit() {
-    let mapId = Number(this.route.snapshot.paramMap.get('mapId'));
-    let posX = Number(this.route.snapshot.paramMap.get('posX'));
-    let posY = Number(this.route.snapshot.paramMap.get('posY'));
-    this.map = this.model.playerMaps.find(m => m.mapId === mapId);
-    this.tile = this.map.tiles.find(t => t.posX === posX && t.posY === posY);
-    this.backendService.getFight(this.tile.fightId).subscribe(data => {
-      this.fight = data;
-    });
+    let fightId = Number(this.route.snapshot.paramMap.get('fightId'));
+    if (fightId) {
+      this.testFight = true;
+      this.initTestFight(fightId);
+    } else {
+      let mapId = Number(this.route.snapshot.paramMap.get('mapId'));
+      let posX = Number(this.route.snapshot.paramMap.get('posX'));
+      let posY = Number(this.route.snapshot.paramMap.get('posY'));
+      this.initMapCampaign(mapId, posX, posY);
+    }
+
     if (!this.model.teams) {
       this.backendService.getOwnTeams().subscribe(data => {
         this.model.teams = data;
@@ -55,14 +60,28 @@ export class CampaignFightPage implements OnInit {
     }
   }
 
+  initMapCampaign(mapId: number, posX: number, posY: number) {
+    this.map = this.model.playerMaps.find(m => m.mapId === mapId);
+    this.tile = this.map.tiles.find(t => t.posX === posX && t.posY === posY);
+    this.backendService.getFight(this.tile.fightId).subscribe(data => {
+      this.fight = data;
+    });
+  }
+
+  initTestFight(fightId: number) {
+    this.backendService.getFight(fightId).subscribe(data => {
+      this.fight = data;
+    });
+  }
+
   close() {
     this.location.back();
   }
 
   initTeam() {
-    this.team = this.model.teams.find(t => t.type === 'CAMPAIGN');
+    this.team = this.model.teams.find(t => t.type === (this.testFight ? 'TEST' : 'CAMPAIGN'));
     if (!this.team) {
-      this.team = new Team('CAMPAIGN');
+      this.team = new Team(this.testFight ? 'TEST' : 'CAMPAIGN');
     } else {
       this.hero1 = this.team.hero1Id ? this.model.heroes.find(h => h.id === this.team.hero1Id) : null;
       this.hero2 = this.team.hero2Id ? this.model.heroes.find(h => h.id === this.team.hero2Id) : null;
@@ -114,8 +133,14 @@ export class CampaignFightPage implements OnInit {
   }
 
   start() {
-    this.backendService.startCampaignFight(this.map.mapId, this.tile.posX, this.tile.posY, this.team).subscribe(() => {
-      this.router.navigateByUrl('/battle');
-    });
+    if (this.map) {
+      this.backendService.startCampaignFight(this.map.mapId, this.tile.posX, this.tile.posY, this.team).subscribe(() => {
+        this.router.navigateByUrl('/battle');
+      });
+    } else {
+      this.backendService.startTestFight(this.fight.id, this.team).subscribe(() => {
+        this.router.navigateByUrl('/battle');
+      });
+    }
   }
 }

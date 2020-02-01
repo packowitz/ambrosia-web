@@ -5,6 +5,8 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {LootPage} from './loot.page';
 import {LootBoxPage} from './lootBox.page';
+import {GearLootPage} from './gearLoot.page';
+import {GearLootDetailsPage} from './gearLootDetails.page';
 
 @NgModule({
   imports: [
@@ -19,9 +21,17 @@ import {LootBoxPage} from './lootBox.page';
       {
         path: 'box/:id',
         component: LootBoxPage
+      },
+      {
+        path: 'gear',
+        component: GearLootPage
+      },
+      {
+        path: 'gear/:id',
+        component: GearLootDetailsPage
       }
     ])
   ],
-  declarations: [LootPage, LootBoxPage]
+  declarations: [LootPage, LootBoxPage, GearLootPage, GearLootDetailsPage]
 })
 export class LootModule {}

@@ -6,23 +6,24 @@ import {RouterModule} from '@angular/router';
 import {BarracksPage} from './barracks.page';
 import {GearListItem} from './gear-list-item.directive';
 import {GearModal} from './gear.modal';
-import {GearIcon} from './gear-icon.directive';
 import {GearStat} from './gear-stat.directive';
-import {GearJewelSlot} from './gear-jewel-slot.directive';
+import {CommonAmbrosiaModule} from '../common-ambrosia.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: BarracksPage
-      }
-    ])
-  ],
-  declarations: [BarracksPage, GearListItem, GearModal, GearIcon, GearStat, GearJewelSlot],
-  entryComponents: [GearModal]
+    imports: [
+        CommonModule,
+        CommonAmbrosiaModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild([
+            {
+                path: '',
+                component: BarracksPage
+            }
+        ])
+    ],
+    declarations: [BarracksPage, GearListItem, GearModal, GearStat],
+    entryComponents: [GearModal]
 })
-export class BarracksModule {}
+export class BarracksModule {
+}

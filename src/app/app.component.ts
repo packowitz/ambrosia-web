@@ -64,7 +64,15 @@ export class AppComponent {
         {
             title: 'Loot',
             url: '/loot',
-            icon: 'trophy'
+            icon: 'trophy',
+            open: false,
+            children: [
+                {
+                    title: 'Gear Loot',
+                    url: '/loot/gear',
+                    icon: 'vest'
+                }
+            ]
         },
         {
             title: 'Tavern',

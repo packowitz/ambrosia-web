@@ -18,7 +18,24 @@
       <div class="color-white font-large bold">Stage {{battle.fightStage}} cleared</div>
     </div>
     <div *ngIf="!animateStep && (battle.status == 'LOST' || battle.status == 'WON')" class="loading-indicator flex-center pointer" (click)="leaveBattle()">
-      <div class="color-white font-large bold">You {{battle.status}}</div>
+      <div class="color-white font-large bold" *ngIf="!looted">You {{battle.status}}</div>
+      <div class="loot-window pa-2" *ngIf="looted">
+        <div class="flex-center">You received</div>
+        <div class="flex-space-between mt-1">
+          <div *ngFor="let loot of looted">
+            <div *ngIf="loot.type == 'RESOURCE'" class="loot-item flex-vert-center">
+              <img src="assets/img/resources/{{loot.resourceType}}.png" class="loot-image">
+              <div class="font-small">{{loot.value}}x</div>
+            </div>
+            <div *ngIf="loot.type == 'HERO'" class="hero-tile-very-small border-grey flex-vert-center loot-item">
+              <ion-img [src]="'assets/img/chars/' + model.getHero(loot.value).heroBase.avatar + '.png'" class="hero-avatar-very-small border-bottom-grey"></ion-img>
+              <ion-img [src]="'assets/img/star_' + model.getHero(loot.value).stars + '.png'" class="hero-stars"></ion-img>
+            </div>
+            <gear-icon *ngIf="loot.type == 'GEAR'" [gear]="model.getGear(loot.value)" [type]="model.getGear(loot.value).type" class="loot-item"></gear-icon>
+          </div>
+        </div>
+        <div class="flex-center mt-1"><i>(click anywhere to close)</i></div>
+      </div>
     </div>
     <ion-card-header class="flex-space-between">
       <ion-card-title>{{battle.playerName}}#{{battle.playerId}} vs {{battle.opponentName}}{{battle.opponentId ? '#' + battle.opponentId : ''}}</ion-card-title>

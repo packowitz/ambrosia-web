@@ -26,7 +26,11 @@ import {Resources} from '../domain/resources.model';
 import {LootBox} from '../domain/lootBox.model';
 import {GearLoot} from '../domain/gearLoot.model';
 
-
+export class Looted {
+    type: string;
+    resourceType: string;
+    value: number;
+}
 export class PlayerActionResponse {
     player?: Player;
     token?: string;
@@ -42,6 +46,7 @@ export class PlayerActionResponse {
     playerMaps?: PlayerMap[];
     currentMap?: PlayerMap;
     ongoingBattle?: Battle;
+    looted?: Looted[];
 }
 
 @Injectable({
@@ -324,13 +329,11 @@ export class BackendService {
     }
 
     startCampaignFight(mapId: number, posX: number, posY: number, team: Team): Observable<PlayerActionResponse> {
-        let request = {
-            hero1Id: team.hero1Id,
-            hero2Id: team.hero2Id,
-            hero3Id: team.hero3Id,
-            hero4Id: team.hero4Id
-        };
-        return this.http.post<PlayerActionResponse>(API_URL + '/battle/campaign/' + mapId + '/' + posX + '/' + posY, request);
+        return this.http.post<PlayerActionResponse>(API_URL + '/battle/campaign/' + mapId + '/' + posX + '/' + posY, team);
+    }
+
+    startTestFight(fightId: number, team: Team): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/battle/campaign/test/' + fightId, team);
     }
 
     loadAllMaps(): Observable<Map[]> {
@@ -380,6 +383,15 @@ export class BackendService {
         return this.http.post<PlayerActionResponse>(API_URL + '/map/new_building', request);
     }
 
+    openChest(mapId: number, posX: number, posY: number): Observable<PlayerActionResponse> {
+        let request = {
+            mapId: mapId,
+            posX: posX,
+            posY: posY
+        };
+        return this.http.post<PlayerActionResponse>(API_URL + '/map/open_chest', request);
+    }
+
     loadAllLootBoxes(): Observable<LootBox[]> {
         return this.http.get<LootBox[]>(API_URL + '/admin/loot/box');
     }
@@ -392,7 +404,11 @@ export class BackendService {
         return this.http.get<GearLoot[]>(API_URL + '/admin/loot/gear');
     }
 
-    saveGearLoot(gearLoot: GearLoot): Observable<LootBox> {
+    newGearLoot(name: string): Observable<GearLoot> {
+        return this.http.post<GearLoot>(API_URL + '/admin/loot/gear', {name: name});
+    }
+
+    saveGearLoot(gearLoot: GearLoot): Observable<GearLoot> {
         return this.http.post<GearLoot>(API_URL + '/admin/loot/gear', gearLoot);
     }
 

@@ -58,6 +58,14 @@ export class Model {
         this.currentMap = null;
     }
 
+    getHero(id: number): Hero {
+        return this.heroes.find(h => h.id === id);
+    }
+
+    getGear(id: number): Gear {
+        return this.gears.find(g => g.id === id);
+    }
+
     startInterval() {
         this.interval = setInterval(() => {
             let needUpdate = false;
@@ -163,6 +171,17 @@ export class Model {
         }
     }
 
+    updateBaseHero(hero?: HeroBase) {
+        if (hero) {
+            let idx = this.baseHeroes.findIndex(h => h.id === hero.id);
+            if (idx >= 0) {
+                this.baseHeroes[idx] = hero;
+            } else {
+                this.baseHeroes.push(hero);
+            }
+        }
+    }
+
     updateHero(hero?: Hero) {
         if (hero) {
             let idx = this.heroes.findIndex(h => h.id === hero.id);
@@ -250,6 +269,17 @@ export class Model {
                 this.lootBoxes[idx] = lootBox;
             } else {
                 this.lootBoxes.push(lootBox);
+            }
+        }
+    }
+
+    updateGearLoot(gearLoot?: GearLoot) {
+        if (gearLoot) {
+            let idx = this.gearLoots.findIndex(l => l.id === gearLoot.id);
+            if (idx >= 0) {
+                this.gearLoots[idx] = gearLoot;
+            } else {
+                this.gearLoots.push(gearLoot);
             }
         }
     }

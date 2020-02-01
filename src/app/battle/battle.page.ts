@@ -3,7 +3,7 @@ import {Model} from '../services/model.service';
 import {Battle} from '../domain/battle.model';
 import {BattleHero} from '../domain/battleHero.model';
 import {HeroSkill} from '../domain/heroSkill.model';
-import {BackendService} from '../services/backend.service';
+import {BackendService, Looted} from '../services/backend.service';
 import {BattleStep} from '../domain/battleStep.model';
 import {AlertController} from '@ionic/angular';
 import {Router} from '@angular/router';
@@ -25,11 +25,12 @@ export class BattlePage implements OnInit {
 
   autobattle = false;
   loading = false;
+  looted: Looted[];
 
   nextStageBattle: Battle = null;
   loadingNextStageInitiated = false;
 
-  constructor(private model: Model,
+  constructor(public model: Model,
               private backendService: BackendService,
               private alertCtrl: AlertController,
               private router: Router) {}
@@ -38,7 +39,7 @@ export class BattlePage implements OnInit {
     setTimeout(() => this.initBattle(this.model.ongoingBattle), 1000);
   }
 
-  initBattle(battle: Battle) {
+  initBattle(battle: Battle, looted?: Looted[]) {
     if (battle) {
       this.battle = battle;
       if (this.battle.nextBattleId) {
@@ -46,6 +47,7 @@ export class BattlePage implements OnInit {
       }
       this.setActiveHero();
     }
+    this.looted = looted;
   }
 
   setActiveHero() {
@@ -187,7 +189,7 @@ export class BattlePage implements OnInit {
     this.lastKnownStepIdx = this.battle.steps.length - 1;
     this.loading = true;
     this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
-      this.initBattle(data.ongoingBattle);
+      this.initBattle(data.ongoingBattle, data.looted);
       this.loading = false;
     }, error => {
       this.loading = false;
@@ -204,7 +206,7 @@ export class BattlePage implements OnInit {
       this.lastKnownStepIdx = this.battle.steps.length - 1;
       this.loading = true;
       this.backendService.takeAutoTurn(this.battle, this.activeHero).subscribe(data => {
-        this.initBattle(data.ongoingBattle);
+        this.initBattle(data.ongoingBattle, data.looted);
         this.loading = false;
       }, error => {
         this.loading = false;
@@ -221,7 +223,7 @@ export class BattlePage implements OnInit {
     if (this.battle.status === 'PLAYER_TURN') {
       this.loading = true;
       this.backendService.surrender(this.battle).subscribe(data => {
-        this.initBattle(data.ongoingBattle);
+        this.initBattle(data.ongoingBattle, data.looted);
         this.loading = false;
       }, error => {
         this.loading = false;
@@ -268,6 +270,10 @@ export class BattlePage implements OnInit {
   }
 
   leaveBattle() {
-    this.router.navigateByUrl('/home');
+    if (this.battle.type === 'TEST' && this.battle.fight) {
+      this.router.navigateByUrl('/fights/' + this.battle.fight.id);
+    } else {
+      this.router.navigateByUrl('/home');
+    }
   }
 }

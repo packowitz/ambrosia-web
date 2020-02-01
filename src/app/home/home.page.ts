@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Model} from '../services/model.service';
 import {PlayerMapTile} from '../domain/playerMapTile.model';
-import {BackendService} from '../services/backend.service';
+import {BackendService, Looted} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
 import {PlayerMap} from '../domain/playerMap.model';
 import {Router} from '@angular/router';
@@ -16,6 +16,8 @@ import {ConverterService} from '../services/converter.service';
 export class HomePage {
 
   saving = false;
+
+  looted: Looted[];
 
   steamTimer = false;
   cogwheelsTimer = false;
@@ -120,6 +122,13 @@ export class HomePage {
             }).then(alert => alert.present());
           });
         }
+      } else if (!tile.chestOpened) {
+        this.saving = true;
+        this.backendService.openChest(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
+          this.saving = false;
+          this.map = data.currentMap;
+          this.looted = data.looted;
+        });
       }
     }
   }
