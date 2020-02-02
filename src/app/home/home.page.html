@@ -62,7 +62,12 @@
 
   <ion-card *ngIf="map">
     <ion-card-header>
-      <ion-card-title>{{map.name}}</ion-card-title>
+      <ion-card-title>
+        <div class="flex-space-between">
+          {{map.name}}
+          <ion-button *ngIf="model.player.admin" (click)="resetMap()" fill="clear">Reset Map</ion-button>
+        </div>
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <div class="map-container-outer scrollable-vert">

@@ -369,6 +369,15 @@ export class BackendService {
         return this.http.get<PlayerMap>(API_URL + '/map/' + mapId);
     }
 
+    resetMap(mapId: number, discovered: boolean, fights: boolean, chests: boolean): Observable<PlayerActionResponse> {
+        let request = {
+            discovered: discovered,
+            fights: fights,
+            chests: chests
+        };
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/map/' + mapId + '/reset', request);
+    }
+
     discoverMapTile(mapId: number, posX: number, posY: number): Observable<PlayerActionResponse> {
         let request = {
             mapId: mapId,
@@ -415,5 +424,4 @@ export class BackendService {
     saveGearLoot(gearLoot: GearLoot): Observable<GearLoot> {
         return this.http.post<GearLoot>(API_URL + '/admin/loot/gear', gearLoot);
     }
-
 }

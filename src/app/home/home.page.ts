@@ -146,5 +146,59 @@ export class HomePage {
     }
   }
 
+  resetMap() {
+    this.alertCtrl.create({
+      subHeader: 'Reset this map',
+      inputs: [
+        {
+          name: 'discovered',
+          type: 'checkbox',
+          label: 'Discovery',
+          value: 'discovered',
+          checked: true
+        },
+        {
+          name: 'fights',
+          type: 'checkbox',
+          label: 'Fights',
+          value: 'fights',
+          checked: true
+        },
+        {
+          name: 'chests',
+          type: 'checkbox',
+          label: 'Chests',
+          value: 'chests',
+          checked: true
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            console.log(data);
+            if (data.length > 0) {
+              this.saving = true;
+              let discovered = false, fights = false, chests = false;
+              data.forEach(item => {
+                if (item === 'discovered') { discovered = true; }
+                if (item === 'fights') { fights = true; }
+                if (item === 'chests') { chests = true; }
+              });
+              this.backendService.resetMap(this.map.mapId, discovered, fights, chests).subscribe(response => {
+                this.map = response.currentMap;
+                this.saving = false;
+              });
+            }
+          }
+        }
+      ]
+    }).then(alert => alert.present());
+  }
+
 
 }
