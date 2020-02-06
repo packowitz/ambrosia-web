@@ -138,6 +138,9 @@ export class HomePage {
       case 'BARRACKS':
         this.router.navigateByUrl('/barracks');
         break;
+      case 'ACADEMY':
+        this.router.navigateByUrl('/academy');
+        break;
       default:
         this.alertCtrl.create({
           subHeader: type + ' will be implemented soon.'

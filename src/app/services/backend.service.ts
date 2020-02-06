@@ -424,4 +424,28 @@ export class BackendService {
     saveGearLoot(gearLoot: GearLoot): Observable<GearLoot> {
         return this.http.post<GearLoot>(API_URL + '/admin/loot/gear', gearLoot);
     }
+
+    feedHeroesForXp(hero: Hero, fodder1?: Hero, fodder2?: Hero, fodder3?: Hero, fodder4?: Hero, fodder5?: Hero, fodder6?: Hero): Observable<PlayerActionResponse> {
+        let request = {
+            hero1Id: fodder1 ? fodder1.id : null,
+            hero2Id: fodder2 ? fodder2.id : null,
+            hero3Id: fodder3 ? fodder3.id : null,
+            hero4Id: fodder4 ? fodder4.id : null,
+            hero5Id: fodder5 ? fodder5.id : null,
+            hero6Id: fodder6 ? fodder6.id : null
+        };
+        return this.http.post<PlayerActionResponse>(API_URL + '/building/academy/hero/' + hero.id + '/level', request);
+    }
+
+    feedHeroesForEvolve(hero: Hero, fodder1?: Hero, fodder2?: Hero, fodder3?: Hero, fodder4?: Hero, fodder5?: Hero, fodder6?: Hero): Observable<PlayerActionResponse> {
+        let request = {
+            hero1Id: fodder1 ? fodder1.id : null,
+            hero2Id: fodder2 ? fodder2.id : null,
+            hero3Id: fodder3 ? fodder3.id : null,
+            hero4Id: fodder4 ? fodder4.id : null,
+            hero5Id: fodder5 ? fodder5.id : null,
+            hero6Id: fodder6 ? fodder6.id : null
+        };
+        return this.http.post<PlayerActionResponse>(API_URL + '/building/academy/hero/' + hero.id + '/evolve', request);
+    }
 }

@@ -42,6 +42,7 @@ const routes: Routes = [
         canActivate: [AdminGuard]
     },
     {path: 'barracks', loadChildren: './barracks/barracks.module#BarracksModule'},
+    {path: 'academy', loadChildren: './academy/academy.module#AcademyModule'},
     {path: 'login', loadChildren: './login/login.module#LoginPageModule'},
     {path: 'properties', loadChildren: './properties/properties.module#PropertiesPageModule'},
     {path: 'campaign', loadChildren: './campaign/campaign.module#CampaignModule'},

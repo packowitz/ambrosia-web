@@ -340,3 +340,28 @@ ion-row.table-row {
     width: 40px;
   }
 }
+
+.bar-outer {
+  border: 1px solid black;
+  max-width: 300px;
+  background-color: #a8a8a8;
+  position: relative;
+  .bar-inner {
+    position: absolute;
+    left: 0;
+    top:0;
+    background-color: #dcb754;
+  }
+  .bar-inner-2nd {
+    position: absolute;
+    top: 0;
+    background-color: #65afc1;
+  }
+  .bar-text {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+  }
+}

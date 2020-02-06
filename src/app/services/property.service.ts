@@ -10,7 +10,7 @@ import {API_URL} from '../../environments/environment';
 })
 export class PropertyService {
 
-  initialCategories = ['JEWEL'];
+  initialCategories = ['JEWEL', 'HERO'];
 
   properties = {};
 
@@ -44,6 +44,50 @@ export class PropertyService {
       let jewelProperty = props.find((p: DynamicProperty) => p.level === level);
       if (jewelProperty) {
         return jewelProperty.value1;
+      }
+    }
+    return 0;
+  }
+
+  getHeroMaxXp(level: number): number {
+    let props = this.properties['XP_MAX_HERO'];
+    if (props) {
+      let lvlProp = props.find((p: DynamicProperty) => p.level === level);
+      if (lvlProp) {
+        return lvlProp.value1;
+      }
+    }
+    return 0;
+  }
+
+  getHeroMergeXp(level: number): number {
+    let props = this.properties['MERGE_XP_HERO'];
+    if (props) {
+      let lvlProp = props.find((p: DynamicProperty) => p.level === level);
+      if (lvlProp) {
+        return lvlProp.value1;
+      }
+    }
+    return 0;
+  }
+
+  getHeroMaxAsc(ascLevel: number): number {
+    let props = this.properties['ASC_POINTS_MAX_HERO'];
+    if (props) {
+      let lvlProp = props.find((p: DynamicProperty) => p.level === ascLevel);
+      if (lvlProp) {
+        return lvlProp.value1;
+      }
+    }
+    return 0;
+  }
+
+  getHeroMergeAsc(rarity: number): number {
+    let props = this.properties['MERGE_ASC_HERO'];
+    if (props) {
+      let lvlProp = props.find((p: DynamicProperty) => p.level === rarity);
+      if (lvlProp) {
+        return lvlProp.value1;
       }
     }
     return 0;
