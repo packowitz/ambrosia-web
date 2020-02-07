@@ -44,9 +44,13 @@ export class TrainingPage implements OnInit {
       this.team = new Team('DUELL');
     } else {
       this.hero1 = this.team.hero1Id ? this.model.heroes.find(h => h.id === this.team.hero1Id) : null;
+      if (!this.hero1) { this.team.hero1 = null; }
       this.hero2 = this.team.hero2Id ? this.model.heroes.find(h => h.id === this.team.hero2Id) : null;
+      if (!this.hero2) { this.team.hero2 = null; }
       this.hero3 = this.team.hero3Id ? this.model.heroes.find(h => h.id === this.team.hero3Id) : null;
+      if (!this.hero3) { this.team.hero3 = null; }
       this.hero4 = this.team.hero4Id ? this.model.heroes.find(h => h.id === this.team.hero4Id) : null;
+      if (!this.hero4) { this.team.hero4 = null; }
     }
   }
 
