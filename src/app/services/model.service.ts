@@ -17,6 +17,7 @@ import {Resources} from '../domain/resources.model';
 import {HttpClient} from '@angular/common/http';
 import {LootBox} from '../domain/lootBox.model';
 import {GearLoot} from '../domain/gearLoot.model';
+import {VehicleBase} from '../domain/vehicleBase.model';
 
 @Injectable({
     providedIn: 'root'
@@ -43,6 +44,7 @@ export class Model {
     maps: Map[];
     playerMaps: PlayerMap[];
     currentMap: PlayerMap;
+    baseVehicles: VehicleBase[];
 
     interval: number;
     updateInProgress = false;
@@ -291,6 +293,17 @@ export class Model {
                 this.teams[idx] = team;
             } else {
                 this.teams.push(team);
+            }
+        }
+    }
+
+    updateVehicleBase(vehicle?: VehicleBase) {
+        if (vehicle) {
+            let idx = this.baseVehicles.findIndex(t => t.id === vehicle.id);
+            if (idx >= 0) {
+                this.baseVehicles[idx] = vehicle;
+            } else {
+                this.baseVehicles.push(vehicle);
             }
         }
     }

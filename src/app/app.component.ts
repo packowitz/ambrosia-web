@@ -38,6 +38,11 @@ export class AppComponent {
             ]
         },
         {
+            title: 'Vehicles',
+            url: '/vehiclebase',
+            icon: 'jetpack'
+        },
+        {
             title: 'Fights',
             url: '/fights',
             icon: 'hydra',

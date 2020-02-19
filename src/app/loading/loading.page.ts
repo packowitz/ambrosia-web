@@ -34,9 +34,9 @@ export class LoadingPage {
       this.loadServiceAccounts();
     } else if (!this.playerChecked) {
       this.checkPlayer();
-    } else if (this.enumService.enumsLoaded < this.enumService.enumsTotal) {
+    } else if (!this.enumService.enums) {
       this.status = 'Waiting for static content to get loaded';
-      while (this.enumService.enumsLoaded < this.enumService.enumsTotal && !this.enumService.enumsFailed) {
+      while (!this.enumService.enums && !this.enumService.enumsFailed) {
         setTimeout(() => this.initApp(), 200);
       }
       if (this.enumService.enumsFailed) {

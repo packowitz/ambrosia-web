@@ -37,40 +37,86 @@
               <ion-input type="number" [(ngModel)]="item.chance" style="max-width: 50px;"></ion-input>
             </ion-item>
           </div>
-          <div class="flex-center" *ngIf="item.type == 'RESOURCE'">
-            Res
-            <ion-item lines="none">
-              <ion-input type="number" [(ngModel)]="item.resourceAmount" style="max-width: 50px;"></ion-input>
-            </ion-item>
-            <ion-item lines="none">
-              <ion-select [(ngModel)]="item.resourceType" style="max-width: 100%">
-                <ion-select-option *ngFor="let type of getResourceTypes()" [value]="type.name">{{type.name}}</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div class="flex-center" *ngIf="item.type == 'HERO'">
-            Hero
-            <ion-item lines="none">
-              <ion-select [(ngModel)]="item.heroBaseId" style="max-width: 100%">
-                <ion-select-option *ngFor="let hero of model.baseHeroes" [value]="hero.id">#{{hero.id}} {{hero.name}}</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div class="flex-center" *ngIf="item.type == 'GEAR'">
-            Gear
-            <ion-item lines="none">
-              <ion-select [(ngModel)]="item.gearLootId" style="max-width: 100%">
-                <ion-select-option *ngFor="let gear of model.gearLoots" [value]="gear.id">{{gear.name}}</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
           <div>
             <ion-button fill="clear" [color]="item.type == 'RESOURCE' ? 'primary' : 'dark'" (click)="item.type = 'RESOURCE'">Res</ion-button>
+            <ion-button fill="clear" [color]="item.type == 'JEWEL' ? 'primary' : 'dark'" (click)="item.type = 'JEWEL'">Jewel</ion-button>
             <ion-button fill="clear" [color]="item.type == 'HERO' ? 'primary' : 'dark'" (click)="item.type = 'HERO'">Hero</ion-button>
             <ion-button fill="clear" [color]="item.type == 'GEAR' ? 'primary' : 'dark'" (click)="item.type = 'GEAR'">Gear</ion-button>
+            <ion-button fill="clear" [color]="item.type == 'VEHICLE' ? 'primary' : 'dark'" (click)="item.type = 'VEHICLE'">Vehicle</ion-button>
+            <ion-button fill="clear" [color]="item.type == 'VEHICLE_PART' ? 'primary' : 'dark'" (click)="item.type = 'VEHICLE_PART'">Part</ion-button>
             <ion-button fill="clear" color="danger" (click)="deleteItem(item)"><ion-icon name="trash"></ion-icon></ion-button>
           </div>
         </div>
+
+        <div class="flex-space-between" *ngIf="item.type == 'RESOURCE'">
+          <div class="flex-grow">&nbsp;</div>
+          <ion-item>
+            <ion-input type="number" [(ngModel)]="item.resourceFrom" value="1" style="max-width: 50px;"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>to</ion-label>
+            <ion-input type="number" [(ngModel)]="item.resourceTo" value="1" style="max-width: 50px;"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-select [(ngModel)]="item.resourceType" style="max-width: 100%">
+              <ion-select-option *ngFor="let type of getResourceTypes()" [value]="type.name">{{type.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="flex-space-between" *ngIf="item.type == 'JEWEL'">
+          <div class="flex-grow">&nbsp;</div>
+          <div>
+            <ion-button fill="outline" size="small" [color]="jewelTypeEnabled(item, type.name) ? 'primary' : 'medium'" *ngFor="let type of enumService.getJewelTypes()" (click)="toggleJewelType(item, type.name)">{{type.name}}</ion-button>
+          </div>
+          <ion-item>
+            <ion-label>Level (1-10)</ion-label>
+            <ion-input type="number" [(ngModel)]="item.jewelLevel" min="1" max="10" value="1" style="max-width: 50px; min-width: 50px"></ion-input>
+          </ion-item>
+        </div>
+        <div class="flex-space-between" *ngIf="item.type == 'HERO'">
+          <div class="flex-grow">&nbsp;</div>
+          <ion-item>
+            <ion-select [(ngModel)]="item.heroBaseId" style="max-width: 100%">
+              <ion-select-option *ngFor="let hero of model.baseHeroes" [value]="hero.id">#{{hero.id}} {{hero.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Level (1-60)</ion-label>
+            <ion-input type="number" [(ngModel)]="item.heroLevel" min="1" max="60" value="1" style="max-width: 50px;"></ion-input>
+          </ion-item>
+        </div>
+        <div class="flex-space-between" *ngIf="item.type == 'GEAR'">
+          <div class="flex-grow">&nbsp;</div>
+          <ion-item>
+            <ion-select [(ngModel)]="item.gearLootId" style="max-width: 100%">
+              <ion-select-option *ngFor="let gear of model.gearLoots" [value]="gear.id">{{gear.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="flex-space-between" *ngIf="item.type == 'VEHICLE'">
+          <div class="flex-grow">&nbsp;</div>
+          <ion-item>
+            <ion-select [(ngModel)]="item.vehicleBaseId" style="max-width: 100%">
+              <ion-select-option *ngFor="let vehicle of model.baseVehicles" [value]="vehicle.id">{{vehicle.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="flex-space-between" *ngIf="item.type == 'VEHICLE_PART'">
+          <div class="flex-grow">&nbsp;</div>
+          <ion-item>
+            <ion-label>Type</ion-label>
+            <ion-select [(ngModel)]="item.vehiclePartType" style="max-width: 100%">
+              <ion-select-option *ngFor="let type of enumService.getPartTypes()" [value]="type">{{type}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Quality</ion-label>
+            <ion-select [(ngModel)]="item.vehiclePartQuality" style="max-width: 100%">
+              <ion-select-option *ngFor="let quality of enumService.getPartQualities()" [value]="quality">{{quality}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
       </div>
       <div class="flex-center">
         <ion-button color="success" (click)="newItem()">Add Line</ion-button>

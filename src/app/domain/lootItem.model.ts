@@ -5,7 +5,14 @@ export class LootItem {
     chance: number;
     type: string;
     resourceType: string;
-    resourceAmount: number;
+    resourceFrom: number;
+    resourceTo: number;
     heroBaseId: number;
+    heroLevel: number;
     gearLootId: number;
+    jewelTypes: string[];
+    jewelLevel: number;
+    vehicleBaseId: number;
+    vehiclePartType: string;
+    vehiclePartQuality: string;
 }

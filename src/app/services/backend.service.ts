@@ -25,6 +25,7 @@ import {Building} from '../domain/building.model';
 import {Resources} from '../domain/resources.model';
 import {LootBox} from '../domain/lootBox.model';
 import {GearLoot} from '../domain/gearLoot.model';
+import {VehicleBase} from '../domain/vehicleBase.model';
 
 export class Looted {
     type: string;
@@ -447,5 +448,17 @@ export class BackendService {
             hero6Id: fodder6 ? fodder6.id : null
         };
         return this.http.post<PlayerActionResponse>(API_URL + '/building/academy/hero/' + hero.id + '/evolve', request);
+    }
+
+    loadAllBaseVehicles(): Observable<VehicleBase[]> {
+        return this.http.get<VehicleBase[]>(API_URL + '/admin/vehicle');
+    }
+
+    newBaseVehicle(name: string): Observable<VehicleBase> {
+        return this.http.post<VehicleBase>(API_URL + '/admin/vehicle', {name: name});
+    }
+
+    saveBaseVehicle(vehicle: VehicleBase): Observable<VehicleBase> {
+        return this.http.post<VehicleBase>(API_URL + '/admin/vehicle', vehicle);
     }
 }
