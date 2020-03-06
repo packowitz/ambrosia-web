@@ -3,12 +3,7 @@ import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
 import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
-import {Player} from '../domain/player.model';
 import {Router} from '@angular/router';
-import {Fight} from '../domain/fight.model';
-import {Map} from '../domain/map.model';
-import {LootBox} from '../domain/lootBox.model';
-import {GearLoot} from '../domain/gearLoot.model';
 import {VehicleBase} from '../domain/vehicleBase.model';
 
 @Component({

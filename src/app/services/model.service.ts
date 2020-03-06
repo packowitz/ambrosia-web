@@ -18,6 +18,9 @@ import {HttpClient} from '@angular/common/http';
 import {LootBox} from '../domain/lootBox.model';
 import {GearLoot} from '../domain/gearLoot.model';
 import {VehicleBase} from '../domain/vehicleBase.model';
+import {Progress} from '../domain/progress.model';
+import {Vehicle} from '../domain/vehicle.model';
+import {VehiclePart} from '../domain/vehiclePart.model';
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +31,7 @@ export class Model {
     playerId: number;
     activeAccountId: number;
     player: Player;
+    progress: Progress;
     resources: Resources;
     baseHeroes: HeroBase[];
     heroes: Hero[];
@@ -39,6 +43,8 @@ export class Model {
     fightStageConfigs: FightStageConfig[];
     fightEnvironments: FightEnvironment[];
     buildings: Building[];
+    vehicles: Vehicle[];
+    vehicleParts: VehiclePart[];
     lootBoxes: LootBox[];
     gearLoots: GearLoot[];
     maps: Map[];
@@ -66,6 +72,14 @@ export class Model {
 
     getGear(id: number): Gear {
         return this.gears.find(g => g.id === id);
+    }
+
+    getVehicle(id: number): Vehicle {
+        return this.vehicles.find(v => v.id === id);
+    }
+
+    getVehiclePart(id: number): VehiclePart {
+        return this.vehicleParts.find(p => p.id === id);
     }
 
     startInterval() {
@@ -115,6 +129,9 @@ export class Model {
             }
             localStorage.setItem(key, data.token);
         }
+        if (data.progress) {
+            this.progress = data.progress;
+        }
         if (data.resources) {
             this.resources = data.resources;
             if (!this.interval) {
@@ -152,6 +169,20 @@ export class Model {
                 data.buildings.forEach(b => this.updateBuilding(b));
             } else {
                 this.buildings = data.buildings;
+            }
+        }
+        if (data.vehicles) {
+            if (this.vehicles) {
+                data.vehicles.forEach(v => this.updateVehicle(v));
+            } else {
+                this.vehicles = data.vehicles;
+            }
+        }
+        if (data.vehicleParts) {
+            if (this.vehicleParts) {
+                data.vehicleParts.forEach(p => this.updateVehiclePart(p));
+            } else {
+                this.vehicleParts = data.vehicleParts;
             }
         }
         if (data.playerMaps) {
@@ -307,5 +338,29 @@ export class Model {
             }
         }
     }
+
+    updateVehicle(vehicle?: Vehicle) {
+        if (vehicle) {
+            let idx = this.vehicles.findIndex(v => v.id === vehicle.id);
+            if (idx >= 0) {
+                this.vehicles[idx] = vehicle;
+            } else {
+                this.vehicles.push(vehicle);
+            }
+        }
+    }
+
+    updateVehiclePart(part?: VehiclePart) {
+        if (part) {
+            let idx = this.vehicleParts.findIndex(p => p.id === part.id);
+            if (idx >= 0) {
+                this.vehicleParts[idx] = part;
+            } else {
+                this.vehicleParts.push(part);
+            }
+        }
+    }
+
+
 
 }

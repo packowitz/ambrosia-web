@@ -112,6 +112,7 @@ export class LootBoxPage {
         item.type = 'RESOURCE';
         item.resourceTo = 5;
         item.resourceType = 'COINS';
+        item.jewelTypes = [];
         this.lootBox.items.push(item);
     }
 

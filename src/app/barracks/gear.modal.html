@@ -45,7 +45,7 @@
                     </div>
                     <div *ngIf="gear.jewelSlot4" class="flex-center">
                         <ion-button (click)="selectJewelSlot(4, gear.jewelSlot4)" color="dark" [fill]="selectedJewel == 4 ? 'outline' : 'clear'">
-                            <gear-jewel-slot [slotType]="gear.jewelSlot3" [pluggedInType]="gear.jewel4Type" style="font-size: 2em; display: flex"></gear-jewel-slot>
+                            <gear-jewel-slot [slotType]="gear.jewelSlot4" [pluggedInType]="gear.jewel4Type" style="font-size: 2em; display: flex"></gear-jewel-slot>
                             <gear-stat *ngIf="gear.jewel4Type" class="ml-1" [stat]="gear.jewel4Type" [value]="propertyService.getJewelValue(gear.jewel4Type, gear.jewel4Level)" [showStatName]="false"></gear-stat>
                             <span *ngIf="!gear.jewel4Type" class="ml-1"><i class="color-grey">empty</i></span>
                         </ion-button>

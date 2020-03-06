@@ -52,7 +52,6 @@
         <ion-col sizeMd="3" *ngIf="category.showStat">
           <ion-item class="full-width">
             <ion-select interface="popover" placeholder="Select" [(ngModel)]="prop.stat" [selectedText]="prop.stat" class="full-width no-max-width">
-              <ion-select-option [value]="null">none</ion-select-option>
               <ion-select-option *ngFor="let stat of enumService.getHeroStats()" [value]="stat">{{stat}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -60,8 +59,14 @@
         <ion-col sizeMd="3" *ngIf="category.showResources">
           <ion-item class="full-width">
             <ion-select interface="popover" placeholder="Select" [(ngModel)]="prop.resourceType" [selectedText]="prop.resourceType" class="full-width no-max-width">
-              <ion-select-option [value]="null">none</ion-select-option>
               <ion-select-option *ngFor="let res of enumService.getResourceTypes()" [value]="res.name">{{res.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="3" *ngIf="category.showVehicleStat">
+          <ion-item class="full-width">
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="prop.vehicleStat" [selectedText]="prop.vehicleStat" class="full-width no-max-width">
+              <ion-select-option *ngFor="let stat of enumService.getVehicleStats()" [value]="stat">{{stat}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>

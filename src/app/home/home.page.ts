@@ -7,6 +7,7 @@ import {PlayerMap} from '../domain/playerMap.model';
 import {Router} from '@angular/router';
 import {Building} from '../domain/building.model';
 import {ConverterService} from '../services/converter.service';
+import {PropertyService} from '../services/property.service';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +33,8 @@ export class HomePage {
               private backendService: BackendService,
               private alertCtrl: AlertController,
               private router: Router,
-              public converter: ConverterService) {}
+              public converter: ConverterService,
+              public propertyService: PropertyService) {}
 
   ionViewWillEnter(): void {
     this.map = this.model.currentMap;
@@ -141,6 +143,9 @@ export class HomePage {
       case 'ACADEMY':
         this.router.navigateByUrl('/academy');
         break;
+      case 'GARAGE':
+        this.router.navigateByUrl('/garage');
+        break;
       default:
         this.alertCtrl.create({
           subHeader: type + ' will be implemented soon.'
@@ -183,7 +188,6 @@ export class HomePage {
         }, {
           text: 'Ok',
           handler: (data) => {
-            console.log(data);
             if (data.length > 0) {
               this.saving = true;
               let discovered = false, fights = false, chests = false;

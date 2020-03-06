@@ -26,14 +26,19 @@ import {Resources} from '../domain/resources.model';
 import {LootBox} from '../domain/lootBox.model';
 import {GearLoot} from '../domain/gearLoot.model';
 import {VehicleBase} from '../domain/vehicleBase.model';
+import {Vehicle} from '../domain/vehicle.model';
+import {VehiclePart} from '../domain/vehiclePart.model';
+import {Progress} from '../domain/progress.model';
 
 export class Looted {
     type: string;
     resourceType: string;
+    jewelType: JewelType;
     value: number;
 }
 export class PlayerActionResponse {
     player?: Player;
+    progress?: Progress;
     token?: string;
     resources: Resources;
     hero?: Hero;
@@ -44,6 +49,8 @@ export class PlayerActionResponse {
     gearIdsRemovedFromArmory?: number[];
     jewelries?: Jewelry[];
     buildings?: Building[];
+    vehicles?: Vehicle[];
+    vehicleParts?: VehiclePart[];
     playerMaps?: PlayerMap[];
     currentMap?: PlayerMap;
     ongoingBattle?: Battle;
@@ -460,5 +467,21 @@ export class BackendService {
 
     saveBaseVehicle(vehicle: VehicleBase): Observable<VehicleBase> {
         return this.http.post<VehicleBase>(API_URL + '/admin/vehicle', vehicle);
+    }
+
+    deactivateVehicle(vehicle: Vehicle): Observable<Vehicle> {
+        return this.http.post<Vehicle>(API_URL + '/vehicle/' + vehicle.id + '/deactivate', null);
+    }
+
+    activateVehicle(vehicle: Vehicle, slot: number): Observable<Vehicle> {
+        return this.http.post<Vehicle>(API_URL + '/vehicle/' + vehicle.id + '/activate/' + slot, null);
+    }
+
+    pluginPart(part: VehiclePart, vehicle: Vehicle): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/vehicle/' + vehicle.id + '/plugin/' + part.id, null);
+    }
+
+    unplugPart(part: VehiclePart, vehicle: Vehicle): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/vehicle/' + vehicle.id + '/unplug/' + part.id, null);
     }
 }

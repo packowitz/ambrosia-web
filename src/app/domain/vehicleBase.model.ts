@@ -6,7 +6,10 @@ export class VehicleBase {
     engineQuality: string;
     frameQuality: string;
     computerQuality: string;
+    specialPart1?: string;
     specialPart1Quality?: string;
+    specialPart2?: string;
     specialPart2Quality?: string;
+    specialPart3?: string;
     specialPart3Quality?: string;
 }

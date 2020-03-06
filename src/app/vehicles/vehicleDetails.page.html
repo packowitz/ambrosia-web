@@ -50,21 +50,36 @@
           <ion-item lines="none">
             <div class="flex-space-between-wrap full-width">
               Special1:
-              <ion-button fill="outline" [color]="vehicle.specialPart1Quality ? 'medium' : 'primary'" (click)="vehicle.specialPart1Quality = null">NONE</ion-button>
+              <ion-item>
+                <ion-select [(ngModel)]="vehicle.specialPart1" style="max-width: 100%">
+                  <ion-select-option [value]="null" [selected]="true">NONE</ion-select-option>
+                  <ion-select-option *ngFor="let type of enumService.getPartTypes()" [value]="type">{{type}}</ion-select-option>
+                </ion-select>
+              </ion-item>
               <ion-button fill="outline" [color]="vehicle.specialPart1Quality == quality ? 'primary' : 'medium'" *ngFor="let quality of enumService.getPartQualities()" (click)="vehicle.specialPart1Quality = quality">{{quality}}</ion-button>
             </div>
           </ion-item>
           <ion-item lines="none">
             <div class="flex-space-between-wrap full-width">
               Special2:
-              <ion-button fill="outline" [color]="vehicle.specialPart2Quality ? 'medium' : 'primary'" (click)="vehicle.specialPart2Quality = null">NONE</ion-button>
+              <ion-item>
+                <ion-select [(ngModel)]="vehicle.specialPart2" style="max-width: 100%">
+                  <ion-select-option [value]="null" [selected]="true">NONE</ion-select-option>
+                  <ion-select-option *ngFor="let type of enumService.getPartTypes()" [value]="type">{{type}}</ion-select-option>
+                </ion-select>
+              </ion-item>
               <ion-button fill="outline" [color]="vehicle.specialPart2Quality == quality ? 'primary' : 'medium'" *ngFor="let quality of enumService.getPartQualities()" (click)="vehicle.specialPart2Quality = quality">{{quality}}</ion-button>
             </div>
           </ion-item>
           <ion-item lines="none">
             <div class="flex-space-between-wrap full-width">
               Special3:
-              <ion-button fill="outline" [color]="vehicle.specialPart3Quality ? 'medium' : 'primary'" (click)="vehicle.specialPart3Quality = null">NONE</ion-button>
+              <ion-item>
+                <ion-select [(ngModel)]="vehicle.specialPart3" style="max-width: 100%">
+                  <ion-select-option [value]="null" [selected]="true">NONE</ion-select-option>
+                  <ion-select-option *ngFor="let type of enumService.getPartTypes()" [value]="type">{{type}}</ion-select-option>
+                </ion-select>
+              </ion-item>
               <ion-button fill="outline" [color]="vehicle.specialPart3Quality == quality ? 'primary' : 'medium'" *ngFor="let quality of enumService.getPartQualities()" (click)="vehicle.specialPart3Quality = quality">{{quality}}</ion-button>
             </div>
           </ion-item>

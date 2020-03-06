@@ -4,10 +4,12 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {CampaignFightPage} from './campaignFight.page';
+import {CommonAmbrosiaModule} from '../common-ambrosia.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CommonAmbrosiaModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild([

@@ -9,6 +9,9 @@ import {Team} from '../domain/team.model';
 import {PlayerMap} from '../domain/playerMap.model';
 import {PlayerMapTile} from '../domain/playerMapTile.model';
 import {Location} from '@angular/common';
+import {Vehicle} from '../domain/vehicle.model';
+import {PopoverController} from '@ionic/angular';
+import {VehicleSelectionPopover} from '../garage/vehicle-selection-popover';
 
 @Component({
   selector: 'campaign-fight',
@@ -23,6 +26,7 @@ export class CampaignFightPage implements OnInit {
 
   fight: FightResolved;
   team: Team;
+  vehicle?: Vehicle;
   hero1?: Hero;
   hero2?: Hero;
   hero3?: Hero;
@@ -35,7 +39,8 @@ export class CampaignFightPage implements OnInit {
               private router: Router,
               public model: Model,
               public enumService: EnumService,
-              private location: Location) {
+              private location: Location,
+              private popoverCtrl: PopoverController) {
   }
 
   ngOnInit() {
@@ -92,6 +97,9 @@ export class CampaignFightPage implements OnInit {
       this.hero4 = this.team.hero4Id ? this.model.heroes.find(h => h.id === this.team.hero4Id) : null;
       if (!this.hero4) { this.team.hero4Id = null; }
     }
+    if (this.model.vehicles && this.model.vehicles.length > 0) {
+      this.vehicle = this.model.vehicles.find(v => v.slot != null);
+    }
   }
 
   selectHero(hero: Hero) {
@@ -110,6 +118,25 @@ export class CampaignFightPage implements OnInit {
         this.hero4 = hero;
       }
     }
+  }
+
+  selectVehicle() {
+    this.popoverCtrl.create({
+      component: VehicleSelectionPopover,
+      componentProps: {
+        noVehicle: true,
+        vehiclesInSlot: true
+      }
+    }).then(modal => {
+      modal.onDidDismiss().then((dataReturned) => {
+        if (dataReturned !== null && dataReturned.data) {
+          this.vehicle = dataReturned.data;
+        } else {
+          this.vehicle = null;
+        }
+      });
+      modal.present();
+    });
   }
 
   successfullyRemoved(hero: Hero): boolean {
@@ -138,6 +165,11 @@ export class CampaignFightPage implements OnInit {
 
   start() {
     this.model.updateTeam(this.team);
+    if (this.vehicle) {
+      this.team.vehicleId = this.vehicle.id;
+    } else {
+      this.team.vehicleId = null;
+    }
     if (this.map) {
       this.backendService.startCampaignFight(this.map.mapId, this.tile.posX, this.tile.posY, this.team).subscribe(() => {
         this.router.navigateByUrl('/battle');

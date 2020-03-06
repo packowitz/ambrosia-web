@@ -1,0 +1,152 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between" *ngIf="building">
+        <div>Garage - Level {{building.level}}</div>
+        <ion-icon name="close" class="pointer" (click)="close()"></ion-icon>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Your Garage Slots
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="scrollable-list">
+        <div *ngFor="let slot of slots" class="mr-2">
+          <div class="ion-text-center">Slot {{slot.slot}}</div>
+          <div *ngIf="slot.vehicle" [class.selected-tile]="slot.slot == vehicle?.slot" (click)="selectVehicle(slot.vehicle)" class="pointer">
+            <vehicle [vehicle]="slot.vehicle"></vehicle>
+          </div>
+          <div *ngIf="!slot.vehicle" (click)="emptySlot(slot.slot)" class="pointer">
+            <ion-img src="/assets/img/vehicles/EMPTY_SLOT.png"></ion-img>
+          </div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="vehicle">
+    <ion-card-header>
+      <ion-card-title>
+        <div class="flex-space-between">
+          <div>{{vehicle.baseVehicle.name}}</div>
+          <div>Lvl {{vehicle.level}} / {{vehicle.baseVehicle.maxLevel}}</div>
+          <div class="flex-center">Slot {{vehicle.slot}} <ion-button (click)="deactivate()">Deactivate</ion-button></div>
+        </div>
+      </ion-card-title>
+      <ion-card-content>
+        <ion-row>
+          <ion-col sizeMd="6">
+            <ion-list>
+              <ion-item>Parts</ion-item>
+              <ion-item>
+                <ion-img src="/assets/img/vehicles/parts/ENGINE_{{vehicle.engine ? vehicle.engine.quality : 'NONE'}}.png"></ion-img>
+                <div *ngIf="vehicle.engine" class="flex-space-between ml-2 full-width">
+                  <div class="flex-vert font-small">
+                    <div>Lvl {{vehicle.engine.level}} {{converter.readableIdentifier(vehicle.engine.quality)}} Engine</div>
+                    <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.engine)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
+                  </div>
+                  <ion-button fill="clear" size="small" (click)="unplug(vehicle.engine)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                </div>
+                <div *ngIf="!vehicle.engine" class="ml-2 font-small color-grey">
+                  Engine max quality: {{converter.readableIdentifier(vehicle.baseVehicle.engineQuality)}}
+                </div>
+              </ion-item>
+              <ion-item>
+                <ion-img src="/assets/img/vehicles/parts/FRAME_{{vehicle.frame ? vehicle.frame.quality : 'NONE'}}.png"></ion-img>
+                <div *ngIf="vehicle.frame" class="flex-space-between ml-2 full-width">
+                  <div class="flex-vert font-small">
+                    <div>Lvl {{vehicle.frame.level}} {{converter.readableIdentifier(vehicle.frame.quality)}} Frame</div>
+                    <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.frame)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
+                  </div>
+                  <ion-button fill="clear" size="small" (click)="unplug(vehicle.frame)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                </div>
+                <div *ngIf="!vehicle.frame" class="ml-2 font-small color-grey">
+                  Frame max quality: {{converter.readableIdentifier(vehicle.baseVehicle.frameQuality)}}
+                </div>
+              </ion-item>
+              <ion-item>
+                <ion-img src="/assets/img/vehicles/parts/COMPUTER_{{vehicle.computer ? vehicle.computer.quality : 'NONE'}}.png"></ion-img>
+                <div *ngIf="vehicle.computer" class="flex-space-between ml-2 full-width">
+                  <div class="flex-vert font-small">
+                    <div>Lvl {{vehicle.computer.level}} {{converter.readableIdentifier(vehicle.computer.quality)}} Computer</div>
+                    <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.computer)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
+                  </div>
+                  <ion-button fill="clear" size="small" (click)="unplug(vehicle.computer)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                </div>
+                <div *ngIf="!vehicle.computer" class="ml-2 font-small color-grey">
+                  Computer max quality: {{converter.readableIdentifier(vehicle.baseVehicle.computerQuality)}}
+                </div>
+              </ion-item>
+              
+              <ion-item *ngIf="vehicle.baseVehicle.specialPart1">
+                <ion-img src="/assets/img/vehicles/parts/{{vehicle.baseVehicle.specialPart1}}_{{vehicle.specialPart1 ? vehicle.specialPart1.quality : 'NONE'}}.png"></ion-img>
+                <div *ngIf="vehicle.specialPart1" class="flex-space-between ml-2 full-width">
+                  <div class="flex-vert font-small">
+                    <div>Lvl {{vehicle.specialPart1.level}} {{converter.readableIdentifier(vehicle.specialPart1.quality)}} {{converter.readableIdentifier(vehicle.specialPart1.type)}}</div>
+                    <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.specialPart1)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
+                  </div>
+                  <ion-button fill="clear" size="small" (click)="unplug(vehicle.specialPart1)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                </div>
+                <div *ngIf="!vehicle.specialPart1" class="ml-2 font-small color-grey">
+                  {{converter.readableIdentifier(vehicle.baseVehicle.specialPart1)}} max quality: {{converter.readableIdentifier(vehicle.baseVehicle.specialPart1Quality)}}
+                </div>
+              </ion-item>
+              <ion-item *ngIf="vehicle.baseVehicle.specialPart2">
+                <ion-img src="/assets/img/vehicles/parts/{{vehicle.baseVehicle.specialPart2}}_{{vehicle.specialPart2 ? vehicle.specialPart2.quality : 'NONE'}}.png"></ion-img>
+                <div *ngIf="vehicle.specialPart2" class="flex-space-between ml-2 full-width">
+                  <div class="flex-vert font-small">
+                    <div>Lvl {{vehicle.specialPart2.level}} {{converter.readableIdentifier(vehicle.specialPart2.quality)}} {{converter.readableIdentifier(vehicle.specialPart2.type)}}</div>
+                    <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.specialPart2)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
+                  </div>
+                  <ion-button fill="clear" size="small" (click)="unplug(vehicle.specialPart2)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                </div>
+                <div *ngIf="!vehicle.specialPart2" class="ml-2 font-small color-grey">
+                  {{converter.readableIdentifier(vehicle.baseVehicle.specialPart2)}} max quality: {{converter.readableIdentifier(vehicle.baseVehicle.specialPart2Quality)}}
+                </div>
+              </ion-item>
+              <ion-item *ngIf="vehicle.baseVehicle.specialPart3">
+                <ion-img src="/assets/img/vehicles/parts/{{vehicle.baseVehicle.specialPart3}}_{{vehicle.specialPart3 ? vehicle.specialPart3.quality : 'NONE'}}.png"></ion-img>
+                <div *ngIf="vehicle.specialPart3" class="flex-space-between ml-2 full-width">
+                  <div class="flex-vert font-small">
+                    <div>Lvl {{vehicle.specialPart3.level}} {{converter.readableIdentifier(vehicle.specialPart3.quality)}} {{converter.readableIdentifier(vehicle.specialPart3.type)}}</div>
+                    <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.specialPart3)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
+                  </div>
+                  <ion-button fill="clear" size="small" (click)="unplug(vehicle.specialPart3)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                </div>
+                <div *ngIf="!vehicle.specialPart3" class="ml-2 font-small color-grey">
+                  {{converter.readableIdentifier(vehicle.baseVehicle.specialPart3)}} max quality: {{converter.readableIdentifier(vehicle.baseVehicle.specialPart3Quality)}}
+                </div>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+          <ion-col sizeMd="6">
+            <ion-list>
+              <ion-item>Spare Parts</ion-item>
+              <ion-item *ngFor="let part of spareParts">
+                <ion-img src="/assets/img/vehicles/parts/{{part.type + '_' + part.quality}}.png"></ion-img>
+                <div class="flex-space-between ml-2 full-width">
+                  <div class="flex-vert font-small">
+                    <div>Lvl {{part.level}} {{converter.readableIdentifier(part.quality)}} {{converter.readableIdentifier(part.type)}}</div>
+                    <div *ngFor="let prop of propertyService.getVehiclePartProperties(part)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
+                  </div>
+                  <ion-button fill="clear" size="small" (click)="plugin(part)"><ion-img class="equip-icon" src="/assets/img/equip.png"></ion-img></ion-button>
+                </div>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card-header>
+  </ion-card>
+</ion-content>

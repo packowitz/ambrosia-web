@@ -6,7 +6,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AlertController, ModalController} from '@ionic/angular';
 import {ConverterService} from '../services/converter.service';
 import {VehicleBase} from '../domain/vehicleBase.model';
-import {HeroAvatarModal} from '../herobase/heroavatar.modal';
 import {VehicleAvatarModal} from './vehicleAvatar.modal';
 
 @Component({

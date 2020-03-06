@@ -34,8 +34,13 @@
   <ion-card>
     <ion-card-content>
       <ion-row>
-        <ion-col sizeMd="2" class="flex-center">
-          <div>Your Team</div>
+        <ion-col sizeMd="2">
+          <div (click)="selectVehicle()" class="pointer">
+            <vehicle *ngIf="vehicle" [vehicle]="vehicle" [small]="true"></vehicle>
+            <div *ngIf="!vehicle">
+              <ion-img class="vehicle-avatar" src="/assets/img/vehicles/EMPTY_SLOT.png"></ion-img>
+            </div>
+          </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="hero1">
           <div (click)="selectHero(hero1)" class="hero-tile-small border-grey pointer flex-vert-center">
