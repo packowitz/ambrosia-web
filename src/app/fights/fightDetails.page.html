@@ -62,20 +62,20 @@
       </ion-row>
       <ion-item>
         <ion-label slot="start">Finishing Stage Config</ion-label>
-        <ion-select (ionChange)="selectStageConfig($event)">
-          <ion-select-option *ngFor="let config of model.fightStageConfigs" [value]="config" [selected]="config.id == fight.stageConfig.id">{{config.name}}</ion-select-option>
+        <ion-select [(ngModel)]="fight.stageConfig" [compareWith]="compareById">
+          <ion-select-option *ngFor="let config of model.fightStageConfigs" [value]="config">{{config.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label slot="start">Fight environment</ion-label>
-        <ion-select (ionChange)="selectEnvironment($event)">
-          <ion-select-option *ngFor="let environment of model.fightEnvironments" [value]="environment" [selected]="environment.id == fight.environment.id">{{environment.name}}</ion-select-option>
+        <ion-select [(ngModel)]="fight.environment" [compareWith]="compareById">
+          <ion-select-option *ngFor="let environment of model.fightEnvironments" [value]="environment">{{environment.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label slot="start">Loot</ion-label>
-        <ion-select (ionChange)="selectLoot($event)">
-          <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot" [selected]="loot.id == fight.lootBox.id">{{loot.name}}</ion-select-option>
+        <ion-select [(ngModel)]="fight.lootBox" [compareWith]="compareById">
+          <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot">{{loot.name}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-card-content>

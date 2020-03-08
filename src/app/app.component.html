@@ -1,6 +1,6 @@
 <ion-app>
-  <ion-split-pane>
-    <ion-menu *ngIf="model.player">
+  <ion-split-pane contentId="main">
+    <ion-menu *ngIf="model.player" menuId="menu" contentId="main">
       <ion-header>
         <ion-toolbar>
           <div class="flex-space-between">
@@ -13,7 +13,7 @@
           </div>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
+      <ion-content id="menu">
 
         <div *ngFor="let p of pages">
           <div *ngIf="!p.admin || model.player.admin">
@@ -47,6 +47,6 @@
 
       </ion-content>
     </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
+    <ion-router-outlet id="main"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>

@@ -62,16 +62,8 @@ export class FightDetailsPage implements OnInit {
     this.router.navigateByUrl('/fights');
   }
 
-  selectStageConfig(event) {
-    this.fight.stageConfig = event.detail.value;
-  }
-
-  selectEnvironment(event) {
-    this.fight.environment = event.detail.value;
-  }
-
-  selectLoot(event) {
-    this.fight.lootBox = event.detail.value;
+  compareById(o1, o2): boolean {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
   }
 
   getResourceTypes(): ResourceType[] {

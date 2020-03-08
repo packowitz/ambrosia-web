@@ -52,7 +52,7 @@
               Special1:
               <ion-item>
                 <ion-select [(ngModel)]="vehicle.specialPart1" style="max-width: 100%">
-                  <ion-select-option [value]="null" [selected]="true">NONE</ion-select-option>
+                  <ion-select-option [value]="null">NONE</ion-select-option>
                   <ion-select-option *ngFor="let type of enumService.getPartTypes()" [value]="type">{{type}}</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -64,7 +64,7 @@
               Special2:
               <ion-item>
                 <ion-select [(ngModel)]="vehicle.specialPart2" style="max-width: 100%">
-                  <ion-select-option [value]="null" [selected]="true">NONE</ion-select-option>
+                  <ion-select-option [value]="null">NONE</ion-select-option>
                   <ion-select-option *ngFor="let type of enumService.getPartTypes()" [value]="type">{{type}}</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -76,7 +76,7 @@
               Special3:
               <ion-item>
                 <ion-select [(ngModel)]="vehicle.specialPart3" style="max-width: 100%">
-                  <ion-select-option [value]="null" [selected]="true">NONE</ion-select-option>
+                  <ion-select-option [value]="null">NONE</ion-select-option>
                   <ion-select-option *ngFor="let type of enumService.getPartTypes()" [value]="type">{{type}}</ion-select-option>
                 </ion-select>
               </ion-item>

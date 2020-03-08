@@ -27,7 +27,9 @@ export class HerobaseCreatePage {
         }, error => {
             this.toastCtrl.create({
                 message: error.error.message,
-                showCloseButton: true,
+                buttons: [
+                    { text: 'Close', role: 'cancel' }
+                ],
                 position: 'bottom',
                 color: 'danger'
             }).then(toast => toast.present());
