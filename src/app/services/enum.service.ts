@@ -37,6 +37,7 @@ export class Enums {
     partQualities: string[];
     partTypes: string[];
     vehicleStats: string[];
+    lootItemTypes: string[];
 }
 
 @Injectable({
@@ -155,5 +156,9 @@ export class EnumService {
 
     getVehicleStats(): string[] {
         return this.enums.vehicleStats;
+    }
+
+    getLootItemTypes(): string[] {
+        return this.enums.lootItemTypes;
     }
 }

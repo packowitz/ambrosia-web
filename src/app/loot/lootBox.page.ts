@@ -56,6 +56,10 @@ export class LootBoxPage {
         }
     }
 
+    compareNullable(o1, o2): boolean {
+        return o1 && o2 ? o1 === o2 : !o1 && !o2;
+    }
+
     orderItems() {
         this.lootBox.items = this.lootBox.items.sort((a, b) => {
             if (a.slotNumber === b.slotNumber) {

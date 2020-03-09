@@ -37,13 +37,22 @@
               <ion-input type="number" [(ngModel)]="item.chance" style="max-width: 50px;"></ion-input>
             </ion-item>
           </div>
-          <div>
-            <ion-button fill="clear" [color]="item.type == 'RESOURCE' ? 'primary' : 'dark'" (click)="item.type = 'RESOURCE'">Res</ion-button>
-            <ion-button fill="clear" [color]="item.type == 'JEWEL' ? 'primary' : 'dark'" (click)="item.type = 'JEWEL'">Jewel</ion-button>
-            <ion-button fill="clear" [color]="item.type == 'HERO' ? 'primary' : 'dark'" (click)="item.type = 'HERO'">Hero</ion-button>
-            <ion-button fill="clear" [color]="item.type == 'GEAR' ? 'primary' : 'dark'" (click)="item.type = 'GEAR'">Gear</ion-button>
-            <ion-button fill="clear" [color]="item.type == 'VEHICLE' ? 'primary' : 'dark'" (click)="item.type = 'VEHICLE'">Vehicle</ion-button>
-            <ion-button fill="clear" [color]="item.type == 'VEHICLE_PART' ? 'primary' : 'dark'" (click)="item.type = 'VEHICLE_PART'">Part</ion-button>
+          <div class="flex-center">
+            Color
+            <ion-item lines="none">
+              <ion-select [(ngModel)]="item.color" [compareWith]="compareNullable" style="max-width: 100%">
+                <ion-select-option [value]="null">Any</ion-select-option>
+                <ion-select-option *ngFor="let color of enumService.getColors()" [value]="color">{{color}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <div class="flex-center">
+            Type
+            <ion-item lines="none">
+              <ion-select [(ngModel)]="item.type" style="max-width: 100%">
+                <ion-select-option *ngFor="let type of enumService.getLootItemTypes()" [value]="type">{{type}}</ion-select-option>
+              </ion-select>
+            </ion-item>
             <ion-button fill="clear" color="danger" (click)="deleteItem(item)"><ion-icon name="trash"></ion-icon></ion-button>
           </div>
         </div>

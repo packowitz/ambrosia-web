@@ -3,6 +3,7 @@ export class LootItem {
     slotNumber: number;
     itemOrder: number;
     chance: number;
+    color: string;
     type: string;
     resourceType: string;
     resourceFrom: number;
