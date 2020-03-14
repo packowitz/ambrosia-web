@@ -15,4 +15,5 @@ export class BattleStepAction {
     buffIntensity?: number;
     buffDuration?: number;
     buffDurationChange?: number;
+    speedbarFill?: number;
 }

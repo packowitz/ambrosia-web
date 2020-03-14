@@ -119,6 +119,7 @@
                 <div *ngIf="action.type == 'HOT'">{{action.heroName}}({{action.heroPosition}}): healing per turn <i class="GREEN">{{action.healthDiff}}</i> health</div>
                 <div *ngIf="action.type == 'DEAD'">{{action.heroName}}({{action.heroPosition}}) died</div>
                 <div *ngIf="action.type == 'RESURRECTED'">{{action.heroName}}({{action.heroPosition}}) resurrected with {{action.healthDiff}} HP</div>
+                <div *ngIf="action.type == 'SPEEDBAR'">{{action.heroName}}({{action.heroPosition}}) got speedbar filled by {{action.speedbarFill}}</div>
               </div>
             </div>
           </div>
