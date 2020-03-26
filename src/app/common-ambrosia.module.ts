@@ -6,10 +6,11 @@ import {CommonModule} from '@angular/common';
 import {VehicleDirective} from './garage/vehicle.directive';
 import {VehicleSelectionPopover} from './garage/vehicle-selection-popover';
 import {LootedDirective} from './home/looted.directive';
+import {LootItemDirective} from './home/loot-item.directive';
 
 @NgModule({
-    declarations: [GearIcon, GearJewelSlot, VehicleDirective, VehicleSelectionPopover, LootedDirective],
-    exports: [GearIcon, GearJewelSlot, VehicleDirective, VehicleSelectionPopover, LootedDirective],
+    declarations: [GearIcon, GearJewelSlot, VehicleDirective, VehicleSelectionPopover, LootedDirective, LootItemDirective],
+    exports: [GearIcon, GearJewelSlot, VehicleDirective, VehicleSelectionPopover, LootedDirective, LootItemDirective],
     imports: [
         CommonModule,
         IonicModule

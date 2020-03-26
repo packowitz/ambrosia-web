@@ -21,6 +21,7 @@ import {VehicleBase} from '../domain/vehicleBase.model';
 import {Progress} from '../domain/progress.model';
 import {Vehicle} from '../domain/vehicle.model';
 import {VehiclePart} from '../domain/vehiclePart.model';
+import {Mission} from '../domain/mission.model';
 
 @Injectable({
     providedIn: 'root'
@@ -51,6 +52,7 @@ export class Model {
     playerMaps: PlayerMap[];
     currentMap: PlayerMap;
     baseVehicles: VehicleBase[];
+    missions: Mission[];
 
     interval: number;
     updateInProgress = false;
@@ -84,23 +86,36 @@ export class Model {
 
     startInterval() {
         this.interval = setInterval(() => {
-            let needUpdate = false;
+            let updateResources = false;
             if (this.resources.steam < this.resources.steamMax) {
                 this.resources.steamProduceIn --;
-                needUpdate = needUpdate || this.resources.steamProduceIn <= 0;
+                updateResources = updateResources || this.resources.steamProduceIn <= 0;
             }
             if (this.resources.cogwheels < this.resources.cogwheelsMax) {
                 this.resources.cogwheelsProduceIn --;
-                needUpdate = needUpdate || this.resources.cogwheelsProduceIn <= 0;
+                updateResources = updateResources || this.resources.cogwheelsProduceIn <= 0;
             }
             if (this.resources.tokens < this.resources.tokensMax) {
                 this.resources.tokensProduceIn --;
-                needUpdate = needUpdate || this.resources.tokensProduceIn <= 0;
+                updateResources = updateResources || this.resources.tokensProduceIn <= 0;
             }
-
-            if (needUpdate) {
+            if (updateResources) {
                 this.updateResources();
             }
+
+            this.missions.filter(m => !m.missionFinished).forEach(mission => {
+                mission.secondsUntilDone --;
+                mission.nextUpdateSeconds --;
+                mission.battles.forEach(battle => {
+                    battle.secondsUntilDone --;
+                });
+                if (mission.nextUpdateSeconds <= 0 && !mission.updating) {
+                    mission.updating = true;
+                    this.http.post<PlayerActionResponse>(API_URL + '/battle/mission/' + mission.id, null).subscribe(data => {
+                        console.log("Updated mission " + data.missions[0].id);
+                    });
+                }
+            });
         }, 1000);
     }
 
@@ -202,6 +217,19 @@ export class Model {
                 this.ongoingBattle = data.ongoingBattle;
             }
         }
+        if (data.missions) {
+            if (this.missions) {
+                data.missions.forEach(m => this.updateMission(m));
+            } else {
+                this.missions = data.missions;
+            }
+        }
+        if (data.missionIdFinished && this.missions) {
+            let idx = this.missions.findIndex(m => m.id === data.missionIdFinished);
+            if (idx >= 0) {
+                this.missions.splice(idx, 1);
+            }
+        }
     }
 
     updateBaseHero(hero?: HeroBase) {
@@ -223,6 +251,21 @@ export class Model {
             } else {
                 this.heroes.push(hero);
             }
+            this.heroes = this.heroes.sort((a, b) => {
+                if (a.level === b.level) {
+                    if (a.stars === b.stars) {
+                        if (a.heroBase.id === b.heroBase.id) {
+                            return a.id - b.id;
+                        } else {
+                            return a.heroBase.id - b.heroBase.id;
+                        }
+                    } else {
+                        return b.stars - a.stars;
+                    }
+                } else {
+                    return b.level - a.level;
+                }
+            });
         }
     }
 
@@ -361,6 +404,16 @@ export class Model {
         }
     }
 
-
+    updateMission(mission?: Mission) {
+        if (mission && mission.id && mission.id > 0) {
+            let idx = this.missions.findIndex(m => m.id === mission.id);
+            if (idx >= 0) {
+                this.missions[idx] = mission;
+            } else {
+                this.missions.push(mission);
+                this.missions = this.missions.sort((a, b) => a.slotNumber - b.slotNumber);
+            }
+        }
+    }
 
 }

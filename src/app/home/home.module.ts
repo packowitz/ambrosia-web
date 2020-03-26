@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router';
 
 import {HomePage} from './home.page';
 import {CommonAmbrosiaModule} from '../common-ambrosia.module';
+import {MissionProgressPopover} from './mission-progress-popover';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {CommonAmbrosiaModule} from '../common-ambrosia.module';
             }
         ])
     ],
-    declarations: [HomePage]
+    declarations: [HomePage, MissionProgressPopover],
+    entryComponents: [MissionProgressPopover]
 })
 export class HomePageModule {
 }

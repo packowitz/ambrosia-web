@@ -4,6 +4,7 @@ import {VehiclePart} from './vehiclePart.model';
 export class Vehicle {
     id: number;
     playerId: number;
+    missionId: number;
     baseVehicle: VehicleBase;
     level: number;
     slot?: number;

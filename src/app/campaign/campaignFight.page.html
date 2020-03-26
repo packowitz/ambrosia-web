@@ -23,8 +23,11 @@
     </ion-card-header>
     <ion-card-content>
       <div class="scrollable-list">
-        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center pointer mr-2">
+        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center mr-2" [class.pointer]="!hero.missionId">
           <ion-img [src]="'assets/img/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+          <div *ngIf="hero.missionId" class="on-mission flex-vert-center">
+            <div class="text">On Mission</div>
+          </div>
           <div class="top-left-bubble level-bubble background-{{hero.heroBase.color}}">{{hero.level}}</div>
           <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
         </div>
@@ -36,7 +39,7 @@
       <ion-row>
         <ion-col sizeMd="2">
           <div (click)="selectVehicle()" class="pointer">
-            <vehicle *ngIf="vehicle" [vehicle]="vehicle" [small]="true"></vehicle>
+            <vehicle *ngIf="vehicle" [vehicle]="vehicle" [small]="true" [showMission]="true"></vehicle>
             <div *ngIf="!vehicle">
               <ion-img class="vehicle-avatar" src="/assets/img/vehicles/EMPTY_SLOT.png"></ion-img>
             </div>
@@ -90,11 +93,12 @@
             <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
           </div>
         </ion-col>
-        <ion-col sizeMd="2" class="flex-center">
-          <ion-button color="success" (click)="start()" [disabled]="!hero1 && !hero2 && !hero3 && !hero4">
-            <div *ngIf="!testFight" class="flex-center">{{fight.costs}}<ion-img src="assets/img/resources/{{fight.resourceType}}.png" class="resource-icon ml-1"></ion-img></div>
+        <ion-col sizeMd="2" class="flex-vert-center">
+          <ion-button color="success" (click)="start()" [disabled]="!canStartBattle()">
+            <div *ngIf="!testFight" class="flex-center">Start ({{fight.costs}}<ion-img src="assets/img/resources/{{fight.resourceType}}.png" class="resource-icon"></ion-img>)</div>
             <div *ngIf="testFight">Start</div>
           </ion-button>
+          <ion-button *ngIf="offlineBattleEnabled()" (click)="openMission()" [disabled]="!vehicle || !canStartBattle()">Mission</ion-button>
         </ion-col>
       </ion-row>
     </ion-card-content>

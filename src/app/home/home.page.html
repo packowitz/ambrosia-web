@@ -42,6 +42,19 @@
     </div>
   </ion-card>
 
+  <ion-card *ngIf="model.missions.length > 0">
+    <div class="scrollable-list pa-2">
+      <div *ngFor="let mission of model.missions">
+        <div class="mission-avatar pointer" (click)="openMission(mission)">
+          <ion-img src="assets/img/vehicles/{{model.getVehicle(mission.vehicleId).baseVehicle.avatar}}.png"></ion-img>
+          <div class="ml-1 mr-1 time-bar">
+            <span class="time-bar-inner" [style.width]="(100 * (mission.duration - mission.secondsUntilDone) / mission.duration) + '%'"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-card>
+
   <ion-card *ngIf="map">
     <ion-card-header>
       <ion-card-title>

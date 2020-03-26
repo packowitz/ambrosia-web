@@ -19,6 +19,7 @@ export class VehicleSelectionPopover implements OnInit {
     vehicles: Vehicle[] = [];
     showNoVehicle = false;
     vehiclesInSlot = false;
+    showVehiclesOnMission = true;
 
     constructor(private popoverController: PopoverController,
                 private navParams: NavParams,
@@ -29,7 +30,11 @@ export class VehicleSelectionPopover implements OnInit {
 
     ngOnInit(): void {
         if (this.vehiclesInSlot) {
-            this.vehicles = this.model.vehicles.filter(v => v.slot != null);
+            if (this.showVehiclesOnMission) {
+                this.vehicles = this.model.vehicles.filter(v => v.slot != null);
+            } else {
+                this.vehicles = this.model.vehicles.filter(v => v.slot != null && !v.missionId);
+            }
         } else {
             this.vehicles = this.model.vehicles.filter(v => v.slot == null);
         }

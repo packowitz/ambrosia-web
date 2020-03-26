@@ -204,6 +204,26 @@ ion-row.table-row {
     .vehicle-part {
       width: 25px;
     }
+    .on-mission {
+      width: 80px;
+      height: 120px;
+    }
+  }
+
+  .on-mission {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 140px;
+    background-color: rgba(0,0,0,0.5);
+    .text {
+      width: 100%;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.6);
+      color: #691313;
+      font-weight: 600;
+    }
   }
 }
 
@@ -214,6 +234,20 @@ ion-row.table-row {
 .hero-tile-small {
   position: relative;
   max-width: 80px;
+
+  .on-mission {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    background-color: rgba(0,0,0,0.5);
+    .text {
+      background-color: rgba(255, 255, 255, 0.6);
+      color: #691313;
+      font-weight: 600;
+    }
+  }
 }
 
 .hero-tile-very-small {
@@ -231,6 +265,63 @@ ion-row.table-row {
   }
   &:hover {
     background-color: #c3c5d2;
+  }
+}
+
+.mission-avatar {
+  border-radius: 500px;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #5fc9ec, 0 0 0 2px #427fce, 0 0 0 5px #5a69e2;
+  ion-img {
+    padding: 4px;
+  }
+  &:hover {
+    background-color: #c3c5d2;
+  }
+}
+
+.time-bar {
+  border: 1px solid #045022;
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 2px;
+  .time-bar-inner {
+    background-color: #1ec35f;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 8px;
+  }
+}
+
+.xp-bar {
+  border: 1px solid #045022;
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  .xp-bar-inner {
+    background-color: #1ec35f;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 8px;
+  }
+}
+
+.asc-bar {
+  border: 1px solid #32347b;
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  .asc-bar-inner {
+    background-color: #285fda;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 8px;
   }
 }
 
@@ -353,12 +444,12 @@ ion-row.table-row {
 
 .loot-window {
   background-color: white;
-  .loot-item {
-    margin: 0 12px;
-  }
-  .loot-image {
-    width: 40px;
-  }
+}
+.loot-item {
+  margin: 0 12px;
+}
+.loot-image {
+  width: 40px;
 }
 
 .bar-outer {

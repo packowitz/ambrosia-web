@@ -21,8 +21,11 @@
     </ion-card-header>
     <ion-card-content>
       <div class="scrollable-list">
-        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center pointer mr-2" [class.selected-tile]="hero.id == selectedHero?.id || hero.id == fodder1?.id || hero.id == fodder2?.id || hero.id == fodder3?.id || hero.id == fodder4?.id || hero.id == fodder5?.id || hero.id == fodder6?.id">
+        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center mr-2" [class.pointer]="!hero.missionId" [class.selected-tile]="hero.id == selectedHero?.id || hero.id == fodder1?.id || hero.id == fodder2?.id || hero.id == fodder3?.id || hero.id == fodder4?.id || hero.id == fodder5?.id || hero.id == fodder6?.id">
           <ion-img [src]="'assets/img/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+          <div *ngIf="hero.missionId" class="on-mission flex-vert-center">
+            <div class="text">On Mission</div>
+          </div>
           <div class="top-left-bubble level-bubble background-{{hero.heroBase.color}}">{{hero.level}}</div>
           <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
         </div>

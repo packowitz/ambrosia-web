@@ -2,12 +2,14 @@ import {Component} from '@angular/core';
 import {Model} from '../services/model.service';
 import {PlayerMapTile} from '../domain/playerMapTile.model';
 import {BackendService, Looted} from '../services/backend.service';
-import {AlertController} from '@ionic/angular';
+import {AlertController, ModalController, PopoverController} from '@ionic/angular';
 import {PlayerMap} from '../domain/playerMap.model';
 import {Router} from '@angular/router';
 import {Building} from '../domain/building.model';
 import {ConverterService} from '../services/converter.service';
 import {PropertyService} from '../services/property.service';
+import {Mission} from '../domain/mission.model';
+import {MissionProgressPopover} from './mission-progress-popover';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +36,8 @@ export class HomePage {
               private alertCtrl: AlertController,
               private router: Router,
               public converter: ConverterService,
-              public propertyService: PropertyService) {}
+              public propertyService: PropertyService,
+              public modalCtrl: ModalController) {}
 
   ionViewWillEnter(): void {
     this.map = this.model.currentMap;
@@ -152,6 +155,15 @@ export class HomePage {
         }).then(alert => alert.present());
         break;
     }
+  }
+
+  openMission(mission: Mission) {
+    this.modalCtrl.create({
+      component: MissionProgressPopover,
+      componentProps: {
+        mission: mission
+      }
+    }).then(modal => modal.present());
   }
 
   resetMap() {

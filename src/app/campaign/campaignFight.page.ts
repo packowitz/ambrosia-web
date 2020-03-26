@@ -12,12 +12,14 @@ import {Location} from '@angular/common';
 import {Vehicle} from '../domain/vehicle.model';
 import {PopoverController} from '@ionic/angular';
 import {VehicleSelectionPopover} from '../garage/vehicle-selection-popover';
+import {StartMissionPopover} from './start-mission-popover';
+import {ConverterService} from '../services/converter.service';
 
 @Component({
   selector: 'campaign-fight',
   templateUrl: 'campaignFight.page.html'
 })
-export class CampaignFightPage implements OnInit {
+export class CampaignFightPage {
 
   saving = false;
 
@@ -40,10 +42,11 @@ export class CampaignFightPage implements OnInit {
               public model: Model,
               public enumService: EnumService,
               private location: Location,
-              private popoverCtrl: PopoverController) {
+              private popoverCtrl: PopoverController,
+              private converter: ConverterService) {
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     let fightId = Number(this.route.snapshot.paramMap.get('fightId'));
     if (fightId) {
       this.testFight = true;
@@ -84,21 +87,21 @@ export class CampaignFightPage implements OnInit {
   }
 
   initTeam() {
-    this.team = this.model.teams.find(t => t.type === (this.testFight ? 'TEST' : 'CAMPAIGN'));
+    this.team = this.converter.dataClone(this.model.teams.find(t => t.type === (this.testFight ? 'TEST' : 'CAMPAIGN')));
     if (!this.team) {
       this.team = new Team(this.testFight ? 'TEST' : 'CAMPAIGN');
     } else {
-      this.hero1 = this.team.hero1Id ? this.model.heroes.find(h => h.id === this.team.hero1Id) : null;
+      this.hero1 = this.team.hero1Id ? this.model.heroes.find(h => h.id === this.team.hero1Id && !h.missionId) : null;
       if (!this.hero1) { this.team.hero1Id = null; }
-      this.hero2 = this.team.hero2Id ? this.model.heroes.find(h => h.id === this.team.hero2Id) : null;
+      this.hero2 = this.team.hero2Id ? this.model.heroes.find(h => h.id === this.team.hero2Id && !h.missionId) : null;
       if (!this.hero2) { this.team.hero2Id = null; }
-      this.hero3 = this.team.hero3Id ? this.model.heroes.find(h => h.id === this.team.hero3Id) : null;
+      this.hero3 = this.team.hero3Id ? this.model.heroes.find(h => h.id === this.team.hero3Id && !h.missionId) : null;
       if (!this.hero3) { this.team.hero3Id = null; }
-      this.hero4 = this.team.hero4Id ? this.model.heroes.find(h => h.id === this.team.hero4Id) : null;
+      this.hero4 = this.team.hero4Id ? this.model.heroes.find(h => h.id === this.team.hero4Id && !h.missionId) : null;
       if (!this.hero4) { this.team.hero4Id = null; }
     }
     if (this.model.vehicles && this.model.vehicles.length > 0) {
-      this.vehicle = this.model.vehicles.find(v => v.slot != null);
+      this.vehicle = this.model.vehicles.find(v => v.slot != null && !v.missionId);
     }
   }
 
@@ -125,7 +128,8 @@ export class CampaignFightPage implements OnInit {
       component: VehicleSelectionPopover,
       componentProps: {
         noVehicle: true,
-        vehiclesInSlot: true
+        vehiclesInSlot: true,
+        showVehiclesOnMission: false
       }
     }).then(modal => {
       modal.onDidDismiss().then((dataReturned) => {
@@ -163,6 +167,19 @@ export class CampaignFightPage implements OnInit {
     return false;
   }
 
+  canStartBattle(): boolean {
+    if (this.fight.resourceType === 'STEAM' && (this.model.resources.premiumSteam + this.model.resources.steam) < this.fight.costs) {
+      return false;
+    }
+    if (this.fight.resourceType === 'COGWHEELS' && (this.model.resources.premiumCogwheels + this.model.resources.cogwheels) < this.fight.costs) {
+      return false;
+    }
+    if (this.fight.resourceType === 'TOKENS' && (this.model.resources.premiumTokens + this.model.resources.tokens) < this.fight.costs) {
+      return false;
+    }
+    return !!this.hero1 || !!this.hero2 || !!this.hero3 || !!this.hero4;
+  }
+
   start() {
     this.model.updateTeam(this.team);
     if (this.vehicle) {
@@ -179,5 +196,29 @@ export class CampaignFightPage implements OnInit {
         this.router.navigateByUrl('/battle');
       });
     }
+  }
+
+  offlineBattleEnabled(): boolean {
+    return this.tile.victoriousFight&& this.tile.fightRepeatable;
+  }
+
+  openMission() {
+    this.popoverCtrl.create({
+      component: StartMissionPopover,
+      componentProps: {
+        fight: this.fight
+      }
+    }).then(modal => {
+      modal.onDidDismiss().then((dataReturned) => {
+        if (dataReturned !== null && dataReturned.data) {
+          this.model.updateTeam(this.team);
+          this.team.vehicleId = this.vehicle.id;
+          this.backendService.startMission(this.map.mapId, this.tile.posX, this.tile.posY, this.team, dataReturned.data).subscribe(() => {
+            this.router.navigateByUrl('/home');
+          });
+        }
+      });
+      modal.present();
+    });
   }
 }

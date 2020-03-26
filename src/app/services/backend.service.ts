@@ -29,6 +29,7 @@ import {VehicleBase} from '../domain/vehicleBase.model';
 import {Vehicle} from '../domain/vehicle.model';
 import {VehiclePart} from '../domain/vehiclePart.model';
 import {Progress} from '../domain/progress.model';
+import {Mission} from '../domain/mission.model';
 
 export class Looted {
     type: string;
@@ -55,6 +56,8 @@ export class PlayerActionResponse {
     currentMap?: PlayerMap;
     ongoingBattle?: Battle;
     looted?: Looted[];
+    missions?: Mission[];
+    missionIdFinished?: number;
 }
 
 @Injectable({
@@ -338,6 +341,26 @@ export class BackendService {
 
     startCampaignFight(mapId: number, posX: number, posY: number, team: Team): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/battle/campaign/' + mapId + '/' + posX + '/' + posY, team);
+    }
+
+    startMission(mapId: number, posX: number, posY: number, team: Team, battleTimes: number): Observable<PlayerActionResponse> {
+        let request = {
+            type: team.type,
+            battleTimes: battleTimes,
+            mapId: mapId,
+            posX: posX,
+            posY: posY,
+            vehicleId: team.vehicleId,
+            hero1Id: team.hero1Id,
+            hero2Id: team.hero2Id,
+            hero3Id: team.hero3Id,
+            hero4Id: team.hero4Id
+        };
+        return this.http.post<PlayerActionResponse>(API_URL + '/battle/mission', request);
+    }
+
+    finishMission(missionId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/battle/mission/' + missionId + '/finish', null);
     }
 
     startTestFight(fightId: number, team: Team): Observable<PlayerActionResponse> {

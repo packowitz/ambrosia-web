@@ -8,6 +8,9 @@ import {Vehicle} from '../domain/vehicle.model';
         <div class="position-relative">
           <ion-img src="/assets/img/vehicles/{{vehicle.baseVehicle.avatar}}.png"></ion-img>
           <div class="top-left-bubble level-bubble background-black">{{vehicle.level}}</div>
+          <div *ngIf="showMission && vehicle.missionId" class="on-mission flex-vert-center">
+            <div class="text">On Mission</div>
+          </div>
         </div>
         <div class="ion-text-center">{{vehicle.baseVehicle.name}}</div>
         <div class="flex-space-around">
@@ -25,5 +28,6 @@ import {Vehicle} from '../domain/vehicle.model';
 })
 export class VehicleDirective {
   @Input() vehicle: Vehicle;
-  @Input() small: false;
+  @Input() small = false;
+  @Input() showMission = false;
 }

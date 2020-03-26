@@ -9,6 +9,7 @@ export class PlayerMapTile {
     fightIcon: string;
     fightId: number;
     fightRepeatable: boolean;
+    victoriousFight: boolean;
     portalToMapId: number;
     buildingType: string;
 }

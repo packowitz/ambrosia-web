@@ -5,6 +5,7 @@ import {HeroGearSet} from './heroGearSet.model';
 export class Hero {
     id: number;
     playerId: number;
+    missionId: number;
     heroBase: HeroBase;
     stars: number;
     level: number;
