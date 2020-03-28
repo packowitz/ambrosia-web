@@ -21,21 +21,21 @@
   <ion-card>
     <ion-card-content>
       <ion-row>
-        <ion-col sizeXs="4" sizeSm="2">
+        <ion-col sizeXs="4" sizeSm="4">
           <ion-item class="flex-grow">
             <ion-label position="floating">Name</ion-label>
             <ion-input [(ngModel)]="fight.name"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col sizeXs="4" sizeSm="2">
-          <ion-item class="flex-grow ml-2 mr-2">
+        <ion-col sizeXs="4" sizeSm="4">
+          <ion-item class="flex-grow">
             <ion-label position="floating">Resource</ion-label>
             <ion-select [(ngModel)]="fight.resourceType">
               <ion-select-option *ngFor="let res of getResourceTypes()" [value]="res.name">{{res.name}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
-        <ion-col sizeXs="4" sizeSm="2">
+        <ion-col sizeXs="4" sizeSm="4">
           <ion-item class="flex-grow">
             <ion-label position="floating">Costs</ion-label>
             <ion-input [(ngModel)]="fight.costs" type="number"></ion-input>
@@ -43,14 +43,32 @@
         </ion-col>
         <ion-col sizeXs="4" sizeSm="2">
           <ion-item class="flex-grow">
-            <ion-label position="floating">Level</ion-label>
-            <ion-input [(ngModel)]="fight.level" type="number"></ion-input>
+            <ion-label position="floating">TravelSeconds</ion-label>
+            <ion-input [(ngModel)]="fight.travelDuration" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeXs="4" sizeSm="2">
+          <ion-item class="flex-grow">
+            <ion-label position="floating">MsPerTurn</ion-label>
+            <ion-input [(ngModel)]="fight.timePerTurn" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeXs="4" sizeSm="2">
+          <ion-item class="flex-grow">
+            <ion-label position="floating">MaxTurns</ion-label>
+            <ion-input [(ngModel)]="fight.maxTurnsPerStage" type="number"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col sizeXs="4" sizeSm="2">
           <ion-item class="flex-grow">
             <ion-label position="floating">XP</ion-label>
             <ion-input [(ngModel)]="fight.xp" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeXs="4" sizeSm="2">
+          <ion-item class="flex-grow">
+            <ion-label position="floating">Rec Level</ion-label>
+            <ion-input [(ngModel)]="fight.level" type="number"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col sizeXs="4" sizeSm="2">

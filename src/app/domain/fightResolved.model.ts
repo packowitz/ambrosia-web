@@ -13,6 +13,9 @@ export class FightResolved {
     xp: number;
     level: number;
     ascPoints: number;
+    travelDuration: number;
+    timePerTurn: number;
+    maxTurnsPerStage: number;
     stages: FightStageResolved[];
     stageConfig: FightStageConfig;
     environment: FightEnvironment;

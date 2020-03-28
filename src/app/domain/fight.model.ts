@@ -12,6 +12,9 @@ export class Fight {
     xp: number;
     level: number;
     ascPoints: number;
+    travelDuration: number;
+    timePerTurn: number;
+    maxTurnsPerStage: number;
     stageConfig: FightStageConfig;
     environment: FightEnvironment;
     lootBox: LootBox;
