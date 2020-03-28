@@ -23,6 +23,9 @@
       <div class="scrollable-list">
         <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center pointer mr-2" [class.selected-tile]="hero.id == selectedHero.id">
           <ion-img [src]="'assets/img/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+          <div *ngIf="hero.missionId" class="on-mission flex-vert-center">
+            <div class="text">On Mission</div>
+          </div>
           <div class="top-left-bubble level-bubble background-{{hero.heroBase.color}}">{{hero.level}}</div>
           <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
         </div>
@@ -133,7 +136,7 @@
           <div *ngFor="let skill of selectedHero.heroBase.skills" (click)="selectSkill(skill.number)" class="skill-tile flex-vert-center mr-2" [class.selected-skill]="skill.number == selectedSkill.number">
             <ion-img [src]="'assets/img/skills/' + skill.icon + '.png'" class="skill_icon pointer"></ion-img>
             <div *ngIf="getSkillLevel(skill) > 0" class="skill-level">{{getSkillLevel(skill)}}</div>
-            <div *ngIf="getSkillLevel(skill) == 0" class="locked"><ion-icon name="lock"></ion-icon></div>
+            <div *ngIf="getSkillLevel(skill) == 0" class="locked"><ion-icon name="lock-closed-outline"></ion-icon></div>
           </div>
         </div>
         <div *ngIf="selectedSkill">
@@ -144,8 +147,8 @@
           <div *ngIf="selectedSkill.skillLevel.length > 0" class="mt-2">
             <div *ngFor="let lvl of selectedSkill.skillLevel" [class.strong]="getSkillLevel(selectedSkill) >= lvl.level">L{{lvl.level}} {{lvl.description}}</div>
           </div>
-          <ion-button size="small" color="success" (click)="heroGainSkillLevel()" [disabled]="selectedHero.skillPoints <= 0">Skill up ({{selectedHero.skillPoints}})</ion-button>
-          <ion-button size="small" color="warning" (click)="heroResetSkills()">Reset skills</ion-button>
+          <ion-button size="small" color="success" (click)="heroGainSkillLevel()" [disabled]="selectedHero.missionId || selectedHero.skillPoints <= 0">Skill up ({{selectedHero.skillPoints}})</ion-button>
+          <ion-button size="small" color="warning" (click)="heroResetSkills()" [disabled]="selectedHero.missionId">Reset skills</ion-button>
         </div>
       </div>
 

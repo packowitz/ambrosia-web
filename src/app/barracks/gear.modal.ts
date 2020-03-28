@@ -52,12 +52,6 @@ export class GearModal {
         }
     }
 
-    upgrade(jewelType: string, level: number) {
-        this.backendService.upgradeJewel(jewelType, level).subscribe(() => {
-            this.selectJewelSlot(this.selectedJewel, this.selectedJewelSlotType);
-        });
-    }
-
     pluginJewel(jewelType: string, level: number) {
         this.backendService.pluginJewel(this.gear, this.selectedJewel, jewelType, level).subscribe(action => {
             this.updateJewelsOnGear(action.gear);

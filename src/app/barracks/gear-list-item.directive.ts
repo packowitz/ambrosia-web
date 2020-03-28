@@ -9,17 +9,17 @@ import {ModalController} from '@ionic/angular';
 @Component({
   selector: 'gear-list-item',
   template: `
-      <div class="flex-start" [class.color-grey]="!gear" (click)="showGearDetails()">
+      <div class="flex-start" [class.color-grey]="!gear" (click)="showGearDetails()" [class.pointer]="canShowDetails()">
         <gear-icon [gear]="gear" [type]="type"></gear-icon>
         <div *ngIf="gear" class="flex-vert gear-text flex-grow">
           <div>{{converter.readableIdentifier(gear.set)}} {{converter.readableIdentifier(gear.rarity)}} {{converter.readableIdentifier(gear.type)}}</div>
           <gear-stat [stat]="gear.stat" [value]="gear.statValue"></gear-stat>
         </div>
-        <div *ngIf="gear && !gear.equippedTo">
-          <ion-button fill="outline" color="success" size="small" (click)="equipGear($event)"><i class="fas fa-user-plus"></i></ion-button>
+        <div *ngIf="gear && !gear.equippedTo && !hero.missionId">
+          <ion-button fill="clear" size="small" (click)="equipGear($event)"><ion-img class="equip-icon" src="/assets/img/equip.png"></ion-img></ion-button>
         </div>
-        <div *ngIf="gear && gear.equippedTo">
-          <ion-button fill="outline" color="danger" size="small" (click)="unequipGear($event)"><i class="fas fa-user-minus"></i></ion-button>
+        <div *ngIf="gear && gear.equippedTo && !hero.missionId">
+          <ion-button fill="clear" size="small" (click)="unequipGear($event)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
         </div>
       </div>
   `,
@@ -49,8 +49,12 @@ export class GearListItem {
     });
   }
 
+  canShowDetails(): boolean {
+    return this.gear && !(this.hero.missionId && this.gear.equippedTo);
+  }
+
   showGearDetails() {
-    if (this.gear) {
+    if (this.canShowDetails()) {
       this.modalCtrl.create({
         component: GearModal,
         componentProps: {

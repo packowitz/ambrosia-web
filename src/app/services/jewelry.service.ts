@@ -9,8 +9,7 @@ export class JewelryService {
 
   public jewelries = {};
 
-  constructor(private enumService: EnumService) { }
-
+  constructor(private enumService: EnumService) {}
 
   updateJewelry(jewelry: Jewelry) {
     this.jewelries[jewelry.type] = jewelry;

@@ -13,6 +13,7 @@ import {AdminGuard} from './services/auth-guard.service';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
 import {PlayerActionInterceptor} from './interceptors/player-action.interceptor';
 import {FormsModule} from '@angular/forms';
+import {EnumService} from './services/enum.service';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import {FormsModule} from '@angular/forms';
         AdminGuard,
         StatusBar,
         SplashScreen,
+        EnumService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: PlayerActionInterceptor, multi: true}
