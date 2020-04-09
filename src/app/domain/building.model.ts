@@ -3,6 +3,7 @@ export class Building {
     playerId: number;
     type: string;
     level: number;
+    upgradeTriggered: boolean;
     upgradeStarted?: string;
     upgradeFinished?: string;
 }

@@ -30,6 +30,7 @@ import {Vehicle} from '../domain/vehicle.model';
 import {VehiclePart} from '../domain/vehiclePart.model';
 import {Progress} from '../domain/progress.model';
 import {Mission} from '../domain/mission.model';
+import {Upgrade} from '../domain/upgrade.model';
 
 export class Looted {
     type: string;
@@ -58,6 +59,8 @@ export class PlayerActionResponse {
     looted?: Looted[];
     missions?: Mission[];
     missionIdFinished?: number;
+    upgrades: Upgrade[];
+    upgradeRemoved: number;
 }
 
 @Injectable({
@@ -509,5 +512,21 @@ export class BackendService {
 
     unplugPart(part: VehiclePart, vehicle: Vehicle): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/vehicle/' + vehicle.id + '/unplug/' + part.id, null);
+    }
+
+    upgradeBuilding(buildingType: string): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/building/' + buildingType, null);
+    }
+
+    finishUpgrade(upgradeId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/' + upgradeId + '/finish', null);
+    }
+
+    cancelUpgrade(upgradeId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/' + upgradeId + '/cancel', null);
+    }
+
+    moveUpgradeUp(upgradeId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/' + upgradeId + '/moveup', null);
     }
 }

@@ -7,7 +7,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {BattlePage} from './battle.page';
 import {BattlefieldHero} from './battlefieldHero.directive';
-import {CommonAmbrosiaModule} from '../common-ambrosia.module';
+import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 
 const routes: Routes = [
     {

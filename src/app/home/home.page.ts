@@ -9,7 +9,7 @@ import {Building} from '../domain/building.model';
 import {ConverterService} from '../services/converter.service';
 import {PropertyService} from '../services/property.service';
 import {Mission} from '../domain/mission.model';
-import {MissionProgressPopover} from './mission-progress-popover';
+import {MissionProgressModal} from './mission-progress-modal';
 
 @Component({
   selector: 'app-home',
@@ -59,7 +59,7 @@ export class HomePage {
     this.addBuilding(this.model.buildings.find(b => b.type === 'GARAGE'));
     this.addBuilding(this.model.buildings.find(b => b.type === 'BAZAAR'));
     this.addBuilding(this.model.buildings.find(b => b.type === 'JEWELRY'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'STORAGE_0'));
+    this.addBuilding(this.model.buildings.find(b => b.type === 'STORAGE'));
   }
 
   private addBuilding(building?: Building) {
@@ -159,7 +159,7 @@ export class HomePage {
 
   openMission(mission: Mission) {
     this.modalCtrl.create({
-      component: MissionProgressPopover,
+      component: MissionProgressModal,
       componentProps: {
         mission: mission
       }

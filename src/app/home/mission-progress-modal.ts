@@ -97,7 +97,7 @@ import {BackendService} from '../services/backend.service';
         </div>
     `
 })
-export class MissionProgressPopover {
+export class MissionProgressModal {
 
     mission: Mission;
     vehicle: Vehicle;
@@ -127,7 +127,7 @@ export class MissionProgressPopover {
                     this.mission = mission;
                 }
             }
-        }, 900);
+        }, 200);
     }
 
     ionViewWillLeave() {

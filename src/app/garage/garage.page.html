@@ -25,7 +25,7 @@
         <div *ngFor="let slot of slots" class="mr-2">
           <div class="ion-text-center">Slot {{slot.slot}}</div>
           <div *ngIf="slot.vehicle" [class.selected-tile]="slot.slot == vehicle?.slot" (click)="selectVehicle(slot.vehicle)" class="pointer">
-            <vehicle [vehicle]="slot.vehicle"></vehicle>
+            <vehicle [vehicle]="slot.vehicle" [showMission]="true"></vehicle>
           </div>
           <div *ngIf="!slot.vehicle" (click)="emptySlot(slot.slot)" class="pointer">
             <ion-img src="/assets/img/vehicles/EMPTY_SLOT.png"></ion-img>

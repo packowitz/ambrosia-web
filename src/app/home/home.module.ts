@@ -5,8 +5,8 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 
 import {HomePage} from './home.page';
-import {CommonAmbrosiaModule} from '../common-ambrosia.module';
-import {MissionProgressPopover} from './mission-progress-popover';
+import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
+import {MissionProgressModal} from './mission-progress-modal';
 
 @NgModule({
     imports: [
@@ -21,8 +21,8 @@ import {MissionProgressPopover} from './mission-progress-popover';
             }
         ])
     ],
-    declarations: [HomePage, MissionProgressPopover],
-    entryComponents: [MissionProgressPopover]
+    declarations: [HomePage, MissionProgressModal],
+    entryComponents: [MissionProgressModal]
 })
 export class HomePageModule {
 }

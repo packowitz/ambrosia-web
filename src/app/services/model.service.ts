@@ -22,6 +22,7 @@ import {Progress} from '../domain/progress.model';
 import {Vehicle} from '../domain/vehicle.model';
 import {VehiclePart} from '../domain/vehiclePart.model';
 import {Mission} from '../domain/mission.model';
+import {Upgrade} from '../domain/upgrade.model';
 
 @Injectable({
     providedIn: 'root'
@@ -53,6 +54,7 @@ export class Model {
     currentMap: PlayerMap;
     baseVehicles: VehicleBase[];
     missions: Mission[];
+    upgrades: Upgrade[];
 
     interval: number;
     updateInProgress = false;
@@ -82,6 +84,25 @@ export class Model {
 
     getVehiclePart(id: number): VehiclePart {
         return this.vehicleParts.find(p => p.id === id);
+    }
+
+    hasEnoughResources(type: string, amount: number): boolean {
+        return this.getResourceAmount(type) >= amount;
+    }
+
+    getResourceAmount(type: string): number {
+        if (type === 'STEAM') { return (this.resources.steam + this.resources.premiumSteam); }
+        if (type === 'COGWHEELS') { return (this.resources.cogwheels + this.resources.premiumCogwheels); }
+        if (type === 'TOKENS') { return (this.resources.tokens + this.resources.premiumTokens); }
+        if (type === 'COINS') { return this.resources.coins; }
+        if (type === 'RUBIES') { return this.resources.rubies; }
+        if (type === 'METAL') { return this.resources.metal; }
+        if (type === 'IRON') { return this.resources.iron; }
+        if (type === 'STEAL') { return this.resources.steal; }
+        if (type === 'WOOD') { return this.resources.wood; }
+        if (type === 'BROWN_COAL') { return this.resources.brownCoal; }
+        if (type === 'BLACK_COAL') { return this.resources.blackCoal; }
+        return 0;
     }
 
     startInterval() {
@@ -116,6 +137,17 @@ export class Model {
                     });
                 }
             });
+
+            let upgradeInProgress = this.upgrades.find(u => u.inProgress);
+            if (upgradeInProgress) {
+                upgradeInProgress.secondsUntilDone --;
+                if (upgradeInProgress.secondsUntilDone <= 0 && !upgradeInProgress.updating) {
+                    upgradeInProgress.updating = true;
+                    this.http.post<PlayerActionResponse>(API_URL + '/upgrade/check', null).subscribe(data => {
+                        console.log("Updated upgrades");
+                    });
+                }
+            }
         }, 1000);
     }
 
@@ -143,6 +175,19 @@ export class Model {
                 key += '-service';
             }
             localStorage.setItem(key, data.token);
+        }
+        if (data.upgrades) {
+            if (this.upgrades) {
+                data.upgrades.forEach(u => this.updateUpgrade(u));
+            } else {
+                this.upgrades = data.upgrades;
+            }
+        }
+        if (data.upgradeRemoved) {
+            let idx = this.upgrades.findIndex(u => u.id === data.upgradeRemoved);
+            if (idx >= 0) {
+                this.upgrades.splice(idx, 1);
+            }
         }
         if (data.progress) {
             this.progress = data.progress;
@@ -412,6 +457,18 @@ export class Model {
             } else {
                 this.missions.push(mission);
                 this.missions = this.missions.sort((a, b) => a.slotNumber - b.slotNumber);
+            }
+        }
+    }
+
+    updateUpgrade(upgrade?: Upgrade) {
+        if (upgrade) {
+            let idx = this.upgrades.findIndex(u => u.id === upgrade.id);
+            if (idx >= 0) {
+                this.upgrades[idx] = upgrade;
+            } else {
+                this.upgrades.push(upgrade);
+                this.upgrades = this.upgrades.sort((a, b) => a.position - b.position);
             }
         }
     }

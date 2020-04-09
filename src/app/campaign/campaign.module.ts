@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {CampaignFightPage} from './campaignFight.page';
-import {CommonAmbrosiaModule} from '../common-ambrosia.module';
+import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {StartMissionPopover} from './start-mission-popover';
 
 @NgModule({

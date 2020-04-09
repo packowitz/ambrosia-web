@@ -3,4 +3,7 @@ export class Progress {
     garageSlots: number;
     offlineBattleSpeed: number;
     maxOfflineBattlesPerMission: number;
+    builderQueueLength: number;
+    builderSpeed: number;
+    barrackSize: number;
 }

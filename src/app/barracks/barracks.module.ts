@@ -7,7 +7,8 @@ import {BarracksPage} from './barracks.page';
 import {GearListItem} from './gear-list-item.directive';
 import {GearModal} from './gear.modal';
 import {GearStat} from './gear-stat.directive';
-import {CommonAmbrosiaModule} from '../common-ambrosia.module';
+import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
+import {BarracksUpgradeModal} from './barracksUpgrade.modal';
 
 @NgModule({
     imports: [
@@ -22,8 +23,8 @@ import {CommonAmbrosiaModule} from '../common-ambrosia.module';
             }
         ])
     ],
-    declarations: [BarracksPage, GearListItem, GearModal, GearStat],
-    entryComponents: [GearModal]
+    declarations: [BarracksPage, GearListItem, GearModal, GearStat, BarracksUpgradeModal],
+    entryComponents: [GearModal, BarracksUpgradeModal]
 })
 export class BarracksModule {
 }

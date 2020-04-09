@@ -7,6 +7,10 @@ import {Model} from '../services/model.service';
 import {Gear} from '../domain/gear.model';
 import {Location} from '@angular/common';
 import {Building} from '../domain/building.model';
+import {PropertyService} from '../services/property.service';
+import {ModalController} from '@ionic/angular';
+import {MissionProgressModal} from '../home/mission-progress-modal';
+import {BarracksUpgradeModal} from './barracksUpgrade.modal';
 
 @Component({
   selector: 'barracks',
@@ -21,11 +25,14 @@ export class BarracksPage implements OnInit {
   gearTypeFilter: string[] = [];
 
   building: Building;
+  canUpgradeBuilding = false;
 
   constructor(private backendService: BackendService,
               private converter: ConverterService,
               public model: Model,
-              private location: Location) {
+              private location: Location,
+              private propertyService: PropertyService,
+              private modalCtrl: ModalController) {
     console.log("BarracksPage.constructor");
   }
 
@@ -39,10 +46,20 @@ export class BarracksPage implements OnInit {
 
   ionViewWillEnter() {
     this.building = this.model.buildings.find(b => b.type === 'BARRACKS');
+    this.canUpgradeBuilding = this.propertyService.getBuildingUpgradeTime(this.building.type, this.building.level + 1).length > 0;
   }
 
   close() {
     this.location.back();
+  }
+
+  openUpgradeModal() {
+    this.modalCtrl.create({
+      component: BarracksUpgradeModal
+    }).then(modal => {
+      modal.onDidDismiss().then(() => this.ionViewWillEnter());
+      modal.present();
+    });
   }
 
   selectHero(hero: Hero) {

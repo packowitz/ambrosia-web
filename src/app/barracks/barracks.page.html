@@ -5,8 +5,14 @@
     </ion-buttons>
     <ion-title>
       <div class="flex-space-between" *ngIf="building">
-        <div>Barracks - Level {{building.level}}</div>
-        <ion-icon name="close" class="pointer" (click)="close()"></ion-icon>
+        <div class="flex-center">
+          Barracks - Level {{building.level}}
+          <ion-button class="ml-2" *ngIf="canUpgradeBuilding" size="small" color="success" (click)="openUpgradeModal()">{{building.upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
+        </div>
+        <div class="flex-center">
+          <div [class.color-red]="model.heroes.length >= model.progress.barrackSize">{{model.heroes.length}}/{{model.progress.barrackSize}}</div>
+          <ion-icon name="close" class="ml-2 pointer" (click)="close()"></ion-icon>
+        </div>
       </div>
     </ion-title>
   </ion-toolbar>

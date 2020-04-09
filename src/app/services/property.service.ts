@@ -11,7 +11,7 @@ import {VehiclePart} from '../domain/vehiclePart.model';
 })
 export class PropertyService {
 
-  initialCategories = ['JEWEL', 'HERO', 'VEHICLE'];
+  initialCategories = ['JEWEL', 'HERO', 'VEHICLE', 'BUILDING_UP_TIME', 'BUILDING_UP_COST', 'BUILDING'];
 
   properties = {};
 
@@ -37,6 +37,14 @@ export class PropertyService {
         }
       });
     });
+  }
+
+  getProps(type: string, level: number): DynamicProperty[] {
+    let props = this.properties[type];
+    if (props) {
+      return props.filter((p: DynamicProperty) => p.level === level);
+    }
+    return [];
   }
 
   getJewelValue(type: string, level: number): number {
@@ -146,6 +154,14 @@ export class PropertyService {
       return props.filter((p: DynamicProperty) => p.level === part.level);
     }
     return [];
+  }
+
+  getBuildingUpgradeTime(buildingType: string, level: number): DynamicProperty[] {
+    return this.getProps(buildingType + '_UP_TIME', level);
+  }
+
+  getBuildingUpgradeCosts(buildingType: string, level: number): DynamicProperty[] {
+    return this.getProps(buildingType + '_UP_COST', level);
   }
 
   saveProperties(type: string, properties: DynamicProperty[]): Observable<DynamicProperty[]> {
