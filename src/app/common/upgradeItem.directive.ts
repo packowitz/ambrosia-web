@@ -18,9 +18,12 @@ import {AlertController} from '@ionic/angular';
             Upgrading {{converter.readableIdentifier(item.buildingType)}} to level {{getNextLevel()}}
           </div>
           <div class="flex-grow">&nbsp;</div>
-          <div>
-            {{progressInPercent()}}%
+          <div class="progress-bar-with-time" *ngIf="item.inProgress">
+            <span class="bar-inner" [style.width]="progressInPercent() + '%'">&nbsp;</span>
+            <span class="bar-text">{{item.secondsUntilDone > 0 ? converter.time(item.secondsUntilDone) : 'Done'}}</span>
+            &nbsp;
           </div>
+          <div *ngIf="!item.inProgress">{{progressInPercent()}}%</div>
           <ion-button *ngIf="!item.finished" (click)="moveUpgradeUp()" fill="clear" shape="round" size="small" [disabled]="saving || item.position == 1"><ion-icon slot="icon-only" name="chevron-up-circle-outline"></ion-icon></ion-button>
           <ion-button *ngIf="!item.finished" (click)="cancelUpgrade()" color="danger" fill="clear" shape="round" size="small" [disabled]="saving"><ion-icon slot="icon-only" name="close-circle-outline"></ion-icon></ion-button>
           <ion-button *ngIf="item.finished" (click)="finishUpgrade()" color="success" fill="clear" shape="round" size="small" [disabled]="saving"><ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon></ion-button>

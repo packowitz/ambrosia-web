@@ -4,9 +4,9 @@ import {Hero} from '../domain/hero.model';
 import {ConverterService} from '../services/converter.service';
 import {Model} from '../services/model.service';
 import {Location} from '@angular/common';
-import {Building} from '../domain/building.model';
 import {PropertyService} from '../services/property.service';
-import {AlertController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
+import {AcademyUpgradeModal} from './academyUpgrade.modal';
 
 @Component({
   selector: 'academy',
@@ -37,19 +37,34 @@ export class AcademyPage {
   fodder5: Hero;
   fodder6: Hero;
 
-  building: Building;
+  buildingType = 'ACADEMY';
+  canUpgradeBuilding = false;
 
   constructor(private backendService: BackendService,
               private converter: ConverterService,
               private propertyService: PropertyService,
               public model: Model,
               private location: Location,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private modalCtrl: ModalController) {
     console.log("AcademyPage.constructor");
   }
 
   ionViewWillEnter() {
-    this.building = this.model.buildings.find(b => b.type === 'ACADEMY');
+    this.canUpgradeBuilding = this.propertyService.getBuildingUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+  }
+
+  getBuilding() {
+    return this.model.getBuilding(this.buildingType);
+  }
+
+  openUpgradeModal() {
+    this.modalCtrl.create({
+      component: AcademyUpgradeModal
+    }).then(modal => {
+      modal.onDidDismiss().then(() => this.ionViewWillEnter());
+      modal.present();
+    });
   }
 
   resetFodder() {
@@ -154,17 +169,24 @@ export class AcademyPage {
       this.removedFodder(hero);
     } else {
       if (!this.selectedHero) {
-        this.selectedHero = hero;
-        this.currentLevel = hero.level;
-        this.currentLevelMaxXp = hero.maxXp;
-        this.currentAscLevel = hero.ascLvl;
-        this.currentAscLevelMaxPoints = hero.ascPointsMax;
-        if (hero.xp === hero.maxXp && hero.level === 10 * hero.stars) {
-          this.feedForEvolve = true;
-          this.fodderSize = hero.stars;
+        if (hero.level > this.model.progress.maxTrainingLevel) {
+          this.alertCtrl.create({
+            subHeader: 'You cannot train or evolve heroes of level higher than ' + this.model.progress.maxTrainingLevel,
+            buttons: [{text: 'OK'}]
+          }).then(alert => alert.present());
         } else {
-          this.feedForEvolve = false;
-          this.fodderSize = 6;
+          this.selectedHero = hero;
+          this.currentLevel = hero.level;
+          this.currentLevelMaxXp = hero.maxXp;
+          this.currentAscLevel = hero.ascLvl;
+          this.currentAscLevelMaxPoints = hero.ascPointsMax;
+          if (hero.xp === hero.maxXp && hero.level === 10 * hero.stars) {
+            this.feedForEvolve = true;
+            this.fodderSize = hero.stars;
+          } else {
+            this.feedForEvolve = false;
+            this.fodderSize = 6;
+          }
         }
       } else if (this.feedForEvolve && hero.stars < this.selectedHero.stars) {
         this.alertCtrl.create({

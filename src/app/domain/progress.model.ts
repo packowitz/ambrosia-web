@@ -6,4 +6,5 @@ export class Progress {
     builderQueueLength: number;
     builderSpeed: number;
     barrackSize: number;
+    maxTrainingLevel: number;
 }

@@ -47,7 +47,7 @@ export class ConverterService {
         }
         let secs = sec % 60;
         let mins = (sec - secs) / 60;
-        if (mins < 10) {
+        if (mins < 60) {
             return  mins + ':' + (secs < 10 ? '0' : '') + secs;
         }
         let hours = Math.floor(mins / 60);

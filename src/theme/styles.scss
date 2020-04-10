@@ -329,6 +329,28 @@ ion-row.table-row {
   }
 }
 
+.progress-bar-with-time {
+  width: 80px;
+  border: 1px solid #045022;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  background-color: #bbbbbb;
+  .bar-inner {
+    background-color: #1ec35f;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .bar-text {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+  }
+}
+
 .empty-hero-tile {
   width: 80px;
   height: 80px;

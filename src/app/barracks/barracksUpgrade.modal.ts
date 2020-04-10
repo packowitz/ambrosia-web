@@ -66,7 +66,7 @@ export class BarracksUpgradeModal {
     saving = false;
 
     constructor(private modalCtrl: ModalController,
-                private model: Model,
+                public model: Model,
                 private backendService: BackendService,
                 private propertyService: PropertyService,
                 private alertCtrl: AlertController) {
