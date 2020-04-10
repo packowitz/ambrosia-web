@@ -57,7 +57,7 @@ export class Model {
     upgrades: Upgrade[];
 
     interval: number;
-    updateInProgress = false;
+    updateResourcesInProgress = false;
 
     constructor(private http: HttpClient) {}
 
@@ -84,6 +84,10 @@ export class Model {
 
     getVehiclePart(id: number): VehiclePart {
         return this.vehicleParts.find(p => p.id === id);
+    }
+
+    getBuilding(type: string): Building {
+        return this.buildings.find(b => b.type === type);
     }
 
     hasEnoughResources(type: string, amount: number): boolean {
@@ -152,14 +156,14 @@ export class Model {
     }
 
     updateResources() {
-        if (!this.updateInProgress) {
-            this.updateInProgress = true;
+        if (!this.updateResourcesInProgress) {
+            this.updateResourcesInProgress = true;
             this.http.get<Resources>(API_URL + '/resources').subscribe(data => {
                 this.resources = data;
-                this.updateInProgress = false;
+                this.updateResourcesInProgress = false;
                 console.log('resources updated');
             }, () => {
-                this.updateInProgress = false;
+                this.updateResourcesInProgress = false;
                 console.log('resource update failed');
             });
         }

@@ -529,4 +529,8 @@ export class BackendService {
     moveUpgradeUp(upgradeId: number): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/' + upgradeId + '/moveup', null);
     }
+
+    adminGainResources(resourceType: string): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/resources/gain/' + resourceType, null);
+    }
 }

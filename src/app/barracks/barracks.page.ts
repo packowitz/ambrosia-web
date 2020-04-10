@@ -5,12 +5,11 @@ import {ConverterService} from '../services/converter.service';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {Model} from '../services/model.service';
 import {Gear} from '../domain/gear.model';
-import {Location} from '@angular/common';
 import {Building} from '../domain/building.model';
 import {PropertyService} from '../services/property.service';
 import {ModalController} from '@ionic/angular';
-import {MissionProgressModal} from '../home/mission-progress-modal';
 import {BarracksUpgradeModal} from './barracksUpgrade.modal';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'barracks',
@@ -30,7 +29,7 @@ export class BarracksPage implements OnInit {
   constructor(private backendService: BackendService,
               private converter: ConverterService,
               public model: Model,
-              private location: Location,
+              private router: Router,
               private propertyService: PropertyService,
               private modalCtrl: ModalController) {
     console.log("BarracksPage.constructor");
@@ -50,7 +49,7 @@ export class BarracksPage implements OnInit {
   }
 
   close() {
-    this.location.back();
+    this.router.navigateByUrl('/home');
   }
 
   openUpgradeModal() {

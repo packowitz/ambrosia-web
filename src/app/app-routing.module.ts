@@ -49,6 +49,7 @@ const routes: Routes = [
     {path: 'campaign', loadChildren: './campaign/campaign.module#CampaignModule'},
     {path: 'training', loadChildren: './training/training.module#TrainingPageModule'},
     {path: 'garage', loadChildren: './garage/garage.module#GarageModule'},
+    {path: 'storage', loadChildren: './storage/storage.module#StorageModule'},
     {path: 'battle', loadChildren: './battle/battle.module#BattlePageModule'}
 ];
 

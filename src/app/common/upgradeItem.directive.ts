@@ -1,10 +1,7 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Gear} from '../domain/gear.model';
+import {Component, Input} from '@angular/core';
 import {ConverterService} from '../services/converter.service';
 import {Upgrade} from '../domain/upgrade.model';
 import {Model} from '../services/model.service';
-import {Building} from '../domain/building.model';
-import {OfflineBattle} from '../domain/offlineBattle.model';
 import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
 
@@ -33,7 +30,6 @@ import {AlertController} from '@ionic/angular';
 })
 export class UpgradeItemDirective {
     @Input() item: Upgrade;
-    @Output() refresh = new EventEmitter();
 
     saving = false;
 
@@ -63,7 +59,6 @@ export class UpgradeItemDirective {
         this.saving = true;
         this.backendService.finishUpgrade(this.item.id).subscribe(data => {
             this.saving = false;
-            this.refresh.emit();
         }, error => {
             this.saving = false;
             this.alertCtrl.create({
@@ -78,7 +73,6 @@ export class UpgradeItemDirective {
         this.saving = true;
         this.backendService.cancelUpgrade(this.item.id).subscribe(data => {
             this.saving = false;
-            this.refresh.emit();
         }, error => {
             this.saving = false;
             this.alertCtrl.create({
@@ -93,7 +87,6 @@ export class UpgradeItemDirective {
         this.saving = true;
         this.backendService.moveUpgradeUp(this.item.id).subscribe(data => {
             this.saving = false;
-            this.refresh.emit();
         }, error => {
             this.saving = false;
             this.alertCtrl.create({

@@ -1,0 +1,421 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        <div class="flex-center">
+          Storage - Level {{getBuilding().level}}
+          <ion-button class="ml-2" *ngIf="canUpgradeBuilding" size="small" color="success" (click)="openUpgradeModal()">{{getBuilding().upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
+        </div>
+        <div class="flex-center">
+          <ion-icon name="close" class="ml-2 pointer" (click)="close()"></ion-icon>
+        </div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>General Resources</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/COINS.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Coins</b> are the currency in Ambrosia. Every service you use you need need to pay coins for. You will find coins mostly by doing missions.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.coins}}<ion-img src="assets/img/resources/COINS.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('COINS')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mt-1">
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/RUBIES.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Rubies</b> are very rare and valuable. Spending rubies can make your life easier. You can speed up everything with them. They can be found time by time on missions and they are granted as rewards for tasks.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.rubies}}<ion-img src="assets/img/resources/RUBIES.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('RUBIES')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Battle Fees</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/STEAM.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Steam</b> is the resources you need mostly for doing missions. You also need it to discover tiles on maps. Steam is generated over time. Levelling up your Storage will increase the amount of Steam you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.steam}}<ion-img src="assets/img/resources/STEAM.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.steamMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('STEAM')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mt-1">
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/PREMIUM_STEAM.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Premium Steam</b> is used for the same things you can use Steam for but it doesn't get generated over time. But you can gain it as reward for tasks or can be purchased in the shop. Levelling up your Storage will increase the amount of Premium Steam you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.premiumSteam}}<ion-img src="assets/img/resources/PREMIUM_STEAM.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.premiumSteamMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('PREMIUM_STEAM')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/COGWHEELS.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Cogwheels</b> are needed to fight some special battles on the map. Cogwheels are generated over time. Levelling up your Storage will increase the number of Cogwheels you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.cogwheels}}<ion-img src="assets/img/resources/COGWHEELS.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.cogwheelsMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('COGWHEELS')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mt-1">
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/PREMIUM_COGWHEELS.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Premium Cogwheels</b> are used for the same things you can use Cogwheels for but they don't get generated over time. But you can gain them as reward for tasks or can be purchased in the shop. Levelling up your Storage will increase the number of Premium Cogwheels you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.premiumCogwheels}}<ion-img src="assets/img/resources/PREMIUM_COGWHEELS.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.premiumCogwheelsMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('PREMIUM_COGWHEELS')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/TOKENS.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Tokens</b> are needed to fight against teams of other players in the arena. Tokens are generated over time. Levelling up your Storage will increase the number of Tokens you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.tokens}}<ion-img src="assets/img/resources/TOKENS.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.tokensMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('TOKENS')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mt-1">
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/PREMIUM_TOKENS.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Premium Tokens</b> are used for the same things you can use Tokens for but they don't get generated over time. But you can gain them as reward for tasks or can be purchased in the shop. Levelling up your Storage will increase the number of Premium Tokens you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.premiumTokens}}<ion-img src="assets/img/resources/PREMIUM_TOKENS.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.premiumTokensMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('PREMIUM_TOKENS')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Upgrade Material</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/METAL.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Metal</b> is the base material needed to perform upgrades on buildings and vehicles. Levelling up your Storage will increase the amount of Metal you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.metal}}<ion-img src="assets/img/resources/METAL.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.metalMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('METAL')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mt-1">
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/IRON.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>IRON</b> has better quality as Metal so it is used for higher upgrades. Levelling up your Storage will increase the amount of Iron you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.iron}}<ion-img src="assets/img/resources/IRON.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.ironMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('IRON')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/STEAL.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Steal</b> is the finest material needed for upgrades and is needed for the highest levels. Levelling up your Storage will increase the amount of Steal you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.steal}}<ion-img src="assets/img/resources/STEAL.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.stealMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('STEAL')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Forge Material</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/WOOD.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Wood</b> is the base material needed to perform simple modifications in the Forge. Levelling up your Storage will increase the amount of Wood you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.wood}}<ion-img src="assets/img/resources/WOOD.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.woodMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('WOOD')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mt-1">
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/BROWN_COAL.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Brown coal</b> has better quality as Wood so it is used for more complicated modifications. Levelling up your Storage will increase the amount of Brown coal you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.brownCoal}}<ion-img src="assets/img/resources/BROWN_COAL.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.brownCoalMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('BROWN_COAL')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/BLACK_COAL.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Black coal</b> is the finest material needed for most complicated modifications in the Forge. Levelling up your Storage will increase the amount of Black coal you can store.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.blackCoal}}<ion-img src="assets/img/resources/BLACK_COAL.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          {{model.resources.blackCoalMax}} max
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('BLACK_COAL')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Laboratory Material</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/SIMPLE_GENOME.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Simple Genomes</b> are used in the laboratory to clone a simple (1*) hero.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.simpleGenome}}<ion-img src="assets/img/resources/SIMPLE_GENOME.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('SIMPLE_GENOME')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/COMMON_GENOME.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Common Genomes</b> are used in the laboratory to clone a common (2*) hero.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.commonGenome}}<ion-img src="assets/img/resources/COMMON_GENOME.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('COMMON_GENOME')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/UNCOMMON_GENOME.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Uncommon Genomes</b> are used in the laboratory to clone an uncommon (3*) hero.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.uncommonGenome}}<ion-img src="assets/img/resources/UNCOMMON_GENOME.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('UNCOMMON_GENOME')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/RARE_GENOME.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Rare Genomes</b> are used in the laboratory to clone a rare (4*) hero.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.rareGenome}}<ion-img src="assets/img/resources/RARE_GENOME.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('RARE_GENOME')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/EPIC_GENOME.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          <b>Epic Genomes</b> are used in the laboratory to clone an epic (5*) hero.
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.epicGenome}}<ion-img src="assets/img/resources/EPIC_GENOME.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" fill="outline" (click)="gain('EPIC_GENOME')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

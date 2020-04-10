@@ -51,15 +51,15 @@ export class HomePage {
 
   private calcBuildings() {
     this.buildings = [];
-    this.addBuilding(this.model.buildings.find(b => b.type === 'BARRACKS'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'ARENA'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'ACADEMY'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'LABORATORY'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'FORGE'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'GARAGE'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'BAZAAR'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'JEWELRY'));
-    this.addBuilding(this.model.buildings.find(b => b.type === 'STORAGE'));
+    this.addBuilding(this.model.getBuilding('BARRACKS'));
+    this.addBuilding(this.model.getBuilding('ARENA'));
+    this.addBuilding(this.model.getBuilding('ACADEMY'));
+    this.addBuilding(this.model.getBuilding('LABORATORY'));
+    this.addBuilding(this.model.getBuilding('FORGE'));
+    this.addBuilding(this.model.getBuilding('GARAGE'));
+    this.addBuilding(this.model.getBuilding('BAZAAR'));
+    this.addBuilding(this.model.getBuilding('JEWELRY'));
+    this.addBuilding(this.model.getBuilding('STORAGE'));
   }
 
   private addBuilding(building?: Building) {
@@ -148,6 +148,9 @@ export class HomePage {
         break;
       case 'GARAGE':
         this.router.navigateByUrl('/garage');
+        break;
+      case 'STORAGE':
+        this.router.navigateByUrl('/storage');
         break;
       default:
         this.alertCtrl.create({

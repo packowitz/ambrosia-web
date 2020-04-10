@@ -11,7 +11,7 @@ import {PropertyService} from '../services/property.service';
 import {DynamicProperty} from '../domain/property.model';
 
 @Component({
-    selector: 'barracks-upgrade-modal',
+    selector: 'storage-upgrade-modal',
     template: `
         <div class="ma-2">
           <div class="flex-space-around">
@@ -22,7 +22,7 @@ import {DynamicProperty} from '../domain/property.model';
             <div class="flex">{{model.resources.rubies}}<ion-img src="assets/img/resources/RUBIES.png" class="resource-icon"></ion-img></div>
           </div>
           <div class="mt-2 flex-center">
-            Upgraded Barracks provides more space for heroes
+            Upgraded Storage provides more space for your resources
           </div>
           <ion-item class="mt-2">
             <div class="flex-center full-width">
@@ -31,7 +31,7 @@ import {DynamicProperty} from '../domain/property.model';
           </ion-item>
           <upgrade-item *ngFor="let item of model.upgrades" [item]="item"></upgrade-item>
           <div *ngIf="!getBuilding().upgradeTriggered">
-            <div class="mt-2 flex-center" *ngIf="!upgradeSeconds">Cannot upgrade Barracks higher than level {{getBuilding().level}}</div>
+            <div class="mt-2 flex-center" *ngIf="!upgradeSeconds">Cannot upgrade Storage higher than level {{getBuilding().level}}</div>
             <div class="mt-3" *ngIf="upgradeSeconds">
               <div class="flex-space-around">
                 <div *ngIf="hasEnoughResources">Upgrade costs</div>
@@ -56,9 +56,9 @@ import {DynamicProperty} from '../domain/property.model';
         </div>
     `
 })
-export class BarracksUpgradeModal {
+export class StorageUpgradeModal {
 
-    buildingType = "BARRACKS";
+    buildingType = "STORAGE";
     upgradeSeconds: number = null;
     upgradeCosts: DynamicProperty[] = [];
     hasEnoughResources = true;
