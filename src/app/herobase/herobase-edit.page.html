@@ -5,10 +5,14 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title *ngIf="hero">
-      Edit {{converter.rarityStars(hero.rarity)}}
-      <ion-icon name="star"></ion-icon>
-      ({{hero.rarity}}) <strong [class]="hero.color">{{hero.name}}</strong>, {{hero.heroClass}}
-      <ion-button (click)="editHero()" float-end size="small" [disabled]="saving">Save changes</ion-button>
+      <div class="flex-space-between">
+        <div>
+          Edit {{converter.rarityStars(hero.rarity)}}
+          <ion-icon name="star"></ion-icon>
+          ({{hero.rarity}}) <strong [class]="hero.color">{{hero.name}}</strong>, {{hero.heroClass}}
+        </div>
+        <ion-button (click)="editHero()" size="small" [disabled]="saving">Save changes</ion-button>
+      </div>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -261,19 +265,19 @@
       <ion-card-title>Skills</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-segment (ionChange)="setSkill($event)" [ngModel]="selectedSkill">
-        <ion-segment-button *ngFor="let skill of hero.skills" [value]="skill.number">
-          <ion-img [src]="'assets/img/skills/' + skill.icon + '.png'" class="skill_icon" (click)="changeSkillIcon($event, skill)"></ion-img>
-          <ion-label>Skill {{skill.number}}</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="add">
-          <ion-label>New Skill</ion-label>
-        </ion-segment-button>
-      </ion-segment>
+      <div class="flex-space-between">
+        <div *ngFor="let heroSkill of hero.skills" (click)="setSkill(heroSkill)" class="pointer pt-2 pl-3 pr-3 pb-1" [class.skill-selected]="skill.number == heroSkill.number">
+          <ion-img [src]="'assets/img/skills/' + heroSkill.icon + '.png'" class="skill_icon" (click)="skill.number == heroSkill.number ?  changeSkillIcon(heroSkill) : false"></ion-img>
+          <div [class.bold]="skill.number == heroSkill.number" class="mt-1">Skill {{heroSkill.number}}</div>
+        </div>
+        <div>
+          <ion-button size="large" fill="clear" (click)="addNewSkill()"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </div>
+      </div>
     </ion-card-content>
-    <div *ngFor="let skill of [getSelectedSkill()]">
+    <div *ngIf="skill">
       <ion-row>
-        <ion-col sizeMd="3">
+        <ion-col sizeMd="2">
           <ion-item>
             <ion-label>Skill name</ion-label>
           </ion-item>
@@ -283,11 +287,14 @@
             <ion-input type="text" [(ngModel)]="skill.name" required></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col sizeMd="4">
+        <ion-col sizeMd="3">
           <ion-item>
             <ion-label>Passive</ion-label>
             <ion-checkbox slot="end" [(ngModel)]="skill.passive"></ion-checkbox>
           </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-end">
+          <ion-button size="large" fill="clear" color="danger" (click)="removeSkill()"><ion-icon name="trash-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
       <ion-row *ngIf="skill.passive">
@@ -378,28 +385,20 @@
           <ion-row *ngFor="let action of skill.actions" class="mt-4">
             <ion-col sizeMd="12">
               <div class="flex-space-between ml-2 mr-2">
-                <div>{{action.position}}. {{action.triggerChance}}% {{action.type}} {{action.effect}}
+                <div class="pointer" (click)="toggleExpandAction(action.position)">{{action.position}}. {{action.triggerChance}}% {{action.type}} {{action.effect}}
                   ({{action.effectValue}}) on {{action.target}}<span
                       *ngIf="action.effectDuration"> for {{action.effectDuration}} turn(s)</span></div>
                 <div class="flex-grow"></div>
-                <ion-button (click)="dropAction(action)" size="small" fill="outline" color="danger">
-                  <ion-icon name="trash"></ion-icon>
-                </ion-button>
-                <ion-button (click)="moveAction(action, -1)" size="small" fill="outline"
+                <ion-button (click)="moveAction(action, -1)" fill="clear"
                             [disabled]="action.position <= 1">
-                  <ion-icon name="arrow-dropup-circle"></ion-icon>
+                  <ion-icon name="arrow-up-circle-outline"></ion-icon>
                 </ion-button>
-                <ion-button (click)="moveAction(action, 1)" size="small" fill="outline"
+                <ion-button (click)="moveAction(action, 1)" fill="clear"
                             [disabled]="action.position >= skill.actions.length">
-                  <ion-icon name="arrow-dropdown-circle"></ion-icon>
+                  <ion-icon name="arrow-down-circle-outline"></ion-icon>
                 </ion-button>
-                <ion-button *ngIf="skillActionsExpanded != action.position" size="small" fill="clear"
-                            (click)="toggleExpandAction(action.position)">
-                  <ion-icon name="arrow-dropdown"></ion-icon>
-                </ion-button>
-                <ion-button *ngIf="skillActionsExpanded == action.position" size="small" fill="clear"
-                            (click)="toggleExpandAction(action.position)">
-                  <ion-icon name="arrow-dropup"></ion-icon>
+                <ion-button (click)="dropAction(action)" fill="clear" color="danger">
+                  <ion-icon name="trash-outline"></ion-icon>
                 </ion-button>
               </div>
             </ion-col>
