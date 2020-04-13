@@ -5,6 +5,7 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {GaragePage} from './garage.page';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
+import {GarageUpgradeModal} from './garageUpgrade.modal';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
       }
     ])
   ],
-  declarations: [GaragePage]
+  declarations: [GaragePage, GarageUpgradeModal],
+  entryComponents: [GarageUpgradeModal]
 })
 export class GarageModule {}

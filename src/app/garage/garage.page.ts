@@ -1,14 +1,14 @@
 import {Component} from '@angular/core';
 import {Model} from '../services/model.service';
-import {Building} from '../domain/building.model';
 import {Location} from '@angular/common';
 import {Vehicle} from '../domain/vehicle.model';
 import {BackendService} from '../services/backend.service';
-import {PopoverController} from '@ionic/angular';
+import {ModalController, PopoverController} from '@ionic/angular';
 import {VehicleSelectionPopover} from './vehicle-selection-popover';
 import {VehiclePart} from '../domain/vehiclePart.model';
 import {ConverterService} from '../services/converter.service';
 import {PropertyService} from '../services/property.service';
+import {GarageUpgradeModal} from './garageUpgrade.modal';
 
 export class GarageSlot {
   slot: number;
@@ -28,7 +28,9 @@ export class GaragePage {
 
   saving = false;
 
-  building: Building;
+  buildingType = "GARAGE";
+  canUpgradeBuilding = false;
+
   slots: GarageSlot[] = [];
   vehicle: Vehicle;
 
@@ -39,12 +41,21 @@ export class GaragePage {
               private backendService: BackendService,
               private popoverCtrl: PopoverController,
               public converter: ConverterService,
-              public propertyService: PropertyService) {
+              public propertyService: PropertyService,
+              private modalCtrl: ModalController) {
   }
 
   ionViewWillEnter() {
-    this.building = this.model.buildings.find(b => b.type === 'GARAGE');
+    this.canUpgradeBuilding = this.propertyService.getBuildingUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
     this.initSlots();
+  }
+
+  getBuilding() {
+    return this.model.getBuilding(this.buildingType);
+  }
+
+  getVehicleStorage(): number {
+    return this.model.vehicles.filter(v => !v.slot).length;
   }
 
   initSlots() {
@@ -57,6 +68,15 @@ export class GaragePage {
       slot ++;
     }
     this.initSpareParts();
+  }
+
+  openUpgradeModal() {
+    this.modalCtrl.create({
+      component: GarageUpgradeModal
+    }).then(modal => {
+      modal.onDidDismiss().then(() => this.ionViewWillEnter());
+      modal.present();
+    });
   }
 
   reloadVehicle() {

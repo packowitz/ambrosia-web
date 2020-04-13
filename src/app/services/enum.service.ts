@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {API_URL} from '../../environments/environment';
 
 export class SkillActionEffect { name: string; type: string; description: string; }
-export class PropertyCategory { name: string; levelName: string; value1name: string; showStat: boolean; showResources: boolean; showBuilding: boolean; showVehicleStat: boolean; showValue2: boolean; value2name: string; }
-export class PropertyType { name: string; category: string; description: string; }
+export class PropertyCategory { name: string; levelName: string; value1name: string; showStat: boolean; showResources: boolean; showVehicleStat: boolean; showValue2: boolean; value2name: string; }
+export class PropertyType { name: string; category: string; description: string; value1name: string; showStat: boolean; showResources: boolean; showVehicleStat: boolean; showValue2: boolean; value2name: string; }
 export class GearSet { name: string; pieces: number; description: string; }
 export class JewelType { name: string; slot: string; gearSet: string; }
 export class MapTileStructure { name: string; type: string; }
