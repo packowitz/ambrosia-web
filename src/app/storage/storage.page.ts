@@ -28,7 +28,7 @@ export class StoragePage {
   }
 
   ionViewWillEnter() {
-    this.canUpgradeBuilding = this.propertyService.getBuildingUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+    this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
   }
 
   getBuilding() {

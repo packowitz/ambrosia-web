@@ -11,7 +11,7 @@ import {VehiclePart} from '../domain/vehiclePart.model';
 })
 export class PropertyService {
 
-  initialCategories = ['JEWEL', 'HERO', 'VEHICLE', 'BUILDING_UP_TIME', 'BUILDING_UP_COST', 'BUILDING'];
+  initialCategories = ['JEWEL', 'HERO', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
 
   properties = {};
 
@@ -156,12 +156,12 @@ export class PropertyService {
     return [];
   }
 
-  getBuildingUpgradeTime(buildingType: string, level: number): DynamicProperty[] {
-    return this.getProps(buildingType + '_UP_TIME', level);
+  getUpgradeTime(type: string, level: number): DynamicProperty[] {
+    return this.getProps(type + '_UP_TIME', level);
   }
 
-  getBuildingUpgradeCosts(buildingType: string, level: number): DynamicProperty[] {
-    return this.getProps(buildingType + '_UP_COST', level);
+  getUpgradeCosts(type: string, level: number): DynamicProperty[] {
+    return this.getProps(type + '_UP_COST', level);
   }
 
   saveProperties(type: string, properties: DynamicProperty[]): Observable<DynamicProperty[]> {

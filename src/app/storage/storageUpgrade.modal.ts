@@ -74,11 +74,11 @@ export class StorageUpgradeModal {
     }
 
     init() {
-        let upTimes = this.propertyService.getBuildingUpgradeTime(this.buildingType, this.getBuilding().level + 1);
+        let upTimes = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1);
         if (upTimes.length === 1) {
             this.upgradeSeconds = upTimes[0].value1;
         }
-        this.upgradeCosts = this.propertyService.getBuildingUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
+        this.upgradeCosts = this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
         this.hasEnoughResources = true;
         this.upgradeCosts.forEach(c => {
             if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {

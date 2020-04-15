@@ -518,6 +518,14 @@ export class BackendService {
         return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/building/' + buildingType, null);
     }
 
+    upgradeVehicle(vehicleId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/vehicle/' + vehicleId, null);
+    }
+
+    upgradeVehiclePart(partId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/vehicle_part/' + partId, null);
+    }
+
     finishUpgrade(upgradeId: number): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/' + upgradeId + '/finish', null);
     }

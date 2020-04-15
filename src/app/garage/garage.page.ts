@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {Model} from '../services/model.service';
-import {Location} from '@angular/common';
 import {Vehicle} from '../domain/vehicle.model';
 import {BackendService} from '../services/backend.service';
 import {ModalController, PopoverController} from '@ionic/angular';
@@ -9,6 +8,9 @@ import {VehiclePart} from '../domain/vehiclePart.model';
 import {ConverterService} from '../services/converter.service';
 import {PropertyService} from '../services/property.service';
 import {GarageUpgradeModal} from './garageUpgrade.modal';
+import {VehicleUpgradeModal} from './vehicleUpgrade.modal';
+import {Router} from '@angular/router';
+import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
 
 export class GarageSlot {
   slot: number;
@@ -37,7 +39,7 @@ export class GaragePage {
   spareParts: VehiclePart[] = [];
 
   constructor(public model: Model,
-              private location: Location,
+              private router: Router,
               private backendService: BackendService,
               private popoverCtrl: PopoverController,
               public converter: ConverterService,
@@ -46,7 +48,8 @@ export class GaragePage {
   }
 
   ionViewWillEnter() {
-    this.canUpgradeBuilding = this.propertyService.getBuildingUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+    this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+    this.vehicle = null;
     this.initSlots();
   }
 
@@ -70,13 +73,49 @@ export class GaragePage {
     this.initSpareParts();
   }
 
-  openUpgradeModal() {
+  openUpgradeGarageModal() {
     this.modalCtrl.create({
       component: GarageUpgradeModal
     }).then(modal => {
       modal.onDidDismiss().then(() => this.ionViewWillEnter());
       modal.present();
     });
+  }
+
+  openUpgradeVehicleModal() {
+    if (this.vehicle) {
+      this.modalCtrl.create({
+        component: VehicleUpgradeModal,
+        componentProps: {
+          vehicleId: this.vehicle.id
+        }
+      }).then(modal => {
+        modal.onDidDismiss().then(() => this.selectVehicle(this.model.getVehicle(this.vehicle.id)));
+        modal.present();
+      });
+    }
+  }
+
+  openUpgradeVehiclePartModal(part: VehiclePart) {
+    if (part) {
+      this.modalCtrl.create({
+        component: VehiclePartUpgradeModal,
+        componentProps: {
+          partId: part.id
+        }
+      }).then(modal => {
+        modal.onDidDismiss().then(() => this.initSpareParts());
+        modal.present();
+      });
+    }
+  }
+
+  canUpgradeVehicle(): boolean {
+    return this.vehicle && !this.vehicle.missionId && this.vehicle.level < this.vehicle.baseVehicle.maxLevel;
+  }
+
+  canUpgradeVehiclePart(part: VehiclePart): boolean {
+    return !!this.propertyService.getUpgradeTime('PART_' + part.quality, part.level + 1);
   }
 
   reloadVehicle() {
@@ -100,7 +139,7 @@ export class GaragePage {
   }
 
   close() {
-    this.location.back();
+    this.router.navigateByUrl('/home');
   }
 
   selectVehicle(vehicle: Vehicle) {

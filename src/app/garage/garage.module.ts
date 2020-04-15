@@ -6,6 +6,8 @@ import {RouterModule} from '@angular/router';
 import {GaragePage} from './garage.page';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {GarageUpgradeModal} from './garageUpgrade.modal';
+import {VehicleUpgradeModal} from './vehicleUpgrade.modal';
+import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
 
 @NgModule({
   imports: [
@@ -20,7 +22,7 @@ import {GarageUpgradeModal} from './garageUpgrade.modal';
       }
     ])
   ],
-  declarations: [GaragePage, GarageUpgradeModal],
-  entryComponents: [GarageUpgradeModal]
+  declarations: [GaragePage, GarageUpgradeModal, VehicleUpgradeModal, VehiclePartUpgradeModal],
+  entryComponents: [GarageUpgradeModal, VehicleUpgradeModal, VehiclePartUpgradeModal]
 })
 export class GarageModule {}

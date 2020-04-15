@@ -4,6 +4,8 @@ import {Upgrade} from '../domain/upgrade.model';
 import {Model} from '../services/model.service';
 import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
+import {Vehicle} from '../domain/vehicle.model';
+import {VehiclePart} from '../domain/vehiclePart.model';
 
 @Component({
     selector: 'upgrade-item',
@@ -14,8 +16,20 @@ import {AlertController} from '@ionic/angular';
           <div *ngIf="item.buildingType" class="building-avatar ma-2">
             <ion-img src="assets/img/buildings/{{item.buildingType}}.png"></ion-img>
           </div>
+          <div *ngIf="item.vehicleId" class="ma-2">
+            <ion-img class="vehicle-only-avatar" src="assets/img/vehicles/{{getVehicle().baseVehicle.avatar}}.png"></ion-img>
+          </div>
+          <div *ngIf="item.vehiclePartId" class="ma-2">
+            <ion-img src="/assets/img/vehicles/parts/{{getVehiclePart().type + '_' + getVehiclePart().quality}}.png"></ion-img>
+          </div>
           <div *ngIf="item.buildingType">
             Upgrading {{converter.readableIdentifier(item.buildingType)}} to level {{getNextLevel()}}
+          </div>
+          <div *ngIf="item.vehicleId">
+            Upgrading {{getVehicle().baseVehicle.name}} to level {{getNextLevel()}}
+          </div>
+          <div *ngIf="item.vehiclePartId">
+            Upgrading {{converter.readableIdentifier(getVehiclePart().type)}} to level {{getNextLevel()}}
           </div>
           <div class="flex-grow">&nbsp;</div>
           <div class="progress-bar-with-time" *ngIf="item.inProgress">
@@ -42,9 +56,25 @@ export class UpgradeItemDirective {
                 private alertCtrl: AlertController) {
     }
 
+    getVehicle(): Vehicle {
+        if (this.item.vehicleId) {
+            return this.model.getVehicle(this.item.vehicleId);
+        }
+    }
+
+    getVehiclePart(): VehiclePart {
+        if (this.item.vehiclePartId) {
+            return this.model.getVehiclePart(this.item.vehiclePartId);
+        }
+    }
+
     getNextLevel() {
         if (this.item.buildingType) {
             return this.model.buildings.find(b => b.type === this.item.buildingType).level + 1;
+        } else if (this.item.vehicleId) {
+            return this.getVehicle().level + 1;
+        } else if (this.item.vehiclePartId) {
+            return this.getVehiclePart().level + 1;
         }
     }
 

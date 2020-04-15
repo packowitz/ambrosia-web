@@ -1,12 +1,14 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AlertController, ModalController} from '@ionic/angular';
 import {Model} from '../services/model.service';
 import {BackendService} from '../services/backend.service';
 import {PropertyService} from '../services/property.service';
 import {DynamicProperty} from '../domain/property.model';
+import {Vehicle} from '../domain/vehicle.model';
+import {VehiclePart} from '../domain/vehiclePart.model';
 
 @Component({
-    selector: 'garage-upgrade-modal',
+    selector: 'vehicle-part-upgrade-modal',
     template: `
         <div class="ma-2">
           <div class="flex-space-around">
@@ -17,16 +19,16 @@ import {DynamicProperty} from '../domain/property.model';
             <div class="flex">{{model.resources.rubies}}<ion-img src="assets/img/resources/RUBIES.png" class="resource-icon"></ion-img></div>
           </div>
           <div class="mt-2 flex-center">
-            Upgraded Garage can store more vehicles and parts that are not parked in a slot or plugged into a vehicle
+            Upgraded Vehicle Parts grant higher bonuses
           </div>
           <ion-item class="mt-2">
             <div class="flex-center full-width">
-              Your current building queue {{model.upgrades.length}}/{{model.progress.builderQueueLength}}
+              Your current upgrade queue {{model.upgrades.length}}/{{model.progress.builderQueueLength}}
             </div>
           </ion-item>
           <upgrade-item *ngFor="let item of model.upgrades" [item]="item"></upgrade-item>
-          <div *ngIf="!getBuilding().upgradeTriggered">
-            <div class="mt-2 flex-center" *ngIf="!upgradeSeconds">Cannot upgrade Garage higher than level {{getBuilding().level}}</div>
+          <div *ngIf="!getPart().upgradeTriggered">
+            <div class="mt-2 flex-center" *ngIf="!upgradeSeconds">Cannot upgrade Vehicle Part higher than level {{getPart().level}}</div>
             <div class="mt-3" *ngIf="upgradeSeconds">
               <div class="flex-space-around">
                 <div *ngIf="hasEnoughResources">Upgrade costs</div>
@@ -37,12 +39,12 @@ import {DynamicProperty} from '../domain/property.model';
               </div>
               <div class="mt-2 flex-center">
                 <ion-button color="danger" fill="outline" (click)="closeModal()">Close</ion-button>
-                <ion-button [disabled]="!hasEnoughResources || saving || model.upgrades.length >= model.progress.builderQueueLength" (click)="performUpgrade()">Upgrade Garage to level {{getBuilding().level + 1}}</ion-button>
+                <ion-button [disabled]="!hasEnoughResources || saving || model.upgrades.length >= model.progress.builderQueueLength" (click)="performUpgrade()">Upgrade Part to level {{getPart().level + 1}}</ion-button>
               </div>
             </div>
           </div>
 
-          <div *ngIf="getBuilding().upgradeTriggered">
+          <div *ngIf="getPart().upgradeTriggered">
             <div class="mt-2 flex-center">
               <ion-button color="danger" fill="outline" (click)="closeModal()">Close</ion-button>
             </div>
@@ -51,9 +53,10 @@ import {DynamicProperty} from '../domain/property.model';
         </div>
     `
 })
-export class GarageUpgradeModal {
+export class VehiclePartUpgradeModal {
 
-    buildingType = "GARAGE";
+    @Input() partId: number;
+
     upgradeSeconds: number = null;
     upgradeCosts: DynamicProperty[] = [];
     hasEnoughResources = true;
@@ -65,15 +68,17 @@ export class GarageUpgradeModal {
                 private backendService: BackendService,
                 private propertyService: PropertyService,
                 private alertCtrl: AlertController) {
-        this.init();
     }
 
-    init() {
-        let upTimes = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1);
+    ionViewWillEnter() {
+        let part = this.getPart();
+        let type = 'PART_' + part.quality;
+
+        let upTimes = this.propertyService.getUpgradeTime(type, part.level + 1);
         if (upTimes.length === 1) {
             this.upgradeSeconds = upTimes[0].value1;
         }
-        this.upgradeCosts = this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
+        this.upgradeCosts = this.propertyService.getUpgradeCosts(type, part.level + 1);
         this.hasEnoughResources = true;
         this.upgradeCosts.forEach(c => {
             if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
@@ -82,8 +87,8 @@ export class GarageUpgradeModal {
         });
     }
 
-    getBuilding() {
-        return this.model.getBuilding(this.buildingType);
+    getPart(): VehiclePart {
+        return this.model.getVehiclePart(this.partId);
     }
 
     closeModal() {
@@ -91,11 +96,11 @@ export class GarageUpgradeModal {
     }
 
     performUpgrade() {
-        if (this.hasEnoughResources && this.upgradeSeconds && this.model.upgrades.length < this.model.progress.builderQueueLength && !this.getBuilding().upgradeTriggered) {
+        if (this.hasEnoughResources && this.upgradeSeconds && this.model.upgrades.length < this.model.progress.builderQueueLength && !this.getPart().upgradeTriggered) {
             this.saving = true;
-            this.backendService.upgradeBuilding(this.buildingType).subscribe(data => {
+            this.backendService.upgradeVehiclePart(this.partId).subscribe(data => {
                 this.saving = false;
-                this.init();
+                this.ionViewWillEnter();
             }, error => {
                 this.saving = false;
                 this.alertCtrl.create({

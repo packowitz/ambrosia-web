@@ -45,7 +45,7 @@ export class BarracksPage implements OnInit {
 
   ionViewWillEnter() {
     this.building = this.model.buildings.find(b => b.type === 'BARRACKS');
-    this.canUpgradeBuilding = this.propertyService.getBuildingUpgradeTime(this.building.type, this.building.level + 1).length > 0;
+    this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.building.type, this.building.level + 1).length > 0;
   }
 
   close() {

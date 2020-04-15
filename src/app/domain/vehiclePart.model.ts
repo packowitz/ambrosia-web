@@ -5,4 +5,5 @@ export class VehiclePart {
     type: string;
     quality: string;
     level: number;
+    upgradeTriggered: boolean;
 }
