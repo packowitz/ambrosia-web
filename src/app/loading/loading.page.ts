@@ -15,7 +15,6 @@ export class LoadingPage {
 
   playerLoaded = false;
   serviceAccountsLoaded = false;
-  playerChecked = false;
   status = "Initializing Ambrosia";
 
   constructor(private backendService: BackendService,
@@ -32,8 +31,6 @@ export class LoadingPage {
       this.loadPlayer();
     } else if (this.model.player.admin && !this.serviceAccountsLoaded) {
       this.loadServiceAccounts();
-    } else if (!this.playerChecked) {
-      this.checkPlayer();
     } else if (!this.enumService.enums) {
       this.status = 'Waiting for static content to get loaded';
       while (!this.enumService.enums && !this.enumService.enumsFailed) {
@@ -85,29 +82,6 @@ export class LoadingPage {
     this.backendService.getAllServiceAccounts().subscribe(data => {
       this.model.serviceAccounts = data;
       this.serviceAccountsLoaded = true;
-      this.initApp();
-    });
-  }
-
-  checkPlayer() {
-    if (!this.model.player.color) {
-      this.alertCtrl.create({
-        subHeader: 'Select your hero color',
-        buttons: [
-          {text: 'Red', cssClass: 'RED', handler: () => this.saveColor('RED') },
-          {text: 'Green', cssClass: 'GREEN', handler: () => this.saveColor('GREEN') },
-          {text: 'Blue', cssClass: 'BLUE', handler: () => this.saveColor('BLUE') }
-        ]
-      }).then(alert => alert.present());
-    } else {
-      this.playerChecked = true;
-      this.initApp();
-    }
-  }
-
-  saveColor(color: string) {
-    this.status = 'Updating player';
-    this.backendService.selectPlayerColor(color).subscribe(() => {
       this.initApp();
     });
   }

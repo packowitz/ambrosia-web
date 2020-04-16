@@ -40,9 +40,26 @@ export class HomePage {
               public modalCtrl: ModalController) {}
 
   ionViewWillEnter(): void {
-    this.map = this.model.currentMap;
-    this.calcRows();
-    this.calcBuildings();
+    if (!this.model.player.color) {
+      this.alertCtrl.create({
+        subHeader: 'Select your hero color',
+        buttons: [
+          {text: 'Red', cssClass: 'RED', handler: () => this.saveColor('RED') },
+          {text: 'Green', cssClass: 'GREEN', handler: () => this.saveColor('GREEN') },
+          {text: 'Blue', cssClass: 'BLUE', handler: () => this.saveColor('BLUE') }
+        ]
+      }).then(alert => alert.present());
+    } else {
+      this.map = this.model.currentMap;
+      this.calcRows();
+      this.calcBuildings();
+    }
+  }
+
+  saveColor(color: string) {
+    this.backendService.selectPlayerColor(color).subscribe(() => {
+      this.ionViewWillEnter();
+    });
   }
 
   private calcRows() {
