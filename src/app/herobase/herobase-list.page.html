@@ -19,13 +19,13 @@
     </ion-row>
     <ion-row *ngFor="let heroClass of heroClassList" class="table-row">
         <ion-col>{{heroClass.heroClass}} {{converter.rarityStars(heroClass.rarity)}}*</ion-col>
-        <ion-col *ngIf="getHero(heroClass, 'RED') as hero"><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="RED">{{hero.name}}</a></ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'RED') as hero"><ion-icon name="star" *ngIf="hero.startingHero"></ion-icon><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="RED">{{hero.name}}</a></ion-col>
         <ion-col *ngIf="!getHero(heroClass, 'RED')">-</ion-col>
-        <ion-col *ngIf="getHero(heroClass, 'GREEN') as hero"><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="GREEN">{{hero.name}}</a></ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'GREEN') as hero"><ion-icon name="star" *ngIf="hero.startingHero"></ion-icon><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="GREEN">{{hero.name}}</a></ion-col>
         <ion-col *ngIf="!getHero(heroClass, 'GREEN')">-</ion-col>
-        <ion-col *ngIf="getHero(heroClass, 'BLUE') as hero"><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="BLUE">{{hero.name}}</a></ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'BLUE') as hero"><ion-icon name="star" *ngIf="hero.startingHero"></ion-icon><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="BLUE">{{hero.name}}</a></ion-col>
         <ion-col *ngIf="!getHero(heroClass, 'BLUE')">-</ion-col>
-        <ion-col *ngIf="getHero(heroClass, 'NEUTRAL') as hero"><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="NEUTRAL">{{hero.name}}</a></ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'NEUTRAL') as hero"><ion-icon name="star" *ngIf="hero.startingHero"></ion-icon><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="NEUTRAL">{{hero.name}}</a></ion-col>
         <ion-col *ngIf="!getHero(heroClass, 'NEUTRAL')">-</ion-col>
     </ion-row>
 </ion-content>

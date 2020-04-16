@@ -6,6 +6,7 @@ export class HeroBase {
     rarity: string;
     heroClass: string;
     color: string;
+    startingHero: boolean;
     heroType: string;
     avatar: string;
     strengthBase: number;

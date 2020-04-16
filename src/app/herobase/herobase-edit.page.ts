@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HeroBase} from '../domain/herobase.model';
 import {BackendService} from '../services/backend.service';
 import {ConverterService} from '../services/converter.service';
@@ -18,6 +18,7 @@ import {Model} from '../services/model.service';
 })
 export class HerobaseEditPage implements OnInit {
 
+    heroId: number;
     hero: HeroBase;
     skill: HeroSkill;
     saving = false;
@@ -30,23 +31,36 @@ export class HerobaseEditPage implements OnInit {
                 private converter: ConverterService,
                 private enumService: EnumService,
                 private alertCtrl: AlertController,
-                private modalCtrl: ModalController) {}
+                private modalCtrl: ModalController,
+                private router: Router) {}
 
     ngOnInit() {
-        let id = this.route.snapshot.paramMap.get('id');
-        this.backendService.getHeroBase(id).subscribe(data => {
-            this.hero = this.converter.dataClone(data);
-            if(this.hero.skills.length === 0) {
-                this.addNewSkill();
-            } else {
-                this.setSkill(this.hero.skills[0]);
-            }
-        });
+        this.heroId = Number(this.route.snapshot.paramMap.get('id'));
+    }
+
+    ionViewWillEnter() {
+        if (!this.model.baseHeroes) {
+            this.backendService.getHeroBases().subscribe(data => {
+                this.model.baseHeroes = data;
+                this.setHero();
+            });
+        } else {
+            this.setHero();
+        }
+    }
+
+    setHero() {
+        this.hero = this.converter.dataClone(this.model.baseHeroes.find(h => h.id === this.heroId));
+        if(this.hero.skills.length === 0) {
+            this.addNewSkill();
+        } else {
+            this.setSkill(this.hero.skills[0]);
+        }
     }
 
     recruit() {
         this.saving = true;
-        this.backendService.recruitHero(this.hero).subscribe(data => {
+        this.backendService.recruitHero(this.hero).subscribe(() => {
             // forward to hero page
             this.saving = false;
         });
@@ -93,7 +107,7 @@ export class HerobaseEditPage implements OnInit {
         }).then(a => a.present());
     }
 
-    editHero() {
+    save() {
         this.saving = true;
         this.backendService.saveHeroBase(this.hero).subscribe(data => {
             this.model.updateBaseHero(data);
@@ -107,6 +121,10 @@ export class HerobaseEditPage implements OnInit {
                 buttons: [{text: 'Okay'}]
             }).then(data => data.present());
         });
+    }
+
+    cancel() {
+        this.router.navigateByUrl('/herobase/list');
     }
 
     setSkill(skill: HeroSkill) {

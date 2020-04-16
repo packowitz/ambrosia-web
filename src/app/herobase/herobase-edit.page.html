@@ -11,7 +11,10 @@
           <ion-icon name="star"></ion-icon>
           ({{hero.rarity}}) <strong [class]="hero.color">{{hero.name}}</strong>, {{hero.heroClass}}
         </div>
-        <ion-button (click)="editHero()" size="small" [disabled]="saving">Save changes</ion-button>
+        <div>
+          <ion-button color="medium" fill="clean" (click)="cancel()">Cancel</ion-button>
+          <ion-button color="success" (click)="save()" size="small" [disabled]="saving">Save</ion-button>
+        </div>
       </div>
     </ion-title>
   </ion-toolbar>
@@ -70,6 +73,12 @@
               <ion-item>
                 <ion-label>Max Asc Lvl</ion-label>
                 <ion-input type="number" [(ngModel)]="hero.maxAscLevel" required></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="6">
+              <ion-item>
+                <ion-label>Starting Hero</ion-label>
+                <ion-checkbox [(ngModel)]="hero.startingHero"></ion-checkbox>
               </ion-item>
             </ion-col>
           </ion-row>
