@@ -4,6 +4,4 @@ export class Building {
     type: string;
     level: number;
     upgradeTriggered: boolean;
-    upgradeStarted?: string;
-    upgradeFinished?: string;
 }

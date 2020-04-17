@@ -157,14 +157,17 @@ export class HomePage {
 
   gotoBuilding(type: string) {
     switch(type) {
-      case 'BARRACKS':
-        this.router.navigateByUrl('/barracks');
-        break;
       case 'ACADEMY':
         this.router.navigateByUrl('/academy');
         break;
+      case 'BARRACKS':
+        this.router.navigateByUrl('/barracks');
+        break;
       case 'GARAGE':
         this.router.navigateByUrl('/garage');
+        break;
+      case 'LABORATORY':
+        this.router.navigateByUrl('/laboratory');
         break;
       case 'STORAGE':
         this.router.navigateByUrl('/storage');

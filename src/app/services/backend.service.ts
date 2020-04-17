@@ -31,6 +31,7 @@ import {VehiclePart} from '../domain/vehiclePart.model';
 import {Progress} from '../domain/progress.model';
 import {Mission} from '../domain/mission.model';
 import {Upgrade} from '../domain/upgrade.model';
+import {Incubator} from '../domain/incubator.model';
 
 export class Looted {
     type: string;
@@ -61,6 +62,8 @@ export class PlayerActionResponse {
     missionIdFinished?: number;
     upgrades: Upgrade[];
     upgradeRemoved: number;
+    incubators: Incubator[];
+    incubatorDone: number;
 }
 
 @Injectable({
@@ -471,7 +474,7 @@ export class BackendService {
             hero5Id: fodder5 ? fodder5.id : null,
             hero6Id: fodder6 ? fodder6.id : null
         };
-        return this.http.post<PlayerActionResponse>(API_URL + '/building/academy/hero/' + hero.id + '/level', request);
+        return this.http.post<PlayerActionResponse>(API_URL + '/academy/hero/' + hero.id + '/level', request);
     }
 
     feedHeroesForEvolve(hero: Hero, fodder1?: Hero, fodder2?: Hero, fodder3?: Hero, fodder4?: Hero, fodder5?: Hero, fodder6?: Hero): Observable<PlayerActionResponse> {
@@ -483,7 +486,7 @@ export class BackendService {
             hero5Id: fodder5 ? fodder5.id : null,
             hero6Id: fodder6 ? fodder6.id : null
         };
-        return this.http.post<PlayerActionResponse>(API_URL + '/building/academy/hero/' + hero.id + '/evolve', request);
+        return this.http.post<PlayerActionResponse>(API_URL + '/academy/hero/' + hero.id + '/evolve', request);
     }
 
     loadAllBaseVehicles(): Observable<VehicleBase[]> {
@@ -540,5 +543,17 @@ export class BackendService {
 
     adminGainResources(resourceType: string): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/admin/resources/gain/' + resourceType, null);
+    }
+
+    cloneHero(genomeType: string): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/laboratory/clone/' + genomeType, null);
+    }
+
+    openIncubator(incubatorId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/laboratory/open/' + incubatorId, null);
+    }
+
+    cancelIncubator(incubatorId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/laboratory/cancel/' + incubatorId, null);
     }
 }

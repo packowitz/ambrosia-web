@@ -55,6 +55,23 @@ export class ConverterService {
         return hours + ':' + (mins < 10 ? '0' : '') + mins;
     }
 
+    timeWithUnit(sec: number): string {
+        if (sec <= 0) {
+            return '0:00 s';
+        }
+        if (sec < 10) {
+            return '0:0' + sec + ' m';
+        }
+        let secs = sec % 60;
+        let mins = (sec - secs) / 60;
+        if (mins < 60) {
+            return  mins + ':' + (secs < 10 ? '0' : '') + secs + ' m';
+        }
+        let hours = Math.floor(mins / 60);
+        mins = mins % 60;
+        return hours + ':' + (mins < 10 ? '0' : '') + mins + ' h';
+    }
+
     dataClone(orig) {
         return JSON.parse(JSON.stringify(orig));
     }

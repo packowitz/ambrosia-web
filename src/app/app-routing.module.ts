@@ -50,6 +50,7 @@ const routes: Routes = [
     {path: 'training', loadChildren: './training/training.module#TrainingPageModule'},
     {path: 'garage', loadChildren: './garage/garage.module#GarageModule'},
     {path: 'storage', loadChildren: './storage/storage.module#StorageModule'},
+    {path: 'laboratory', loadChildren: './laboratory/laboratory.module#LaboratoryModule'},
     {path: 'battle', loadChildren: './battle/battle.module#BattlePageModule'}
 ];
 

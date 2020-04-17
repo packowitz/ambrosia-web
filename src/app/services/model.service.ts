@@ -23,6 +23,7 @@ import {Vehicle} from '../domain/vehicle.model';
 import {VehiclePart} from '../domain/vehiclePart.model';
 import {Mission} from '../domain/mission.model';
 import {Upgrade} from '../domain/upgrade.model';
+import {Incubator} from '../domain/incubator.model';
 
 @Injectable({
     providedIn: 'root'
@@ -55,9 +56,11 @@ export class Model {
     baseVehicles: VehicleBase[];
     missions: Mission[];
     upgrades: Upgrade[];
+    incubators: Incubator[];
 
     interval: number;
     updateResourcesInProgress = false;
+    updateIncubatorsInProgress = false;
 
     constructor(private http: HttpClient) {}
 
@@ -106,6 +109,11 @@ export class Model {
         if (type === 'WOOD') { return this.resources.wood; }
         if (type === 'BROWN_COAL') { return this.resources.brownCoal; }
         if (type === 'BLACK_COAL') { return this.resources.blackCoal; }
+        if (type === 'SIMPLE_GENOME') { return this.resources.simpleGenome; }
+        if (type === 'COMMON_GENOME') { return this.resources.commonGenome; }
+        if (type === 'UNCOMMON_GENOME') { return this.resources.uncommonGenome; }
+        if (type === 'RARE_GENOME') { return this.resources.rareGenome; }
+        if (type === 'EPIC_GENOME') { return this.resources.epicGenome; }
         return 0;
     }
 
@@ -147,10 +155,21 @@ export class Model {
                 upgradeInProgress.secondsUntilDone --;
                 if (upgradeInProgress.secondsUntilDone <= 0 && !upgradeInProgress.updating) {
                     upgradeInProgress.updating = true;
-                    this.http.post<PlayerActionResponse>(API_URL + '/upgrade/check', null).subscribe(data => {
+                    this.http.post<PlayerActionResponse>(API_URL + '/upgrade/check', null).subscribe(() => {
                         console.log("Updated upgrades");
                     });
                 }
+            }
+
+            let incubatorUpdate = false;
+            this.incubators.filter(i => !i.finished).forEach(incubator => {
+                incubator.secondsUntilDone --;
+                if (incubator.secondsUntilDone <= 0) {
+                    incubatorUpdate = true;
+                }
+            });
+            if (incubatorUpdate) {
+                this.updateIncubators();
             }
         }, 1000);
     }
@@ -165,6 +184,20 @@ export class Model {
             }, () => {
                 this.updateResourcesInProgress = false;
                 console.log('resource update failed');
+            });
+        }
+    }
+
+    updateIncubators() {
+        if (!this.updateIncubatorsInProgress) {
+            this.updateIncubatorsInProgress = true;
+            this.http.get<Incubator[]>(API_URL + '/laboratory/incubators').subscribe(data => {
+                this.incubators = data;
+                this.updateIncubatorsInProgress = false;
+                console.log('incubators updated');
+            }, () => {
+                this.updateIncubatorsInProgress = false;
+                console.log('incubators update failed');
             });
         }
     }
@@ -277,6 +310,19 @@ export class Model {
             let idx = this.missions.findIndex(m => m.id === data.missionIdFinished);
             if (idx >= 0) {
                 this.missions.splice(idx, 1);
+            }
+        }
+        if (data.incubators) {
+            if (this.incubators) {
+                data.incubators.forEach(i => this.updateIncubator(i));
+            } else {
+                this.incubators = data.incubators;
+            }
+        }
+        if (data.incubatorDone && this.incubators) {
+            let idx = this.incubators.findIndex(i => i.id === data.incubatorDone);
+            if (idx >= 0) {
+                this.incubators.splice(idx, 1);
             }
         }
     }
@@ -473,6 +519,17 @@ export class Model {
             } else {
                 this.upgrades.push(upgrade);
                 this.upgrades = this.upgrades.sort((a, b) => a.position - b.position);
+            }
+        }
+    }
+
+    updateIncubator(incubator?: Incubator) {
+        if (incubator) {
+            let idx = this.incubators.findIndex(i => i.id === incubator.id);
+            if (idx >= 0) {
+                this.incubators[idx] = incubator;
+            } else {
+                this.incubators.push(incubator);
             }
         }
     }

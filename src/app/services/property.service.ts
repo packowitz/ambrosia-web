@@ -164,6 +164,14 @@ export class PropertyService {
     return this.getProps(type + '_UP_COST', level);
   }
 
+  getIncubationTime(genome: string): DynamicProperty[] {
+    return this.getProps(genome + '_TIME', 1);
+  }
+
+  getIncubationCosts(genome: string): DynamicProperty[] {
+    return this.getProps(genome + '_COST', 1);
+  }
+
   saveProperties(type: string, properties: DynamicProperty[]): Observable<DynamicProperty[]> {
     return this.http.post<DynamicProperty[]>(API_URL + '/admin/properties/type/' + type, properties).pipe(map(p => {
       this.properties[type] = p;

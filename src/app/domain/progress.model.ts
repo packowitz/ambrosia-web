@@ -9,4 +9,6 @@ export class Progress {
     maxTrainingLevel: number;
     vehicleStorage: number;
     vehiclePartStorage: number;
+    incubators: number;
+    labSpeed: number;
 }

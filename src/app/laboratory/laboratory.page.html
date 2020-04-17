@@ -1,0 +1,143 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        <div class="flex-center">
+          Laboratory - Level {{getBuilding().level}}
+          <ion-button class="ml-2" *ngIf="canUpgradeBuilding" size="small" color="success" (click)="openUpgradeModal()">{{getBuilding().upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
+        </div>
+        <div class="flex-center">
+          <ion-icon name="close" class="ml-2 pointer" (click)="close()"></ion-icon>
+        </div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div class="loading-indicator" *ngIf="hero" (click)="hero = null">
+  <div class="loot-window pa-2">
+    <div class="flex-center">You received</div>
+    <div class="flex-center mt-1">
+      <div class="flex-vert-center">
+        <div class="hero-tile-very-small border-grey flex-vert-center loot-item">
+          <ion-img [src]="'assets/img/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-very-small border-bottom-grey"></ion-img>
+          <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
+        </div>
+        <div>{{hero.heroBase.name}}</div>
+      </div>
+    </div>
+    <div class="flex-center mt-1"><i>(click anywhere to close)</i></div>
+  </div>
+</div>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="flex-space-between">
+          <div>Your incubators</div>
+          <div class="font-small">{{model.incubators.length}} / {{model.progress.incubators}} incubators in use</div>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="flex">
+        <div *ngFor="let incubator of model.incubators" class="flex-vert-center border-grey pt-1 pl-2 pr-2 mr-3 pointer" (click)="finishIncubation(incubator)">
+          <ion-img src="assets/img/resources/{{incubator.type}}.png" class="resource-icon-large"></ion-img>
+          <div>{{converter.time(incubator.secondsUntilDone)}}</div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Genomes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/SIMPLE_GENOME.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          Incubating <b>Simple Genomes</b> will clone a simple (1*) hero.
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-end">
+          <div class="bold flex-center">
+            <span [class.color-red]="!hasEnoughGenomes('SIMPLE_GENOME')">{{model.resources.simpleGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('SIMPLE_GENOME')}}<ion-img src="assets/img/resources/SIMPLE_GENOME.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" (click)="clone('SIMPLE_GENOME')" [disabled]="saving || !canStartCloning('SIMPLE_GENOME')">{{incubationtime('SIMPLE_GENOME')}}</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/COMMON_GENOME.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          Incubating <b>Common Genomes</b> will clone a common (2*) hero.
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-end">
+          <div class="bold flex-center">
+            <span [class.color-red]="!hasEnoughGenomes('COMMON_GENOME')">{{model.resources.commonGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('COMMON_GENOME')}}<ion-img src="assets/img/resources/COMMON_GENOME.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" (click)="clone('COMMON_GENOME')" [disabled]="saving || !canStartCloning('COMMON_GENOME')">{{incubationtime('COMMON_GENOME')}}</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/UNCOMMON_GENOME.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          Incubating <b>Uncommon Genomes</b> will clone an uncommon (3*) hero.
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-end">
+          <div class="bold flex-center">
+            <span [class.color-red]="!hasEnoughGenomes('UNCOMMON_GENOME')">{{model.resources.uncommonGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('UNCOMMON_GENOME')}}<ion-img src="assets/img/resources/UNCOMMON_GENOME.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" (click)="clone('UNCOMMON_GENOME')" [disabled]="saving || !canStartCloning('UNCOMMON_GENOME')">{{incubationtime('UNCOMMON_GENOME')}}</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/RARE_GENOME.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          Incubating <b>Rare Genomes</b> will clone a rare (4*) hero.
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-end">
+          <div class="bold flex-center">
+            <span [class.color-red]="!hasEnoughGenomes('RARE_GENOME')">{{model.resources.rareGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('RARE_GENOME')}}<ion-img src="assets/img/resources/RARE_GENOME.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" (click)="clone('RARE_GENOME')" [disabled]="saving || !canStartCloning('RARE_GENOME')">{{incubationtime('RARE_GENOME')}}</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-img src="assets/img/resources/EPIC_GENOME.png" class="resource-icon-large"></ion-img>
+        </ion-col>
+        <ion-col sizeMd="6">
+          Incubating <b>Epic Genomes</b> will clone an epic (5*) hero.
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-end">
+          <div class="bold flex-center">
+            <span [class.color-red]="!hasEnoughGenomes('EPIC_GENOME')">{{model.resources.epicGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('EPIC_GENOME')}}<ion-img src="assets/img/resources/EPIC_GENOME.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="2" class="flex-center">
+          <ion-button color="success" size="small" (click)="clone('EPIC_GENOME')" [disabled]="saving || !canStartCloning('EPIC_GENOME')">{{incubationtime('EPIC_GENOME')}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
