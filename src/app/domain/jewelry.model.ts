@@ -1,6 +1,7 @@
 export class Jewelry {
     id: number;
     type: string;
+    slot: string;
     lvl1 = 0;
     lvl2 = 0;
     lvl3 = 0;

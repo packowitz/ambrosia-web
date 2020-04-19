@@ -10,7 +10,7 @@
           <ion-button class="ml-2" *ngIf="canUpgradeBuilding" size="small" color="success" (click)="openUpgradeModal()">{{getBuilding().upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
         </div>
         <div class="flex-center">
-          <div>max hero level to train: {{model.progress.maxTrainingLevel}}</div>
+          <div class="font-small">max hero level to train: {{model.progress.maxTrainingLevel}}</div>
           <ion-icon name="close" class="ml-2 pointer" (click)="close()"></ion-icon>
         </div>
       </div>

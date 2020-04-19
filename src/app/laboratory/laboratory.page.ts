@@ -5,9 +5,9 @@ import {Model} from '../services/model.service';
 import {PropertyService} from '../services/property.service';
 import {AlertController, ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
-import {LaboratoryUpgradeModal} from './laboratoryUpgrade.modal';
 import {Incubator} from '../domain/incubator.model';
 import {Hero} from '../domain/hero.model';
+import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 
 @Component({
   selector: 'laboratory',
@@ -45,7 +45,10 @@ export class LaboratoryPage {
 
   openUpgradeModal() {
     this.modalCtrl.create({
-      component: LaboratoryUpgradeModal
+      component: BuildingUpgradeModal,
+      componentProps: {
+        buildingType: this.buildingType
+      }
     }).then(modal => {
       modal.onDidDismiss().then(() => this.ionViewWillEnter());
       modal.present();

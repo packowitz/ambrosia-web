@@ -5,11 +5,10 @@ import {ConverterService} from '../services/converter.service';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {Model} from '../services/model.service';
 import {Gear} from '../domain/gear.model';
-import {Building} from '../domain/building.model';
 import {PropertyService} from '../services/property.service';
 import {ModalController} from '@ionic/angular';
-import {BarracksUpgradeModal} from './barracksUpgrade.modal';
 import {Router} from '@angular/router';
+import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 
 @Component({
   selector: 'barracks',
@@ -23,7 +22,7 @@ export class BarracksPage implements OnInit {
   selectedSkill: HeroSkill;
   gearTypeFilter: string[] = [];
 
-  building: Building;
+  buildingType = 'BARRACKS';
   canUpgradeBuilding = false;
 
   constructor(private backendService: BackendService,
@@ -44,8 +43,11 @@ export class BarracksPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.building = this.model.buildings.find(b => b.type === 'BARRACKS');
-    this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.building.type, this.building.level + 1).length > 0;
+    this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+  }
+
+  getBuilding() {
+    return this.model.getBuilding(this.buildingType);
   }
 
   close() {
@@ -54,7 +56,10 @@ export class BarracksPage implements OnInit {
 
   openUpgradeModal() {
     this.modalCtrl.create({
-      component: BarracksUpgradeModal
+      component: BuildingUpgradeModal,
+      componentProps: {
+        buildingType: this.buildingType
+      }
     }).then(modal => {
       modal.onDidDismiss().then(() => this.ionViewWillEnter());
       modal.present();

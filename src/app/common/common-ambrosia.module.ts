@@ -8,15 +8,18 @@ import {VehicleSelectionPopover} from '../garage/vehicle-selection-popover';
 import {LootedDirective} from '../home/looted.directive';
 import {LootItemDirective} from '../home/loot-item.directive';
 import {UpgradeItemDirective} from './upgradeItem.directive';
+import {BuildingUpgradeModal} from './buildingUpgrade.modal';
 
 @NgModule({
     declarations: [
+        BuildingUpgradeModal,
         GearIcon, GearJewelSlot,
         LootedDirective, LootItemDirective,
         UpgradeItemDirective,
         VehicleDirective, VehicleSelectionPopover
     ],
     exports: [
+        BuildingUpgradeModal,
         GearIcon, GearJewelSlot,
         LootedDirective, LootItemDirective,
         UpgradeItemDirective,
@@ -26,7 +29,7 @@ import {UpgradeItemDirective} from './upgradeItem.directive';
         CommonModule,
         IonicModule
     ],
-    entryComponents: [VehicleSelectionPopover]
+    entryComponents: [BuildingUpgradeModal, VehicleSelectionPopover]
 })
 export class CommonAmbrosiaModule {
 }

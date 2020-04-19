@@ -7,10 +7,10 @@ import {VehicleSelectionPopover} from './vehicle-selection-popover';
 import {VehiclePart} from '../domain/vehiclePart.model';
 import {ConverterService} from '../services/converter.service';
 import {PropertyService} from '../services/property.service';
-import {GarageUpgradeModal} from './garageUpgrade.modal';
 import {VehicleUpgradeModal} from './vehicleUpgrade.modal';
 import {Router} from '@angular/router';
 import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
+import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 
 export class GarageSlot {
   slot: number;
@@ -75,7 +75,10 @@ export class GaragePage {
 
   openUpgradeGarageModal() {
     this.modalCtrl.create({
-      component: GarageUpgradeModal
+      component: BuildingUpgradeModal,
+      componentProps: {
+        buildingType: this.buildingType
+      }
     }).then(modal => {
       modal.onDidDismiss().then(() => this.ionViewWillEnter());
       modal.present();

@@ -5,30 +5,35 @@ import {Model} from '../services/model.service';
 import {PropertyService} from '../services/property.service';
 import {ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
+import {EnumService} from '../services/enum.service';
+import {JewelryService} from '../services/jewelry.service';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
+import {JewelUpgradeModal} from './jewelUpgrade.modal';
 
 @Component({
-  selector: 'storage',
-  templateUrl: 'storage.page.html'
+  selector: 'jewelry',
+  templateUrl: 'jewelry.page.html'
 })
-export class StoragePage {
+export class JewelryPage {
 
   saving = false;
 
-  buildingType = "STORAGE";
-  canUpgradeBuilding = false;
+  buildingType = "JEWELRY";
+
+  levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   constructor(private backendService: BackendService,
               private converter: ConverterService,
-              private propertyService: PropertyService,
+              public propertyService: PropertyService,
               public model: Model,
+              public enumService: EnumService,
               private router: Router,
-              private modalCtrl: ModalController) {
-    console.log("StoragePage.constructor");
+              private modalCtrl: ModalController,
+              private jewelryServcie: JewelryService) {
   }
 
-  ionViewWillEnter() {
-    this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+  canUpgradeBuilding(): boolean {
+    return this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
   }
 
   getBuilding() {
@@ -45,16 +50,16 @@ export class StoragePage {
       componentProps: {
         buildingType: this.buildingType
       }
-    }).then(modal => {
-      modal.onDidDismiss().then(() => this.ionViewWillEnter());
-      modal.present();
-    });
+    }).then(modal => modal.present() );
   }
 
-  gain(type: string) {
-    this.saving = true;
-    this.backendService.adminGainResources(type).subscribe(() => {
-      this.saving = false;
-    });
+  openJewelUpgradeModal(type: string, level: number) {
+    this.modalCtrl.create({
+      component: JewelUpgradeModal,
+      componentProps: {
+        jewelType: type,
+        jewelLevel: level
+      }
+    }).then(modal => modal.present() );
   }
 }

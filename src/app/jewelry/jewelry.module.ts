@@ -3,11 +3,9 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
-import {BarracksPage} from './barracks.page';
-import {GearListItem} from './gear-list-item.directive';
-import {GearModal} from './gear.modal';
-import {GearStat} from './gear-stat.directive';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
+import {JewelryPage} from './jewelry.page';
+import {JewelUpgradeModal} from './jewelUpgrade.modal';
 
 @NgModule({
     imports: [
@@ -18,12 +16,12 @@ import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
         RouterModule.forChild([
             {
                 path: '',
-                component: BarracksPage
+                component: JewelryPage
             }
         ])
     ],
-    declarations: [BarracksPage, GearListItem, GearModal, GearStat],
-    entryComponents: [GearModal]
+    declarations: [JewelryPage, JewelUpgradeModal],
+    entryComponents: [JewelUpgradeModal]
 })
-export class BarracksModule {
+export class JewelryModule {
 }

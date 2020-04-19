@@ -3,10 +3,10 @@ import {BackendService} from '../services/backend.service';
 import {Hero} from '../domain/hero.model';
 import {ConverterService} from '../services/converter.service';
 import {Model} from '../services/model.service';
-import {Location} from '@angular/common';
 import {PropertyService} from '../services/property.service';
 import {AlertController, ModalController} from '@ionic/angular';
-import {AcademyUpgradeModal} from './academyUpgrade.modal';
+import {Router} from '@angular/router';
+import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 
 @Component({
   selector: 'academy',
@@ -44,7 +44,7 @@ export class AcademyPage {
               private converter: ConverterService,
               private propertyService: PropertyService,
               public model: Model,
-              private location: Location,
+              private router: Router,
               private alertCtrl: AlertController,
               private modalCtrl: ModalController) {
     console.log("AcademyPage.constructor");
@@ -60,7 +60,10 @@ export class AcademyPage {
 
   openUpgradeModal() {
     this.modalCtrl.create({
-      component: AcademyUpgradeModal
+      component: BuildingUpgradeModal,
+      componentProps: {
+        buildingType: this.buildingType
+      }
     }).then(modal => {
       modal.onDidDismiss().then(() => this.ionViewWillEnter());
       modal.present();
@@ -141,7 +144,7 @@ export class AcademyPage {
   }
 
   close() {
-    this.location.back();
+    this.router.navigateByUrl('/home');
   }
 
   selectHero(hero: Hero) {

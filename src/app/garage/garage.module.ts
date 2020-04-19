@@ -5,7 +5,6 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {GaragePage} from './garage.page';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
-import {GarageUpgradeModal} from './garageUpgrade.modal';
 import {VehicleUpgradeModal} from './vehicleUpgrade.modal';
 import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
 
@@ -22,7 +21,7 @@ import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
       }
     ])
   ],
-  declarations: [GaragePage, GarageUpgradeModal, VehicleUpgradeModal, VehiclePartUpgradeModal],
-  entryComponents: [GarageUpgradeModal, VehicleUpgradeModal, VehiclePartUpgradeModal]
+  declarations: [GaragePage, VehicleUpgradeModal, VehiclePartUpgradeModal],
+  entryComponents: [VehicleUpgradeModal, VehiclePartUpgradeModal]
 })
 export class GarageModule {}

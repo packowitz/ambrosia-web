@@ -23,6 +23,10 @@ export class JewelryService {
     }
   }
 
+  getJewelry(type: string): Jewelry {
+    return this.jewelries[type];
+  }
+
   getJewelries(slot: string): Jewelry[] {
     return this.enumService.getJewelTypes().filter(j => j.slot === slot)
         .map(type => this.jewelries[type.name] ? this.jewelries[type.name] : new Jewelry(type.name));
@@ -31,6 +35,16 @@ export class JewelryService {
   getSpecialJewelry(set: string): Jewelry {
     let jewelry: Jewelry = this.jewelries[set];
     return jewelry ? jewelry : new Jewelry(set);
+  }
+
+  getAllJewelries(): Jewelry[] {
+    let jewelries: Jewelry[] = [];
+    this.enumService.getJewelTypes().forEach(jewelry => {
+      if (this.jewelries[jewelry.name]) {
+        jewelries.push(this.jewelries[jewelry.name]);
+      }
+    });
+    return jewelries;
   }
 
 }

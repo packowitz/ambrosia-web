@@ -11,4 +11,5 @@ export class Progress {
     vehiclePartStorage: number;
     incubators: number;
     labSpeed: number;
+    maxJewelUpgradingLevel: number;
 }

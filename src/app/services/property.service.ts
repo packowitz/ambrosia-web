@@ -58,7 +58,7 @@ export class PropertyService {
     return 0;
   }
 
-  getJewelValueAndName(type: string, level: number): string {
+  getJewelValueAndName(type: string, level: number): string[] {
     let props = this.properties[type + '_JEWEL'];
     if (props) {
       return props.filter((p: DynamicProperty) => p.level === level).map(prop => {
@@ -101,7 +101,7 @@ export class PropertyService {
         return returnValue;
       });
     }
-    return '';
+    return [];
   }
 
   getHeroMaxXp(level: number): number {

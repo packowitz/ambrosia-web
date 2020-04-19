@@ -190,9 +190,8 @@ export class BackendService {
             .pipe(map(action => action.hero));
     }
 
-    upgradeJewel(type: string, level: number): Observable<Jewelry> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/jewelry/merge/' + type + '/' + level, {})
-            .pipe(map(action => action.jewelries[0]));
+    upgradeJewel(type: string, level: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/jewel/' + type + '/' + level, null);
     }
 
     pluginJewel(gear: Gear, slot: number, type: string, level: number): Observable<PlayerActionResponse> {

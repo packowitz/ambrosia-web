@@ -18,7 +18,7 @@ import {ConverterService} from '../services/converter.service';
       <gear-icon *ngIf="loot.type == 'GEAR'" [gear]="model.getGear(loot.value)" [type]="model.getGear(loot.value).type" class="loot-item"></gear-icon>
       <div *ngIf="loot.type == 'JEWEL'" class="loot-item flex-vert">
         <img src="assets/img/jewels/{{loot.jewelType.slot}}_{{loot.value}}.png" class="loot-image">
-        <div class="font-small ion-text-center">{{propertyService.getJewelValueAndName(loot.jewelType.name, loot.value)}}</div>
+        <div *ngFor="let bonus of propertyService.getJewelValueAndName(loot.jewelType.name, loot.value)" class="font-small ion-text-center">{{bonus}}</div>
       </div>
       <div *ngIf="loot.type == 'VEHICLE'" class="loot-item flex-vert">
         <img src="assets/img/vehicles/{{model.getVehicle(loot.value).baseVehicle.avatar}}.png" class="loot-image">
