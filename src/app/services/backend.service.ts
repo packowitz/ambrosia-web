@@ -133,10 +133,6 @@ export class BackendService {
             .pipe(map(action => action.jewelries[0]));
     }
 
-    getOwnJewelries(): Observable<Jewelry[]> {
-        return this.http.get<Jewelry[]>(API_URL + '/jewelry');
-    }
-
     craftGear(gear: Gear): Observable<Gear> {
         return this.http.post<PlayerActionResponse>(API_URL + '/admin/gear/create', gear)
             .pipe(map(action => action.gear));
