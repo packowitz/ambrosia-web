@@ -29,7 +29,7 @@ export class JewelryPage {
               public enumService: EnumService,
               private router: Router,
               private modalCtrl: ModalController,
-              private jewelryServcie: JewelryService) {
+              public jewelryService: JewelryService) {
   }
 
   canUpgradeBuilding(): boolean {
