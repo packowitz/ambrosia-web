@@ -164,7 +164,7 @@
               <ion-item><gear-list-item type="SHIELD" [hero]="selectedHero" [gear]="selectedHero.shield" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
               <ion-item><gear-list-item type="HELMET" [hero]="selectedHero" [gear]="selectedHero.helmet" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
               <ion-item><gear-list-item type="ARMOR" [hero]="selectedHero" [gear]="selectedHero.armor" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
-              <ion-item><gear-list-item type="PANTS" [hero]="selectedHero" [gear]="selectedHero.pants" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
+              <ion-item><gear-list-item type="GLOVES" [hero]="selectedHero" [gear]="selectedHero.gloves" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
               <ion-item><gear-list-item type="BOOTS" [hero]="selectedHero" [gear]="selectedHero.boots" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
             </ion-list>
             <ion-list *ngIf="selectedHero.sets" lines="none">
@@ -183,7 +183,7 @@
                     <ion-button [fill]="gearTypeFilter.indexOf('SHIELD') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('SHIELD')"><i class="ra ra-eye-shield"></i></ion-button>
                     <ion-button [fill]="gearTypeFilter.indexOf('HELMET') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('HELMET')"><i class="ra ra-helmet"></i></ion-button>
                     <ion-button [fill]="gearTypeFilter.indexOf('ARMOR') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('ARMOR')"><i class="ra ra-vest"></i></ion-button>
-                    <ion-button [fill]="gearTypeFilter.indexOf('PANTS') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('PANTS')"><i class="ra ra-forward"></i></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('GLOVES') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('GLOVES')"><i class="ra ra-hand"></i></ion-button>
                     <ion-button [fill]="gearTypeFilter.indexOf('BOOTS') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('BOOTS')"><i class="ra ra-footprint"></i></ion-button>
                   </div>
                 </ion-item>

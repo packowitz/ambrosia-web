@@ -365,7 +365,7 @@ export class Model {
     }
 
     updateGear(gear?: Gear) {
-        if (gear) {
+        if (gear && !gear.equippedTo) {
             let idx = this.gears.findIndex(g => g.id === gear.id);
             if (idx >= 0) {
                 this.gears[idx] = gear;

@@ -26,7 +26,7 @@ export class Hero {
     shield?: Gear;
     helmet?: Gear;
     armor?: Gear;
-    pants?: Gear;
+    gloves?: Gear;
     boots?: Gear;
     baseStrength: number;
     baseHp: number;
