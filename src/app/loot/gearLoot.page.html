@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt="" class="logo"></div>
 <ion-content *ngIf="model.gearLoots">
   <ion-list>
     <ion-item *ngFor="let gearLoot of model.gearLoots" (click)="gearLootDetails(gearLoot)" detail class="pointer">

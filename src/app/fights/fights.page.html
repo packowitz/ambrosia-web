@@ -17,7 +17,7 @@
   </ion-toolbar>
 </ion-header>
 
-<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt="" class="logo"></div>
 <ion-content *ngIf="model.fights">
   <ion-list>
     <ion-item *ngFor="let fight of model.fights" (click)="gotoFightDetails(fight)" detail class="pointer">

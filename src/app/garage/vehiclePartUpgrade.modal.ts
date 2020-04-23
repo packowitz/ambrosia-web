@@ -4,8 +4,8 @@ import {Model} from '../services/model.service';
 import {BackendService} from '../services/backend.service';
 import {PropertyService} from '../services/property.service';
 import {DynamicProperty} from '../domain/property.model';
-import {Vehicle} from '../domain/vehicle.model';
 import {VehiclePart} from '../domain/vehiclePart.model';
+import {ConverterService} from '../services/converter.service';
 
 @Component({
     selector: 'vehicle-part-upgrade-modal',
@@ -18,9 +18,6 @@ import {VehiclePart} from '../domain/vehiclePart.model';
             <div class="flex">{{model.resources.coins}}<ion-img src="assets/img/resources/COINS.png" class="resource-icon"></ion-img></div>
             <div class="flex">{{model.resources.rubies}}<ion-img src="assets/img/resources/RUBIES.png" class="resource-icon"></ion-img></div>
           </div>
-          <div class="mt-2 flex-center">
-            Upgraded Vehicle Parts grant higher bonuses
-          </div>
           <ion-item class="mt-2">
             <div class="flex-center full-width">
               Your current upgrade queue {{model.upgrades.length}}/{{model.progress.builderQueueLength}}
@@ -30,7 +27,11 @@ import {VehiclePart} from '../domain/vehiclePart.model';
           <div *ngIf="!getPart().upgradeTriggered">
             <div class="mt-2 flex-center" *ngIf="!upgradeSeconds">Cannot upgrade Vehicle Part higher than level {{getPart().level}}</div>
             <div class="mt-3" *ngIf="upgradeSeconds">
-              <div class="flex-space-around">
+              Level {{getPart().level + 1}} {{converter.readableIdentifier(getPart().type)}}:
+              <ul>
+                <li *ngFor="let upgrade of getUpgrades()">{{upgrade}}</li>
+              </ul>
+              <div class="flex-space-between">
                 <div *ngIf="hasEnoughResources">Upgrade costs</div>
                 <div *ngIf="!hasEnoughResources">Insufficient resources</div>
                 <div *ngFor="let cost of upgradeCosts" class="flex">
@@ -65,6 +66,7 @@ export class VehiclePartUpgradeModal {
 
     constructor(private modalCtrl: ModalController,
                 public model: Model,
+                public converter: ConverterService,
                 private backendService: BackendService,
                 private propertyService: PropertyService,
                 private alertCtrl: AlertController) {
@@ -89,6 +91,15 @@ export class VehiclePartUpgradeModal {
 
     getPart(): VehiclePart {
         return this.model.getVehiclePart(this.partId);
+    }
+
+    getUpgrades(): string[] {
+        let upgrades: string[] = [];
+        let part = this.getPart();
+        this.propertyService.getProps(part.type + '_PART_' + part.quality, part.level + 1).forEach(p => {
+            upgrades.push('+' + p.value1 + ' ' + this.converter.readableIdentifier(p.vehicleStat));
+        });
+        return upgrades;
     }
 
     closeModal() {

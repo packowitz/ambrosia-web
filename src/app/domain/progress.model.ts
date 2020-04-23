@@ -12,4 +12,14 @@ export class Progress {
     incubators: number;
     labSpeed: number;
     maxJewelUpgradingLevel: number;
+    gearModificationRarity: number;
+    gearModificationSpeed: number;
+    gearBreakDownRarity: number;
+    gearBreakDownResourcesInc: number;
+    reRollGearQualityEnabled: boolean;
+    reRollGearStatEnabled: boolean;
+    incGearRarityEnabled: boolean;
+    reRollGearJewelEnabled: boolean;
+    addGearJewelEnabled: boolean;
+    addGearSpecialJewelEnabled: boolean;
 }

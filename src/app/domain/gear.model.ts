@@ -2,12 +2,16 @@ export class Gear {
     id: number;
     playerId: number;
     equippedTo?: number;
+    modificationInProgress: boolean;
+    modificationPerformed: boolean;
+    modificationAllowed: string;
     set: string;
     rarity: string;
     type: string;
     stat: string;
     statValue: number;
     statQuality: number;
+    gearQuality: string;
     jewelSlot1?: string;
     jewel1Type?: string;
     jewel1Level?: number;
@@ -23,4 +27,7 @@ export class Gear {
     specialJewelSlot: boolean;
     specialJewelType?: string;
     specialJewelLevel?: number;
+
+    // transient
+    markedToBreakdown: boolean;
 }

@@ -110,11 +110,6 @@ export class BackendService {
             .pipe(map(action => action.hero));
     }
 
-    recruitRandomHero(type: String): Observable<Hero> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/hero/recruit/' + type, null)
-            .pipe(map(action => action.hero));
-    }
-
     getAllOwnHeroes(): Observable<Hero[]> {
         return this.http.get<Hero[]>(API_URL + '/hero');
     }
@@ -524,6 +519,10 @@ export class BackendService {
         return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/vehicle_part/' + partId, null);
     }
 
+    upgradeGear(gearId: number, modification: string): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/gear/' + gearId + '/' + modification, null);
+    }
+
     finishUpgrade(upgradeId: number): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/' + upgradeId + '/finish', null);
     }
@@ -550,5 +549,12 @@ export class BackendService {
 
     cancelIncubator(incubatorId: number): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/laboratory/cancel/' + incubatorId, null);
+    }
+
+    breakdownGear(gears: Gear[]): Observable<PlayerActionResponse> {
+        let request = {
+            gearIds: gears.map(g => g.id)
+        };
+        return this.http.post<PlayerActionResponse>(API_URL + '/forge/breakdown', request);
     }
 }

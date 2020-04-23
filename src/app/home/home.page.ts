@@ -163,6 +163,9 @@ export class HomePage {
       case 'BARRACKS':
         this.router.navigateByUrl('/barracks');
         break;
+      case 'FORGE':
+        this.router.navigateByUrl('/forge');
+        break;
       case 'GARAGE':
         this.router.navigateByUrl('/garage');
         break;

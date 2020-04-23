@@ -1,10 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Gear} from '../domain/gear.model';
-import {ConverterService} from '../services/converter.service';
-import {Hero} from '../domain/hero.model';
-import {BackendService} from '../services/backend.service';
-import {GearModal} from './gear.modal';
-import {ModalController} from '@ionic/angular';
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'gear-stat',
@@ -17,7 +11,8 @@ import {ModalController} from '@ionic/angular';
         <div *ngIf="stat == 'STRENGTH_PERC'">+{{value}}%<span *ngIf="showStatName"> Strength</span></div>
         <div *ngIf="stat == 'CRIT'">+{{value}}<span *ngIf="showStatName"> Crit chance</span></div>
         <div *ngIf="stat == 'CRIT_MULT'">+{{value}}<span *ngIf="showStatName"> Crit Multiplier</span></div>
-        <div *ngIf="stat == 'SPEED'">+{{value}}<span *ngIf="showStatName"> Initiative</span></div>
+        <div *ngIf="stat == 'INITIATIVE'">+{{value}}<span *ngIf="showStatName"> Initiative</span></div>
+        <div *ngIf="stat == 'SPEED'">+{{value}}<span *ngIf="showStatName"> Speed</span></div>
         <div *ngIf="stat == 'RESISTANCE'">+{{value}}<span *ngIf="showStatName"> Resistance</span></div>
         <div *ngIf="stat == 'DEXTERITY'">+{{value}}<span *ngIf="showStatName"> Dexterity</span></div>
   `

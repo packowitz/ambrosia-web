@@ -52,6 +52,7 @@ const routes: Routes = [
     {path: 'storage', loadChildren: './storage/storage.module#StorageModule'},
     {path: 'laboratory', loadChildren: './laboratory/laboratory.module#LaboratoryModule'},
     {path: 'jewelry', loadChildren: './jewelry/jewelry.module#JewelryModule'},
+    {path: 'forge', loadChildren: './forge/forge.module#ForgeModule'},
     {path: 'battle', loadChildren: './battle/battle.module#BattlePageModule'}
 ];
 

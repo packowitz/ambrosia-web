@@ -9,26 +9,8 @@
   </ion-toolbar>
 </ion-header>
 
-<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt=""></div>
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt="" class="logo"></div>
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-          Recruit heroes in the tavern
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row>
-        <ion-col sizeMd="3">
-          <ion-button (click)="recruit('BASIC')"><ion-icon name="pricetag"></ion-icon>Basic (1* - 3*)</ion-button>
-        </ion-col>
-        <ion-col sizeMd="3">
-          <ion-button (click)="recruit('ADVANCED')"><ion-icon name="pricetags"></ion-icon>Adavanced (3* - 5*)</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
-
   <ion-card>
     <ion-card-header>
       <ion-card-title>
@@ -127,8 +109,8 @@
         </ion-col>
         <ion-col sizeMd="4">
           <ion-item>
-            <ion-label>StatValue</ion-label>
-            <ion-input type="number" [(ngModel)]="specificGear.statValue" required></ion-input>
+            <ion-label>StatQuality (%)</ion-label>
+            <ion-input type="number" [(ngModel)]="specificGear.statQuality" value="100" required></ion-input>
           </ion-item>
         </ion-col>
         <ion-col sizeMd="4">

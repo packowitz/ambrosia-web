@@ -12,7 +12,7 @@ import {ModalController} from '@ionic/angular';
       <div class="flex-start" [class.color-grey]="!gear" (click)="showGearDetails()" [class.pointer]="canShowDetails()">
         <gear-icon [gear]="gear" [type]="type"></gear-icon>
         <div *ngIf="gear" class="flex-vert gear-text flex-grow">
-          <div>{{converter.readableIdentifier(gear.set)}} {{converter.readableIdentifier(gear.rarity)}} {{converter.readableIdentifier(gear.type)}}</div>
+          <div>{{converter.readableIdentifier(gear.gearQuality)}} {{converter.readableIdentifier(gear.set)}} {{converter.readableIdentifier(gear.type)}}</div>
           <gear-stat [stat]="gear.stat" [value]="gear.statValue"></gear-stat>
         </div>
         <div *ngIf="gear && !gear.equippedTo && !hero.missionId">

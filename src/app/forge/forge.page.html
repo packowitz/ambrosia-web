@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        <div class="flex-center">
+          Forge - Level {{getBuilding().level}}
+          <ion-button class="ml-2" *ngIf="canUpgradeBuilding()" size="small" color="success" (click)="openBuildingUpgradeModal()">{{getBuilding().upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
+        </div>
+        <div class="flex-center">
+          <div class="font-small">Modify Lvl {{model.progress.gearModificationRarity}}, Breakdown Lvl {{model.progress.gearBreakDownRarity}}</div>
+          <ion-button fill="outline" color="danger" (click)="breakdown()" [disabled]="saving || gearForBreakdown().length == 0"><ion-icon name="trash"></ion-icon></ion-button>
+          <ion-icon name="close" class="ml-2 pointer" (click)="close()"></ion-icon>
+        </div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt="" class="logo"></div>
+<looted *ngIf="looted" [looted]="looted" (click)="looted = null" class="loading-indicator"></looted>
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-item *ngFor="let gear of getGear()">
+        <div class="full-width flex-space-between">
+          <gear-icon [gear]="gear" [type]="gear.type" (click)="showGearDetails(gear)" [class.pointer]="!gear.modificationInProgress"></gear-icon>
+          <div class="ml-2 flex-vert gear-text flex-grow font-small">
+            <div>
+              {{converter.readableIdentifier(gear.gearQuality)}}
+              {{converter.readableIdentifier(gear.type)}}
+              <i>({{converter.readableIdentifier(gear.set)}})</i>
+            </div>
+            <div class="flex">
+              <gear-stat [stat]="gear.stat" [value]="gear.statValue"></gear-stat>&nbsp;<i *ngIf="gear.modificationPerformed">(modified)</i>
+            </div>
+          </div>
+          <div *ngIf="model.progress.gearModificationRarity >= converter.rarityStars(gear.rarity) && !gear.modificationInProgress">
+            <ion-button (click)="modificationSelection(gear, $event)" [disabled]="saving">Modify</ion-button>
+          </div>
+          <div *ngIf="gear.modificationInProgress">
+            <ion-button (click)="openUpgradeModal()" [disabled]="saving">Modifying</ion-button>
+          </div>
+          <ion-button [fill]="gear.markedToBreakdown ? 'outline' : 'clear'" color="danger" (click)="gear.markedToBreakdown = !gear.markedToBreakdown" [disabled]="saving || gear.modificationInProgress || converter.rarityStars(gear.rarity) > model.progress.gearBreakDownRarity">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -3,8 +3,10 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
-import {BarracksPage} from './barracks.page';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
+import {ForgePage} from './forge.page';
+import {GearUpgradeModal} from './gearUpgrade.modal';
+import {ModificationSelectionPopover} from './modification-selection-popover';
 
 @NgModule({
     imports: [
@@ -15,11 +17,12 @@ import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
         RouterModule.forChild([
             {
                 path: '',
-                component: BarracksPage
+                component: ForgePage
             }
         ])
     ],
-    declarations: [BarracksPage]
+    declarations: [ForgePage, GearUpgradeModal, ModificationSelectionPopover],
+    entryComponents: [GearUpgradeModal, ModificationSelectionPopover]
 })
-export class BarracksModule {
+export class ForgeModule {
 }

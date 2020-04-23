@@ -9,27 +9,31 @@ import {LootedDirective} from '../home/looted.directive';
 import {LootItemDirective} from '../home/loot-item.directive';
 import {UpgradeItemDirective} from './upgradeItem.directive';
 import {BuildingUpgradeModal} from './buildingUpgrade.modal';
+import {GearModal} from '../barracks/gear.modal';
+import {GearListItem} from '../barracks/gear-list-item.directive';
+import {GearStat} from '../barracks/gear-stat.directive';
+import {UpgradeModal} from './upgrade.modal';
 
 @NgModule({
     declarations: [
         BuildingUpgradeModal,
-        GearIcon, GearJewelSlot,
+        GearIcon, GearListItem, GearModal, GearJewelSlot, GearStat,
         LootedDirective, LootItemDirective,
-        UpgradeItemDirective,
+        UpgradeItemDirective, UpgradeModal,
         VehicleDirective, VehicleSelectionPopover
     ],
     exports: [
         BuildingUpgradeModal,
-        GearIcon, GearJewelSlot,
+        GearIcon, GearListItem, GearModal, GearJewelSlot, GearStat,
         LootedDirective, LootItemDirective,
-        UpgradeItemDirective,
+        UpgradeItemDirective, UpgradeModal,
         VehicleDirective, VehicleSelectionPopover
     ],
     imports: [
         CommonModule,
         IonicModule
     ],
-    entryComponents: [BuildingUpgradeModal, VehicleSelectionPopover]
+    entryComponents: [BuildingUpgradeModal, GearModal, UpgradeModal, VehicleSelectionPopover]
 })
 export class CommonAmbrosiaModule {
 }

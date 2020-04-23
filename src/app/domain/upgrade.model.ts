@@ -5,6 +5,8 @@ export class Upgrade {
     buildingType: string;
     vehicleId: number;
     vehiclePartId: number;
+    gearId: number;
+    gearModification: string;
     jewelType: string;
     jewelLevel: number;
     finished: boolean;

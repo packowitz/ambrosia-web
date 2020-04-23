@@ -6,6 +6,7 @@ import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
 import {Vehicle} from '../domain/vehicle.model';
 import {VehiclePart} from '../domain/vehiclePart.model';
+import {Gear} from '../domain/gear.model';
 
 @Component({
     selector: 'upgrade-item',
@@ -22,6 +23,9 @@ import {VehiclePart} from '../domain/vehiclePart.model';
           <div *ngIf="item.vehiclePartId" class="ma-2">
             <ion-img src="/assets/img/vehicles/parts/{{getVehiclePart().type + '_' + getVehiclePart().quality}}.png"></ion-img>
           </div>
+          <div *ngIf="item.gearId" class="ma-2">
+            <gear-icon [gear]="getGear()" [type]="getGear().type"></gear-icon>
+          </div>
           <div *ngIf="item.buildingType">
             Upgrading {{converter.readableIdentifier(item.buildingType)}} to level {{getNextLevel()}}
           </div>
@@ -30,6 +34,9 @@ import {VehiclePart} from '../domain/vehiclePart.model';
           </div>
           <div *ngIf="item.vehiclePartId">
             Upgrading {{converter.readableIdentifier(getVehiclePart().type)}} to level {{getNextLevel()}}
+          </div>
+          <div *ngIf="item.gearId">
+            {{getGearModificationText()}}
           </div>
           <div class="flex-grow">&nbsp;</div>
           <div class="progress-bar-with-time" *ngIf="item.inProgress">
@@ -66,6 +73,24 @@ export class UpgradeItemDirective {
         if (this.item.vehiclePartId) {
             return this.model.getVehiclePart(this.item.vehiclePartId);
         }
+    }
+
+    getGear(): Gear {
+        if (this.item.gearId) {
+            return this.model.getGear(this.item.gearId);
+        }
+    }
+
+    getGearModificationText(): string {
+        if (this.item.gearModification === 'REROLL_QUALITY') { return 'Modifying Quality'; }
+        if (this.item.gearModification === 'REROLL_STAT') { return 'Modifying Stat'; }
+        if (this.item.gearModification === 'INC_RARITY') { return 'Increasing Rarity'; }
+        if (this.item.gearModification === 'ADD_JEWEL') { return 'Adding Jewel Slot'; }
+        if (this.item.gearModification === 'REROLL_JEWEL_1') { return 'Modifying Jewel Slot 1'; }
+        if (this.item.gearModification === 'REROLL_JEWEL_2') { return 'Modifying Jewel Slot 2'; }
+        if (this.item.gearModification === 'REROLL_JEWEL_3') { return 'Modifying Jewel Slot 3'; }
+        if (this.item.gearModification === 'REROLL_JEWEL_4') { return 'Modifying Jewel Slot 4'; }
+        if (this.item.gearModification === 'ADD_SPECIAL_JEWEL') { return 'Adding Set Jewel Slot'; }
     }
 
     getNextLevel() {
