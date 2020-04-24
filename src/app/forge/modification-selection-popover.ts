@@ -46,7 +46,7 @@ export class ModificationSelectionPopover {
 
     constructor(private popoverController: PopoverController,
                 private navParams: NavParams,
-                private model: Model,
+                public model: Model,
                 public converter: ConverterService) {
         this.gear = navParams.get('gear');
     }
