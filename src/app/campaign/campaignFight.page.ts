@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
@@ -8,7 +8,6 @@ import {FightResolved} from '../domain/fightResolved.model';
 import {Team} from '../domain/team.model';
 import {PlayerMap} from '../domain/playerMap.model';
 import {PlayerMapTile} from '../domain/playerMapTile.model';
-import {Location} from '@angular/common';
 import {Vehicle} from '../domain/vehicle.model';
 import {PopoverController} from '@ionic/angular';
 import {VehicleSelectionPopover} from '../garage/vehicle-selection-popover';
@@ -41,7 +40,6 @@ export class CampaignFightPage {
               private router: Router,
               public model: Model,
               public enumService: EnumService,
-              private location: Location,
               private popoverCtrl: PopoverController,
               private converter: ConverterService) {
   }
@@ -83,11 +81,16 @@ export class CampaignFightPage {
   }
 
   close() {
-    this.location.back();
+    this.router.navigateByUrl('/home');
   }
 
   initTeam() {
-    this.team = this.converter.dataClone(this.model.teams.find(t => t.type === (this.testFight ? 'TEST' : 'CAMPAIGN')));
+    if (this.model.teams) {
+      let team = this.model.teams.find(t => t.type === (this.testFight ? 'TEST' : 'CAMPAIGN'));
+      if (team) {
+        this.team = this.converter.dataClone(team);
+      }
+    }
     if (!this.team) {
       this.team = new Team(this.testFight ? 'TEST' : 'CAMPAIGN');
     } else {

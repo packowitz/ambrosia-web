@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
-import {Model} from '../services/model.service';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,9 +14,7 @@ export class LoginPage {
   register = false;
 
   constructor(private backendService: BackendService,
-              private alertCtrl: AlertController,
-              private model: Model,
-              private router: Router) { }
+              private alertCtrl: AlertController) { }
 
   registerValid(): boolean {
     return this.name && this.name.length >= 4 && this.email && this.email.length >= 6 && this.password && this.password.length >= 8
@@ -31,7 +27,7 @@ export class LoginPage {
     }
     this.backendService.login(this.email, this.password).subscribe(
         () => {
-          this.router.navigateByUrl('/home');
+          window.location.href = "/home";
         },
         error => {
           this.alertCtrl.create({
@@ -48,7 +44,7 @@ export class LoginPage {
     }
     this.backendService.register(this.name, this.email, this.password).subscribe(
         () => {
-          this.router.navigateByUrl('/home');
+          window.location.href = "/home";
         },
         error => {
           this.alertCtrl.create({
