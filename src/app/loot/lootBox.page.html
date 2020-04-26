@@ -23,13 +23,13 @@
         <div class="flex-space-between">
           <div class="flex-center">
             Slot {{item.slotNumber}}
-            <ion-icon *ngIf="item.slotNumber > 1" class="pointer" name="arrow-dropup-circle" (click)="slotDown(item)"></ion-icon>
-            <ion-icon *ngIf="!isLastSlot(item.slotNumber)" class="pointer" name="arrow-dropdown-circle" (click)="slotUp(item)"></ion-icon>
+            <ion-icon *ngIf="item.slotNumber > 1" class="pointer" name="arrow-up-circle-outline" (click)="slotDown(item)"></ion-icon>
+            <ion-icon *ngIf="!isLastSlot(item.slotNumber)" class="pointer" name="arrow-down-circle-outline" (click)="slotUp(item)"></ion-icon>
           </div>
           <div class="flex-center">
             Pos {{item.itemOrder}}
-            <ion-icon *ngIf="item.itemOrder > 1" class="pointer" name="arrow-dropup-circle" (click)="posDown(item)"></ion-icon>
-            <ion-icon *ngIf="!isLastInSlot(item.slotNumber, item.itemOrder)" class="pointer" name="arrow-dropdown-circle" (click)="posUp(item)"></ion-icon>
+            <ion-icon *ngIf="item.itemOrder > 1" class="pointer" name="arrow-up-circle-outline" (click)="posDown(item)"></ion-icon>
+            <ion-icon *ngIf="!isLastInSlot(item.slotNumber, item.itemOrder)" class="pointer" name="arrow-down-circle-outline" (click)="posUp(item)"></ion-icon>
           </div>
           <div class="flex-center">
             Chance (1-100)
