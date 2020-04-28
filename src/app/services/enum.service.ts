@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {API_URL} from '../../environments/environment';
+import {Observable} from 'rxjs';
 
 export class SkillActionEffect { name: string; type: string; description: string; }
 export class PropertyCategory { name: string; levelName: string; value1name: string; showStat: boolean; showResources: boolean; showVehicleStat: boolean; showValue2: boolean; value2name: string; }
@@ -49,10 +50,10 @@ export class EnumService {
     enumsFailed = false;
     enums: Enums;
 
-    constructor(private http: HttpClient) {
-        this.http.get(API_URL + '/enums').subscribe((data: Enums) => {
-            this.enums = data;
-        }, error => this.enumsFailed = true);
+    constructor(private http: HttpClient) {}
+
+    loadEnums(): Observable<Enums> {
+        return this.http.get<Enums>(API_URL + '/enums');
     }
 
     getColors(): string[] {

@@ -43,6 +43,7 @@ export class HomePage {
     if (!this.model.player.color) {
       this.alertCtrl.create({
         subHeader: 'Select your hero color',
+        backdropDismiss: false,
         buttons: [
           {text: 'Red', cssClass: 'RED', handler: () => this.saveColor('RED') },
           {text: 'Green', cssClass: 'GREEN', handler: () => this.saveColor('GREEN') },

@@ -29,11 +29,12 @@ export class PropertyService {
   }
 
   loadInitialProperties() {
-    this.initialCategories.forEach(category => {
-      this.http.get<any>(API_URL + '/properties/category/' + category).subscribe(data => {
-        // tslint:disable-next-line:forin
-        for (let key in data) {
-          this.properties[key] = data[key];
+    this.http.get<any>(API_URL + '/properties/categories/' + this.initialCategories.join()).subscribe(data => {
+      data.forEach(p => {
+        if (this.properties[p.type]) {
+          this.properties[p.type].push(p);
+        } else {
+          this.properties[p.type] = [p];
         }
       });
     });
