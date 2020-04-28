@@ -12,7 +12,7 @@ import {ConverterService} from '../services/converter.service';
         <div class="font-small">{{loot.value}}x</div>
       </div>
       <div *ngIf="loot.type == 'HERO'" class="hero-tile-very-small border-grey flex-vert-center loot-item">
-        <ion-img [src]="'assets/img/chars/' + model.getHero(loot.value).heroBase.avatar + '.png'" class="hero-avatar-very-small border-bottom-grey"></ion-img>
+        <ion-img [src]="'assets/icon/chars/' + model.getHero(loot.value).heroBase.avatar + '.png'" class="hero-avatar-very-small border-bottom-grey"></ion-img>
         <ion-img [src]="'assets/img/star_' + model.getHero(loot.value).stars + '.png'" class="hero-stars"></ion-img>
       </div>
       <gear-icon *ngIf="loot.type == 'GEAR'" [gear]="model.getGear(loot.value)" [type]="model.getGear(loot.value).type" class="loot-item"></gear-icon>

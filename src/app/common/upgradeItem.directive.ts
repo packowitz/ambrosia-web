@@ -15,7 +15,7 @@ import {Gear} from '../domain/gear.model';
         <div class="flex-space-between full-width">
           <div>{{item.position}}.</div>
           <div *ngIf="item.buildingType" class="building-avatar ma-2">
-            <ion-img src="assets/img/buildings/{{item.buildingType}}.png"></ion-img>
+            <ion-img src="assets/icon/buildings/{{item.buildingType}}.png"></ion-img>
           </div>
           <div *ngIf="item.vehicleId" class="ma-2">
             <ion-img class="vehicle-only-avatar" src="assets/img/vehicles/{{getVehicle().baseVehicle.avatar}}.png"></ion-img>

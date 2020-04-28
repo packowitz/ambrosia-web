@@ -35,7 +35,7 @@
     <div class="scrollable-list pa-2">
       <div *ngFor="let building of buildings" class="flex-vert-center mr-4">
         <div class="building-avatar">
-          <ion-img src="assets/img/buildings/{{building.type}}.png" class="pointer" (click)="gotoBuilding(building.type)"></ion-img>
+          <ion-img src="assets/icon/buildings/{{building.type}}.png" class="pointer" (click)="gotoBuilding(building.type)"></ion-img>
         </div>
         <div class="mt-1">{{converter.readableIdentifier(building.type)}}</div>
       </div>
@@ -70,8 +70,8 @@
           <div *ngFor="let y of rows" class="map-row" [class.even]="isEven(y)" [class.odd]="!isEven(y)">
             <div *ngFor="let tile of getRow(y)" class="map-hexagon-wrapper">
               <div class="map-hexagon-overlay" (click)="selectTile(tile)" [class.hover]="tile.discoverable || (tile.discovered && (tile.structure || tile.fightIcon))" [class.pointer]="tile.discoverable || (tile.discovered && (tile.structure || tile.fightIcon))">
-                <img *ngIf="tile.discovered && tile.structure" src="assets/img/structures/{{tile.structure}}.png" class="structure">
-                <img *ngIf="tile.discovered && tile.fightIcon" src="assets/img/monster/{{tile.fightIcon}}.png" class="monster">
+                <img *ngIf="tile.discovered && tile.structure" src="assets/icon/map/structures/{{tile.structure}}.png" class="structure">
+                <img *ngIf="tile.discovered && tile.fightIcon" src="assets/icon/map/monster/{{tile.fightIcon}}.png" class="monster">
                 <div *ngIf="tile.discoverable" class="costs">
                   {{map.discoverySteamCost}}<ion-img src="assets/img/resources/STEAM.png" class="resource-icon"></ion-img>
                 </div>

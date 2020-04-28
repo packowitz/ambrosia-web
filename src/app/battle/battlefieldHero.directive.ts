@@ -13,7 +13,7 @@ import {BattleStepHeroState} from '../domain/battleStepHeroState.model';
            [class.container-dead]="isDead()"
            [class.container-targetable]="targetable"
            (click)="selectHero()">
-        <ion-img [src]="'assets/img/chars/' + hero.heroBase.avatar + '.png'" class="full-width"></ion-img>
+        <ion-img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="full-width"></ion-img>
         <div class="bars flex-start">
           <div class="ml-1 level-bubble background-{{hero.color}}">{{hero.level}}</div>
           <div class="flex-grow" *ngIf="!isDead()">

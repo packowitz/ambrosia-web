@@ -28,7 +28,7 @@
     <ion-card-content>
       <div class="scrollable-list">
         <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center mr-2" [class.pointer]="!hero.missionId" [class.selected-tile]="hero.id == selectedHero?.id || hero.id == fodder1?.id || hero.id == fodder2?.id || hero.id == fodder3?.id || hero.id == fodder4?.id || hero.id == fodder5?.id || hero.id == fodder6?.id">
-          <ion-img [src]="'assets/img/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+          <ion-img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
           <div *ngIf="hero.missionId" class="on-mission flex-vert-center">
             <div class="text">On Mission</div>
           </div>
@@ -45,7 +45,7 @@
         <ion-card-title>
           <div class="flex-space-between">
             <div (click)="selectHero(this.selectedHero)" class="hero-tile-small border-grey flex-vert-center pointer mr-2">
-              <ion-img [src]="'assets/img/chars/' + this.selectedHero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+              <ion-img [src]="'assets/icon/chars/' + this.selectedHero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
               <div class="top-left-bubble level-bubble background-{{this.selectedHero.heroBase.color}}">{{this.selectedHero.level}}</div>
               <ion-img [src]="'assets/img/star_' + this.selectedHero.stars + '.png'" class="hero-stars"></ion-img>
             </div>
@@ -84,74 +84,74 @@
       <ion-row>
         <ion-col sizeMd="2" *ngIf="fodder1">
           <div (click)="selectHero(fodder1)" class="hero-tile-small border-grey pointer flex-vert-center">
-            <ion-img [src]="'assets/img/chars/' + fodder1.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <ion-img [src]="'assets/icon/chars/' + fodder1.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
             <div class="top-left-bubble level-bubble background-{{fodder1.heroBase.color}}">{{fodder1.level}}</div>
             <ion-img [src]="'assets/img/star_' + fodder1.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!fodder1 && fodderSize >= 1">
           <div class="hero-tile-small border-grey">
-            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="fodder2">
           <div (click)="selectHero(fodder2)" class="hero-tile-small border-grey pointer flex-vert-center">
-            <ion-img [src]="'assets/img/chars/' + fodder2.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <ion-img [src]="'assets/icon/chars/' + fodder2.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
             <div class="top-left-bubble level-bubble background-{{fodder2.heroBase.color}}">{{fodder2.level}}</div>
             <ion-img [src]="'assets/img/star_' + fodder2.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!fodder2 && fodderSize >= 2">
           <div class="hero-tile-small border-grey">
-            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="fodder3">
           <div (click)="selectHero(fodder3)" class="hero-tile-small border-grey pointer flex-vert-center">
-            <ion-img [src]="'assets/img/chars/' + fodder3.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <ion-img [src]="'assets/icon/chars/' + fodder3.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
             <div class="top-left-bubble level-bubble background-{{fodder3.heroBase.color}}">{{fodder3.level}}</div>
             <ion-img [src]="'assets/img/star_' + fodder3.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!fodder3 && fodderSize >= 3">
           <div class="hero-tile-small border-grey">
-            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="fodder4">
           <div (click)="selectHero(fodder4)" class="hero-tile-small border-grey pointer flex-vert-center">
-            <ion-img [src]="'assets/img/chars/' + fodder4.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <ion-img [src]="'assets/icon/chars/' + fodder4.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
             <div class="top-left-bubble level-bubble background-{{fodder4.heroBase.color}}">{{fodder4.level}}</div>
             <ion-img [src]="'assets/img/star_' + fodder4.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!fodder4 && fodderSize >= 4">
           <div class="hero-tile-small border-grey">
-            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="fodder5">
           <div (click)="selectHero(fodder5)" class="hero-tile-small border-grey pointer flex-vert-center">
-            <ion-img [src]="'assets/img/chars/' + fodder5.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <ion-img [src]="'assets/icon/chars/' + fodder5.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
             <div class="top-left-bubble level-bubble background-{{fodder5.heroBase.color}}">{{fodder5.level}}</div>
             <ion-img [src]="'assets/img/star_' + fodder5.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!fodder5 && fodderSize >= 5">
           <div class="hero-tile-small border-grey">
-            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="fodder6">
           <div (click)="selectHero(fodder6)" class="hero-tile-small border-grey pointer flex-vert-center">
-            <ion-img [src]="'assets/img/chars/' + fodder6.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+            <ion-img [src]="'assets/icon/chars/' + fodder6.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
             <div class="top-left-bubble level-bubble background-{{fodder6.heroBase.color}}">{{fodder6.level}}</div>
             <ion-img [src]="'assets/img/star_' + fodder6.stars + '.png'" class="hero-stars"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" *ngIf="!fodder6 && fodderSize >= 6">
           <div class="hero-tile-small border-grey">
-            <ion-img src="assets/img/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
           </div>
         </ion-col>
       </ion-row>

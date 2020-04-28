@@ -6,7 +6,7 @@ import {ModalController, NavParams} from '@ionic/angular';
     template: `
         <div class="scrollable-vert">
             <div class="flex-center mt-2">
-                <ion-img [src]="'assets/img/chars/' + currentIcon + '.png'" class="hero-avatar-small pointer border-grey" (click)="closeModal(currentIcon)"></ion-img>
+                <ion-img [src]="'assets/icon/chars/' + currentIcon + '.png'" class="hero-avatar-small pointer border-grey" (click)="closeModal(currentIcon)"></ion-img>
                 <div class="ml-4">Current Avatar</div>
             </div>
             <ion-segment [(ngModel)]="tab">
@@ -24,16 +24,16 @@ import {ModalController, NavParams} from '@ionic/angular';
                 </ion-segment-button>
             </ion-segment>
             <div *ngIf="tab == 'BLUE'" class="flex flex-wrap">
-                <ion-img *ngFor="let icon of blueIcons" [src]="'assets/img/chars/' + icon + '.png'" class="hero-avatar-small pointer border-grey ma-1" (click)="closeModal(icon)"></ion-img>
+                <ion-img *ngFor="let icon of blueIcons" [src]="'assets/icon/chars/' + icon + '.png'" class="hero-avatar-small pointer border-grey ma-1" (click)="closeModal(icon)"></ion-img>
             </div>
             <div *ngIf="tab == 'GREEN'" class="flex flex-wrap">
-                <ion-img *ngFor="let icon of greenIcons" [src]="'assets/img/chars/' + icon + '.png'" class="hero-avatar-small pointer border-grey ma-1" (click)="closeModal(icon)"></ion-img>
+                <ion-img *ngFor="let icon of greenIcons" [src]="'assets/icon/chars/' + icon + '.png'" class="hero-avatar-small pointer border-grey ma-1" (click)="closeModal(icon)"></ion-img>
             </div>
             <div *ngIf="tab == 'RED'" class="flex flex-wrap">
-                <ion-img *ngFor="let icon of redIcons" [src]="'assets/img/chars/' + icon + '.png'" class="hero-avatar-small pointer border-grey ma-1" (click)="closeModal(icon)"></ion-img>
+                <ion-img *ngFor="let icon of redIcons" [src]="'assets/icon/chars/' + icon + '.png'" class="hero-avatar-small pointer border-grey ma-1" (click)="closeModal(icon)"></ion-img>
             </div>
             <div *ngIf="tab == 'NEUTRAL'" class="flex flex-wrap">
-                <ion-img *ngFor="let icon of neutralIcons" [src]="'assets/img/chars/' + icon + '.png'" class="hero-avatar-small pointer border-grey ma-1" (click)="closeModal(icon)"></ion-img>
+                <ion-img *ngFor="let icon of neutralIcons" [src]="'assets/icon/chars/' + icon + '.png'" class="hero-avatar-small pointer border-grey ma-1" (click)="closeModal(icon)"></ion-img>
             </div>
         </div>
     `
@@ -43,13 +43,13 @@ export class HeroAvatarModal implements OnInit {
     currentIcon = "";
     tab = "BLUE";
 
-    blueIconCount = 36;
+    blueIconCount = 23;
     blueIcons = [];
-    greenIconCount = 29;
+    greenIconCount = 23;
     greenIcons = [];
-    redIconCount = 41;
+    redIconCount = 23;
     redIcons = [];
-    neutralIconCount = 4;
+    neutralIconCount = 5;
     neutralIcons = [];
 
     constructor(private modalController: ModalController, private navParams: NavParams) {

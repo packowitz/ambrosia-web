@@ -23,7 +23,7 @@ import {BackendService} from '../services/backend.service';
                 <span class="asc-bar-inner" [style.width]="(100 * hero1.ascPoints / hero1.ascPointsMax) + '%'"></span>
               </div>
               <div class="mt-05 hero-tile-small border-grey flex-vert-center">
-                <ion-img [src]="'assets/img/chars/' + hero1.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+                <ion-img [src]="'assets/icon/chars/' + hero1.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
                 <div class="top-left-bubble level-bubble background-{{hero1.heroBase.color}}">{{hero1.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero1.stars + '.png'" class="hero-stars"></ion-img>
               </div>
@@ -36,7 +36,7 @@ import {BackendService} from '../services/backend.service';
                 <span class="asc-bar-inner" [style.width]="(100 * hero2.ascPoints / hero2.ascPointsMax) + '%'"></span>
               </div>
               <div class="hero-tile-small border-grey flex-vert-center">
-                <ion-img [src]="'assets/img/chars/' + hero2.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+                <ion-img [src]="'assets/icon/chars/' + hero2.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
                 <div class="top-left-bubble level-bubble background-{{hero2.heroBase.color}}">{{hero2.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero2.stars + '.png'" class="hero-stars"></ion-img>
               </div>
@@ -49,7 +49,7 @@ import {BackendService} from '../services/backend.service';
                 <span class="asc-bar-inner" [style.width]="(100 * hero3.ascPoints / hero3.ascPointsMax) + '%'"></span>
               </div>
               <div class="hero-tile-small border-grey flex-vert-center">
-                <ion-img [src]="'assets/img/chars/' + hero3.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+                <ion-img [src]="'assets/icon/chars/' + hero3.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
                 <div class="top-left-bubble level-bubble background-{{hero3.heroBase.color}}">{{hero3.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero3.stars + '.png'" class="hero-stars"></ion-img>
               </div>
@@ -62,7 +62,7 @@ import {BackendService} from '../services/backend.service';
                 <span class="asc-bar-inner" [style.width]="(100 * hero4.ascPoints / hero4.ascPointsMax) + '%'"></span>
               </div>
               <div class="hero-tile-small border-grey flex-vert-center">
-                <ion-img [src]="'assets/img/chars/' + hero4.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+                <ion-img [src]="'assets/icon/chars/' + hero4.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
                 <div class="top-left-bubble level-bubble background-{{hero4.heroBase.color}}">{{hero4.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero4.stars + '.png'" class="hero-stars"></ion-img>
               </div>

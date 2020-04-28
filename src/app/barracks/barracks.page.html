@@ -28,7 +28,7 @@
     <ion-card-content>
       <div class="scrollable-list">
         <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center pointer mr-2" [class.selected-tile]="hero.id == selectedHero.id">
-          <ion-img [src]="'assets/img/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+          <ion-img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
           <div *ngIf="hero.missionId" class="on-mission flex-vert-center">
             <div class="text">On Mission</div>
           </div>
