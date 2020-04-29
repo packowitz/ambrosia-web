@@ -26,16 +26,7 @@ export class AppComponent {
             title: 'Base heroes',
             url: '/herobase/list',
             path: '/herobase/',
-            admin: true,
-            open: false,
-            icon: 'player',
-            children: [
-                {
-                    title: 'Create',
-                    url: '/herobase/create',
-                    icon: 'person-add'
-                }
-            ]
+            icon: 'player'
         },
         {
             title: 'Vehicles',
@@ -46,7 +37,6 @@ export class AppComponent {
             title: 'Fights',
             url: '/fights',
             icon: 'hydra',
-            admin: true,
             open: false,
             children: [
                 {

@@ -4,7 +4,10 @@
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>
-            Base heroes
+            <div class="flex-space-between">
+                Base heroes
+                <ion-button color="success" size="small" (click)="newBaseHero()">New Base hero</ion-button>
+            </div>
         </ion-title>
     </ion-toolbar>
 </ion-header>
@@ -82,43 +85,43 @@
                 <div class="ml-2 flex-vert">
                     <div class="bold">{{hero.name}}</div>
                     <div *ngIf="hero.startingHero" class="font-small">STARTING HERO</div>
-                    <i *ngIf="hero.recruitable" class="font-small">cloneable</i>
+                    <div class="font-small"><i>{{converter.readableIdentifier(hero.heroType)}}</i><i *ngIf="hero.recruitable">, cloneable</i></div>
                 </div>
             </div>
         </ion-col>
-        <ion-col *ngIf="!getHero(heroClass, 'RED')">-</ion-col>
+        <ion-col *ngIf="!getHero(heroClass, 'RED')" class="flex-center"><ion-button fill="outline" size="small" (click)="createHero(heroClass, 'RED')"><ion-icon name="add"></ion-icon></ion-button></ion-col>
         <ion-col *ngIf="getHero(heroClass, 'GREEN') as hero" class="pointer" (click)="gotoHero(hero)">
             <div class="flex-start">
                 <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'" class="hero-avatar-very-small border-green"></ion-img>
                 <div class="ml-2 flex-vert">
                     <div class="bold">{{hero.name}}</div>
                     <div *ngIf="hero.startingHero" class="font-small">STARTING HERO</div>
-                    <i *ngIf="hero.recruitable" class="font-small">cloneable</i>
+                    <div class="font-small"><i>{{converter.readableIdentifier(hero.heroType)}}</i><i *ngIf="hero.recruitable">, cloneable</i></div>
                 </div>
             </div>
         </ion-col>
-        <ion-col *ngIf="!getHero(heroClass, 'GREEN')">-</ion-col>
+        <ion-col *ngIf="!getHero(heroClass, 'GREEN')" class="flex-center"><ion-button fill="outline" size="small" (click)="createHero(heroClass, 'GREEN')"><ion-icon name="add"></ion-icon></ion-button></ion-col>
         <ion-col *ngIf="getHero(heroClass, 'BLUE') as hero" class="pointer" (click)="gotoHero(hero)">
             <div class="flex-start">
                 <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'" class="hero-avatar-very-small border-blue"></ion-img>
                 <div class="ml-2 flex-vert">
                     <div class="bold">{{hero.name}}</div>
                     <div *ngIf="hero.startingHero" class="font-small">STARTING HERO</div>
-                    <i *ngIf="hero.recruitable" class="font-small">cloneable</i>
+                    <div class="font-small"><i>{{converter.readableIdentifier(hero.heroType)}}</i><i *ngIf="hero.recruitable">, cloneable</i></div>
                 </div>
             </div>
         </ion-col>
-        <ion-col *ngIf="!getHero(heroClass, 'BLUE')">-</ion-col>
+        <ion-col *ngIf="!getHero(heroClass, 'BLUE')" class="flex-center"><ion-button fill="outline" size="small" (click)="createHero(heroClass, 'BLUE')"><ion-icon name="add"></ion-icon></ion-button></ion-col>
         <ion-col *ngIf="getHero(heroClass, 'NEUTRAL') as hero" class="pointer" (click)="gotoHero(hero)">
             <div class="flex-start">
                 <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'" class="hero-avatar-very-small border-neutral"></ion-img>
                 <div class="ml-2 flex-vert">
                     <div class="bold">{{hero.name}}</div>
                     <div *ngIf="hero.startingHero" class="font-small">STARTING HERO</div>
-                    <i *ngIf="hero.recruitable" class="font-small">cloneable</i>
+                    <div class="font-small"><i>{{converter.readableIdentifier(hero.heroType)}}</i><i *ngIf="hero.recruitable">, cloneable</i></div>
                 </div>
             </div>
         </ion-col>
-        <ion-col *ngIf="!getHero(heroClass, 'NEUTRAL')">-</ion-col>
+        <ion-col *ngIf="!getHero(heroClass, 'NEUTRAL')" class="flex-center"><ion-button fill="outline" size="small" (click)="createHero(heroClass, 'NEUTRAL')"><ion-icon name="add"></ion-icon></ion-button></ion-col>
     </ion-row>
 </ion-content>

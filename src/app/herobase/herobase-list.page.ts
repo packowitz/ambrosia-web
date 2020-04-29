@@ -99,4 +99,30 @@ export class HerobaseListPage {
     gotoHero(hero: HeroBase) {
         this.router.navigateByUrl('/herobase/edit/' + hero.id);
     }
+
+    newBaseHero() {
+        this.router.navigateByUrl('/herobase/create');
+    }
+
+    createHero(heroClass: HeroClassRarity, color: string) {
+        let newHero = new HeroBase();
+        newHero.rarity = heroClass.rarity;
+        newHero.heroClass = heroClass.heroClass;
+        newHero.color = color;
+        newHero.heroType = this.model.baseHeroes.find(h => h.heroClass === heroClass.heroClass && h.rarity === heroClass.rarity).heroType;
+        newHero.name = color + " " + heroClass.heroClass;
+        this.backendService.createHeroBase(newHero).subscribe(hero => {
+            this.model.updateBaseHero(hero);
+            this.router.navigateByUrl('/herobase/edit/' + hero.id);
+        }, error => {
+            this.toastCtrl.create({
+                message: error.error.message,
+                buttons: [
+                    { text: 'Close', role: 'cancel' }
+                ],
+                position: 'bottom',
+                color: 'danger'
+            }).then(toast => toast.present());
+        });
+    }
 }

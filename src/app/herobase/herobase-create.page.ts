@@ -18,6 +18,10 @@ export class HerobaseCreatePage {
                 private router: Router) {
     }
 
+    cancel() {
+        this.router.navigateByUrl('/herobase/list');
+    }
+
     createHero(form) {
         console.log('creating base hero: ');
         console.log(form.value);

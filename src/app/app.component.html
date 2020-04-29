@@ -5,43 +5,41 @@
         <ion-toolbar>
           <div class="flex-space-between">
             <ion-title>Menu</ion-title>
-            <ion-select *ngIf="model.player.admin" [(ngModel)]="model.activeAccountId" (ionChange)="loadAccountData()" [interfaceOptions]="{subHeader: 'Select Account'}">
+            <ion-select [(ngModel)]="model.activeAccountId" (ionChange)="loadAccountData()" [interfaceOptions]="{subHeader: 'Select Account'}">
               <ion-select-option [value]="model.playerId">{{model.playerName}}</ion-select-option>
               <ion-select-option *ngFor="let serviceAcc of model.serviceAccounts" [value]="serviceAcc.id">{{serviceAcc.name}}</ion-select-option>
             </ion-select>
-            <ion-button *ngIf="model.player.admin" color="success" size="small" (click)="addServiceAccount()"><ion-icon name="add"></ion-icon></ion-button>
+            <ion-button color="success" size="small" (click)="addServiceAccount()"><ion-icon name="add"></ion-icon></ion-button>
           </div>
         </ion-toolbar>
       </ion-header>
       <ion-content id="menu">
 
         <div *ngFor="let p of pages">
-          <div *ngIf="!p.admin || model.player.admin">
-            <ion-menu-toggle *ngIf="p.url" autoHide="false">
-              <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active" (click)="p.open = !p.open">
-                <i class="ra ra-{{p.icon}}" slot="start"></i>
-                <ion-icon slot="end" name="arrow-forward" *ngIf="p.children?.length > 0 && !p.open"></ion-icon>
-                <ion-icon slot="end" name="arrow-down" *ngIf="p.children?.length > 0 && p.open"></ion-icon>
-                <ion-label>{{p.title}}</ion-label>
-              </ion-item>
-            </ion-menu-toggle>
-
-            <ion-item button *ngIf="!p.url && p.children?.length > 0" (click)="p.open = !p.open" [class.parent-active]="p.open" detail="false">
+          <ion-menu-toggle *ngIf="p.url" autoHide="false">
+            <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active" (click)="p.open = !p.open">
               <i class="ra ra-{{p.icon}}" slot="start"></i>
-              <ion-icon slot="end" name="arrow-forward" *ngIf="!p.open"></ion-icon>
-              <ion-icon slot="end" name="arrow-down" *ngIf="p.open"></ion-icon>
+              <ion-icon slot="end" name="arrow-forward" *ngIf="p.children?.length > 0 && !p.open"></ion-icon>
+              <ion-icon slot="end" name="arrow-down" *ngIf="p.children?.length > 0 && p.open"></ion-icon>
               <ion-label>{{p.title}}</ion-label>
             </ion-item>
+          </ion-menu-toggle>
 
-            <ion-list *ngIf="p.open && p.children?.length > 0">
-              <ion-menu-toggle autoHide="false">
-                <ion-item *ngFor="let sub of p.children" class="sub-item" [routerLink]="sub.url" routerDirection="root" routerLinkActive="active">
-                  <i *ngIf="sub.icon" class="ra ra-{{sub.icon}}" slot="start"></i>
-                  <ion-label>{{sub.title}}</ion-label>
-                </ion-item>
-              </ion-menu-toggle>
-            </ion-list>
-          </div>
+          <ion-item button *ngIf="!p.url && p.children?.length > 0" (click)="p.open = !p.open" [class.parent-active]="p.open" detail="false">
+            <i class="ra ra-{{p.icon}}" slot="start"></i>
+            <ion-icon slot="end" name="arrow-forward" *ngIf="!p.open"></ion-icon>
+            <ion-icon slot="end" name="arrow-down" *ngIf="p.open"></ion-icon>
+            <ion-label>{{p.title}}</ion-label>
+          </ion-item>
+
+          <ion-list *ngIf="p.open && p.children?.length > 0">
+            <ion-menu-toggle autoHide="false">
+              <ion-item *ngFor="let sub of p.children" class="sub-item" [routerLink]="sub.url" routerDirection="root" routerLinkActive="active">
+                <i *ngIf="sub.icon" class="ra ra-{{sub.icon}}" slot="start"></i>
+                <ion-label>{{sub.title}}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
 
         </div>
 
