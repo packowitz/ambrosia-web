@@ -18,6 +18,10 @@
   background-color: #a32324;
 }
 
+.background-light-red {
+  background-color: #ffa7a2;
+}
+
 .background-GREEN {
   background-color: #2f9b34;
 }
@@ -58,6 +62,10 @@
   color: #a0211d;
 }
 
+.color-blue {
+  color: #1414a0;
+}
+
 .color-orange {
   color: #d4910d;
 }
@@ -84,6 +92,22 @@
 
 .color-jewel-CRIT {
   color: #2ba6bb;
+}
+
+.border-red {
+  border: 2px solid #a91d1d;
+}
+
+.border-green {
+  border: 2px solid #30841b;
+}
+
+.border-blue {
+  border: 2px solid #2a40dc;
+}
+
+.border-neutral {
+  border: 2px solid #9c9696;
 }
 
 .border-grey {
@@ -163,7 +187,7 @@
 }
 
 ion-row.table-header {
-  background-color: #4c8dff;
+  background-color: #ccddff;
   ion-col {
     padding: 10px 12px;
     border: solid 1px grey;
@@ -204,6 +228,10 @@ ion-row.table-row {
 
 .hero-avatar-small {
   width: 80px;
+}
+
+.hero-avatar-very-small {
+  width: 60px;
 }
 
 .vehicle-only-avatar {

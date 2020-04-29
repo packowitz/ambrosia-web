@@ -10,22 +10,115 @@
 </ion-header>
 
 <ion-content>
+    <ion-card>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label>Sorting</ion-label>
+                    <ion-select [(ngModel)]="sorting" (ionChange)="sort(heroClassList)">
+                        <ion-select-option value="RarityAsc">Rarity Asc</ion-select-option>
+                        <ion-select-option value="RarityDesc">Rarity Desc</ion-select-option>
+                        <ion-select-option value="NameAsc">Name Asc</ion-select-option>
+                        <ion-select-option value="NameDesc">Name Desc</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-checkbox [(ngModel)]="onlyCloneable" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">Only cloneable</ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-checkbox [(ngModel)]="onlyStartingHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">Only starting heroes</ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-checkbox [(ngModel)]="showSimpleHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">1*</ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-checkbox [(ngModel)]="showCommonHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">2*</ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-checkbox [(ngModel)]="showUncommonHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">3*</ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-checkbox [(ngModel)]="showRareHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">4*</ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-checkbox [(ngModel)]="showEpicHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">5*</ion-label>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-card>
     <ion-row class="table-header">
         <ion-col>Hero Class</ion-col>
-        <ion-col>RED</ion-col>
-        <ion-col>GREEN</ion-col>
-        <ion-col>BLUE</ion-col>
+        <ion-col class="color-red">RED</ion-col>
+        <ion-col class="color-green">GREEN</ion-col>
+        <ion-col class="color-blue">BLUE</ion-col>
         <ion-col>NEUTRAL</ion-col>
     </ion-row>
     <ion-row *ngFor="let heroClass of heroClassList" class="table-row">
-        <ion-col>{{heroClass.heroClass}} {{converter.rarityStars(heroClass.rarity)}}*</ion-col>
-        <ion-col *ngIf="getHero(heroClass, 'RED') as hero"><ion-icon name="star" *ngIf="hero.startingHero"></ion-icon><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="RED">{{hero.name}}</a></ion-col>
+        <ion-col>{{heroClass.heroClass}} {{heroClass.stars}}*</ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'RED') as hero" class="pointer" (click)="gotoHero(hero)">
+            <div class="flex-start">
+                <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'" class="hero-avatar-very-small border-red"></ion-img>
+                <div class="ml-2 flex-vert">
+                    <div class="bold">{{hero.name}}</div>
+                    <div *ngIf="hero.startingHero" class="font-small">STARTING HERO</div>
+                    <i *ngIf="hero.recruitable" class="font-small">cloneable</i>
+                </div>
+            </div>
+        </ion-col>
         <ion-col *ngIf="!getHero(heroClass, 'RED')">-</ion-col>
-        <ion-col *ngIf="getHero(heroClass, 'GREEN') as hero"><ion-icon name="star" *ngIf="hero.startingHero"></ion-icon><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="GREEN">{{hero.name}}</a></ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'GREEN') as hero" class="pointer" (click)="gotoHero(hero)">
+            <div class="flex-start">
+                <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'" class="hero-avatar-very-small border-green"></ion-img>
+                <div class="ml-2 flex-vert">
+                    <div class="bold">{{hero.name}}</div>
+                    <div *ngIf="hero.startingHero" class="font-small">STARTING HERO</div>
+                    <i *ngIf="hero.recruitable" class="font-small">cloneable</i>
+                </div>
+            </div>
+        </ion-col>
         <ion-col *ngIf="!getHero(heroClass, 'GREEN')">-</ion-col>
-        <ion-col *ngIf="getHero(heroClass, 'BLUE') as hero"><ion-icon name="star" *ngIf="hero.startingHero"></ion-icon><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="BLUE">{{hero.name}}</a></ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'BLUE') as hero" class="pointer" (click)="gotoHero(hero)">
+            <div class="flex-start">
+                <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'" class="hero-avatar-very-small border-blue"></ion-img>
+                <div class="ml-2 flex-vert">
+                    <div class="bold">{{hero.name}}</div>
+                    <div *ngIf="hero.startingHero" class="font-small">STARTING HERO</div>
+                    <i *ngIf="hero.recruitable" class="font-small">cloneable</i>
+                </div>
+            </div>
+        </ion-col>
         <ion-col *ngIf="!getHero(heroClass, 'BLUE')">-</ion-col>
-        <ion-col *ngIf="getHero(heroClass, 'NEUTRAL') as hero"><ion-icon name="star" *ngIf="hero.startingHero"></ion-icon><ion-icon name="color-wand" *ngIf="hero.recruitable"></ion-icon><a [routerLink]="'/herobase/edit/' + hero.id" class="NEUTRAL">{{hero.name}}</a></ion-col>
+        <ion-col *ngIf="getHero(heroClass, 'NEUTRAL') as hero" class="pointer" (click)="gotoHero(hero)">
+            <div class="flex-start">
+                <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'" class="hero-avatar-very-small border-neutral"></ion-img>
+                <div class="ml-2 flex-vert">
+                    <div class="bold">{{hero.name}}</div>
+                    <div *ngIf="hero.startingHero" class="font-small">STARTING HERO</div>
+                    <i *ngIf="hero.recruitable" class="font-small">cloneable</i>
+                </div>
+            </div>
+        </ion-col>
         <ion-col *ngIf="!getHero(heroClass, 'NEUTRAL')">-</ion-col>
     </ion-row>
 </ion-content>
