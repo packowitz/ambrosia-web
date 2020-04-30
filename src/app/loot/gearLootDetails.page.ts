@@ -1,13 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {Model} from '../services/model.service';
-import {EnumService, MapTileStructure, ResourceType} from '../services/enum.service';
+import {EnumService} from '../services/enum.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Map} from '../domain/map.model';
-import {MapTile} from '../domain/mapTile.model';
 import {AlertController} from '@ionic/angular';
-import {LootBox} from '../domain/lootBox.model';
-import {LootItem} from '../domain/lootItem.model';
 import {ConverterService} from '../services/converter.service';
 import {GearLoot} from '../domain/gearLoot.model';
 
@@ -18,6 +14,7 @@ import {GearLoot} from '../domain/gearLoot.model';
 export class GearLootDetailsPage {
 
   saving = false;
+  editName = false;
 
   gearLoot: GearLoot;
 
@@ -31,6 +28,7 @@ export class GearLootDetailsPage {
   }
 
   ionViewWillEnter() {
+    this.editName = false;
     let id = Number(this.route.snapshot.paramMap.get('id'));
     if (!this.model.gearLoots) {
       this.saving = true;

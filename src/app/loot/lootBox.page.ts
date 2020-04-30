@@ -15,6 +15,7 @@ import {ConverterService} from '../services/converter.service';
 export class LootBoxPage {
 
     saving = false;
+    editName = false;
 
     lootBox: LootBox;
 
@@ -28,6 +29,7 @@ export class LootBoxPage {
     }
 
     ionViewWillEnter() {
+        this.editName = false;
         let id = Number(this.route.snapshot.paramMap.get('id'));
         if (!this.model.lootBoxes) {
             this.saving = true;

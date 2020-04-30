@@ -5,7 +5,11 @@
     </ion-buttons>
     <ion-title>
       <div class="flex-space-between">
-        Loot Box {{lootBox ? lootBox.name : ''}}
+        <div *ngIf="!editName && lootBox" class="flex-start">Loot Box {{lootBox.name}} <ion-button class="ml-1" fill="none" (click)="editName = true"><ion-icon name="pencil-outline"></ion-icon></ion-button></div>
+        <div *ngIf="editName && lootBox" class="flex-start">
+          Loot Box
+          <ion-input [(ngModel)]="lootBox.name" autofocus="true" class="input-border ml-1"></ion-input>
+        </div>
         <div>
           <ion-button color="medium" fill="clean" (click)="cancel()">Cancel</ion-button>
           <ion-button color="success" (click)="save()">Save</ion-button>
