@@ -27,7 +27,10 @@
       <ion-card-title>
         <div class="flex-space-between">
           General attributes
-          <ion-button (click)="recruit()">Recruit</ion-button>
+          <div>
+            <ion-button (click)="delete()" color="danger">Delete</ion-button>
+            <ion-button (click)="recruit()">Recruit</ion-button>
+          </div>
         </div>
       </ion-card-title>
     </ion-card-header>

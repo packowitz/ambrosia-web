@@ -101,6 +101,10 @@ export class BackendService {
         return this.http.post<HeroBase>(API_URL + '/admin/hero_base', data);
     }
 
+    deleteHeroBase(heroId): Observable<any> {
+        return this.http.delete<any>(API_URL + '/admin/hero_base/' + heroId);
+    }
+
     saveHeroBase(hero: HeroBase): Observable<HeroBase> {
         return this.http.put<HeroBase>(API_URL + '/admin/hero_base/' + hero.id, hero);
     }

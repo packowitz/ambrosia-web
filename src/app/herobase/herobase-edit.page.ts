@@ -66,6 +66,33 @@ export class HerobaseEditPage implements OnInit {
         });
     }
 
+    delete() {
+        this.alertCtrl.create({
+            subHeader: 'Are you sure to delete this base hero?',
+            buttons: [
+                {text: 'Cancel'},
+                {text: 'Delete', handler: () => {
+                    this.saving = true;
+                    this.backendService.deleteHeroBase(this.hero.id).subscribe(() => {
+                        this.saving = false;
+                        let idx = this.model.baseHeroes.findIndex(h => h.id === this.hero.id);
+                        if (idx >= 0) {
+                            this.model.baseHeroes.splice(idx, 1);
+                        }
+                        this.cancel();
+                    }, error => {
+                        this.saving = false;
+                        this.alertCtrl.create({
+                            header: 'Server error',
+                            message: error.error.message,
+                            buttons: [{text: 'Okay'}]
+                        }).then(data => data.present());
+                    });
+                }}
+            ]
+        }).then(a => a.present());
+    }
+
     counter(i: number) {
         return new Array(i);
     }
