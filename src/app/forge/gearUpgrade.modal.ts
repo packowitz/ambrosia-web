@@ -12,19 +12,19 @@ import {ConverterService} from '../services/converter.service';
       <div class="ma-2" *ngIf="gearId">
         <div class="flex-space-around">
           <div class="flex">{{model.resources.wood}}/{{model.resources.woodMax}}
-            <ion-img src="assets/img/resources/WOOD.png" class="resource-icon"></ion-img>
+            <ion-img src="assets/icon/resources/WOOD.png" class="resource-icon"></ion-img>
           </div>
           <div class="flex">{{model.resources.brownCoal}}/{{model.resources.brownCoalMax}}
-            <ion-img src="assets/img/resources/BROWN_COAL.png" class="resource-icon"></ion-img>
+            <ion-img src="assets/icon/resources/BROWN_COAL.png" class="resource-icon"></ion-img>
           </div>
           <div class="flex">{{model.resources.blackCoal}}/{{model.resources.blackCoalMax}}
-            <ion-img src="assets/img/resources/BLACK_COAL.png" class="resource-icon"></ion-img>
+            <ion-img src="assets/icon/resources/BLACK_COAL.png" class="resource-icon"></ion-img>
           </div>
           <div class="flex">{{model.resources.coins}}
-            <ion-img src="assets/img/resources/COINS.png" class="resource-icon"></ion-img>
+            <ion-img src="assets/icon/resources/COINS.png" class="resource-icon"></ion-img>
           </div>
           <div class="flex">{{model.resources.rubies}}
-            <ion-img src="assets/img/resources/RUBIES.png" class="resource-icon"></ion-img>
+            <ion-img src="assets/icon/resources/RUBIES.png" class="resource-icon"></ion-img>
           </div>
         </div>
         <ion-item class="mt-2">
@@ -47,7 +47,7 @@ import {ConverterService} from '../services/converter.service';
               <div *ngIf="!hasEnoughResources">Insufficient resources</div>
               <div *ngFor="let cost of upgradeCosts" class="flex">
                 <div [class.color-red]="!model.hasEnoughResources(cost.resourceType, cost.value1)">{{model.getResourceAmount(cost.resourceType)}}</div>/{{cost.value1}}
-                <ion-img src="assets/img/resources/{{cost.resourceType}}.png" class="resource-icon"></ion-img>
+                <ion-img src="assets/icon/resources/{{cost.resourceType}}.png" class="resource-icon"></ion-img>
               </div>
             </div>
             <div class="mt-2 flex-center">

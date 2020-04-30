@@ -12,8 +12,8 @@ import {ConverterService} from '../services/converter.service';
           <div class="flex-space-between mb-2">
             <div class="flex-grow">&nbsp;</div>
             <div class="flex" *ngIf="fight.resourceType == 'STEAM'">
-              <div class="flex ml-2 mr-2">{{model.resources.premiumSteam}}/{{model.resources.premiumSteamMax}}<ion-img src="assets/img/resources/PREMIUM_STEAM.png" class="resource-icon" alt="premium steam"></ion-img></div>
-              <div class="flex pointer" (click)="timer = !timer">{{timer ? ( model.resources.steam >= model.resources.steamMax ? 'max' : converter.time(model.resources.steamProduceIn) ) : model.resources.steam + '/' + model.resources.steamMax}}<ion-img src="assets/img/resources/STEAM.png" class="resource-icon" alt="steam"></ion-img></div>
+              <div class="flex ml-2 mr-2">{{model.resources.premiumSteam}}/{{model.resources.premiumSteamMax}}<ion-img src="assets/icon/resources/PREMIUM_STEAM.png" class="resource-icon" alt="premium steam"></ion-img></div>
+              <div class="flex pointer" (click)="timer = !timer">{{timer ? ( model.resources.steam >= model.resources.steamMax ? 'max' : converter.time(model.resources.steamProduceIn) ) : model.resources.steam + '/' + model.resources.steamMax}}<ion-img src="assets/icon/resources/STEAM.png" class="resource-icon" alt="steam"></ion-img></div>
             </div>
           </div>
           <ion-range min="1" [max]="max" [(ngModel)]="numberOfBattles">
@@ -23,7 +23,7 @@ import {ConverterService} from '../services/converter.service';
             <div class="flex-grow">&nbsp;</div>
             <div class="flex">
               <ion-button color="medium" fill="clean" (click)="closeModal()">Cancel</ion-button>
-              <ion-button color="success" size="small" (click)="closeModal(numberOfBattles)">Start ({{numberOfBattles * fight.costs}}<ion-img src="assets/img/resources/{{fight.resourceType}}.png" class="resource-icon"></ion-img>)</ion-button>
+              <ion-button color="success" size="small" (click)="closeModal(numberOfBattles)">Start ({{numberOfBattles * fight.costs}}<ion-img src="assets/icon/resources/{{fight.resourceType}}.png" class="resource-icon"></ion-img>)</ion-button>
             </div>
           </div>
         </div>

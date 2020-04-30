@@ -8,7 +8,7 @@ import {ConverterService} from '../services/converter.service';
     selector: 'loot-item',
     template: `
       <div *ngIf="loot.type == 'RESOURCE'" class="loot-item flex-vert-center">
-        <img src="assets/img/resources/{{loot.resourceType}}.png" class="loot-image">
+        <img src="assets/icon/resources/{{loot.resourceType}}.png" class="loot-image">
         <div class="font-small">{{loot.value}}x</div>
       </div>
       <div *ngIf="loot.type == 'HERO'" class="hero-tile-very-small border-grey flex-vert-center loot-item">

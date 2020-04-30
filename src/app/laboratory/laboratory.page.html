@@ -46,7 +46,7 @@
     <ion-card-content>
       <div class="flex">
         <div *ngFor="let incubator of model.incubators" class="flex-vert-center border-grey pt-1 pl-2 pr-2 mr-3 pointer" (click)="finishIncubation(incubator)">
-          <ion-img src="assets/img/resources/{{incubator.type}}.png" class="resource-icon-large"></ion-img>
+          <ion-img src="assets/icon/resources/{{incubator.type}}.png" class="resource-icon-large"></ion-img>
           <div>{{converter.time(incubator.secondsUntilDone)}}</div>
         </div>
       </div>
@@ -60,14 +60,14 @@
     <ion-card-content>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/img/resources/SIMPLE_GENOME.png" class="resource-icon-large"></ion-img>
+          <ion-img src="assets/icon/resources/SIMPLE_GENOME.png" class="resource-icon-large"></ion-img>
         </ion-col>
         <ion-col sizeMd="6">
           Incubating <b>Simple Genomes</b> will clone a simple (1*) hero.
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
-            <span [class.color-red]="!hasEnoughGenomes('SIMPLE_GENOME')">{{model.resources.simpleGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('SIMPLE_GENOME')}}<ion-img src="assets/img/resources/SIMPLE_GENOME.png" class="resource-icon"></ion-img>
+            <span [class.color-red]="!hasEnoughGenomes('SIMPLE_GENOME')">{{model.resources.simpleGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('SIMPLE_GENOME')}}<ion-img src="assets/icon/resources/SIMPLE_GENOME.png" class="resource-icon"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
@@ -76,14 +76,14 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/img/resources/COMMON_GENOME.png" class="resource-icon-large"></ion-img>
+          <ion-img src="assets/icon/resources/COMMON_GENOME.png" class="resource-icon-large"></ion-img>
         </ion-col>
         <ion-col sizeMd="6">
           Incubating <b>Common Genomes</b> will clone a common (2*) hero.
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
-            <span [class.color-red]="!hasEnoughGenomes('COMMON_GENOME')">{{model.resources.commonGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('COMMON_GENOME')}}<ion-img src="assets/img/resources/COMMON_GENOME.png" class="resource-icon"></ion-img>
+            <span [class.color-red]="!hasEnoughGenomes('COMMON_GENOME')">{{model.resources.commonGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('COMMON_GENOME')}}<ion-img src="assets/icon/resources/COMMON_GENOME.png" class="resource-icon"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
@@ -92,14 +92,14 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/img/resources/UNCOMMON_GENOME.png" class="resource-icon-large"></ion-img>
+          <ion-img src="assets/icon/resources/UNCOMMON_GENOME.png" class="resource-icon-large"></ion-img>
         </ion-col>
         <ion-col sizeMd="6">
           Incubating <b>Uncommon Genomes</b> will clone an uncommon (3*) hero.
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
-            <span [class.color-red]="!hasEnoughGenomes('UNCOMMON_GENOME')">{{model.resources.uncommonGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('UNCOMMON_GENOME')}}<ion-img src="assets/img/resources/UNCOMMON_GENOME.png" class="resource-icon"></ion-img>
+            <span [class.color-red]="!hasEnoughGenomes('UNCOMMON_GENOME')">{{model.resources.uncommonGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('UNCOMMON_GENOME')}}<ion-img src="assets/icon/resources/UNCOMMON_GENOME.png" class="resource-icon"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
@@ -108,14 +108,14 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/img/resources/RARE_GENOME.png" class="resource-icon-large"></ion-img>
+          <ion-img src="assets/icon/resources/RARE_GENOME.png" class="resource-icon-large"></ion-img>
         </ion-col>
         <ion-col sizeMd="6">
           Incubating <b>Rare Genomes</b> will clone a rare (4*) hero.
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
-            <span [class.color-red]="!hasEnoughGenomes('RARE_GENOME')">{{model.resources.rareGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('RARE_GENOME')}}<ion-img src="assets/img/resources/RARE_GENOME.png" class="resource-icon"></ion-img>
+            <span [class.color-red]="!hasEnoughGenomes('RARE_GENOME')">{{model.resources.rareGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('RARE_GENOME')}}<ion-img src="assets/icon/resources/RARE_GENOME.png" class="resource-icon"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
@@ -124,14 +124,14 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/img/resources/EPIC_GENOME.png" class="resource-icon-large"></ion-img>
+          <ion-img src="assets/icon/resources/EPIC_GENOME.png" class="resource-icon-large"></ion-img>
         </ion-col>
         <ion-col sizeMd="6">
           Incubating <b>Epic Genomes</b> will clone an epic (5*) hero.
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
-            <span [class.color-red]="!hasEnoughGenomes('EPIC_GENOME')">{{model.resources.epicGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('EPIC_GENOME')}}<ion-img src="assets/img/resources/EPIC_GENOME.png" class="resource-icon"></ion-img>
+            <span [class.color-red]="!hasEnoughGenomes('EPIC_GENOME')">{{model.resources.epicGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('EPIC_GENOME')}}<ion-img src="assets/icon/resources/EPIC_GENOME.png" class="resource-icon"></ion-img>
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">

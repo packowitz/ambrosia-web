@@ -95,7 +95,7 @@
         </ion-col>
         <ion-col sizeMd="2" class="flex-vert-center">
           <ion-button color="success" (click)="start()" [disabled]="!canStartBattle()">
-            <div *ngIf="!testFight" class="flex-center">Start ({{fight.costs}}<ion-img src="assets/img/resources/{{fight.resourceType}}.png" class="resource-icon"></ion-img>)</div>
+            <div *ngIf="!testFight" class="flex-center">Start ({{fight.costs}}<ion-img src="assets/icon/resources/{{fight.resourceType}}.png" class="resource-icon"></ion-img>)</div>
             <div *ngIf="testFight">Start</div>
           </ion-button>
           <ion-button *ngIf="offlineBattleEnabled()" (click)="openMission()" [disabled]="!vehicle || !canStartBattle()">Mission</ion-button>
