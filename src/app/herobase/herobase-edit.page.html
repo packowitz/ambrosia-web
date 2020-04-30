@@ -279,7 +279,7 @@
     <ion-card-content>
       <div class="flex-space-between">
         <div *ngFor="let heroSkill of hero.skills" (click)="setSkill(heroSkill)" class="pointer pt-2 pl-3 pr-3 pb-1" [class.skill-selected]="skill.number == heroSkill.number">
-          <ion-img [src]="'assets/img/skills/' + heroSkill.icon + '.png'" class="skill_icon" (click)="skill.number == heroSkill.number ?  changeSkillIcon(heroSkill) : false"></ion-img>
+          <ion-img [src]="'assets/icon/skills/' + heroSkill.icon + '.png'" class="skill_icon" (click)="skill.number == heroSkill.number ?  changeSkillIcon(heroSkill) : false"></ion-img>
           <div [class.bold]="skill.number == heroSkill.number" class="mt-1">Skill {{heroSkill.number}}</div>
         </div>
         <div>

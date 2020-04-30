@@ -6,7 +6,7 @@ import {ModalController, NavParams} from '@ionic/angular';
     template: `
         <div class="scrollable-vert">
             <div class="flex-center mt-2">
-                <ion-img [src]="'assets/img/skills/' + currentIcon + '.png'" class="skill_icon pointer" (click)="closeModal(currentIcon)"></ion-img>
+                <ion-img [src]="'assets/icon/skills/' + currentIcon + '.png'" class="skill_icon pointer" (click)="closeModal(currentIcon)"></ion-img>
                 <div class="ml-4">Current Skill Icon</div>
             </div>
             <ion-segment [(ngModel)]="tab">
@@ -21,13 +21,13 @@ import {ModalController, NavParams} from '@ionic/angular';
                 </ion-segment-button>
             </ion-segment>
             <div *ngIf="tab == 'BLUE'" class="flex flex-wrap">
-                <ion-img *ngFor="let icon of blueIcons" [src]="'assets/img/skills/' + icon + '.png'" class="skill_icon pointer ma-1" (click)="closeModal(icon)"></ion-img>
+                <ion-img *ngFor="let icon of blueIcons" [src]="'assets/icon/skills/' + icon + '.png'" class="skill_icon pointer ma-1" (click)="closeModal(icon)"></ion-img>
             </div>
             <div *ngIf="tab == 'GREEN'" class="flex flex-wrap">
-                <ion-img *ngFor="let icon of greenIcons" [src]="'assets/img/skills/' + icon + '.png'" class="skill_icon pointer ma-1" (click)="closeModal(icon)"></ion-img>
+                <ion-img *ngFor="let icon of greenIcons" [src]="'assets/icon/skills/' + icon + '.png'" class="skill_icon pointer ma-1" (click)="closeModal(icon)"></ion-img>
             </div>
             <div *ngIf="tab == 'RED'" class="flex flex-wrap">
-                <ion-img *ngFor="let icon of redIcons" [src]="'assets/img/skills/' + icon + '.png'" class="skill_icon pointer ma-1" (click)="closeModal(icon)"></ion-img>
+                <ion-img *ngFor="let icon of redIcons" [src]="'assets/icon/skills/' + icon + '.png'" class="skill_icon pointer ma-1" (click)="closeModal(icon)"></ion-img>
             </div>
         </div>
     `
@@ -37,11 +37,11 @@ export class SkillIconModal implements OnInit {
     currentIcon = "";
     tab = "BLUE";
 
-    blueIconCount = 86;
+    blueIconCount = 117;
     blueIcons = [];
-    greenIconCount = 62;
+    greenIconCount = 99;
     greenIcons = [];
-    redIconCount = 120;
+    redIconCount = 131;
     redIcons = [];
 
     constructor(private modalController: ModalController, private navParams: NavParams) {
