@@ -571,3 +571,12 @@ ion-row.table-row {
 .skill-selected {
   background-color: #b8ebf1;
 }
+
+.tile-selection {
+  max-width: 50px;
+  border: 1px solid grey;
+
+  &.selected {
+    border: 3px solid #ce1616;
+  }
+}

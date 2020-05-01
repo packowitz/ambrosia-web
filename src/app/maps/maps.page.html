@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt="" class="logo"></div>
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
 <ion-content *ngIf="model.maps">
   <ion-list>
     <ion-item *ngFor="let map of model.maps" (click)="mapDetails(map)" detail class="pointer">

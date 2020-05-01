@@ -26,6 +26,9 @@
   }
 
   .map-hexagon-overlay {
+    &.structure {
+      background-color: rgba(255,255,255,0.5);
+    }
     &:hover {
       background-color: rgba(0,0,0,0.5);
     }
@@ -131,6 +134,10 @@
   height: 100%;
   overflow: hidden;
   transform: skewY(-30deg) rotate(60deg);
+
+  &.structure {
+    background-color: rgba(255,255,255,0.5);
+  }
 
   img {
     position: absolute;

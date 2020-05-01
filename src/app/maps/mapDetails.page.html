@@ -15,7 +15,7 @@
   </ion-toolbar>
 </ion-header>
 
-<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt="" class="logo"></div>
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
 <ion-content *ngIf="map">
   <ion-card>
     <ion-card-content>
@@ -84,27 +84,22 @@
           <ion-checkbox [(ngModel)]="tile.blueAlwaysRevealed" slot="start"></ion-checkbox>
         </ion-item>
       </div>
-      <ion-radio-group [(ngModel)]="tile.type">
-        <div class="flex-space-between">
-          <ion-item *ngFor="let mapType of enumService.getMapTileTypes()">
-            <ion-label>{{mapType}}</ion-label>
-            <ion-radio [value]="mapType"></ion-radio>
-          </ion-item>
-        </div>
-      </ion-radio-group>
+      <div class="mt-2 mb-2 flex-space-between">
+        <ion-img *ngFor="let mapType of enumService.getMapTileTypes()" src="assets/icon/map/tiles/{{mapType}}.png" class="pointer tile-selection" (click)="tile.type = mapType" [class.selected]="tile.type == mapType"></ion-img>
+      </div>
       <div class="flex-space-between">
-        <ion-item>
+        <ion-item class="flex-grow">
           <ion-label>Fight Repeatable</ion-label>
           <ion-checkbox [(ngModel)]="tile.fightRepeatable" slot="start"></ion-checkbox>
         </ion-item>
-        <ion-item>
+        <ion-item class="flex-grow">
           <ion-label>Icon</ion-label>
-          <ion-select [(ngModel)]="tile.fightIcon" placeholder="select" [required]="tile.fightId" (ionChange)="fightIconChanged()">
+          <ion-select [(ngModel)]="tile.fightIcon" placeholder="select" [required]="!!tile.fightId" (ionChange)="fightIconChanged()">
             <ion-select-option [value]="null">NONE</ion-select-option>
             <ion-select-option *ngFor="let icon of enumService.getMapTileFightIcons()" [value]="icon">{{icon}}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item class="flex-grow">
           <ion-label>Fight</ion-label>
           <ion-select [(ngModel)]="tile.fightId" placeholder="select" [required]="tile.fightIcon" (ionChange)="fightChanged()">
             <ion-select-option [value]="null">NONE</ion-select-option>
@@ -193,15 +188,15 @@
         <div class="map-container-inner" [class.first-row-even]="isEven(rows[0])" [class.last-row-even]="isEven(rows[rows.length - 1])">
           <div *ngFor="let y of rows" class="map-row" [class.even]="isEven(y)" [class.odd]="!isEven(y)">
             <div *ngFor="let tile of getRow(y)" class="map-hexagon-wrapper">
-              <div class="map-hexagon-overlay pointer" [class.selected]="isSelected(tile)" (click)="selectTile(tile)">
-                <img *ngIf="tile.redAlwaysRevealed" src="assets/img/red_dot.png" class="to-front">
-                <img *ngIf="tile.greenAlwaysRevealed" src="assets/img/green_dot.png" class="to-front">
-                <img *ngIf="tile.blueAlwaysRevealed" src="assets/img/blue_dot.png" class="to-front">
+              <div class="map-hexagon-overlay pointer" [class.selected]="isSelected(tile)" (click)="selectTile(tile)" [class.structure]="tile.redAlwaysRevealed || tile.blueAlwaysRevealed || tile.greenAlwaysRevealed || tile.fightIcon || tile.structure">
+                <img *ngIf="tile.redAlwaysRevealed" src="assets/icon/red_dot.png" class="to-front">
+                <img *ngIf="tile.greenAlwaysRevealed" src="assets/icon/green_dot.png" class="to-front">
+                <img *ngIf="tile.blueAlwaysRevealed" src="assets/icon/blue_dot.png" class="to-front">
                 <img *ngIf="tile.structure" src="assets/icon/map/structures/{{tile.structure}}.png" class="structure">
                 <img *ngIf="tile.fightIcon" src="assets/icon/map/monster/{{tile.fightIcon}}.png" class="monster">
               </div>
               <div class="map-hexagon">
-                <img src="assets/img/{{tile.type}}.png">
+                <img src="assets/icon/map/tiles/{{tile.type}}.png">
               </div>
             </div>
           </div>

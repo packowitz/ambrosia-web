@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<div *ngIf="saving" class="loading-indicator"><img src="assets/img/logo.png" alt="" class="logo"></div>
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
 <looted *ngIf="looted" [looted]="looted" (click)="looted = null" class="loading-indicator"></looted>
 <ion-content>
   <ion-card class="pa-2">
@@ -69,7 +69,7 @@
         <div class="player-map-container-inner {{map.background}}">
           <div *ngFor="let y of rows" class="map-row" [class.even]="isEven(y)" [class.odd]="!isEven(y)">
             <div *ngFor="let tile of getRow(y)" class="map-hexagon-wrapper">
-              <div class="map-hexagon-overlay" (click)="selectTile(tile)" [class.hover]="tile.discoverable || (tile.discovered && (tile.structure || tile.fightIcon))" [class.pointer]="tile.discoverable || (tile.discovered && (tile.structure || tile.fightIcon))">
+              <div class="map-hexagon-overlay" [class.structure]="tile.discovered && (tile.structure || tile.fightIcon)" (click)="selectTile(tile)" [class.hover]="tile.discoverable || (tile.discovered && (tile.structure || tile.fightIcon))" [class.pointer]="tile.discoverable || (tile.discovered && (tile.structure || tile.fightIcon))">
                 <img *ngIf="tile.discovered && tile.structure" src="assets/icon/map/structures/{{tile.structure}}.png" class="structure">
                 <img *ngIf="tile.discovered && tile.fightIcon" src="assets/icon/map/monster/{{tile.fightIcon}}.png" class="monster">
                 <div *ngIf="tile.discoverable" class="costs">
@@ -77,7 +77,7 @@
                 </div>
               </div>
               <div class="map-hexagon">
-                <img *ngIf="tile.discovered" src="assets/img/{{tile.type}}.png">
+                <img *ngIf="tile.discovered" src="assets/icon/map/tiles/{{tile.type}}.png">
               </div>
             </div>
           </div>
