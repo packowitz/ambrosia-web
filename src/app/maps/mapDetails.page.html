@@ -188,7 +188,7 @@
         <div class="map-container-inner" [class.first-row-even]="isEven(rows[0])" [class.last-row-even]="isEven(rows[rows.length - 1])">
           <div *ngFor="let y of rows" class="map-row" [class.even]="isEven(y)" [class.odd]="!isEven(y)">
             <div *ngFor="let tile of getRow(y)" class="map-hexagon-wrapper">
-              <div class="map-hexagon-overlay pointer" [class.selected]="isSelected(tile)" (click)="selectTile(tile)" [class.structure]="tile.redAlwaysRevealed || tile.blueAlwaysRevealed || tile.greenAlwaysRevealed || tile.fightIcon || tile.structure">
+              <div class="map-hexagon-overlay pointer" [class.selected]="isSelected(tile)" (click)="selectTile(tile)" [class.structure]="tile.redAlwaysRevealed || tile.blueAlwaysRevealed || tile.greenAlwaysRevealed || tile.structure" [class.fight]="tile.fightIcon">
                 <img *ngIf="tile.redAlwaysRevealed" src="assets/icon/red_dot.png" class="to-front">
                 <img *ngIf="tile.greenAlwaysRevealed" src="assets/icon/green_dot.png" class="to-front">
                 <img *ngIf="tile.blueAlwaysRevealed" src="assets/icon/blue_dot.png" class="to-front">

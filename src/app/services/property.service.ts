@@ -60,6 +60,7 @@ export class PropertyService {
   }
 
   getJewelValueAndName(type: string, level: number): string[] {
+    if (!type || !level) { return []; }
     let props = this.properties[type + '_JEWEL'];
     if (props) {
       return props.filter((p: DynamicProperty) => p.level === level).map(prop => {

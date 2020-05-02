@@ -13,6 +13,7 @@ import {PopoverController} from '@ionic/angular';
 import {VehicleSelectionPopover} from '../garage/vehicle-selection-popover';
 import {StartMissionPopover} from './start-mission-popover';
 import {ConverterService} from '../services/converter.service';
+import {FightStageResolved} from '../domain/fightStageResolved.model';
 
 @Component({
   selector: 'campaign-fight',
@@ -223,5 +224,13 @@ export class CampaignFightPage {
       });
       modal.present();
     });
+  }
+
+  getSelectedHeroes(): Hero[] {
+    return [this.hero1, this.hero2, this.hero3, this.hero4];
+  }
+
+  getStageHeroe(stage: FightStageResolved): Hero[] {
+    return [stage.hero1, stage.hero2, stage.hero3, stage.hero4];
   }
 }

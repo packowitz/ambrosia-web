@@ -22,6 +22,10 @@
   background-color: #ffa7a2;
 }
 
+.background-info {
+  background-color: #38b0ef;
+}
+
 .background-GREEN {
   background-color: #2f9b34;
 }
@@ -150,6 +154,10 @@
   cursor: pointer;
 }
 
+.no-wrap {
+  white-space: nowrap;
+}
+
 .active {
   --ion-text-color: var(--ion-color-primary);
 
@@ -169,6 +177,18 @@
 
 .no-max-width {
   max-width: inherit;
+}
+
+.max-width-50p {
+  max-width: 50%;
+}
+
+.width-60 {
+  width: 60px;
+}
+
+.height70 {
+  height: 70px;
 }
 
 .fake-link {
@@ -298,6 +318,12 @@ ion-row.table-row {
   }
 }
 
+.hero-tile-smaller {
+  position: relative;
+  min-width: 60px;
+  max-width: 60px;
+}
+
 .hero-tile-very-small {
   position: relative;
   max-width: 40px;
@@ -338,34 +364,6 @@ ion-row.table-row {
   border-radius: 2px;
   .time-bar-inner {
     background-color: #1ec35f;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 8px;
-  }
-}
-
-.xp-bar {
-  border: 1px solid #045022;
-  position: relative;
-  height: 6px;
-  overflow: hidden;
-  .xp-bar-inner {
-    background-color: #1ec35f;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 8px;
-  }
-}
-
-.asc-bar {
-  border: 1px solid #32347b;
-  position: relative;
-  height: 6px;
-  overflow: hidden;
-  .asc-bar-inner {
-    background-color: #285fda;
     position: absolute;
     top: 0;
     left: 0;
@@ -488,6 +486,12 @@ ion-row.table-row {
   left: 2px;
 }
 
+.top-right-bubble {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
 .hero-stars {
   width: 100%;
   left: 0;
@@ -536,21 +540,55 @@ ion-row.table-row {
 }
 
 .bar-outer {
-  border: 1px solid black;
-  max-width: 300px;
-  background-color: #a8a8a8;
   position: relative;
-  .bar-inner {
+  background-color: #c3bfbd;
+  height: 8px;
+  overflow: hidden;
+
+  &.with-text {
+    height: inherit;
+    border: 1px solid black;
+    &::after {
+      content: " ";
+      white-space: pre;
+    }
+    .bar-filled {
+      height: inherit;
+      &::after {
+        content: " ";
+        white-space: pre;
+      }
+    }
+    .bar-filled-added::after {
+      content: " ";
+      white-space: pre;
+    }
+  }
+
+  &.xp {
+    .bar-filled {
+      background-color: #2ed0e0;;
+    }
+  }
+  &.asc {
+    .bar-filled {
+      background-color: #cb2dea;
+    }
+  }
+
+  .bar-filled {
     position: absolute;
     left: 0;
     top:0;
-    background-color: #dcb754;
+    height: 8px;
   }
-  .bar-inner-2nd {
+
+  .bar-filled-added {
     position: absolute;
     top: 0;
-    background-color: #65afc1;
+    background-color: #57ab61;
   }
+
   .bar-text {
     position: absolute;
     left: 0;
@@ -578,5 +616,38 @@ ion-row.table-row {
 
   &.selected {
     border: 3px solid #ce1616;
+  }
+}
+
+.widePopover .popover-content {
+  width: 360px;
+  top: 15vh !important;
+}
+
+.skill-tile {
+  position: relative;
+  border: 2px solid grey;
+
+  &.selected-skill {
+    border: 2px solid gold;
+  }
+
+  .skill-level {
+    position: absolute;
+    right: 1px;
+    bottom: -2px;
+    color: white;
+  }
+
+  .locked {
+    position: absolute;
+    color: white;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(90, 90, 90, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
   }
 }

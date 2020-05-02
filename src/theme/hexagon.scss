@@ -29,6 +29,9 @@
     &.structure {
       background-color: rgba(255,255,255,0.5);
     }
+    &.fight {
+      background-color: rgba(208, 55, 55, 0.5);
+    }
     &:hover {
       background-color: rgba(0,0,0,0.5);
     }
@@ -135,6 +138,9 @@
   overflow: hidden;
   transform: skewY(-30deg) rotate(60deg);
 
+  &.fight {
+    background-color: rgba(208, 55, 55, 0.5);
+  }
   &.structure {
     background-color: rgba(255,255,255,0.5);
   }

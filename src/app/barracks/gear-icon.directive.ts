@@ -5,7 +5,7 @@ import {ConverterService} from '../services/converter.service';
 @Component({
     selector: 'gear-icon',
     template: `
-      <div class="flex-start border_{{getJewelCount()}} mt-1">
+      <div class="flex-start border_{{getJewelCount()}}">
         <div class="flex-vert gear-icon-box">
           <ion-img *ngIf="!gear" [src]="'assets/img/sets/default_' + type + '.png'"></ion-img>
           <ion-img *ngIf="gear" [src]="'assets/img/sets/' + gear.set + '_' + type + '.png'" class="border-right-grey"></ion-img>

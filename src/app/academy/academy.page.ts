@@ -249,4 +249,8 @@ export class AcademyPage {
     }
     return true;
   }
+
+  getFodder(): Hero[] {
+    return [this.fodder1, this.fodder2, this.fodder3, this.fodder4, this.fodder5, this.fodder6];
+  }
 }

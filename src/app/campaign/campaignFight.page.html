@@ -23,14 +23,7 @@
     </ion-card-header>
     <ion-card-content>
       <div class="scrollable-list">
-        <div *ngFor="let hero of model.heroes" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center mr-2" [class.pointer]="!hero.missionId">
-          <ion-img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
-          <div *ngIf="hero.missionId" class="on-mission flex-vert-center">
-            <div class="text">On Mission</div>
-          </div>
-          <div class="top-left-bubble level-bubble background-{{hero.heroBase.color}}">{{hero.level}}</div>
-          <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
-        </div>
+        <hero-icon *ngFor="let hero of model.heroes" [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [selected]="hero == hero1 || hero == hero2 || hero == hero3 || hero == hero4"></hero-icon>
       </div>
     </ion-card-content>
   </ion-card>
@@ -45,53 +38,8 @@
             </div>
           </div>
         </ion-col>
-        <ion-col sizeMd="2" *ngIf="hero1">
-          <div (click)="selectHero(hero1)" class="hero-tile-small border-grey pointer flex-vert-center">
-            <ion-img [src]="'assets/icon/chars/' + hero1.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
-            <div class="top-left-bubble level-bubble background-{{hero1.heroBase.color}}">{{hero1.level}}</div>
-            <ion-img [src]="'assets/img/star_' + hero1.stars + '.png'" class="hero-stars"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="!hero1">
-          <div class="hero-tile-small border-grey">
-            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="hero2">
-          <div (click)="selectHero(hero2)" class="hero-tile-small border-grey pointer flex-vert-center">
-            <ion-img [src]="'assets/icon/chars/' + hero2.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
-            <div class="top-left-bubble level-bubble background-{{hero2.heroBase.color}}">{{hero2.level}}</div>
-            <ion-img [src]="'assets/img/star_' + hero2.stars + '.png'" class="hero-stars"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="!hero2">
-          <div class="hero-tile-small border-grey">
-            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="hero3">
-          <div (click)="selectHero(hero3)" class="hero-tile-small border-grey pointer flex-vert-center">
-            <ion-img [src]="'assets/icon/chars/' + hero3.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
-            <div class="top-left-bubble level-bubble background-{{hero3.heroBase.color}}">{{hero3.level}}</div>
-            <ion-img [src]="'assets/img/star_' + hero3.stars + '.png'" class="hero-stars"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="!hero3">
-          <div class="hero-tile-small border-grey">
-            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="hero4">
-          <div (click)="selectHero(hero4)" class="hero-tile-small border-grey pointer flex-vert-center">
-            <ion-img [src]="'assets/icon/chars/' + hero4.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
-            <div class="top-left-bubble level-bubble background-{{hero4.heroBase.color}}">{{hero4.level}}</div>
-            <ion-img [src]="'assets/img/star_' + hero4.stars + '.png'" class="hero-stars"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="!hero4">
-          <div class="hero-tile-small border-grey">
-            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
-          </div>
+        <ion-col sizeMd="2" *ngFor="let hero of getSelectedHeroes()">
+          <hero-icon [hero]="hero" [clickable]="true" (clicked)="selectHero($event)"></hero-icon>
         </ion-col>
         <ion-col sizeMd="2" class="flex-vert-center">
           <ion-button color="success" (click)="start()" [disabled]="!canStartBattle()">
@@ -115,53 +63,8 @@
     <ion-card-content>
       <ion-row *ngFor="let fightStage of fight.stages">
         <ion-col sizeMd="2" class="flex-center">Stage {{fightStage.stage}}</ion-col>
-        <ion-col sizeMd="2" *ngIf="fightStage.hero1">
-          <div class="hero-tile-small border-grey flex-vert-center">
-            <ion-img [src]="'assets/icon/chars/' + fightStage.hero1.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
-            <div class="top-left-bubble level-bubble background-{{fightStage.hero1.heroBase.color}}">{{fightStage.hero1.level}}</div>
-            <ion-img [src]="'assets/img/star_' + fightStage.hero1.stars + '.png'" class="hero-stars"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="!fightStage.hero1">
-          <div class="hero-tile-small border-grey">
-            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="fightStage.hero2">
-          <div class="hero-tile-small border-grey flex-vert-center">
-            <ion-img [src]="'assets/icon/chars/' + fightStage.hero2.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
-            <div class="top-left-bubble level-bubble background-{{fightStage.hero2.heroBase.color}}">{{fightStage.hero2.level}}</div>
-            <ion-img [src]="'assets/img/star_' + fightStage.hero2.stars + '.png'" class="hero-stars"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="!fightStage.hero2">
-          <div class="hero-tile-small border-grey">
-            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="fightStage.hero3">
-          <div class="hero-tile-small border-grey flex-vert-center">
-            <ion-img [src]="'assets/icon/chars/' + fightStage.hero3.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
-            <div class="top-left-bubble level-bubble background-{{fightStage.hero3.heroBase.color}}">{{fightStage.hero3.level}}</div>
-            <ion-img [src]="'assets/img/star_' + fightStage.hero3.stars + '.png'" class="hero-stars"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="!fightStage.hero3">
-          <div class="hero-tile-small border-grey">
-            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="fightStage.hero4">
-          <div class="hero-tile-small border-grey flex-vert-center">
-            <ion-img [src]="'assets/icon/chars/' + fightStage.hero4.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
-            <div class="top-left-bubble level-bubble background-{{fightStage.hero4.heroBase.color}}">{{fightStage.hero4.level}}</div>
-            <ion-img [src]="'assets/img/star_' + fightStage.hero4.stars + '.png'" class="hero-stars"></ion-img>
-          </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngIf="!fightStage.hero4">
-          <div class="hero-tile-small border-grey">
-            <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
-          </div>
+        <ion-col sizeMd="2" *ngFor="let stageHero of getStageHeroe(fightStage)">
+          <hero-icon [hero]="stageHero"></hero-icon>
         </ion-col>
       </ion-row>
     </ion-card-content>

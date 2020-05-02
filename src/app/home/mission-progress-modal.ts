@@ -16,11 +16,11 @@ import {BackendService} from '../services/backend.service';
               <vehicle [vehicle]="vehicle" [small]="true"></vehicle>
             </div>
             <div *ngIf="hero1">
-              <div class="xp-bar">
-                <span class="xp-bar-inner" [style.width]="(100 * hero1.xp / hero1.maxXp) + '%'"></span>
+              <div class="bar-outer xp">
+                <span class="bar-filled" [style.width]="(100 * hero1.xp / hero1.maxXp) + '%'"></span>
               </div>
-              <div class="asc-bar">
-                <span class="asc-bar-inner" [style.width]="(100 * hero1.ascPoints / hero1.ascPointsMax) + '%'"></span>
+              <div class="bar-outer asc" style="margin-top: 1px;">
+                <span class="bar-filled" [style.width]="(100 * hero1.ascPoints / hero1.ascPointsMax) + '%'"></span>
               </div>
               <div class="mt-05 hero-tile-small border-grey flex-vert-center">
                 <ion-img [src]="'assets/icon/chars/' + hero1.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
