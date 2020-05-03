@@ -11,7 +11,7 @@ import {VehiclePart} from '../domain/vehiclePart.model';
 })
 export class PropertyService {
 
-  initialCategories = ['JEWEL', 'HERO', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
+  initialCategories = ['JEWEL', 'HERO', 'SET', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
 
   properties = {};
 
@@ -63,47 +63,49 @@ export class PropertyService {
     if (!type || !level) { return []; }
     let props = this.properties[type + '_JEWEL'];
     if (props) {
-      return props.filter((p: DynamicProperty) => p.level === level).map(prop => {
-        let returnValue = '+' + prop.value1;
-        switch (prop.stat) {
-          case 'HP_ABS': returnValue += ' HP'; break;
-          case 'HP_PERC': returnValue += '% HP'; break;
-          case 'ARMOR_ABS': returnValue += ' Armor'; break;
-          case 'ARMOR_PERC': returnValue += '% Armor'; break;
-          case 'STRENGTH_ABS': returnValue += ' Strength'; break;
-          case 'STRENGTH_PERC': returnValue += '% Strength'; break;
-          case 'CRIT': returnValue += ' Crit'; break;
-          case 'CRIT_MULT': returnValue += ' CritMult'; break;
-          case 'RESISTANCE': returnValue += ' Resistance'; break;
-          case 'DEXTERITY': returnValue += ' Dexterity'; break;
-          case 'INITIATIVE': returnValue += ' Initiative'; break;
-          case 'SPEED': returnValue += ' Speed'; break;
-          case 'LIFESTEAL': returnValue += ' Lifesteal'; break;
-          case 'COUNTER_CHANCE': returnValue += ' Counter'; break;
-          case 'REFLECT': returnValue += ' Reflect'; break;
-          case 'DODGE_CHANCE': returnValue += ' Dodge'; break;
-          case 'ARMOR_PIERCING': returnValue += ' Armor Piercing'; break;
-          case 'ARMOR_EXTRA_DMG': returnValue += ' Armor Dmg'; break;
-          case 'HEALTH_EXTRA_DMG': returnValue += ' Health Dmg'; break;
-          case 'RED_DMG_INC': returnValue += ' Red Dmg'; break;
-          case 'GREEN_DMG_INC': returnValue += ' Green Dmg'; break;
-          case 'BLUE_DMG_INC': returnValue += ' Blue Dmg'; break;
-          case 'HEALING_INC': returnValue += ' Healing'; break;
-          case 'SUPER_CRIT_CHANCE': returnValue += ' SuperCrit'; break;
-          case 'BUFF_INTENSITY_INC': returnValue += ' Buff Intensity'; break;
-          case 'DEBUFF_INTENSITY_INC': returnValue += ' Debuff Intensity'; break;
-          case 'BUFF_DURATION_INC': returnValue += ' Buff Duration'; break;
-          case 'DEBUFF_DURATION_INC': returnValue += ' Debuff Duration'; break;
-          case 'HEAL_PER_TURN': returnValue += ' Heal over time'; break;
-          case 'DMG_PER_TURN': returnValue += ' Dmg over time'; break;
-          case 'CONFUSE_CHANCE': returnValue += ' Confuse'; break;
-          case 'DAMAGE_REDUCTION': returnValue += ' Dmg Reduction'; break;
-          case 'BUFF_RESISTANCE': returnValue += ' Buff Resistance'; break;
-        }
-        return returnValue;
-      });
+      return props.filter((p: DynamicProperty) => p.level === level).map(prop => this.statAsText(prop) );
     }
     return [];
+  }
+
+  statAsText(prop: DynamicProperty): string {
+    let returnValue = '+' + prop.value1;
+    switch (prop.stat) {
+      case 'HP_ABS': returnValue += ' HP'; break;
+      case 'HP_PERC': returnValue += '% HP'; break;
+      case 'ARMOR_ABS': returnValue += ' Armor'; break;
+      case 'ARMOR_PERC': returnValue += '% Armor'; break;
+      case 'STRENGTH_ABS': returnValue += ' Strength'; break;
+      case 'STRENGTH_PERC': returnValue += '% Strength'; break;
+      case 'CRIT': returnValue += ' Crit'; break;
+      case 'CRIT_MULT': returnValue += ' CritMult'; break;
+      case 'RESISTANCE': returnValue += ' Resistance'; break;
+      case 'DEXTERITY': returnValue += ' Dexterity'; break;
+      case 'INITIATIVE': returnValue += ' Initiative'; break;
+      case 'SPEED': returnValue += ' Speed'; break;
+      case 'LIFESTEAL': returnValue += ' Lifesteal'; break;
+      case 'COUNTER_CHANCE': returnValue += ' Counter'; break;
+      case 'REFLECT': returnValue += ' Reflect'; break;
+      case 'DODGE_CHANCE': returnValue += ' Dodge'; break;
+      case 'ARMOR_PIERCING': returnValue += ' Armor Piercing'; break;
+      case 'ARMOR_EXTRA_DMG': returnValue += ' Armor Dmg'; break;
+      case 'HEALTH_EXTRA_DMG': returnValue += ' Health Dmg'; break;
+      case 'RED_DMG_INC': returnValue += ' Red Dmg'; break;
+      case 'GREEN_DMG_INC': returnValue += ' Green Dmg'; break;
+      case 'BLUE_DMG_INC': returnValue += ' Blue Dmg'; break;
+      case 'HEALING_INC': returnValue += ' Healing'; break;
+      case 'SUPER_CRIT_CHANCE': returnValue += ' SuperCrit'; break;
+      case 'BUFF_INTENSITY_INC': returnValue += ' Buff Intensity'; break;
+      case 'DEBUFF_INTENSITY_INC': returnValue += ' Debuff Intensity'; break;
+      case 'BUFF_DURATION_INC': returnValue += ' Buff Duration'; break;
+      case 'DEBUFF_DURATION_INC': returnValue += ' Debuff Duration'; break;
+      case 'HEAL_PER_TURN': returnValue += ' Heal over time'; break;
+      case 'DMG_PER_TURN': returnValue += ' Dmg over time'; break;
+      case 'CONFUSE_CHANCE': returnValue += ' Confuse'; break;
+      case 'DAMAGE_REDUCTION': returnValue += ' Dmg Reduction'; break;
+      case 'BUFF_RESISTANCE': returnValue += ' Buff Resistance'; break;
+    }
+    return returnValue;
   }
 
   getHeroMaxXp(level: number): number {

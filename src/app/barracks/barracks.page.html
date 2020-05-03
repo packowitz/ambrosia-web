@@ -168,14 +168,15 @@
             <div class="armory">
               <ion-list>
                 <ion-item>
-                  <div class="flex-space-between">
+                  <div class="flex-space-between full-width">
                     Armory
-                    <ion-button [fill]="gearTypeFilter.indexOf('WEAPON') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('WEAPON')"><i class="ra ra-relic-blade"></i></ion-button>
-                    <ion-button [fill]="gearTypeFilter.indexOf('SHIELD') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('SHIELD')"><i class="ra ra-eye-shield"></i></ion-button>
-                    <ion-button [fill]="gearTypeFilter.indexOf('HELMET') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('HELMET')"><i class="ra ra-helmet"></i></ion-button>
-                    <ion-button [fill]="gearTypeFilter.indexOf('ARMOR') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('ARMOR')"><i class="ra ra-vest"></i></ion-button>
-                    <ion-button [fill]="gearTypeFilter.indexOf('GLOVES') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('GLOVES')"><i class="ra ra-hand"></i></ion-button>
-                    <ion-button [fill]="gearTypeFilter.indexOf('BOOTS') >= 0 ? 'outline' : 'clear'" (click)="gearFilter('BOOTS')"><i class="ra ra-footprint"></i></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('WEAPON') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('WEAPON')"><ion-img src="assets/img/sets/default_WEAPON.png" class="resource-icon"></ion-img></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('SHIELD') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('SHIELD')"><ion-img src="assets/img/sets/default_SHIELD.png" class="resource-icon"></ion-img></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('HELMET') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('HELMET')"><ion-img src="assets/img/sets/default_HELMET.png" class="resource-icon"></ion-img></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('ARMOR') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('ARMOR')"><ion-img src="assets/img/sets/default_ARMOR.png" class="resource-icon"></ion-img></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('GLOVES') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('GLOVES')"><ion-img src="assets/img/sets/default_GLOVES.png" class="resource-icon"></ion-img></ion-button>
+                    <ion-button [fill]="gearTypeFilter.indexOf('BOOTS') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('BOOTS')"><ion-img src="assets/img/sets/default_BOOTS.png" class="resource-icon"></ion-img></ion-button>
+                    <ion-button fill="clear" (click)="openSetsInfo()"><ion-img src="assets/icon/info.png" class="resource-icon"></ion-img></ion-button>
                   </div>
                 </ion-item>
                 <ion-item *ngFor="let gear of getAvailableGears()" class="mt-05">

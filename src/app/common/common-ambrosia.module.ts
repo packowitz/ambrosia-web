@@ -15,11 +15,12 @@ import {GearStat} from '../barracks/gear-stat.directive';
 import {UpgradeModal} from './upgrade.modal';
 import {HeroIconDirective} from './heroIcon.directive';
 import {HeroInfoPopup} from './heroInfo.popup';
+import {SetsInfoModal} from './setsInfo-modal.component';
 
 @NgModule({
     declarations: [
         BuildingUpgradeModal,
-        GearIcon, GearListItem, GearModal, GearJewelSlot, GearStat,
+        GearIcon, GearListItem, GearModal, GearJewelSlot, GearStat, SetsInfoModal,
         HeroIconDirective, HeroInfoPopup,
         LootedDirective, LootItemDirective,
         UpgradeItemDirective, UpgradeModal,
@@ -27,7 +28,7 @@ import {HeroInfoPopup} from './heroInfo.popup';
     ],
     exports: [
         BuildingUpgradeModal,
-        GearIcon, GearListItem, GearModal, GearJewelSlot, GearStat,
+        GearIcon, GearListItem, GearModal, GearJewelSlot, GearStat, SetsInfoModal,
         HeroIconDirective, HeroInfoPopup,
         LootedDirective, LootItemDirective,
         UpgradeItemDirective, UpgradeModal,
@@ -37,7 +38,7 @@ import {HeroInfoPopup} from './heroInfo.popup';
         CommonModule,
         IonicModule
     ],
-    entryComponents: [BuildingUpgradeModal, GearModal, HeroInfoPopup, UpgradeModal, VehicleSelectionPopover]
+    entryComponents: [BuildingUpgradeModal, GearModal, HeroInfoPopup, UpgradeModal, VehicleSelectionPopover, SetsInfoModal]
 })
 export class CommonAmbrosiaModule {
 }

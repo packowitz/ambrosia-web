@@ -9,6 +9,7 @@ import {PropertyService} from '../services/property.service';
 import {ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
+import {SetsInfoModal} from '../common/setsInfo-modal.component';
 
 @Component({
   selector: 'barracks',
@@ -64,6 +65,12 @@ export class BarracksPage implements OnInit {
       modal.onDidDismiss().then(() => this.ionViewWillEnter());
       modal.present();
     });
+  }
+
+  openSetsInfo() {
+    this.modalCtrl.create({
+      component: SetsInfoModal
+    }).then(p => p.present());
   }
 
   selectHero(hero: Hero) {
