@@ -26,7 +26,7 @@ import {DynamicProperty} from '../domain/property.model';
               <div class="bold mt-1">{{converter.readableIdentifier(selectedBuff.buffName)}}</div>
               <div class="mt-2"><i>{{selectedBuff.description}}</i></div>
               <div *ngIf="veryLight.length > 0" class="mt-3 flex-start">
-                <div class="width-150">Simple (1*):</div>
+                <div class="width-150">Very Light (lvl 1):</div>
                 <div class="ml-2 font-small">
                   <div *ngFor="let bonus of veryLight">{{propertyService.statAsText(bonus)}}</div>
                 </div>
