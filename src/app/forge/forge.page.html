@@ -37,15 +37,24 @@
               <gear-stat [stat]="gear.stat" [value]="gear.statValue"></gear-stat>&nbsp;<i *ngIf="gear.modificationPerformed">(modified)</i>
             </div>
           </div>
+          <div *ngIf="converter.rarityStars(gear.rarity) > model.progress.gearModificationRarity && converter.rarityStars(gear.rarity) > model.progress.gearBreakDownRarity">
+            <i class="font-small color-grey">Upgrade Forge to modify or breakdown this piece</i>
+          </div>
+          <div *ngIf="converter.rarityStars(gear.rarity) > model.progress.gearModificationRarity && converter.rarityStars(gear.rarity) <= model.progress.gearBreakDownRarity">
+            <i class="font-small color-grey">Upgrade Forge to modify this piece</i>
+          </div>
           <div *ngIf="model.progress.gearModificationRarity >= converter.rarityStars(gear.rarity) && !gear.modificationInProgress">
             <ion-button (click)="modificationSelection(gear, $event)" [disabled]="saving">Modify</ion-button>
           </div>
           <div *ngIf="gear.modificationInProgress">
             <ion-button (click)="openUpgradeModal()" [disabled]="saving">Modifying</ion-button>
           </div>
-          <ion-button [fill]="gear.markedToBreakdown ? 'outline' : 'clear'" color="danger" (click)="gear.markedToBreakdown = !gear.markedToBreakdown" [disabled]="saving || gear.modificationInProgress || converter.rarityStars(gear.rarity) > model.progress.gearBreakDownRarity">
+          <ion-button *ngIf="converter.rarityStars(gear.rarity) <= model.progress.gearBreakDownRarity" [fill]="gear.markedToBreakdown ? 'outline' : 'clear'" color="danger" (click)="gear.markedToBreakdown = !gear.markedToBreakdown" [disabled]="saving || gear.modificationInProgress">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
+          <div *ngIf="converter.rarityStars(gear.rarity) <= model.progress.gearModificationRarity && converter.rarityStars(gear.rarity) > model.progress.gearBreakDownRarity">
+            <i class="font-small color-grey">Upgrade Forge to breakdown this piece</i>
+          </div>
         </div>
       </ion-item>
     </ion-card-content>
