@@ -10,6 +10,7 @@ export class GearSet { name: string; pieces: number; description: string; }
 export class JewelType { name: string; slot: string; gearSet: string; }
 export class MapTileStructure { name: string; type: string; }
 export class ResourceType { name: string; category: string; }
+export class Buff { buffName: string; description: string; type: string; propertyType: string; }
 
 export class Enums {
     colors: string[];
@@ -26,6 +27,7 @@ export class Enums {
     heroStats: string[];
     gearSets: string[];
     gearTypes: string[];
+    buffs: Buff[];
     jewelTypes: JewelType[];
     passiveSkillTriggers: string[];
     mapTileTypes: string[];
@@ -110,6 +112,10 @@ export class EnumService {
 
     getGearTypes(): string[] {
         return this.enums.gearTypes;
+    }
+
+    getBuffs(): Buff[] {
+        return this.enums.buffs;
     }
 
     getJewelTypes(): JewelType[] {

@@ -134,7 +134,10 @@
           </div>
         </div>
         <div *ngIf="selectedSkill">
-          <div><strong>{{selectedSkill.name}}</strong></div>
+          <div class="flex-space-between">
+            <strong>{{selectedSkill.name}}</strong>
+            <div class="fake-link" (click)="openBuffInfo()">Buffs</div>
+          </div>
           <div>{{selectedSkill.description}}</div>
           <div *ngIf="selectedSkill.cooldown > 1">Cooldown of {{selectedSkill.cooldown}}</div>
           <div *ngIf="selectedSkill.initCooldown > 1">Initial Cooldown of {{selectedSkill.initCooldown}}</div>

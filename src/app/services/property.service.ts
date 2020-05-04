@@ -11,7 +11,7 @@ import {VehiclePart} from '../domain/vehiclePart.model';
 })
 export class PropertyService {
 
-  initialCategories = ['GEAR', 'JEWEL', 'HERO', 'SET', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
+  initialCategories = ['GEAR', 'JEWEL', 'HERO', 'SET', 'BUFF', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
 
   properties = {};
 
@@ -69,7 +69,9 @@ export class PropertyService {
   }
 
   statAsText(prop: DynamicProperty): string {
-    let returnValue = '+' + prop.value1;
+    let returnValue = '';
+    if (prop.value1 >= 0) { returnValue += '+'; }
+    returnValue += prop.value1;
     if (prop.value2) {
       returnValue += ' - ' + prop.value2;
     }
@@ -102,8 +104,8 @@ export class PropertyService {
       case 'DEBUFF_INTENSITY_INC': returnValue += ' Debuff Intensity'; break;
       case 'BUFF_DURATION_INC': returnValue += ' Buff Duration'; break;
       case 'DEBUFF_DURATION_INC': returnValue += ' Debuff Duration'; break;
-      case 'HEAL_PER_TURN': returnValue += ' Heal over time'; break;
-      case 'DMG_PER_TURN': returnValue += ' Dmg over time'; break;
+      case 'HEAL_PER_TURN': returnValue += ' Heal Over Time'; break;
+      case 'DMG_PER_TURN': returnValue += ' Dmg Over Time'; break;
       case 'CONFUSE_CHANCE': returnValue += ' Confuse'; break;
       case 'DAMAGE_REDUCTION': returnValue += ' Dmg Reduction'; break;
       case 'BUFF_RESISTANCE': returnValue += ' Buff Resistance'; break;

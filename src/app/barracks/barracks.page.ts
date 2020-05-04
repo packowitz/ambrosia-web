@@ -9,8 +9,9 @@ import {PropertyService} from '../services/property.service';
 import {ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
-import {SetsInfoModal} from '../common/setsInfo-modal.component';
-import {GearInfoModal} from '../common/gearInfo-modal.component';
+import {SetsInfoModal} from '../common/setsInfo.modal';
+import {GearInfoModal} from '../common/gearInfo.modal';
+import {BuffInfoModal} from '../common/buffInfo.modal';
 
 @Component({
   selector: 'barracks',
@@ -66,6 +67,12 @@ export class BarracksPage implements OnInit {
       modal.onDidDismiss().then(() => this.ionViewWillEnter());
       modal.present();
     });
+  }
+
+  openBuffInfo() {
+    this.modalCtrl.create({
+      component: BuffInfoModal
+    }).then(p => p.present());
   }
 
   openGearInfo() {
