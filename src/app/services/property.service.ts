@@ -179,6 +179,11 @@ export class PropertyService {
     return this.getProps(genome + '_COST', 1);
   }
 
+  getPossibleGearStats(type: string, stars: number): string[] {
+    if (!type || !stars) { return []; }
+    return this.getProps(type + '_GEAR', stars).map(p => p.stat);
+  }
+
   saveProperties(type: string, properties: DynamicProperty[]): Observable<DynamicProperty[]> {
     return this.http.post<DynamicProperty[]>(API_URL + '/admin/properties/type/' + type, properties).pipe(map(p => {
       this.properties[type] = p;

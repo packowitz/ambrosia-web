@@ -6,6 +6,7 @@ import {Injectable} from '@angular/core';
 export class ConverterService {
 
     rarityStars(rarity: string): number {
+        if (!rarity) { return 0; }
         switch (rarity) {
             case 'SIMPLE': return 1;
             case 'COMMON': return 2;

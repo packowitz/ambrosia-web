@@ -5,6 +5,7 @@ import {ConverterService} from '../services/converter.service';
 import {Model} from '../services/model.service';
 import {EnumService, JewelType} from '../services/enum.service';
 import {Gear} from '../domain/gear.model';
+import {PropertyService} from '../services/property.service';
 
 @Component({
   selector: 'tavern',
@@ -26,9 +27,10 @@ export class TavernPage {
 
   constructor(private backendService: BackendService,
               private alertCtrl: AlertController,
-              private converter: ConverterService,
+              public converter: ConverterService,
               public model: Model,
-              public enumService: EnumService) {
+              public enumService: EnumService,
+              public propertyService: PropertyService) {
     this.gearSet = enumService.getGearSets()[0];
     this.jewelType = enumService.getJewelTypes()[0];
     this.specificGear = new Gear();
@@ -60,6 +62,16 @@ export class TavernPage {
     this.specificGearSlots.splice(i, 1);
   }
 
+  checkStat() {
+    if (this.specificGear.type && this.specificGear.rarity && this.specificGear.stat) {
+      let stats = this.propertyService.getPossibleGearStats(this.specificGear.type, this.converter.rarityStars(this.specificGear.rarity));
+      if (stats.indexOf(this.specificGear.stat) >= 0) {
+        return;
+      }
+    }
+    this.specificGear.stat = null;
+  }
+
   craftSpecificGear() {
     this.saving = true;
     this.specificGearSlots.forEach((slot, idx) => {this.specificGear['jewelSlot' + (idx+1)] = slot;});
@@ -71,6 +83,13 @@ export class TavernPage {
       this.saving = false;
       this.alertCtrl.create({
         header: 'You got ' + gear.set + ' ' + gear.type + ' ' + ' (' + this.converter.rarityStars(gear.rarity) + '*)',
+        buttons: [{text: 'Okay'}]
+      }).then(data => data.present());
+    }, error => {
+      this.saving = false;
+      this.alertCtrl.create({
+        header: 'Server error',
+        message: error.error.message,
         buttons: [{text: 'Okay'}]
       }).then(data => data.present());
     });
