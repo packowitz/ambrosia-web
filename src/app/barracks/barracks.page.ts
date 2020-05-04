@@ -10,6 +10,7 @@ import {ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {SetsInfoModal} from '../common/setsInfo-modal.component';
+import {GearInfoModal} from '../common/gearInfo-modal.component';
 
 @Component({
   selector: 'barracks',
@@ -65,6 +66,12 @@ export class BarracksPage implements OnInit {
       modal.onDidDismiss().then(() => this.ionViewWillEnter());
       modal.present();
     });
+  }
+
+  openGearInfo() {
+    this.modalCtrl.create({
+      component: GearInfoModal
+    }).then(p => p.present());
   }
 
   openSetsInfo() {

@@ -11,7 +11,7 @@ import {VehiclePart} from '../domain/vehiclePart.model';
 })
 export class PropertyService {
 
-  initialCategories = ['JEWEL', 'HERO', 'SET', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
+  initialCategories = ['GEAR', 'JEWEL', 'HERO', 'SET', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
 
   properties = {};
 
@@ -70,6 +70,9 @@ export class PropertyService {
 
   statAsText(prop: DynamicProperty): string {
     let returnValue = '+' + prop.value1;
+    if (prop.value2) {
+      returnValue += ' - ' + prop.value2;
+    }
     switch (prop.stat) {
       case 'HP_ABS': returnValue += ' HP'; break;
       case 'HP_PERC': returnValue += '% HP'; break;

@@ -150,7 +150,12 @@
         <ion-row>
           <ion-col sizeMd="6">
             <ion-list>
-              <ion-item>Hero's Gear</ion-item>
+              <ion-item>
+                <div class="flex-space-between full-width">
+                  Hero's Gear
+                  <ion-button fill="clear" (click)="openGearInfo()"><ion-img src="assets/icon/info.png" class="resource-icon"></ion-img></ion-button>
+                </div>
+              </ion-item>
               <ion-item class="mt-05"><gear-list-item type="WEAPON" [hero]="selectedHero" [gear]="selectedHero.weapon" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
               <ion-item class="mt-05"><gear-list-item type="SHIELD" [hero]="selectedHero" [gear]="selectedHero.shield" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
               <ion-item class="mt-05"><gear-list-item type="HELMET" [hero]="selectedHero" [gear]="selectedHero.helmet" (callback)="selectHero($event)" class="full-width"></gear-list-item></ion-item>
