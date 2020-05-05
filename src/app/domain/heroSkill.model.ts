@@ -4,7 +4,7 @@ import {HeroSkillAction} from './heroSkillAction.model';
 export class HeroSkill {
     id?: number;
     number: number;
-    name: number;
+    name: string;
     icon: string;
     passive: boolean;
     passiveSkillTrigger?: string;

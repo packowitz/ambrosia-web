@@ -11,6 +11,7 @@ import {AlertController, ModalController} from '@ionic/angular';
 import {SkillIconModal} from './skillIcon.modal';
 import {HeroAvatarModal} from './heroavatar.modal';
 import {Model} from '../services/model.service';
+import {NewSkillModal} from './newSkill.modal';
 
 @Component({
     selector: 'herobase-edit',
@@ -52,7 +53,7 @@ export class HerobaseEditPage implements OnInit {
     setHero() {
         this.hero = this.converter.dataClone(this.model.baseHeroes.find(h => h.id === this.heroId));
         if(this.hero.skills.length === 0) {
-            this.addNewSkill();
+            this.addSkill();
         } else {
             this.setSkill(this.hero.skills[0]);
         }
@@ -98,16 +99,61 @@ export class HerobaseEditPage implements OnInit {
     }
 
     addNewSkill() {
+        this.modalCtrl.create({
+            component: NewSkillModal
+        }).then(modal => {
+            modal.onDidDismiss().then((dataReturned) => {
+                console.log(dataReturned);
+                if (dataReturned !== null && dataReturned.data) {
+                    this.addSkill(dataReturned.data);
+                }
+            });
+            modal.present();
+        });
+    }
+
+    addSkill(copy?: HeroSkill) {
+        let skillNumber = this.hero.skills.length + 1;
+        let replaceSkillNr = false;
+        if (!!copy && !!copy.number && copy.number !== skillNumber) {
+            replaceSkillNr = true;
+        }
         let newSkill = new HeroSkill();
-        newSkill.number = this.hero.skills.length + 1;
-        newSkill.icon = 'default';
-        newSkill.initCooldown = 0;
-        newSkill.cooldown = 0;
-        newSkill.skillActiveTrigger = 'ALWAYS';
-        newSkill.target = 'OPPONENT';
-        newSkill.maxLevel = 1;
-        newSkill.skillLevel = [];
-        newSkill.actions = [];
+        newSkill.number = skillNumber;
+        newSkill.name = copy ? copy.name : 'Please name me';
+        newSkill.description = copy ? copy.description : 'Please describe me';
+        newSkill.icon = copy ? copy.icon : 'default';
+        newSkill.passive = copy ? copy.passive : false;
+        newSkill.passiveSkillTrigger = copy ? copy.passiveSkillTrigger : null;
+        newSkill.passiveSkillTriggerValue = copy ? copy.passiveSkillTriggerValue : null;
+        newSkill.initCooldown = copy ? copy.initCooldown : 0;
+        newSkill.cooldown = copy ? copy.cooldown : 0;
+        newSkill.skillActiveTrigger = copy ? copy.skillActiveTrigger : 'ALWAYS';
+        newSkill.target = copy ? copy.target : 'OPPONENT';
+        newSkill.maxLevel = copy ? copy.maxLevel : 1;
+        newSkill.skillLevel = copy ? copy.skillLevel.map(c => {
+            let lvl = new HeroSkillLevel();
+            lvl.level = c.level;
+            lvl.description = c.description;
+            return lvl;
+        }) : [];
+        newSkill.actions = copy ? copy.actions.map(c => {
+            let action = new HeroSkillAction();
+            action.position = c.position;
+            if (replaceSkillNr && c.trigger === 'S' + copy.number + '_LVL') {
+                action.trigger = 'S' + skillNumber + '_LVL';
+            } else {
+                action.trigger = c.trigger;
+            }
+            action.triggerValue = c.triggerValue;
+            action.triggerChance = c.triggerChance;
+            action.type = c.type;
+            action.target = c.target;
+            action.effect = c.effect;
+            action.effectValue = c.effectValue;
+            action.effectDuration = c.effectDuration;
+            return action;
+        }) : [];
         this.hero.skills.push(newSkill);
         this.skill = newSkill;
     }
@@ -123,7 +169,7 @@ export class HerobaseEditPage implements OnInit {
                         this.hero.skills.filter(s => s.number > this.skill.number).forEach(s => s.number--);
                         this.hero.skills.splice(idx, 1);
                         if (this.hero.skills.length === 0) {
-                            this.addNewSkill();
+                            this.addSkill();
                         } else {
                             let skillNr = this.skill.number === 1 ? 1 : this.skill.number - 1;
                             this.setSkill(this.hero.skills.find(s => s.number === skillNr));
