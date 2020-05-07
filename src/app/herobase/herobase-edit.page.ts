@@ -103,7 +103,6 @@ export class HerobaseEditPage implements OnInit {
             component: NewSkillModal
         }).then(modal => {
             modal.onDidDismiss().then((dataReturned) => {
-                console.log(dataReturned);
                 if (dataReturned !== null && dataReturned.data) {
                     this.addSkill(dataReturned.data);
                 }
