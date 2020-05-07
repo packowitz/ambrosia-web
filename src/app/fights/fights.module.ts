@@ -9,10 +9,12 @@ import {FightStageConfigsPage} from './fightStageConfigs.page';
 import {FightStageConfigModal} from './fightStageConfig.modal';
 import {FightEnvironmentsPage} from './fightEnvironments.page';
 import {FightEnvironmentModal} from './fightEnvironment.modal';
+import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CommonAmbrosiaModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild([
