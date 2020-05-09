@@ -26,31 +26,46 @@ import {DynamicProperty} from '../domain/property.model';
               <div class="bold mt-1">{{converter.readableIdentifier(selectedBuff.buffName)}}</div>
               <div class="mt-2"><i>{{selectedBuff.description}}</i></div>
               <div *ngIf="veryLight.length > 0" class="mt-3 flex-start">
-                <div class="width-150">Very Light (lvl 1):</div>
+                <div class="width-150 flex-start">
+                  <ion-img src="assets/icon/buffs/{{selectedBuff.buffName}}_1.png" class="buff_icon_large mr-2"></ion-img>
+                  Very Light
+                </div>
                 <div class="ml-2 font-small">
                   <div *ngFor="let bonus of veryLight">{{propertyService.statAsText(bonus)}}</div>
                 </div>
               </div>
               <div *ngIf="light.length > 0" class="mt-2 flex-start">
-                <div class="width-150">Light (lvl 2):</div>
+                <div class="width-150 flex-start">
+                  <ion-img src="assets/icon/buffs/{{selectedBuff.buffName}}_2.png" class="buff_icon_large mr-2"></ion-img>
+                  Light
+                </div>
                 <div class="ml-2 font-small">
                   <div *ngFor="let bonus of light">{{propertyService.statAsText(bonus)}}</div>
                 </div>
               </div>
               <div *ngIf="normal.length > 0" class="mt-2 flex-start">
-                <div class="width-150">Normal (lvl 3):</div>
+                <div class="width-150 flex-start">
+                  <ion-img src="assets/icon/buffs/{{selectedBuff.buffName}}_3.png" class="buff_icon_large mr-2"></ion-img>
+                  Normal
+                </div>
                 <div class="ml-2 font-small">
                   <div *ngFor="let bonus of normal">{{propertyService.statAsText(bonus)}}</div>
                 </div>
               </div>
               <div *ngIf="strong.length > 0" class="mt-2 flex-start">
-                <div class="width-150">Strong (lvl 4):</div>
+                <div class="width-150 flex-start">
+                  <ion-img src="assets/icon/buffs/{{selectedBuff.buffName}}_4.png" class="buff_icon_large mr-2"></ion-img>
+                  Strong
+                </div>
                 <div class="ml-2 font-small">
                   <div *ngFor="let bonus of strong">{{propertyService.statAsText(bonus)}}</div>
                 </div>
               </div>
               <div *ngIf="veryStrong.length > 0" class="mt-2 flex-start">
-                <div class="width-150">Very Strong (lvl 5):</div>
+                <div class="width-150 flex-start">
+                  <ion-img src="assets/icon/buffs/{{selectedBuff.buffName}}_5.png" class="buff_icon_large mr-2"></ion-img>
+                  Very Strong
+                </div>
                 <div class="ml-2 font-small">
                   <div *ngFor="let bonus of veryStrong">{{propertyService.statAsText(bonus)}}</div>
                 </div>
