@@ -192,13 +192,4 @@ export class PropertyService {
       return p;
     }));
   }
-
-  deleteProperty(prop: DynamicProperty): Observable<DynamicProperty[]> {
-    if (prop.id) {
-      return this.http.delete<DynamicProperty[]>(API_URL + '/admin/properties/type/' + prop.type + '/' + prop.id).pipe(map(p => {
-        this.properties[prop.type] = p;
-        return p;
-      }));
-    }
-  }
 }

@@ -47,12 +47,7 @@ export class PropertiesPage {
   }
 
   delete(prop: DynamicProperty) {
-    if (prop.id) {
-      this.propertyService.deleteProperty(prop).subscribe(() => {
-        let idx = this.properties.indexOf(prop);
-        this.properties.splice(idx, 1);
-      });
-    } else {
+    if (!prop.id) {
       let idx = this.properties.indexOf(prop);
       this.properties.splice(idx, 1);
     }

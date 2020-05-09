@@ -82,7 +82,7 @@
           </ion-item>
         </ion-col>
         <ion-col sizeMd="1">
-          <ion-button fill="clean" (click)="delete(prop)"><ion-icon name="trash" color="danger"></ion-icon></ion-button>
+          <ion-button fill="clean" *ngIf="!prop.id" (click)="delete(prop)"><ion-icon name="trash" color="danger"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
       <ion-row>
