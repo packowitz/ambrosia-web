@@ -92,6 +92,26 @@ export class LootBoxPage {
         this.router.navigateByUrl('/loot');
     }
 
+    copy() {
+        this.saving = true;
+        let newLootBox: LootBox = this.converter.dataClone(this.lootBox);
+        newLootBox.id = null;
+        newLootBox.name += ' (c)';
+        newLootBox.items.forEach(i => i.id = null);
+        this.backendService.saveLootBox(newLootBox).subscribe(data => {
+            this.model.updateLootBox(data);
+            this.saving = false;
+            this.router.navigateByUrl('/loot/box/' + data.id);
+        }, error => {
+            this.saving = false;
+            this.alertCtrl.create({
+                header: 'Server error',
+                message: error.error.message,
+                buttons: [{text: 'Okay'}]
+            }).then(data => data.present());
+        });
+    }
+
     isLastSlot(number: number): boolean {
         return this.lootBox.items[this.lootBox.items.length - 1].slotNumber === number;
     }

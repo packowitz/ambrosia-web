@@ -11,6 +11,7 @@
           <ion-input [(ngModel)]="lootBox.name" autofocus="true" class="input-border ml-1"></ion-input>
         </div>
         <div>
+          <ion-button color="success" fill="outline" (click)="copy()">Copy</ion-button>
           <ion-button color="medium" fill="clean" (click)="cancel()">Cancel</ion-button>
           <ion-button color="success" (click)="save()">Save</ion-button>
         </div>

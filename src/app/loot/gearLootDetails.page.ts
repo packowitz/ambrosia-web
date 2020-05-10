@@ -62,6 +62,25 @@ export class GearLootDetailsPage {
     this.router.navigateByUrl('/loot/gear');
   }
 
+  copy() {
+    this.saving = true;
+    let newGearLoot: GearLoot = this.converter.dataClone(this.gearLoot);
+    newGearLoot.id = null;
+    newGearLoot.name += ' (c)';
+    this.backendService.saveGearLoot(newGearLoot).subscribe(data => {
+      this.model.updateGearLoot(data);
+      this.saving = false;
+      this.router.navigateByUrl('/loot/gear/' + data.id);
+    }, error => {
+      this.saving = false;
+      this.alertCtrl.create({
+        header: 'Server error',
+        message: error.error.message,
+        buttons: [{text: 'Okay'}]
+      }).then(data => data.present());
+    });
+  }
+
   toggleSet(set: string) {
     let idx = this.gearLoot.sets.indexOf(set);
     if (idx >= 0) {
