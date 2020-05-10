@@ -87,7 +87,22 @@ export class MapDetailsPage implements OnInit {
     } else if (tile.lootBoxId) {
       this.tileStructureType = 'chest';
     } else {
-      this.tileStructureType = null;
+      this.tileStructureType = 'none';
+    }
+  }
+
+  structionTypeChanged() {
+    if (this.tileStructureType !== 'portal') {
+      this.tile.portalToMapId = null;
+    }
+    if (this.tileStructureType !== 'building') {
+      this.tile.buildingType = null;
+    }
+    if (this.tileStructureType !== 'chest') {
+      this.tile.lootBoxId = null;
+    }
+    if (this.tileStructureType === 'none') {
+      this.tile.structure = null;
     }
   }
 

@@ -108,8 +108,12 @@
         </ion-item>
       </div>
       <div class="flex">
-        <ion-radio-group [(ngModel)]="tileStructureType">
+        <ion-radio-group [(ngModel)]="tileStructureType" (ionChange)="structionTypeChanged()">
           <div class="flex-space-between">
+            <ion-item>
+              <ion-label>None</ion-label>
+              <ion-radio slot="start" value="none"></ion-radio>
+            </ion-item>
             <ion-item>
               <ion-label>Portal</ion-label>
               <ion-radio slot="start" value="portal"></ion-radio>
