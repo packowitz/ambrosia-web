@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {Hero} from '../domain/hero.model';
 import {ConverterService} from '../services/converter.service';
@@ -18,7 +18,7 @@ import {BuffInfoModal} from '../common/buffInfo.modal';
   templateUrl: 'barracks.page.html',
   styleUrls: ['barracks.page.scss']
 })
-export class BarracksPage implements OnInit {
+export class BarracksPage {
 
   selectedHero: Hero;
   tab = "stats";
@@ -37,15 +37,18 @@ export class BarracksPage implements OnInit {
     console.log("BarracksPage.constructor");
   }
 
-  ngOnInit(): void {
-    console.log("BarracksPage.ngOnInit");
+  ionViewWillEnter() {
+    if (this.model.player.serviceAccount) {
+      if (!this.model.fights) {
+        this.backendService.loadFights().subscribe(data => {
+          this.model.fights = data;
+        });
+      }
+    }
     if (this.model.heroes.length > 0) {
       this.selectedHero = this.model.heroes[0];
       this.selectSkill(1);
     }
-  }
-
-  ionViewWillEnter() {
     this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
   }
 
@@ -55,6 +58,16 @@ export class BarracksPage implements OnInit {
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  isConfiguredInFight(): boolean {
+    if (this.model.player.serviceAccount && this.selectedHero && this.model.fights) {
+      let id = this.selectedHero.id;
+      return !!this.model.fights.find(f =>
+        !!f.stages.find(s => s.hero1Id === id || s.hero2Id === id || s.hero3Id === id || s.hero4Id === id)
+      );
+    }
+    return false;
   }
 
   openUpgradeModal() {

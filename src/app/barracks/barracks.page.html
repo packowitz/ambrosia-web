@@ -27,7 +27,7 @@
     </ion-card-header>
     <ion-card-content>
       <div class="scrollable-list">
-        <hero-icon *ngFor="let hero of model.heroes" [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [clickableOnMission]="true" [showInfo]="false" [selected]="hero.id == selectedHero.id"></hero-icon>
+        <hero-icon *ngFor="let hero of model.heroes" [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [clickableOnMission]="true" [showInfo]="false" [selected]="hero == selectedHero"></hero-icon>
       </div>
     </ion-card-content>
   </ion-card>
@@ -54,6 +54,9 @@
           <ion-label>Gear</ion-label>
         </ion-segment-button>
       </ion-segment>
+
+      <div *ngIf="isConfiguredInFight()" class="mt-1 mb-1 pt-1 pb-1 background-RED color-white flex-center bold">Be careful, this hero is already configured for fights!!</div>
+
       <div *ngIf="tab == 'stats'">
         <ion-row class="flex-start mt-2 ml-1 mr-1">
           <span style="width: 120px;">Lvl {{selectedHero.level}}</span>
