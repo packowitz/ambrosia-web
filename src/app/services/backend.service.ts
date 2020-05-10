@@ -118,8 +118,8 @@ export class BackendService {
         return this.http.get<Hero[]>(API_URL + '/hero');
     }
 
-    getGear(amount: number, set: string): Observable<Gear> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/gear/open/' + set + '/' + amount, null)
+    getGear(amount: number, rarity: string, set: string): Observable<Gear> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/gear/open/' + set + '/' + rarity + '/' + amount, null)
             .pipe(map(action => action.gear));
     }
 
@@ -127,8 +127,8 @@ export class BackendService {
         return this.http.get<Gear[]>(API_URL + '/gear');
     }
 
-    getJewel(amount: number, type: JewelType): Observable<Jewelry> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/jewelry/open/' + type.name + '/' + amount, null)
+    getJewel(amount: number, level: number, type: JewelType): Observable<Jewelry> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/jewelry/open/' + type.name + '/' + level + '/' + amount, null)
             .pipe(map(action => action.jewelries[0]));
     }
 

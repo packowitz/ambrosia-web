@@ -19,7 +19,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-row>
-        <ion-col sizeMd="4">
+        <ion-col sizeMd="2">
           <ion-item>
             <ion-label>Amount</ion-label>
             <ion-input type="number" [(ngModel)]="gearAmount"></ion-input>
@@ -34,11 +34,19 @@
           </ion-item>
         </ion-col>
         <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Rarity</ion-label>
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="gearRarity">
+              <ion-select-option *ngFor="let rarity of enumService.getRarities()" [value]="rarity">{{rarity}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
           <ion-button (click)="buyGear()"><ion-icon name="pricetag"></ion-icon>Get Gear</ion-button>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col sizeMd="4">
+        <ion-col sizeMd="2">
           <ion-item>
             <ion-label>Amount</ion-label>
             <ion-input type="number" [(ngModel)]="jewelAmount"></ion-input>
@@ -52,7 +60,13 @@
             </ion-select>
           </ion-item>
         </ion-col>
-        <ion-col sizeMd="3">
+        <ion-col sizeMd="4">
+          <ion-item>
+            <ion-label>Level</ion-label>
+            <ion-input type="number" min="1" max="10" [(ngModel)]="jewelLevel"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="2">
           <ion-button (click)="buyJewel()"><ion-icon name="pricetag"></ion-icon>Get Jewel</ion-button>
         </ion-col>
       </ion-row>

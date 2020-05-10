@@ -16,9 +16,11 @@ export class TavernPage {
   saving = false;
 
   gearAmount = 10;
+  gearRarity = 'SIMPLE';
   gearSet: string = null;
 
   jewelAmount = 10;
+  jewelLevel = 1;
   jewelType: JewelType = null;
 
   specificGear: Gear;
@@ -38,14 +40,14 @@ export class TavernPage {
 
   buyGear() {
     this.saving = true;
-    this.backendService.getGear(this.gearAmount, this.gearSet).subscribe(gear => {
+    this.backendService.getGear(this.gearAmount, this.gearRarity, this.gearSet).subscribe(gear => {
       this.saving = false;
     });
   }
 
   buyJewel() {
     this.saving = true;
-    this.backendService.getJewel(this.jewelAmount, this.jewelType).subscribe(jewelry => {
+    this.backendService.getJewel(this.jewelAmount, this.jewelLevel, this.jewelType).subscribe(jewelry => {
       this.saving = false;
     });
   }
