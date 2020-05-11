@@ -5,6 +5,7 @@ import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
 import {Router} from '@angular/router';
 import {GearLoot} from '../domain/gearLoot.model';
+import {ConverterService} from '../services/converter.service';
 
 @Component({
   selector: 'gear-loot',
@@ -18,6 +19,7 @@ export class GearLootPage implements OnInit {
               private alertCtrl: AlertController,
               public model: Model,
               public enumService: EnumService,
+              public converter: ConverterService,
               private router: Router) {
   }
 
