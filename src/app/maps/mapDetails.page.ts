@@ -15,6 +15,7 @@ import {ConverterService} from '../services/converter.service';
 export class MapDetailsPage implements OnInit {
 
   saving = false;
+  overlay = 'none';
 
   map: Map;
   isCurrentStartingMap = false;
@@ -201,6 +202,28 @@ export class MapDetailsPage implements OnInit {
 
   chestIcons(): MapTileStructure[] {
     return this.enumService.getMapTileStructures().filter(s => s.type === 'CHEST');
+  }
+
+  fightName(fightId): string {
+    let name = '?';
+    if (this.model.fights) {
+      let fight = this.model.fights.find(f => f.id === fightId);
+      if (fight) {
+        name = fight.name;
+      }
+    }
+    return name;
+  }
+
+  fightRecLvl(fightId): string {
+    let lvl = '?';
+    if (this.model.fights) {
+      let fight = this.model.fights.find(f => f.id === fightId);
+      if (fight) {
+        lvl = '' + fight.level;
+      }
+    }
+    return lvl;
   }
 
   save() {

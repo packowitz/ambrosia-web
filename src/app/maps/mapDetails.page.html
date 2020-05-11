@@ -188,11 +188,22 @@
                 <img *ngIf="tile.alwaysRevealed" src="assets/icon/map/revealed.png" class="to-front">
                 <img *ngIf="tile.structure" src="assets/icon/map/structures/{{tile.structure}}.png" class="structure">
                 <img *ngIf="tile.fightIcon" src="assets/icon/map/monster/{{tile.fightIcon}}.png" class="monster">
+                <div *ngIf="overlay == 'fightName' && tile.fightId" class="text-overlay flex-center">{{fightName(tile.fightId)}}</div>
+                <div *ngIf="overlay == 'fightLvl' && tile.fightId" class="text-overlay flex-center">{{fightRecLvl(tile.fightId)}}</div>
               </div>
               <div class="map-hexagon">
                 <img src="assets/icon/map/tiles/{{tile.type}}.png">
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="ml-2">
+          <div class="flex-start">
+            Info:
+            <ion-button size="small" color="dark" [fill]="overlay == 'none' ? 'outline' : 'clear'" (click)="overlay = 'none'">Clear</ion-button>
+            <ion-button size="small" color="dark" [fill]="overlay == 'fightName' ? 'outline' : 'clear'" (click)="overlay = 'fightName'">FightName</ion-button>
+            <ion-button size="small" color="dark" [fill]="overlay == 'fightLvl' ? 'outline' : 'clear'" (click)="overlay = 'fightLvl'">FightLvl</ion-button>
           </div>
         </div>
       </div>
