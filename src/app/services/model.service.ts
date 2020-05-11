@@ -24,6 +24,8 @@ import {VehiclePart} from '../domain/vehiclePart.model';
 import {Mission} from '../domain/mission.model';
 import {Upgrade} from '../domain/upgrade.model';
 import {Incubator} from '../domain/incubator.model';
+import {FightResolved} from '../domain/fightResolved.model';
+import {ConverterService} from './converter.service';
 
 @Injectable({
     providedIn: 'root'
@@ -62,7 +64,8 @@ export class Model {
     updateResourcesInProgress = false;
     updateIncubatorsInProgress = false;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient,
+                private converter: ConverterService) {}
 
     reset() {
         this.heroes = null;
@@ -407,6 +410,17 @@ export class Model {
             }
             if (map.mapId === this.player.currentMapId) {
                 this.currentMap = map;
+            }
+        }
+    }
+
+    updateFight(fight?: FightResolved) {
+        if (fight && this.fights) {
+            let idx = this.fights.findIndex(f => f.id === fight.id);
+            if (idx >= 0) {
+                this.fights[idx] = this.converter.asFight(fight);
+            } else {
+                this.fights.push(this.converter.asFight(fight));
             }
         }
     }

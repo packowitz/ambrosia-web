@@ -113,13 +113,34 @@ export class FightDetailsPage implements OnInit {
   saveFight() {
     this.saving = true;
     this.stage = null;
-    this.backendService.saveFight(this.fight).subscribe(data => {
+    this.backendService.saveFight(this.converter.asFight(this.fight)).subscribe(data => {
       this.fight = this.converter.dataClone(data);
+      this.model.updateFight(data);
       this.saving = false;
     });
   }
 
   testFight() {
     this.router.navigateByUrl('/campaign/' + this.fight.id);
+  }
+
+  copy() {
+    this.saving = true;
+    let newFight: FightResolved = this.converter.dataClone(this.fight);
+    newFight.id = null;
+    newFight.name += ' (c)';
+    newFight.stages.forEach(s => s.id = null);
+    this.backendService.saveFight(this.converter.asFight(newFight)).subscribe(data => {
+      this.model.updateFight(data);
+      this.saving = false;
+      this.router.navigateByUrl('/fights/' + data.id);
+    }, error => {
+      this.saving = false;
+      this.alertCtrl.create({
+        header: 'Server error',
+        message: error.error.message,
+        buttons: [{text: 'Okay'}]
+      }).then(data => data.present());
+    });
   }
 }

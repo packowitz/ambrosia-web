@@ -7,6 +7,7 @@
       <div class="flex-space-between">
         Fight Details{{fight ? ' - ' + fight.name : ''}}
         <div>
+          <ion-button size="small" color="success" fill="outline" (click)="copy()">Copy</ion-button>
           <ion-button size="small" color="danger" (click)="testFight()">Test</ion-button>
           <ion-button size="small" color="medium" fill="clean" (click)="cancel()">Cancel</ion-button>
           <ion-button size="small" color="success" (click)="saveFight()">Save</ion-button>

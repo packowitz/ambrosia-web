@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {FightResolved} from '../domain/fightResolved.model';
+import {Fight} from '../domain/fight.model';
 
 @Injectable({
     providedIn: 'root'
@@ -75,6 +77,35 @@ export class ConverterService {
 
     dataClone(orig) {
         return JSON.parse(JSON.stringify(orig));
+    }
+
+    asFight(fight: FightResolved): Fight {
+        return {
+            id: fight.id,
+            name: fight.name,
+            serviceAccountId: fight.serviceAccount.id,
+            resourceType: fight.resourceType,
+            costs: fight.costs,
+            xp: fight.xp,
+            level: fight.level,
+            ascPoints: fight.ascPoints,
+            travelDuration: fight.travelDuration,
+            timePerTurn: fight.timePerTurn,
+            maxTurnsPerStage: fight.maxTurnsPerStage,
+            stageConfig: fight.stageConfig,
+            environment: fight.environment,
+            lootBox: fight.lootBox,
+            stages: fight.stages.map(s => {
+                return {
+                    id: s.id,
+                    stage: s.stage,
+                    hero1Id: s.hero1 ? s.hero1.id : null,
+                    hero2Id: s.hero2 ? s.hero2.id : null,
+                    hero3Id: s.hero3 ? s.hero3.id : null,
+                    hero4Id: s.hero4 ? s.hero4.id : null,
+                };
+            })
+        };
     }
 
 }
