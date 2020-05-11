@@ -91,7 +91,7 @@ export class MapDetailsPage implements OnInit {
     }
   }
 
-  structionTypeChanged() {
+  structureTypeChanged() {
     if (this.tileStructureType !== 'portal') {
       this.tile.portalToMapId = null;
     }
@@ -115,9 +115,7 @@ export class MapDetailsPage implements OnInit {
     tile.type = 'NONE';
     tile.posX = x;
     tile.posY = y;
-    tile.blueAlwaysRevealed = false;
-    tile.greenAlwaysRevealed = false;
-    tile.redAlwaysRevealed = false;
+    tile.alwaysRevealed = false;
     return tile;
   }
 
