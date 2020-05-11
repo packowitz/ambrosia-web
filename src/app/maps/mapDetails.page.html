@@ -70,18 +70,10 @@
       <ion-card-title>Tile {{tile.posX}}x{{tile.posY}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div class="flex-space-between">
+      <div class="flex-start">
         <ion-item>
-          <ion-label>Red Revealed</ion-label>
-          <ion-checkbox [(ngModel)]="tile.redAlwaysRevealed" slot="start"></ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-label>Green Revealed</ion-label>
-          <ion-checkbox [(ngModel)]="tile.greenAlwaysRevealed" slot="start"></ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-label>Blue Revealed</ion-label>
-          <ion-checkbox [(ngModel)]="tile.blueAlwaysRevealed" slot="start"></ion-checkbox>
+          <ion-label>Always Revealed</ion-label>
+          <ion-checkbox [(ngModel)]="tile.alwaysRevealed" slot="start"></ion-checkbox>
         </ion-item>
       </div>
       <div class="mt-2 mb-2 flex-space-between">
@@ -193,9 +185,7 @@
           <div *ngFor="let y of rows" class="map-row" [class.even]="isEven(y)" [class.odd]="!isEven(y)">
             <div *ngFor="let tile of getRow(y)" class="map-hexagon-wrapper">
               <div class="map-hexagon-overlay pointer" [class.selected]="isSelected(tile)" (click)="selectTile(tile)" [class.structure]="tile.redAlwaysRevealed || tile.blueAlwaysRevealed || tile.greenAlwaysRevealed || tile.structure" [class.fight]="tile.fightIcon">
-                <img *ngIf="tile.redAlwaysRevealed" src="assets/icon/red_dot.png" class="to-front">
-                <img *ngIf="tile.greenAlwaysRevealed" src="assets/icon/green_dot.png" class="to-front">
-                <img *ngIf="tile.blueAlwaysRevealed" src="assets/icon/blue_dot.png" class="to-front">
+                <img *ngIf="tile.alwaysRevealed" src="assets/icon/map/revealed.png" class="to-front">
                 <img *ngIf="tile.structure" src="assets/icon/map/structures/{{tile.structure}}.png" class="structure">
                 <img *ngIf="tile.fightIcon" src="assets/icon/map/monster/{{tile.fightIcon}}.png" class="monster">
               </div>

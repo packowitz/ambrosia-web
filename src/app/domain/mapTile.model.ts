@@ -3,9 +3,7 @@ export class MapTile {
     posX: number;
     posY: number;
     type: string;
-    redAlwaysRevealed: boolean;
-    greenAlwaysRevealed: boolean;
-    blueAlwaysRevealed: boolean;
+    alwaysRevealed: boolean;
     structure: string;
     fightId: number;
     fightIcon: string;
