@@ -24,11 +24,11 @@
         <div *ngIf="gearLoot.types.length == 1">{{gearLoot.types[0]}}</div>
         <div *ngIf="gearLoot.types.length == enumService.getGearTypes().length">Any Type</div>
         <div *ngIf="gearLoot.types.length > 1 && gearLoot.types.length < enumService.getGearTypes().length">{{gearLoot.types.length}}/{{enumService.getGearTypes().length}} Types</div>
-        <div *ngIf="gearLoot.legendaryChance > 0">{{gearLoot.legendaryChance}}% 6*</div>
-        <div *ngIf="gearLoot.epicChance > 0">{{gearLoot.epicChance}}% 5*</div>
-        <div *ngIf="gearLoot.rareChance > 0">{{gearLoot.rareChance}}% 4*</div>
-        <div *ngIf="gearLoot.uncommonChance > 0">{{gearLoot.uncommonChance}}% 3*</div>
-        <div *ngIf="gearLoot.commonChance > 0">{{gearLoot.commonChance}}% 2*</div>
+        <div *ngIf="gearLoot.legendaryChance > 0">{{gearLoot.legendaryChance}}% Leg</div>
+        <div *ngIf="gearLoot.epicChance > 0">{{gearLoot.epicChance}}% Epic</div>
+        <div *ngIf="gearLoot.rareChance > 0">{{gearLoot.rareChance}}% Rare</div>
+        <div *ngIf="gearLoot.uncommonChance > 0">{{gearLoot.uncommonChance}}% Uncommon</div>
+        <div *ngIf="gearLoot.commonChance > 0">{{gearLoot.commonChance}}% Common</div>
         <div>#{{gearLoot.id}}</div>
       </div>
     </ion-item>
