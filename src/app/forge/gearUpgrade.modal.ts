@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, ModalController, NavParams} from '@ionic/angular';
+import {ModalController, NavParams} from '@ionic/angular';
 import {Model} from '../services/model.service';
 import {BackendService} from '../services/backend.service';
 import {PropertyService} from '../services/property.service';
@@ -94,8 +94,7 @@ export class GearUpgradeModal {
                 public model: Model,
                 public converter: ConverterService,
                 private backendService: BackendService,
-                private propertyService: PropertyService,
-                private alertCtrl: AlertController) {
+                private propertyService: PropertyService) {
         this.modification = navParams.get('modification');
         this.gearId = navParams.get('gearId');
         this.init();
@@ -146,13 +145,8 @@ export class GearUpgradeModal {
             this.saving = true;
             this.backendService.upgradeGear(this.gearId, this.modification).subscribe(() => {
                 this.saving = false;
-            }, error => {
+            }, () => {
                 this.saving = false;
-                this.alertCtrl.create({
-                    header: 'Server error',
-                    message: error.error.message,
-                    buttons: [{text: 'Okay'}]
-                }).then(data => data.present());
             });
 
         }

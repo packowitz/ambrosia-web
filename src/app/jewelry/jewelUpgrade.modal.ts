@@ -1,11 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {AlertController, ModalController} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import {Model} from '../services/model.service';
 import {BackendService} from '../services/backend.service';
 import {PropertyService} from '../services/property.service';
 import {DynamicProperty} from '../domain/property.model';
-import {Vehicle} from '../domain/vehicle.model';
-import {VehiclePart} from '../domain/vehiclePart.model';
 import {ConverterService} from '../services/converter.service';
 import {JewelryService} from '../services/jewelry.service';
 import {Jewelry} from '../domain/jewelry.model';
@@ -67,8 +65,7 @@ export class JewelUpgradeModal {
                 public converter: ConverterService,
                 public jewelryService: JewelryService,
                 private backendService: BackendService,
-                private propertyService: PropertyService,
-                private alertCtrl: AlertController) {
+                private propertyService: PropertyService) {
     }
 
     ionViewWillEnter() {
@@ -99,14 +96,7 @@ export class JewelUpgradeModal {
             this.backendService.upgradeJewel(this.jewelType, this.jewelLevel).subscribe(data => {
                 this.saving = false;
                 this.ionViewWillEnter();
-            }, error => {
-                this.saving = false;
-                this.alertCtrl.create({
-                    header: 'Server error',
-                    message: error.error.message,
-                    buttons: [{text: 'Okay'}]
-                }).then(data => data.present());
-            });
+            }, () => { this.saving = false; });
 
         }
     }

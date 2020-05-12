@@ -3,7 +3,7 @@ import {BackendService} from '../services/backend.service';
 import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertController, ModalController} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import {ConverterService} from '../services/converter.service';
 import {VehicleBase} from '../domain/vehicleBase.model';
 import {VehicleAvatarModal} from './vehicleAvatar.modal';
@@ -23,7 +23,6 @@ export class VehicleDetailsPage {
               private backendService: BackendService,
               public model: Model,
               public enumService: EnumService,
-              public alertCtrl: AlertController,
               private converter: ConverterService,
               private modalCtrl: ModalController) {
   }
@@ -48,14 +47,7 @@ export class VehicleDetailsPage {
       this.vehicle = this.converter.dataClone(data);
       this.model.updateVehicleBase(data);
       this.saving = false;
-    }, error => {
-      this.saving = false;
-      this.alertCtrl.create({
-        header: 'Server error',
-        message: error.error.message,
-        buttons: [{text: 'Okay'}]
-      }).then(data => data.present());
-    });
+    }, () => { this.saving = false; });
   }
 
   cancel() {

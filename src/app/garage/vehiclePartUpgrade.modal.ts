@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {AlertController, ModalController} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import {Model} from '../services/model.service';
 import {BackendService} from '../services/backend.service';
 import {PropertyService} from '../services/property.service';
@@ -68,8 +68,7 @@ export class VehiclePartUpgradeModal {
                 public model: Model,
                 public converter: ConverterService,
                 private backendService: BackendService,
-                private propertyService: PropertyService,
-                private alertCtrl: AlertController) {
+                private propertyService: PropertyService) {
     }
 
     ionViewWillEnter() {
@@ -112,13 +111,8 @@ export class VehiclePartUpgradeModal {
             this.backendService.upgradeVehiclePart(this.partId).subscribe(data => {
                 this.saving = false;
                 this.ionViewWillEnter();
-            }, error => {
+            }, () => {
                 this.saving = false;
-                this.alertCtrl.create({
-                    header: 'Server error',
-                    message: error.error.message,
-                    buttons: [{text: 'Okay'}]
-                }).then(data => data.present());
             });
 
         }

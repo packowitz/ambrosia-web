@@ -81,13 +81,8 @@ export class HerobaseEditPage implements OnInit {
                             this.model.baseHeroes.splice(idx, 1);
                         }
                         this.cancel();
-                    }, error => {
+                    }, () => {
                         this.saving = false;
-                        this.alertCtrl.create({
-                            header: 'Server error',
-                            message: error.error.message,
-                            buttons: [{text: 'Okay'}]
-                        }).then(data => data.present());
                     });
                 }}
             ]

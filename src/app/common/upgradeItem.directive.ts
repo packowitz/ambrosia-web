@@ -3,7 +3,6 @@ import {ConverterService} from '../services/converter.service';
 import {Upgrade} from '../domain/upgrade.model';
 import {Model} from '../services/model.service';
 import {BackendService} from '../services/backend.service';
-import {AlertController} from '@ionic/angular';
 import {Vehicle} from '../domain/vehicle.model';
 import {VehiclePart} from '../domain/vehiclePart.model';
 import {Gear} from '../domain/gear.model';
@@ -59,8 +58,7 @@ export class UpgradeItemDirective {
 
     constructor(private model: Model,
                 private backendService: BackendService,
-                public converter: ConverterService,
-                private alertCtrl: AlertController) {
+                public converter: ConverterService) {
     }
 
     getVehicle(): Vehicle {
@@ -117,13 +115,8 @@ export class UpgradeItemDirective {
         this.saving = true;
         this.backendService.finishUpgrade(this.item.id).subscribe(data => {
             this.saving = false;
-        }, error => {
+        }, () => {
             this.saving = false;
-            this.alertCtrl.create({
-                header: 'Server error',
-                message: error.error.message,
-                buttons: [{text: 'Okay'}]
-            }).then(data => data.present());
         });
     }
 
@@ -131,13 +124,8 @@ export class UpgradeItemDirective {
         this.saving = true;
         this.backendService.cancelUpgrade(this.item.id).subscribe(data => {
             this.saving = false;
-        }, error => {
+        }, () => {
             this.saving = false;
-            this.alertCtrl.create({
-                header: 'Server error',
-                message: error.error.message,
-                buttons: [{text: 'Okay'}]
-            }).then(data => data.present());
         });
     }
 
@@ -145,13 +133,8 @@ export class UpgradeItemDirective {
         this.saving = true;
         this.backendService.moveUpgradeUp(this.item.id).subscribe(data => {
             this.saving = false;
-        }, error => {
+        }, () => {
             this.saving = false;
-            this.alertCtrl.create({
-                header: 'Server error',
-                message: error.error.message,
-                buttons: [{text: 'Okay'}]
-            }).then(data => data.present());
         });
     }
 

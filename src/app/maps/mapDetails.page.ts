@@ -5,7 +5,6 @@ import {EnumService, MapTileStructure} from '../services/enum.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Map} from '../domain/map.model';
 import {MapTile} from '../domain/mapTile.model';
-import {AlertController} from '@ionic/angular';
 import {ConverterService} from '../services/converter.service';
 
 @Component({
@@ -29,7 +28,6 @@ export class MapDetailsPage implements OnInit {
               private backendService: BackendService,
               public model: Model,
               public enumService: EnumService,
-              public alertCtrl: AlertController,
               private converter: ConverterService,
               private router: Router) {
   }
@@ -232,13 +230,6 @@ export class MapDetailsPage implements OnInit {
       this.setMap(data);
       this.model.updateMap(data);
       this.saving = false;
-    }, error => {
-      this.saving = false;
-      this.alertCtrl.create({
-        header: 'Server error',
-        message: error.error.message,
-        buttons: [{text: 'Okay'}]
-      }).then(data => data.present());
-    });
+    }, () => { this.saving = false; });
   }
 }

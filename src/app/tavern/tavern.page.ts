@@ -42,14 +42,14 @@ export class TavernPage {
     this.saving = true;
     this.backendService.getGear(this.gearAmount, this.gearRarity, this.gearSet).subscribe(gear => {
       this.saving = false;
-    });
+    }, () => { this.saving = false; });
   }
 
   buyJewel() {
     this.saving = true;
     this.backendService.getJewel(this.jewelAmount, this.jewelLevel, this.jewelType).subscribe(jewelry => {
       this.saving = false;
-    });
+    }, () => { this.saving = false; });
   }
 
   addSpecificGearSlot(event) {
@@ -87,13 +87,6 @@ export class TavernPage {
         header: 'You got ' + gear.set + ' ' + gear.type + ' ' + ' (' + this.converter.rarityStars(gear.rarity) + '*)',
         buttons: [{text: 'Okay'}]
       }).then(data => data.present());
-    }, error => {
-      this.saving = false;
-      this.alertCtrl.create({
-        header: 'Server error',
-        message: error.error.message,
-        buttons: [{text: 'Okay'}]
-      }).then(data => data.present());
-    });
+    }, () => { this.saving = false; });
   }
 }

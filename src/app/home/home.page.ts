@@ -100,14 +100,7 @@ export class HomePage {
       this.backendService.discoverMapTile(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
         this.map = data.currentMap;
         this.saving = false;
-      }, error => {
-        this.saving = false;
-        this.alertCtrl.create({
-          header: 'Server error',
-          message: error.error.message,
-          buttons: [{text: 'Okay'}]
-        }).then(data => data.present());
-      });
+      }, () => { this.saving = false; });
     } else if (tile.fightIcon) {
       this.router.navigateByUrl('/campaign/' + this.map.mapId + '/' + tile.posX + '/' + tile.posY);
     } else if (tile.structure) {
@@ -120,13 +113,13 @@ export class HomePage {
             this.map = this.model.currentMap;
             this.calcRows();
             this.saving = false;
-          });
+          }, () => { this.saving = false; });
         } else {
           this.backendService.discoverMap(tile.portalToMapId).subscribe(data => {
             this.map = data.currentMap;
             this.calcRows();
             this.saving = false;
-          });
+          }, () => { this.saving = false; });
         }
 
       } else if (tile.buildingType) {
@@ -151,7 +144,7 @@ export class HomePage {
           this.saving = false;
           this.map = data.currentMap;
           this.looted = data.looted;
-        });
+        }, () => { this.saving = false; });
       }
     }
   }
@@ -241,7 +234,7 @@ export class HomePage {
               this.backendService.resetMap(this.map.mapId, discovered, fights, chests).subscribe(response => {
                 this.map = response.currentMap;
                 this.saving = false;
-              });
+              }, () => { this.saving = false; });
             }
           }
         }

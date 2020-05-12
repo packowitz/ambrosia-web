@@ -3,7 +3,6 @@ import {BackendService} from '../services/backend.service';
 import {Model} from '../services/model.service';
 import {EnumService, ResourceType} from '../services/enum.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertController} from '@ionic/angular';
 import {LootBox} from '../domain/lootBox.model';
 import {LootItem} from '../domain/lootItem.model';
 import {ConverterService} from '../services/converter.service';
@@ -24,7 +23,6 @@ export class LootBoxPage {
                 private backendService: BackendService,
                 public model: Model,
                 public enumService: EnumService,
-                public alertCtrl: AlertController,
                 private converter: ConverterService) {
     }
 
@@ -78,14 +76,7 @@ export class LootBoxPage {
             this.lootBox = this.converter.dataClone(data);
             this.model.updateLootBox(data);
             this.saving = false;
-        }, error => {
-            this.saving = false;
-            this.alertCtrl.create({
-                header: 'Server error',
-                message: error.error.message,
-                buttons: [{text: 'Okay'}]
-            }).then(data => data.present());
-        });
+        }, () => { this.saving = false; });
     }
 
     cancel() {
@@ -102,14 +93,7 @@ export class LootBoxPage {
             this.model.updateLootBox(data);
             this.saving = false;
             this.router.navigateByUrl('/loot/box/' + data.id);
-        }, error => {
-            this.saving = false;
-            this.alertCtrl.create({
-                header: 'Server error',
-                message: error.error.message,
-                buttons: [{text: 'Okay'}]
-            }).then(data => data.present());
-        });
+        }, () => { this.saving = false; });
     }
 
     isLastSlot(number: number): boolean {

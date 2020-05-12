@@ -134,13 +134,8 @@ export class FightDetailsPage implements OnInit {
       this.model.updateFight(data);
       this.saving = false;
       this.router.navigateByUrl('/fights/' + data.id);
-    }, error => {
+    }, () => {
       this.saving = false;
-      this.alertCtrl.create({
-        header: 'Server error',
-        message: error.error.message,
-        buttons: [{text: 'Okay'}]
-      }).then(data => data.present());
     });
   }
 }

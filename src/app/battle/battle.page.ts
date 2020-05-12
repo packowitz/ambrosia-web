@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Model} from '../services/model.service';
 import {Battle} from '../domain/battle.model';
 import {BattleHero} from '../domain/battleHero.model';
 import {HeroSkill} from '../domain/heroSkill.model';
 import {BackendService, Looted} from '../services/backend.service';
 import {BattleStep} from '../domain/battleStep.model';
-import {AlertController} from '@ionic/angular';
 import {Router} from '@angular/router';
 
 @Component({
@@ -32,7 +31,6 @@ export class BattlePage implements OnInit {
 
   constructor(public model: Model,
               private backendService: BackendService,
-              private alertCtrl: AlertController,
               private router: Router) {}
 
   ngOnInit() {
@@ -195,13 +193,8 @@ export class BattlePage implements OnInit {
     this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
       this.initBattle(data.ongoingBattle, data.looted);
       this.loading = false;
-    }, error => {
+    }, () => {
       this.loading = false;
-      this.alertCtrl.create({
-        header: 'Server error',
-        message: error.error.message,
-        buttons: [{text: 'Okay'}]
-      }).then(data => data.present());
     });
   }
 
@@ -212,13 +205,8 @@ export class BattlePage implements OnInit {
       this.backendService.takeAutoTurn(this.battle, this.activeHero).subscribe(data => {
         this.initBattle(data.ongoingBattle, data.looted);
         this.loading = false;
-      }, error => {
+      }, () => {
         this.loading = false;
-        this.alertCtrl.create({
-          header: 'Server error',
-          message: error.error.message,
-          buttons: [{text: 'Okay'}]
-        }).then(data => data.present());
       });
     }
   }
@@ -229,13 +217,8 @@ export class BattlePage implements OnInit {
       this.backendService.surrender(this.battle).subscribe(data => {
         this.initBattle(data.ongoingBattle, data.looted);
         this.loading = false;
-      }, error => {
+      }, () => {
         this.loading = false;
-        this.alertCtrl.create({
-          header: 'Server error',
-          message: error.error.message,
-          buttons: [{text: 'Okay'}]
-        }).then(data => data.present());
       });
     }
   }
@@ -288,13 +271,8 @@ export class BattlePage implements OnInit {
       this.autobattle = false;
       this.resetBattle(data.ongoingBattle);
       this.loading = false;
-    }, error => {
+    }, () => {
       this.loading = false;
-      this.alertCtrl.create({
-        header: 'Server error',
-        message: error.error.message,
-        buttons: [{text: 'Okay'}]
-      }).then(data => data.present());
     });
   }
 }
