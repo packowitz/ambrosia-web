@@ -12,6 +12,7 @@ import {SkillIconModal} from './skillIcon.modal';
 import {HeroAvatarModal} from './heroavatar.modal';
 import {Model} from '../services/model.service';
 import {NewSkillModal} from './newSkill.modal';
+import {Hero} from '../domain/hero.model';
 
 @Component({
     selector: 'herobase-edit',
@@ -50,12 +51,16 @@ export class HerobaseEditPage implements OnInit {
         }
     }
 
-    setHero() {
-        this.hero = this.converter.dataClone(this.model.baseHeroes.find(h => h.id === this.heroId));
+    setHero(hero?: HeroBase) {
+        this.hero = this.converter.dataClone(hero ? hero : this.model.baseHeroes.find(h => h.id === this.heroId));
         if(this.hero.skills.length === 0) {
             this.addSkill();
         } else {
-            this.setSkill(this.hero.skills[0]);
+            if (this.skill) {
+                this.skill = this.hero.skills.find(s => s.number === this.skill.number);
+            } else {
+                this.setSkill(this.hero.skills[0]);
+            }
         }
     }
 
@@ -149,7 +154,7 @@ export class HerobaseEditPage implements OnInit {
             return action;
         }) : [];
         this.hero.skills.push(newSkill);
-        this.skill = newSkill;
+        this.setSkill(newSkill);
     }
 
     removeSkill() {
@@ -178,7 +183,7 @@ export class HerobaseEditPage implements OnInit {
         this.saving = true;
         this.backendService.saveHeroBase(this.hero).subscribe(data => {
             this.model.updateBaseHero(data);
-            this.hero = this.converter.dataClone(data);
+            this.setHero(data);
             this.saving = false;
         }, error => {
             this.saving = false;
