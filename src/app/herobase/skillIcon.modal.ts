@@ -19,6 +19,9 @@ import {ModalController, NavParams} from '@ionic/angular';
                 <ion-segment-button value="RED">
                     <ion-label>Red</ion-label>
                 </ion-segment-button>
+                <ion-segment-button value="NEUTRAL">
+                    <ion-label>Neutral</ion-label>
+                </ion-segment-button>
             </ion-segment>
             <div *ngIf="tab == 'BLUE'" class="flex flex-wrap">
                 <ion-img *ngFor="let icon of blueIcons" [src]="'assets/icon/skills/' + icon + '.png'" class="skill_icon pointer ma-1" (click)="closeModal(icon)"></ion-img>
@@ -29,6 +32,9 @@ import {ModalController, NavParams} from '@ionic/angular';
             <div *ngIf="tab == 'RED'" class="flex flex-wrap">
                 <ion-img *ngFor="let icon of redIcons" [src]="'assets/icon/skills/' + icon + '.png'" class="skill_icon pointer ma-1" (click)="closeModal(icon)"></ion-img>
             </div>
+            <div *ngIf="tab == 'NEUTRAL'" class="flex flex-wrap">
+                <ion-img *ngFor="let icon of neutralIcons" [src]="'assets/icon/skills/' + icon + '.png'" class="skill_icon pointer ma-1" (click)="closeModal(icon)"></ion-img>
+            </div>
         </div>
     `
 })
@@ -37,12 +43,14 @@ export class SkillIconModal implements OnInit {
     currentIcon = "";
     tab = "BLUE";
 
-    blueIconCount = 117;
+    blueIconCount = 224;
     blueIcons = [];
-    greenIconCount = 99;
+    greenIconCount = 224;
     greenIcons = [];
-    redIconCount = 131;
+    redIconCount = 224;
     redIcons = [];
+    neutralIconCount = 30;
+    neutralIcons = [];
 
     constructor(private modalController: ModalController, private navParams: NavParams) {
         let counter = 1;
@@ -61,6 +69,12 @@ export class SkillIconModal implements OnInit {
         while (counter <= this.redIconCount) {
             let nr = ('00' + counter).slice(-3);
             this.redIcons.push('red_' + nr);
+            counter ++;
+        }
+        counter = 1;
+        while (counter <= this.neutralIconCount) {
+            let nr = ('00' + counter).slice(-3);
+            this.neutralIcons.push('neutral_' + nr);
             counter ++;
         }
     }
