@@ -53,7 +53,7 @@ export class StoragePage {
 
   gain(type: string) {
     this.saving = true;
-    this.backendService.adminGainResources(type).subscribe(() => {
+    this.backendService.betaTesterGainResources(type).subscribe(() => {
       this.saving = false;
     });
   }

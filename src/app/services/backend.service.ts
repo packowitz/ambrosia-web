@@ -155,23 +155,23 @@ export class BackendService {
             .pipe(map(action => action.hero));
     }
 
-    adminHeroGainLevel(hero: Hero): Observable<Hero> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/gain_level', null)
+    betaTesterHeroGainLevel(hero: Hero): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/tester/hero/' + hero.id + '/gain_level', null)
             .pipe(map(action => action.hero));
     }
 
-    adminHeroLooseLevel(hero: Hero): Observable<Hero> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/loose_level', null)
+    betaTesterHeroLooseLevel(hero: Hero): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/tester/hero/' + hero.id + '/loose_level', null)
             .pipe(map(action => action.hero));
     }
 
-    adminHeroGainAscLevel(hero: Hero): Observable<Hero> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/gain_asc_level', null)
+    betaTesterHeroGainAscLevel(hero: Hero): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/tester/hero/' + hero.id + '/gain_asc_level', null)
             .pipe(map(action => action.hero));
     }
 
-    adminHeroLooseAscLevel(hero: Hero): Observable<Hero> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/loose_asc_level', null)
+    betaTesterHeroLooseAscLevel(hero: Hero): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/tester/hero/' + hero.id + '/loose_asc_level', null)
             .pipe(map(action => action.hero));
     }
 
@@ -383,7 +383,7 @@ export class BackendService {
             fights: fights,
             chests: chests
         };
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/map/' + mapId + '/reset', request);
+        return this.http.post<PlayerActionResponse>(API_URL + '/tester/map/' + mapId + '/reset', request);
     }
 
     discoverMapTile(mapId: number, posX: number, posY: number): Observable<PlayerActionResponse> {
@@ -513,8 +513,8 @@ export class BackendService {
         return this.http.post<PlayerActionResponse>(API_URL + '/upgrade/' + upgradeId + '/moveup', null);
     }
 
-    adminGainResources(resourceType: string): Observable<PlayerActionResponse> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/admin/resources/gain/' + resourceType, null);
+    betaTesterGainResources(resourceType: string): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/tester/resources/gain/' + resourceType, null);
     }
 
     cloneHero(genomeType: string): Observable<PlayerActionResponse> {

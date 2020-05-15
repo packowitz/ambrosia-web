@@ -64,10 +64,10 @@
             <span class="bar-filled" [style.width]="(100 * selectedHero.xp / selectedHero.maxXp) + '%'"></span>
             <span class="bar-text">{{selectedHero.xp == selectedHero.maxXp ? 'MAX' : selectedHero.xp + ' / ' + selectedHero.maxXp + ' XP'}}</span>
           </span>
-          <span *ngIf="model.player.admin" class="ml-4">
+          <span *ngIf="model.player.betaTester" class="ml-4">
             Modify level
-            <ion-button size="small" fill="clear" (click)="adminHeroLooseLevel()"><ion-icon name="remove"></ion-icon></ion-button>
-            <ion-button size="small" fill="clear" (click)="adminHeroGainLevel()"><ion-icon name="add"></ion-icon></ion-button>
+            <ion-button size="small" fill="clear" (click)="betaTesterHeroLooseLevel()"><ion-icon name="remove"></ion-icon></ion-button>
+            <ion-button size="small" fill="clear" (click)="betaTesterHeroGainLevel()"><ion-icon name="add"></ion-icon></ion-button>
           </span>
         </ion-row>
         <div class="flex-start mt-2 ml-1 mr-1">
@@ -76,10 +76,10 @@
             <span class="bar-filled" [style.width]="(100 * selectedHero.ascPoints / selectedHero.ascPointsMax) + '%'"></span>
             <span class="bar-text">{{selectedHero.ascPoints == selectedHero.ascPointsMax ? 'MAX' : selectedHero.ascPoints + ' / ' + selectedHero.ascPointsMax + ' pts'}}</span>
           </span>
-          <span *ngIf="model.player.admin" class="ml-4">
+          <span *ngIf="model.player.betaTester" class="ml-4">
             Modify asc level
-            <ion-button size="small" fill="clear" (click)="adminHeroLooseAscLevel()"><ion-icon name="remove"></ion-icon></ion-button>
-            <ion-button size="small" fill="clear" (click)="adminHeroGainAscLevel()"><ion-icon name="add"></ion-icon></ion-button>
+            <ion-button size="small" fill="clear" (click)="betaTesterHeroLooseAscLevel()"><ion-icon name="remove"></ion-icon></ion-button>
+            <ion-button size="small" fill="clear" (click)="betaTesterHeroGainAscLevel()"><ion-icon name="add"></ion-icon></ion-button>
           </span>
         </div>
         <div class="mt-1 ml-1 mr-1 mb-2 border-bottom flex-space-between">

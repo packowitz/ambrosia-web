@@ -38,7 +38,7 @@
         <ion-col sizeMd="1" class="flex-center">
           <i>no limit</i>
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('COINS')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -57,7 +57,7 @@
         <ion-col sizeMd="1" class="flex-center">
           <i>no limit</i>
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('RUBIES')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -84,7 +84,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.steamMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('STEAM')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -103,7 +103,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.premiumSteamMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('PREMIUM_STEAM')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -122,7 +122,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.cogwheelsMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('COGWHEELS')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -141,7 +141,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.premiumCogwheelsMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('PREMIUM_COGWHEELS')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -160,7 +160,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.tokensMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('TOKENS')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -179,7 +179,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.premiumTokensMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('PREMIUM_TOKENS')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -206,7 +206,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.metalMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('METAL')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -225,7 +225,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.ironMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('IRON')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -244,7 +244,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.stealMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('STEAL')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -271,7 +271,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.woodMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('WOOD')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -290,7 +290,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.brownCoalMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('BROWN_COAL')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -309,7 +309,7 @@
         <ion-col sizeMd="1" class="flex-center">
           {{model.resources.blackCoalMax}} max
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('BLACK_COAL')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -336,7 +336,7 @@
         <ion-col sizeMd="1" class="flex-center">
           <i>no limit</i>
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('SIMPLE_GENOME')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -355,7 +355,7 @@
         <ion-col sizeMd="1" class="flex-center">
           <i>no limit</i>
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('COMMON_GENOME')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -374,7 +374,7 @@
         <ion-col sizeMd="1" class="flex-center">
           <i>no limit</i>
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('UNCOMMON_GENOME')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -393,7 +393,7 @@
         <ion-col sizeMd="1" class="flex-center">
           <i>no limit</i>
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('RARE_GENOME')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
@@ -412,7 +412,7 @@
         <ion-col sizeMd="1" class="flex-center">
           <i>no limit</i>
         </ion-col>
-        <ion-col *ngIf="model.player.admin" sizeMd="2" class="flex-center">
+        <ion-col *ngIf="model.player.betaTester" sizeMd="2" class="flex-center">
           <ion-button color="success" size="small" fill="outline" (click)="gain('EPIC_GENOME')" [disabled]="saving"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
         </ion-col>
       </ion-row>

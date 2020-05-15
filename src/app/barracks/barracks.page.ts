@@ -116,26 +116,26 @@ export class BarracksPage {
     return this.selectedHero['skill' + skill.number] || 0;
   }
 
-  adminHeroLooseLevel() {
-    this.backendService.adminHeroLooseLevel(this.selectedHero).subscribe(data => {
+  betaTesterHeroLooseLevel() {
+    this.backendService.betaTesterHeroLooseLevel(this.selectedHero).subscribe(data => {
       this.selectHero(data);
     });
   }
 
-  adminHeroGainLevel() {
-    this.backendService.adminHeroGainLevel(this.selectedHero).subscribe(data => {
+  betaTesterHeroGainLevel() {
+    this.backendService.betaTesterHeroGainLevel(this.selectedHero).subscribe(data => {
       this.selectHero(data);
     });
   }
 
-  adminHeroLooseAscLevel() {
-    this.backendService.adminHeroLooseAscLevel(this.selectedHero).subscribe(data => {
+  betaTesterHeroLooseAscLevel() {
+    this.backendService.betaTesterHeroLooseAscLevel(this.selectedHero).subscribe(data => {
       this.selectHero(data);
     });
   }
 
-  adminHeroGainAscLevel() {
-    this.backendService.adminHeroGainAscLevel(this.selectedHero).subscribe(data => {
+  betaTesterHeroGainAscLevel() {
+    this.backendService.betaTesterHeroGainAscLevel(this.selectedHero).subscribe(data => {
       this.selectHero(data);
     });
   }
