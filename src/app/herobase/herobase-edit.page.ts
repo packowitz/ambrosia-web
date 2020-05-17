@@ -112,6 +112,7 @@ export class HerobaseEditPage implements OnInit {
     }
 
     addSkill(copy?: HeroSkill) {
+        let heroColor = this.hero.color.toLowerCase;
         let skillNumber = this.hero.skills.length + 1;
         let replaceSkillNr = false;
         if (!!copy && !!copy.number && copy.number !== skillNumber) {
@@ -121,7 +122,7 @@ export class HerobaseEditPage implements OnInit {
         newSkill.number = skillNumber;
         newSkill.name = copy ? copy.name : 'Please name me';
         newSkill.description = copy ? copy.description : 'Please describe me';
-        newSkill.icon = copy ? copy.icon : 'default';
+        newSkill.icon = copy ? copy.icon.replace('red', heroColor).replace('blue', heroColor).replace('green', heroColor) : 'default';
         newSkill.passive = copy ? copy.passive : false;
         newSkill.passiveSkillTrigger = copy ? copy.passiveSkillTrigger : null;
         newSkill.passiveSkillTriggerValue = copy ? copy.passiveSkillTriggerValue : null;

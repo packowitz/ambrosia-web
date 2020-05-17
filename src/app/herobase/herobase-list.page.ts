@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 
 
 export class HeroClassRarity {
+
     heroClass: string;
     rarity: string;
     stars: number;
@@ -25,6 +26,8 @@ export class HeroClassRarity {
     templateUrl: 'herobase-list.page.html'
 })
 export class HerobaseListPage {
+
+    saving = false;
 
     heroClassList: HeroClassRarity[] = [];
 
@@ -105,24 +108,11 @@ export class HerobaseListPage {
     }
 
     createHero(heroClass: HeroClassRarity, color: string) {
-        let newHero = new HeroBase();
-        newHero.rarity = heroClass.rarity;
-        newHero.heroClass = heroClass.heroClass;
-        newHero.color = color;
-        newHero.heroType = this.model.baseHeroes.find(h => h.heroClass === heroClass.heroClass && h.rarity === heroClass.rarity).heroType;
-        newHero.name = color + " " + heroClass.heroClass;
+        let copyFrom = this.model.baseHeroes.find(h => h.heroClass === heroClass.heroClass && h.rarity === heroClass.rarity);
+        let newHero = new HeroBase(copyFrom, color);
         this.backendService.createHeroBase(newHero).subscribe(hero => {
             this.model.updateBaseHero(hero);
             this.router.navigateByUrl('/herobase/edit/' + hero.id);
-        }, error => {
-            this.toastCtrl.create({
-                message: error.error.message,
-                buttons: [
-                    { text: 'Close', role: 'cancel' }
-                ],
-                position: 'bottom',
-                color: 'danger'
-            }).then(toast => toast.present());
-        });
+        }, () => this.saving = false);
     }
 }
