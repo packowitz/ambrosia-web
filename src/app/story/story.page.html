@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Story
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="flex-space-between">
+          Color specific placeholder
+          <ion-button color="success" size="small" (click)="newPlaceholder()">new placeholder</ion-button>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="placeholders">
+      <div>
+        <ion-button *ngFor="let placeholder of placeholders" (click)="openPlaceholderPopover(placeholder)" fill="clear" size="small" color="dark">{{placeholder.identifier}}</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="flex-space-between">
+          Story line
+          <ion-select [(ngModel)]="storyTrigger" (ionChange)="storyTriggerChanged()" class="font-small" placeholder="Select">
+            <ion-select-option *ngFor="let trigger of enumService.getStoryTriggerns()">{{trigger}}</ion-select-option>
+          </ion-select>
+        </div>
+      </ion-card-title>
+      <ion-card-content *ngIf="stories">
+        <div *ngFor="let story of stories">
+          <div class="flex-space-between">
+            {{story.number}}. part
+            <div>
+              <ion-button (click)="deleteStory(story)" fill="clear" size="small" color="danger"><ion-icon name="trash-outline"></ion-icon></ion-button>
+              <ion-button (click)="saveStory(story)" fill="clear" size="small" color="success"><ion-icon name="save-outline"></ion-icon></ion-button>
+            </div>
+          </div>
+          <div class="flex-space-between">
+            <ion-img src="assets/icon/story/{{story.leftPic ? story.leftPic : 'NONE'}}.png" class="story-pic pointer" (click)="openPicSelection(story, 'left')"></ion-img>
+            <div class="flex-vert flex-grow">
+              <ion-item>
+                <ion-label position="floating">Title</ion-label>
+                <ion-input type="text" [(ngModel)]="story.title" [clearInput]="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Text</ion-label>
+                <ion-input type="text" [(ngModel)]="story.message"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">BtnText</ion-label>
+                <ion-input type="text" [(ngModel)]="story.buttonText" [clearInput]="true"></ion-input>
+              </ion-item>
+            </div>
+            <ion-img src="assets/icon/story/{{story.rightPic ? story.rightPic : 'NONE'}}.png" class="story-pic pointer" (click)="openPicSelection(story, 'right')"></ion-img>
+          </div>
+        </div>
+        <div class="flex-center">
+          <ion-button size="small" color="success" (click)="newStory()">Add another part to story</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card-header>
+  </ion-card>
+</ion-content>

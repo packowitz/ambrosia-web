@@ -80,6 +80,11 @@ export class AppComponent {
             icon: 'crossed-axes'
         },
         {
+            title: 'Story',
+            url: '/story',
+            icon: 'book'
+        },
+        {
             title: 'Ongoing Battle',
             url: '/battle',
             icon: 'dripping-sword'

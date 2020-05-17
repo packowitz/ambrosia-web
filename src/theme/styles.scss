@@ -183,6 +183,10 @@
   max-width: 50%;
 }
 
+.width-50p {
+  width: 50%;
+}
+
 .width-60 {
   width: 60px;
 }
@@ -659,4 +663,9 @@ ion-row.table-row {
     justify-content: center;
     font-size: 2em;
   }
+}
+
+.story-pic {
+  width: 100px;
+  min-width: 80px;
 }

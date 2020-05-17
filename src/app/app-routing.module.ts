@@ -41,6 +41,11 @@ const routes: Routes = [
         loadChildren: './tavern/tavern.module#TavernModule',
         canActivate: [AdminGuard]
     },
+    {
+        path: 'story',
+        loadChildren: './story/story.module#StoryModule',
+        canActivate: [AdminGuard]
+    },
     {path: 'barracks', loadChildren: './barracks/barracks.module#BarracksModule'},
     {path: 'vehiclebase', loadChildren: './vehicles/vehicles.module#VehiclesModule'},
     {path: 'academy', loadChildren: './academy/academy.module#AcademyModule'},

@@ -42,6 +42,7 @@ export class Enums {
     vehicleStats: string[];
     lootItemTypes: string[];
     modifications: string[];
+    storyTriggers: string[];
 }
 
 @Injectable({
@@ -172,5 +173,9 @@ export class EnumService {
 
     getModifications(): string[] {
         return this.enums.modifications;
+    }
+
+    getStoryTriggerns(): string[] {
+        return this.enums.storyTriggers;
     }
 }

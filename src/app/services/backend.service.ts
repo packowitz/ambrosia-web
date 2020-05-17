@@ -32,6 +32,8 @@ import {Progress} from '../domain/progress.model';
 import {Mission} from '../domain/mission.model';
 import {Upgrade} from '../domain/upgrade.model';
 import {Incubator} from '../domain/incubator.model';
+import {StoryPlaceholder} from '../domain/storyPlaceholder.model';
+import {Story} from '../domain/story.model';
 
 export class Looted {
     type: string;
@@ -534,5 +536,25 @@ export class BackendService {
             gearIds: gears.map(g => g.id)
         };
         return this.http.post<PlayerActionResponse>(API_URL + '/forge/breakdown', request);
+    }
+
+    getStoryPlaceholder(): Observable<StoryPlaceholder[]> {
+        return this.http.get<StoryPlaceholder[]>(API_URL + '/admin/story/placeholder');
+    }
+
+    saveStoryPlaceholder(placeholder: StoryPlaceholder): Observable<StoryPlaceholder> {
+        return this.http.post<StoryPlaceholder>(API_URL + '/admin/story/placeholder', placeholder);
+    }
+
+    loadStory(storyTrigger: string): Observable<Story[]> {
+        return this.http.get<Story[]>(API_URL + '/admin/story/' + storyTrigger);
+    }
+
+    saveStory(story: Story): Observable<Story> {
+        return this.http.post<Story>(API_URL + '/admin/story', story);
+    }
+
+    deleteStory(story: Story): Observable<any> {
+        return this.http.delete<any>(API_URL + '/admin/story/' + story.id);
     }
 }
