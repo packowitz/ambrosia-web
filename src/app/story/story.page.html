@@ -32,9 +32,12 @@
       <ion-card-title>
         <div class="flex-space-between">
           Story line
-          <ion-select [(ngModel)]="storyTrigger" (ionChange)="storyTriggerChanged()" class="font-small" placeholder="Select">
-            <ion-select-option *ngFor="let trigger of enumService.getStoryTriggerns()">{{trigger}}</ion-select-option>
-          </ion-select>
+          <div class="flex-start">
+            <ion-button size="small" color="success" [disabled]="!storiesModified()" *ngIf="stories" (click)="saveStoryLine()" class="mr-2">save</ion-button>
+            <ion-select [(ngModel)]="storyTrigger" (ionChange)="storyTriggerChanged()" class="font-small" placeholder="Select">
+              <ion-select-option *ngFor="let trigger of enumService.getStoryTriggerns()">{{trigger}}</ion-select-option>
+            </ion-select>
+          </div>
         </div>
       </ion-card-title>
       <ion-card-content *ngIf="stories">
@@ -42,8 +45,8 @@
           <div class="flex-space-between">
             {{story.number}}. part
             <div>
+              <ion-button (click)="moveStoryUp(story)" fill="clear" size="small" [disabled]="story.number == 1"><ion-icon name="arrow-up-circle-outline"></ion-icon></ion-button>
               <ion-button (click)="deleteStory(story)" fill="clear" size="small" color="danger"><ion-icon name="trash-outline"></ion-icon></ion-button>
-              <ion-button (click)="saveStory(story)" fill="clear" size="small" color="success"><ion-icon name="save-outline"></ion-icon></ion-button>
             </div>
           </div>
           <div class="flex-space-between">
@@ -51,15 +54,15 @@
             <div class="flex-vert flex-grow">
               <ion-item>
                 <ion-label position="floating">Title</ion-label>
-                <ion-input type="text" [(ngModel)]="story.title" [clearInput]="true"></ion-input>
+                <ion-input type="text" [(ngModel)]="story.title" [clearInput]="true" (ionChange)="storyModified(story)"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Text</ion-label>
-                <ion-input type="text" [(ngModel)]="story.message"></ion-input>
+                <ion-input type="text" [(ngModel)]="story.message" (ionChange)="storyModified(story)"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">BtnText</ion-label>
-                <ion-input type="text" [(ngModel)]="story.buttonText" [clearInput]="true"></ion-input>
+                <ion-input type="text" [(ngModel)]="story.buttonText" [clearInput]="true" (ionChange)="storyModified(story)"></ion-input>
               </ion-item>
             </div>
             <ion-img src="assets/icon/story/{{story.rightPic ? story.rightPic : 'NONE'}}.png" class="story-pic pointer" (click)="openPicSelection(story, 'right')"></ion-img>

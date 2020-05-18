@@ -24,6 +24,7 @@ export class StoryPage implements OnInit {
   storyTrigger: string;
 
   stories: Story[];
+  storiesToDelete: Story[] = [];
 
   constructor(public model: Model,
               public enumService: EnumService,
@@ -87,6 +88,7 @@ export class StoryPage implements OnInit {
               story.rightPic = dataReturned.data;
             }
           }
+          this.storyModified(story);
         }
       });
       p.present();
@@ -99,6 +101,7 @@ export class StoryPage implements OnInit {
       this.stories = [];
       this.backendService.loadStory(this.storyTrigger).subscribe(data => {
         this.stories = data;
+        this.storiesToDelete = [];
         this.saving = false;
       }, () => this.saving = false);
     }
@@ -110,32 +113,57 @@ export class StoryPage implements OnInit {
     newStory.number = this.stories.length + 1;
     newStory.message = "Story mandatory";
     newStory.buttonText = "Next";
+    newStory.dirty = true;
     this.stories.push(newStory);
   }
 
   deleteStory(story: Story) {
-    if (!story.id) {
-      let idx = this.stories.findIndex(s => s.number === story.number);
-      this.stories.splice(idx, 1);
-      this.stories.filter(s => s.number > story.number).forEach(s => s.number--);
-
-    } else {
-      this.saving = true;
-      this.backendService.deleteStory(story).subscribe(() => {
-        this.saving = false;
-        story.id = null;
-        this.deleteStory(story);
-      }, () => this.saving = false);
+    if (story.id) {
+      this.storiesToDelete.push(story);
     }
+    let idx = this.stories.findIndex(s => s.number === story.number);
+    this.stories.splice(idx, 1);
+    this.stories.filter(s => s.number > story.number).forEach(s => s.number--);
   }
 
-  saveStory(story: Story) {
+  moveStoryUp(story: Story) {
+    if (story.number > 1) {
+      let swapWith = this.stories.find(s => s.number === (story.number - 1));
+      swapWith.number ++;
+      story.number --;
+      this.storyModified(swapWith);
+      this.storyModified(story);
+    }
+    this.stories = this.stories.sort((a, b) => a.number - b.number);
+  }
+
+  storiesModified(): boolean {
+    return  this.stories.findIndex(s => s.dirty) >= 0 || this.storiesToDelete.length > 0;
+  }
+
+  storyModified(story: Story) {
+    story.dirty = true;
+  }
+
+  saveStoryLine() {
     this.saving = true;
-    this.backendService.saveStory(story).subscribe(data => {
+    let story = this.stories.find(s => s.dirty);
+    if (story) {
+      this.backendService.saveStory(story).subscribe(data => {
+        this.saving = false;
+        story.dirty = false;
+        let idx = this.stories.findIndex(s => s.number === story.number);
+        this.stories[idx] = data;
+        this.saveStoryLine();
+      });
+    } else if (this.storiesToDelete.length > 0) {
+      this.backendService.deleteStory(this.storiesToDelete[0]).subscribe(() => {
+        this.storiesToDelete.splice(0, 1);
+        this.saveStoryLine();
+      });
+    } else {
       this.saving = false;
-      let idx = this.stories.findIndex(s => s.number === story.number);
-      this.stories[idx] = data;
-    }, () => this.saving = false);
+    }
   }
 
 }

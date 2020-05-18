@@ -7,4 +7,7 @@ export class Story {
     buttonText: string;
     leftPic?: string;
     rightPic?: string;
+
+    // transient
+    dirty: boolean;
 }
