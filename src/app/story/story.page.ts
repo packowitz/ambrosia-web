@@ -106,6 +106,7 @@ export class StoryPage implements OnInit {
 
   newStory() {
     let newStory = new Story();
+    newStory.trigger = this.storyTrigger;
     newStory.number = this.stories.length + 1;
     newStory.message = "Story mandatory";
     newStory.buttonText = "Next";
