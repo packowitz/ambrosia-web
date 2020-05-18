@@ -18,8 +18,8 @@ export class StoryPicSelectionPopover {
 
     left = true;
 
-    leftPics = ["NONE", "PROF_LEFT", "HERO4_LEFT___COLOR__", "HERO3___COLOR__", "HERO2_LEFT___COLOR__"];
-    rightPics = ["NONE", "PROF_RIGHT", "HERO4_RIGHT___COLOR__", "HERO3___COLOR__", "HERO2_RIGHT___COLOR__"];
+    leftPics = ["NONE", "PROF_LEFT", "HERO4_LEFT___COLOR__", "HERO3_LEFT___COLOR__", "HERO2___COLOR__"];
+    rightPics = ["NONE", "PROF_RIGHT", "HERO4_RIGHT___COLOR__", "HERO3_RIGHT___COLOR__", "HERO2___COLOR__"];
 
     constructor(private popoverController: PopoverController,
                 private navParams: NavParams) {
