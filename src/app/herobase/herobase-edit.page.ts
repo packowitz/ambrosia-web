@@ -112,7 +112,7 @@ export class HerobaseEditPage implements OnInit {
     }
 
     addSkill(copy?: HeroSkill) {
-        let heroColor = this.hero.color.toLowerCase;
+        let heroColor = this.hero.color.toLowerCase();
         let skillNumber = this.hero.skills.length + 1;
         let replaceSkillNr = false;
         if (!!copy && !!copy.number && copy.number !== skillNumber) {
