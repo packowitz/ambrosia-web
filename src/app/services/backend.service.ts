@@ -546,15 +546,19 @@ export class BackendService {
         return this.http.post<StoryPlaceholder>(API_URL + '/admin/story/placeholder', placeholder);
     }
 
+    loadPlayerStory(storyTrigger: string): Observable<Story[]> {
+        return this.http.get<Story[]>(API_URL + '/story/' + storyTrigger);
+    }
+
     loadStory(storyTrigger: string): Observable<Story[]> {
         return this.http.get<Story[]>(API_URL + '/admin/story/' + storyTrigger);
     }
 
-    saveStory(story: Story): Observable<Story> {
-        return this.http.post<Story>(API_URL + '/admin/story', story);
-    }
-
-    deleteStory(story: Story): Observable<any> {
-        return this.http.delete<any>(API_URL + '/admin/story/' + story.id);
+    saveStoryLine(stories: Story[], toDelete: number[]): Observable<Story[]> {
+        let request = {
+            stories: stories,
+            toDelete: toDelete
+        };
+        return this.http.post<Story[]>(API_URL + '/admin/story', request);
     }
 }
