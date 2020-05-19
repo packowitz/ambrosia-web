@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
-import {AlertController, PopoverController} from '@ionic/angular';
-import {ConverterService} from '../services/converter.service';
+import {PopoverController} from '@ionic/angular';
 import {Model} from '../services/model.service';
-import {EnumService, JewelType} from '../services/enum.service';
-import {Gear} from '../domain/gear.model';
-import {PropertyService} from '../services/property.service';
+import {EnumService} from '../services/enum.service';
 import {StoryPlaceholder} from '../domain/storyPlaceholder.model';
 import {PlaceholderPopover} from './placeholder.popover';
 import {Story} from '../domain/story.model';
@@ -47,8 +44,8 @@ export class StoryPage implements OnInit {
       componentProps: {
         placeholder: placeholder
       }
-    }).then(p => {
-      p.onDidDismiss().then((dataReturned) => {
+    }).then(popover => {
+      popover.onDidDismiss().then((dataReturned) => {
         if (dataReturned !== null && dataReturned.data) {
           this.saving = true;
           this.backendService.saveStoryPlaceholder(dataReturned.data).subscribe(data => {
@@ -62,7 +59,7 @@ export class StoryPage implements OnInit {
           }, () => this.saving = false);
         }
       });
-      p.present();
+      popover.present();
     });
   }
 
@@ -138,32 +135,49 @@ export class StoryPage implements OnInit {
   }
 
   storiesModified(): boolean {
-    return  this.stories.findIndex(s => s.dirty) >= 0 || this.storiesToDelete.length > 0;
+    return this.stories.findIndex(s => s.dirty === true) >= 0 || this.storiesToDelete.length > 0;
+  }
+
+  changeTitle(story: Story, event) {
+    if (story.title !== event.detail.value) {
+      story.title = event.detail.value;
+      story.dirty = true;
+    }
+  }
+
+  changeMessage(story: Story, event) {
+    if (story.message !== event.detail.value) {
+      story.message = event.detail.value;
+      story.dirty = true;
+    }
+  }
+
+  changeButtonText(story: Story, event) {
+    if (story.buttonText !== event.detail.value) {
+      story.buttonText = event.detail.value;
+      story.dirty = true;
+    }
   }
 
   storyModified(story: Story) {
+    console.log("marking story " + story.number + " as dirty");
     story.dirty = true;
   }
 
   saveStoryLine() {
     this.saving = true;
-    let story = this.stories.find(s => s.dirty);
-    if (story) {
-      this.backendService.saveStory(story).subscribe(data => {
-        this.saving = false;
-        story.dirty = false;
+    let stories = this.stories.filter(s => s.dirty === true);
+    this.backendService.saveStoryLine(stories, this.storiesToDelete.map(s => s.id)).subscribe(data => {
+      console.log(data);
+      data.forEach(story => {
         let idx = this.stories.findIndex(s => s.number === story.number);
-        this.stories[idx] = data;
-        this.saveStoryLine();
+        if (idx >= 0) {
+          this.stories[idx] = story;
+        }
       });
-    } else if (this.storiesToDelete.length > 0) {
-      this.backendService.deleteStory(this.storiesToDelete[0]).subscribe(() => {
-        this.storiesToDelete.splice(0, 1);
-        this.saveStoryLine();
-      });
-    } else {
+      this.storiesToDelete = [];
       this.saving = false;
-    }
+    }, () => this.saving = false);
   }
 
 }
