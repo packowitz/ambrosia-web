@@ -13,6 +13,7 @@ import {AdminGuard} from './services/auth-guard.service';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
 import {PlayerActionInterceptor} from './interceptors/player-action.interceptor';
 import {FormsModule} from '@angular/forms';
+import {CommonAmbrosiaModule} from './common/common-ambrosia.module';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import {FormsModule} from '@angular/forms';
     imports: [
         BrowserModule,
         HttpClientModule,
+        CommonAmbrosiaModule,
         IonicModule.forRoot(),
         AppRoutingModule,
         FormsModule

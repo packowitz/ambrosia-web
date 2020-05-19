@@ -11,7 +11,12 @@
         </div>
         <div class="flex-center">
           <div class="font-small">max hero level to train: {{model.progress.maxTrainingLevel}}</div>
-          <ion-icon name="close" class="ml-2 pointer" (click)="close()"></ion-icon>
+          <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
+            <i class="ra ra-book font-larger"></i>
+          </ion-button>
+          <ion-button size="small" fill="clear" color="dark" (click)="close()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
         </div>
       </div>
     </ion-title>

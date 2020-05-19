@@ -142,6 +142,10 @@
   font-size: 0.8em;
 }
 
+.font-larger {
+  font-size: 1.8em;
+}
+
 .font-large {
   font-size: 3em;
 }
@@ -668,4 +672,28 @@ ion-row.table-row {
 .story-pic {
   width: 100px;
   min-width: 80px;
+}
+
+.story-popover .popover-content {
+  width: 66vw;
+  max-width: 600px;
+  min-width: 550px;
+}
+
+.story-pic-wrapper {
+  width: 100px;
+  min-width: 100px;
+  height: 100px;
+  min-height: 100px;
+
+  .story-pic {
+    border: 1px solid grey;
+    border-radius: 5px;
+  }
+
+}
+
+.story-text-block {
+  height: 115px;
+  margin: 0 5px;
 }

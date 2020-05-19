@@ -18,6 +18,7 @@ import {HeroInfoPopup} from './heroInfo.popup';
 import {SetsInfoModal} from './setsInfo.modal';
 import {GearInfoModal} from './gearInfo.modal';
 import {BuffInfoModal} from './buffInfo.modal';
+import {StoryPopover} from './story.popover';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import {BuffInfoModal} from './buffInfo.modal';
         GearIcon, GearListItem, GearModal, GearJewelSlot, GearStat, GearInfoModal, SetsInfoModal,
         HeroIconDirective, HeroInfoPopup, BuffInfoModal,
         LootedDirective, LootItemDirective,
+        StoryPopover,
         UpgradeItemDirective, UpgradeModal,
         VehicleDirective, VehicleSelectionPopover
     ],
@@ -33,6 +35,7 @@ import {BuffInfoModal} from './buffInfo.modal';
         GearIcon, GearListItem, GearModal, GearJewelSlot, GearStat, GearInfoModal, SetsInfoModal,
         HeroIconDirective, HeroInfoPopup, BuffInfoModal,
         LootedDirective, LootItemDirective,
+        StoryPopover,
         UpgradeItemDirective, UpgradeModal,
         VehicleDirective, VehicleSelectionPopover
     ],
@@ -40,7 +43,7 @@ import {BuffInfoModal} from './buffInfo.modal';
         CommonModule,
         IonicModule
     ],
-    entryComponents: [BuildingUpgradeModal, GearModal, HeroInfoPopup, BuffInfoModal, UpgradeModal, VehicleSelectionPopover, GearInfoModal, SetsInfoModal]
+    entryComponents: [BuildingUpgradeModal, GearModal, HeroInfoPopup, BuffInfoModal, UpgradeModal, VehicleSelectionPopover, GearInfoModal, SetsInfoModal, StoryPopover]
 })
 export class CommonAmbrosiaModule {
 }

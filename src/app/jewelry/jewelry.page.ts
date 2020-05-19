@@ -9,6 +9,7 @@ import {EnumService} from '../services/enum.service';
 import {JewelryService} from '../services/jewelry.service';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {JewelUpgradeModal} from './jewelUpgrade.modal';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'jewelry',
@@ -19,6 +20,7 @@ export class JewelryPage {
   saving = false;
 
   buildingType = "JEWELRY";
+  enterStory = this.buildingType + '_ENTERED';
 
   levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -29,7 +31,18 @@ export class JewelryPage {
               public enumService: EnumService,
               private router: Router,
               private modalCtrl: ModalController,
-              public jewelryService: JewelryService) {
+              public jewelryService: JewelryService,
+              private storyService: StoryService) {
+  }
+
+  ionViewWillEnter() {
+    if (this.storyService.storyUnknown(this.enterStory)) {
+      this.showStory();
+    }
+  }
+
+  showStory() {
+    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   canUpgradeBuilding(): boolean {

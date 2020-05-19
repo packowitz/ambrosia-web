@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {Incubator} from '../domain/incubator.model';
 import {Hero} from '../domain/hero.model';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'laboratory',
@@ -18,6 +19,7 @@ export class LaboratoryPage {
   saving = false;
 
   buildingType = "LABORATORY";
+  enterStory = this.buildingType + '_ENTERED';
   canUpgradeBuilding = false;
 
   hero: Hero;
@@ -28,11 +30,19 @@ export class LaboratoryPage {
               public model: Model,
               private router: Router,
               private modalCtrl: ModalController,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private storyService: StoryService) {
   }
 
   ionViewWillEnter() {
     this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+    if (this.storyService.storyUnknown(this.enterStory)) {
+      this.showStory();
+    }
+  }
+
+  showStory() {
+    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   getBuilding() {

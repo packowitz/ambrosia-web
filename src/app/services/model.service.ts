@@ -3,7 +3,7 @@ import {Player} from '../domain/player.model';
 import {Hero} from '../domain/hero.model';
 import {Gear} from '../domain/gear.model';
 import {HeroBase} from '../domain/herobase.model';
-import {PlayerActionResponse} from './backend.service';
+import {Looted, PlayerActionResponse} from './backend.service';
 import {Team} from '../domain/team.model';
 import {Battle} from '../domain/battle.model';
 import {API_URL, environment} from '../../environments/environment';
@@ -59,6 +59,7 @@ export class Model {
     missions: Mission[];
     upgrades: Upgrade[];
     incubators: Incubator[];
+    looted: Looted[];
 
     interval: number;
     updateResourcesInProgress = false;
@@ -327,6 +328,9 @@ export class Model {
             if (idx >= 0) {
                 this.incubators.splice(idx, 1);
             }
+        }
+        if (data.looted) {
+            this.looted = data.looted;
         }
     }
 

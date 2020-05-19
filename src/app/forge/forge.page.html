@@ -12,7 +12,12 @@
         <div class="flex-center">
           <div class="font-small">Modify Lvl {{model.progress.gearModificationRarity}}, Breakdown Lvl {{model.progress.gearBreakDownRarity}}</div>
           <ion-button fill="outline" color="danger" (click)="breakdown()" [disabled]="saving || gearForBreakdown().length == 0"><ion-icon name="trash"></ion-icon></ion-button>
-          <ion-icon name="close" class="ml-2 pointer" (click)="close()"></ion-icon>
+          <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
+            <i class="ra ra-book font-larger"></i>
+          </ion-button>
+          <ion-button size="small" fill="clear" color="dark" (click)="close()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
         </div>
       </div>
     </ion-title>
@@ -20,7 +25,7 @@
 </ion-header>
 
 <div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
-<looted *ngIf="looted" [looted]="looted" (click)="looted = null" class="loading-indicator"></looted>
+<looted></looted>
 <ion-content>
   <ion-card>
     <ion-card-content>

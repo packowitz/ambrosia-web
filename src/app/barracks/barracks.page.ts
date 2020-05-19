@@ -12,6 +12,7 @@ import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {SetsInfoModal} from '../common/setsInfo.modal';
 import {GearInfoModal} from '../common/gearInfo.modal';
 import {BuffInfoModal} from '../common/buffInfo.modal';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'barracks',
@@ -26,6 +27,7 @@ export class BarracksPage {
   gearTypeFilter: string[] = [];
 
   buildingType = 'BARRACKS';
+  enterStory = this.buildingType + '_ENTERED';
   canUpgradeBuilding = false;
 
   constructor(private backendService: BackendService,
@@ -33,7 +35,8 @@ export class BarracksPage {
               public model: Model,
               private router: Router,
               private propertyService: PropertyService,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private storyService: StoryService) {
     console.log("BarracksPage.constructor");
   }
 
@@ -50,6 +53,14 @@ export class BarracksPage {
       this.selectSkill(1);
     }
     this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+
+    if (this.storyService.storyUnknown(this.enterStory)) {
+      this.showStory();
+    }
+  }
+
+  showStory() {
+    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   getBuilding() {

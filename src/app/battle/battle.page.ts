@@ -3,7 +3,7 @@ import {Model} from '../services/model.service';
 import {Battle} from '../domain/battle.model';
 import {BattleHero} from '../domain/battleHero.model';
 import {HeroSkill} from '../domain/heroSkill.model';
-import {BackendService, Looted} from '../services/backend.service';
+import {BackendService} from '../services/backend.service';
 import {BattleStep} from '../domain/battleStep.model';
 import {Router} from '@angular/router';
 
@@ -24,7 +24,6 @@ export class BattlePage implements OnInit {
 
   autobattle = false;
   loading = false;
-  looted: Looted[];
 
   nextStageBattle: Battle = null;
   loadingNextStageInitiated = false;
@@ -47,7 +46,7 @@ export class BattlePage implements OnInit {
     this.initBattle(battle);
   }
 
-  initBattle(battle: Battle, looted?: Looted[]) {
+  initBattle(battle: Battle) {
     if (battle) {
       this.battle = battle;
       if (this.battle.nextBattleId) {
@@ -55,7 +54,6 @@ export class BattlePage implements OnInit {
       }
       this.setActiveHero();
     }
-    this.looted = looted;
   }
 
   setActiveHero() {
@@ -191,7 +189,7 @@ export class BattlePage implements OnInit {
     this.lastKnownStepIdx = this.battle.steps.length - 1;
     this.loading = true;
     this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
-      this.initBattle(data.ongoingBattle, data.looted);
+      this.initBattle(data.ongoingBattle);
       this.loading = false;
     }, () => {
       this.loading = false;
@@ -203,7 +201,7 @@ export class BattlePage implements OnInit {
       this.lastKnownStepIdx = this.battle.steps.length - 1;
       this.loading = true;
       this.backendService.takeAutoTurn(this.battle, this.activeHero).subscribe(data => {
-        this.initBattle(data.ongoingBattle, data.looted);
+        this.initBattle(data.ongoingBattle);
         this.loading = false;
       }, () => {
         this.loading = false;
@@ -215,7 +213,7 @@ export class BattlePage implements OnInit {
     if (this.battle.status === 'PLAYER_TURN') {
       this.loading = true;
       this.backendService.surrender(this.battle).subscribe(data => {
-        this.initBattle(data.ongoingBattle, data.looted);
+        this.initBattle(data.ongoingBattle);
         this.loading = false;
       }, () => {
         this.loading = false;

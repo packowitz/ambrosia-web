@@ -7,6 +7,7 @@ import {PropertyService} from '../services/property.service';
 import {AlertController, ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'academy',
@@ -38,6 +39,7 @@ export class AcademyPage {
   fodder6: Hero;
 
   buildingType = 'ACADEMY';
+  enterStory = this.buildingType + '_ENTERED';
   canUpgradeBuilding = false;
 
   constructor(private backendService: BackendService,
@@ -46,12 +48,20 @@ export class AcademyPage {
               public model: Model,
               private router: Router,
               private alertCtrl: AlertController,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private storyService: StoryService) {
     console.log("AcademyPage.constructor");
   }
 
   ionViewWillEnter() {
     this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+    if (this.storyService.storyUnknown(this.enterStory)) {
+      this.showStory();
+    }
+  }
+
+  showStory() {
+    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   getBuilding() {

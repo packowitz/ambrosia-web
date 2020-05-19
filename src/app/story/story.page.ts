@@ -160,7 +160,6 @@ export class StoryPage implements OnInit {
   }
 
   storyModified(story: Story) {
-    console.log("marking story " + story.number + " as dirty");
     story.dirty = true;
   }
 
@@ -168,7 +167,6 @@ export class StoryPage implements OnInit {
     this.saving = true;
     let stories = this.stories.filter(s => s.dirty === true);
     this.backendService.saveStoryLine(stories, this.storiesToDelete.map(s => s.id)).subscribe(data => {
-      console.log(data);
       data.forEach(story => {
         let idx = this.stories.findIndex(s => s.number === story.number);
         if (idx >= 0) {

@@ -12,6 +12,7 @@ import {GearModal} from '../barracks/gear.modal';
 import {UpgradeModal} from '../common/upgrade.modal';
 import {GearUpgradeModal} from './gearUpgrade.modal';
 import {ModificationSelectionPopover} from './modification-selection-popover';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'forge',
@@ -21,9 +22,8 @@ export class ForgePage {
 
   saving = false;
 
-  looted: Looted[];
-
   buildingType = "FORGE";
+  enterStory = this.buildingType + '_ENTERED';
 
   constructor(private backendService: BackendService,
               private converter: ConverterService,
@@ -32,11 +32,22 @@ export class ForgePage {
               public enumService: EnumService,
               private router: Router,
               private modalCtrl: ModalController,
-              private popoverCtrl: PopoverController) {
+              private popoverCtrl: PopoverController,
+              private storyService: StoryService) {
+  }
+
+  ionViewWillEnter() {
+    if (this.storyService.storyUnknown(this.enterStory)) {
+      this.showStory();
+    }
   }
 
   canUpgradeBuilding(): boolean {
     return this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+  }
+
+  showStory() {
+    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   getBuilding() {
@@ -127,7 +138,6 @@ export class ForgePage {
       this.saving = true;
       this.backendService.breakdownGear(gears).subscribe(data => {
         this.saving = false;
-        this.looted = data.looted;
       });
     }
   }

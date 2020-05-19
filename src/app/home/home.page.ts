@@ -10,6 +10,7 @@ import {ConverterService} from '../services/converter.service';
 import {PropertyService} from '../services/property.service';
 import {Mission} from '../domain/mission.model';
 import {MissionProgressModal} from './mission-progress-modal';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'app-home',
@@ -18,9 +19,10 @@ import {MissionProgressModal} from './mission-progress-modal';
 })
 export class HomePage {
 
-  saving = false;
+  storyNewPlayer = 'PLAYER_NEW';
+  storyColorSelected = 'PLAYER_COLOR_SELECTED';
 
-  looted: Looted[];
+  saving = false;
 
   steamTimer = false;
   cogwheelsTimer = false;
@@ -32,6 +34,7 @@ export class HomePage {
   rows: number[];
 
   constructor(public model: Model,
+              private storyService: StoryService,
               private backendService: BackendService,
               private alertCtrl: AlertController,
               private router: Router,
@@ -40,7 +43,12 @@ export class HomePage {
               public modalCtrl: ModalController) {}
 
   ionViewWillEnter(): void {
-    if (!this.model.player.color) {
+    if (this.storyService.storyUnknown(this.storyNewPlayer)) {
+      this.storyService.showStory(this.storyNewPlayer).subscribe(() => {
+        console.log("HomePage after new player story");
+        this.ionViewWillEnter();
+      });
+    } else if (!this.model.player.color) {
       this.alertCtrl.create({
         subHeader: 'Select your hero color',
         backdropDismiss: false,
@@ -50,16 +58,20 @@ export class HomePage {
           {text: 'Blue', cssClass: 'BLUE', handler: () => this.saveColor('BLUE') }
         ]
       }).then(alert => alert.present());
-    } else {
-      this.map = this.model.currentMap;
-      this.calcRows();
-      this.calcBuildings();
     }
+    this.map = this.model.currentMap;
+    this.calcRows();
+    this.calcBuildings();
   }
 
   saveColor(color: string) {
     this.backendService.selectPlayerColor(color).subscribe(() => {
-      this.ionViewWillEnter();
+      if (this.storyService.storyUnknown(this.storyColorSelected)) {
+        this.storyService.showStory(this.storyColorSelected).subscribe(() => {
+          console.log("HomePage after color selection story");
+          this.ionViewWillEnter();
+        });
+      }
     });
   }
 
@@ -130,12 +142,10 @@ export class HomePage {
           this.backendService.discoverBuilding(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
             this.saving = false;
             this.calcBuildings();
-            this.alertCtrl.create({
-              subHeader: 'You discovered a new building: The ' + tile.buildingType + '. Go and check it out',
-              buttons: [
-                {text: 'Check it out', handler: () => this.gotoBuilding(tile.buildingType)}
-              ]
-            }).then(alert => alert.present());
+            let discoverStory = tile.buildingType + '_DISCOVERED';
+            if (this.storyService.storyUnknown(discoverStory)) {
+              this.storyService.showStory(discoverStory).subscribe(() => this.gotoBuilding(tile.buildingType));
+            }
           });
         }
       } else if (!tile.chestOpened) {
@@ -143,7 +153,6 @@ export class HomePage {
         this.backendService.openChest(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
           this.saving = false;
           this.map = data.currentMap;
-          this.looted = data.looted;
         }, () => { this.saving = false; });
       }
     }

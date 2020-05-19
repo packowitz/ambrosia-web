@@ -11,6 +11,7 @@ import {VehicleUpgradeModal} from './vehicleUpgrade.modal';
 import {Router} from '@angular/router';
 import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
+import {StoryService} from '../services/story.service';
 
 export class GarageSlot {
   slot: number;
@@ -31,6 +32,7 @@ export class GaragePage {
   saving = false;
 
   buildingType = "GARAGE";
+  enterStory = this.buildingType + '_ENTERED';
   canUpgradeBuilding = false;
 
   slots: GarageSlot[] = [];
@@ -44,13 +46,21 @@ export class GaragePage {
               private popoverCtrl: PopoverController,
               public converter: ConverterService,
               public propertyService: PropertyService,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private storyService: StoryService) {
   }
 
   ionViewWillEnter() {
     this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
     this.vehicle = null;
     this.initSlots();
+    if (this.storyService.storyUnknown(this.enterStory)) {
+      this.showStory();
+    }
+  }
+
+  showStory() {
+    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   getBuilding() {
