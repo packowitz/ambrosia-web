@@ -397,9 +397,9 @@
           <ion-row *ngFor="let action of skill.actions" class="mt-4">
             <ion-col sizeMd="12">
               <div class="flex-space-between ml-2 mr-2">
-                <div class="pointer" (click)="toggleExpandAction(action.position)">{{action.position}}. {{action.triggerChance}}% {{action.type}} {{action.effect}}
-                  ({{action.effectValue}}) on {{action.target}}<span
-                      *ngIf="action.effectDuration"> for {{action.effectDuration}} turn(s)</span></div>
+                <div class="pointer" (click)="toggleExpandAction(action.position)">
+                  {{action.position}}. {{action.trigger}}{{action.triggerValue ? ' (' + action.triggerValue + ')' : ''}} {{action.triggerChance}}% {{action.type}} {{action.effect}} ({{action.effectValue}}) on {{action.target}}<span *ngIf="action.effectDuration"> for {{action.effectDuration}} turn(s)</span>
+                </div>
                 <div class="flex-grow"></div>
                 <ion-button (click)="moveAction(action, -1)" fill="clear"
                             [disabled]="action.position <= 1">
