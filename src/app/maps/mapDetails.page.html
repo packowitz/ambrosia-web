@@ -29,6 +29,13 @@
           <ion-input type="number" [(ngModel)]="map.discoverySteamCost"></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label>Story</ion-label>
+          <ion-select [(ngModel)]="map.storyTrigger">
+            <ion-select-option [value]="null">NONE</ion-select-option>
+            <ion-select-option *ngFor="let storyTrigger of enumService.getStoryTriggerns()" [value]="storyTrigger">{{converter.readableIdentifier(storyTrigger)}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
           <ion-label>Starting Map</ion-label>
           <ion-checkbox [(ngModel)]="map.startingMap" [disabled]="isCurrentStartingMap" slot="start"></ion-checkbox>
         </ion-item>

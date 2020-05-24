@@ -5,6 +5,7 @@ export class PlayerMap {
     name: string;
     background: string;
     discoverySteamCost: number;
+    storyTrigger: string;
     minX: number;
     maxX: number;
     minY: number;

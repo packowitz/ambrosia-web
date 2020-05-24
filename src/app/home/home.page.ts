@@ -125,12 +125,14 @@ export class HomePage {
             this.map = this.model.currentMap;
             this.calcRows();
             this.saving = false;
+            this.showMapStory();
           }, () => { this.saving = false; });
         } else {
           this.backendService.discoverMap(tile.portalToMapId).subscribe(data => {
             this.map = data.currentMap;
             this.calcRows();
             this.saving = false;
+            this.showMapStory();
           }, () => { this.saving = false; });
         }
 
@@ -155,6 +157,14 @@ export class HomePage {
           this.map = data.currentMap;
         }, () => { this.saving = false; });
       }
+    }
+  }
+
+  showMapStory() {
+    if (this.map.storyTrigger && this.storyService.storyUnknown(this.map.storyTrigger)) {
+      this.storyService.showStory(this.map.storyTrigger).subscribe(() => {
+        console.log("HomePage map story shown");
+      });
     }
   }
 
