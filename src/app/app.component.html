@@ -1,6 +1,6 @@
 <ion-app>
   <ion-split-pane contentId="main">
-    <ion-menu *ngIf="model.player?.admin" menuId="menu" contentId="main">
+    <ion-menu *ngIf="model.player?.admin || model.useServiceAccount" menuId="menu" contentId="main">
       <ion-header>
         <ion-toolbar>
           <div class="flex-space-between">

@@ -10,6 +10,6 @@ export class AdminGuard implements CanActivate {
   constructor(private model: Model) { }
 
   canActivate() {
-    return this.model.player && this.model.player.admin;
+    return this.model.player && (this.model.useServiceAccount || this.model.player.admin);
   }
 }
