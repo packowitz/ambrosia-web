@@ -64,17 +64,26 @@ export class Model {
     interval: number;
     updateResourcesInProgress = false;
     updateIncubatorsInProgress = false;
+    useServiceAccount = false;
 
     constructor(private http: HttpClient,
                 private converter: ConverterService) {}
 
     reset() {
+        this.progress = null;
         this.heroes = null;
         this.gears = null;
         this.teams = null;
         this.ongoingBattle = null;
+        this.buildings = null;
+        this.vehicles = null;
+        this.vehicleParts = null;
         this.playerMaps = null;
         this.currentMap = null;
+        this.missions = null;
+        this.upgrades = null;
+        this.incubators = null;
+        this.looted = null;
     }
 
     getHero(id: number): Hero {
@@ -123,57 +132,65 @@ export class Model {
 
     startInterval() {
         this.interval = setInterval(() => {
-            let updateResources = false;
-            if (this.resources.steam < this.resources.steamMax) {
-                this.resources.steamProduceIn --;
-                updateResources = updateResources || this.resources.steamProduceIn <= 0;
-            }
-            if (this.resources.cogwheels < this.resources.cogwheelsMax) {
-                this.resources.cogwheelsProduceIn --;
-                updateResources = updateResources || this.resources.cogwheelsProduceIn <= 0;
-            }
-            if (this.resources.tokens < this.resources.tokensMax) {
-                this.resources.tokensProduceIn --;
-                updateResources = updateResources || this.resources.tokensProduceIn <= 0;
-            }
-            if (updateResources) {
-                this.updateResources();
+            if (this.resources) {
+                let updateResources = false;
+                if (this.resources.steam < this.resources.steamMax) {
+                    this.resources.steamProduceIn --;
+                    updateResources = updateResources || this.resources.steamProduceIn <= 0;
+                }
+                if (this.resources.cogwheels < this.resources.cogwheelsMax) {
+                    this.resources.cogwheelsProduceIn --;
+                    updateResources = updateResources || this.resources.cogwheelsProduceIn <= 0;
+                }
+                if (this.resources.tokens < this.resources.tokensMax) {
+                    this.resources.tokensProduceIn --;
+                    updateResources = updateResources || this.resources.tokensProduceIn <= 0;
+                }
+                if (updateResources) {
+                    this.updateResources();
+                }
             }
 
-            this.missions.filter(m => !m.missionFinished).forEach(mission => {
-                mission.secondsUntilDone --;
-                mission.nextUpdateSeconds --;
-                mission.battles.forEach(battle => {
-                    battle.secondsUntilDone --;
+            if (this.missions) {
+                this.missions.filter(m => !m.missionFinished).forEach(mission => {
+                    mission.secondsUntilDone --;
+                    mission.nextUpdateSeconds --;
+                    mission.battles.forEach(battle => {
+                        battle.secondsUntilDone --;
+                    });
+                    if (mission.nextUpdateSeconds <= 0 && !mission.updating) {
+                        mission.updating = true;
+                        this.http.post<PlayerActionResponse>(API_URL + '/battle/mission/' + mission.id, null).subscribe(data => {
+                            console.log("Updated mission " + data.missions[0].id);
+                        });
+                    }
                 });
-                if (mission.nextUpdateSeconds <= 0 && !mission.updating) {
-                    mission.updating = true;
-                    this.http.post<PlayerActionResponse>(API_URL + '/battle/mission/' + mission.id, null).subscribe(data => {
-                        console.log("Updated mission " + data.missions[0].id);
-                    });
-                }
-            });
+            }
 
-            let upgradeInProgress = this.upgrades.find(u => u.inProgress);
-            if (upgradeInProgress) {
-                upgradeInProgress.secondsUntilDone --;
-                if (upgradeInProgress.secondsUntilDone <= 0 && !upgradeInProgress.updating) {
-                    upgradeInProgress.updating = true;
-                    this.http.post<PlayerActionResponse>(API_URL + '/upgrade/check', null).subscribe(() => {
-                        console.log("Updated upgrades");
-                    });
+            if (this.upgrades) {
+                let upgradeInProgress = this.upgrades.find(u => u.inProgress);
+                if (upgradeInProgress) {
+                    upgradeInProgress.secondsUntilDone --;
+                    if (upgradeInProgress.secondsUntilDone <= 0 && !upgradeInProgress.updating) {
+                        upgradeInProgress.updating = true;
+                        this.http.post<PlayerActionResponse>(API_URL + '/upgrade/check', null).subscribe(() => {
+                            console.log("Updated upgrades");
+                        });
+                    }
                 }
             }
 
-            let incubatorUpdate = false;
-            this.incubators.filter(i => !i.finished).forEach(incubator => {
-                incubator.secondsUntilDone --;
-                if (incubator.secondsUntilDone <= 0) {
-                    incubatorUpdate = true;
+            if (this.incubators) {
+                let incubatorUpdate = false;
+                this.incubators.filter(i => !i.finished).forEach(incubator => {
+                    incubator.secondsUntilDone --;
+                    if (incubator.secondsUntilDone <= 0) {
+                        incubatorUpdate = true;
+                    }
+                });
+                if (incubatorUpdate) {
+                    this.updateIncubators();
                 }
-            });
-            if (incubatorUpdate) {
-                this.updateIncubators();
             }
         }, 1000);
     }
@@ -211,9 +228,9 @@ export class Model {
             this.player = data.player;
         }
         if (data.token) {
-            let key = environment.production ? 'ambrosia-jwt' : 'jwt';
+            let key = environment.tokenKey;
             if (this.player.serviceAccount) {
-                key += '-service';
+                key = environment.serviceTokenKey;
             }
             localStorage.setItem(key, data.token);
         }

@@ -32,7 +32,7 @@
     </div>
   </ion-card>
   <ion-card>
-    <div class="scrollable-list pa-2">
+    <div class="scrollable-list pa-2" *ngIf="model.buildings">
       <div *ngFor="let building of buildings" class="flex-vert-center mr-4">
         <div class="building-avatar">
           <ion-img src="assets/icon/buildings/{{building.type}}.png" class="pointer" (click)="gotoBuilding(building.type)"></ion-img>
@@ -42,7 +42,7 @@
     </div>
   </ion-card>
 
-  <ion-card *ngIf="model.missions.length > 0">
+  <ion-card *ngIf="model.missions && model.missions.length > 0">
     <div class="scrollable-list pa-2">
       <div *ngFor="let mission of model.missions">
         <div class="mission-avatar pointer" (click)="openMission(mission)">

@@ -33,6 +33,9 @@ export class JewelryPage {
               private modalCtrl: ModalController,
               public jewelryService: JewelryService,
               private storyService: StoryService) {
+    if (!this.getBuilding()) {
+      this.close();
+    }
   }
 
   ionViewWillEnter() {

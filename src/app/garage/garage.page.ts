@@ -48,6 +48,9 @@ export class GaragePage {
               public propertyService: PropertyService,
               private modalCtrl: ModalController,
               private storyService: StoryService) {
+    if (!this.getBuilding()) {
+      this.close();
+    }
   }
 
   ionViewWillEnter() {

@@ -34,6 +34,9 @@ export class ForgePage {
               private modalCtrl: ModalController,
               private popoverCtrl: PopoverController,
               private storyService: StoryService) {
+    if (!this.getBuilding()) {
+      this.close();
+    }
   }
 
   ionViewWillEnter() {

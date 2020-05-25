@@ -25,6 +25,9 @@ export class StoragePage {
               private router: Router,
               private modalCtrl: ModalController) {
     console.log("StoragePage.constructor");
+    if (!this.getBuilding()) {
+      this.close();
+    }
   }
 
   ionViewWillEnter() {

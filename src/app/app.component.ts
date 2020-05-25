@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
 
-import {AlertController, Platform} from '@ionic/angular';
+import {AlertController, MenuController, Platform} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {BackendService} from './services/backend.service';
 import {Model} from './services/model.service';
+import {environment} from '../environments/environment';
+import {LoadingState} from './services/loadingState.service';
 
 @Component({
     selector: 'app-root',
@@ -96,7 +98,9 @@ export class AppComponent {
         private backendService: BackendService,
         public model: Model,
         private router: Router,
-        private alertCtrl: AlertController
+        private alertCtrl: AlertController,
+        private loadingState: LoadingState,
+        private menuCtrl: MenuController
     ) {
         this.initializeApp();
     }
@@ -111,10 +115,14 @@ export class AppComponent {
                     p.open = true;
                 }
             });
-            localStorage.setItem('ambrosia-page-requested', path);
+            localStorage.setItem(environment.requestedPage, path);
 
-            this.router.navigateByUrl('/loading');
-
+            let token = localStorage.getItem(environment.tokenKey);
+            if (token) {
+                this.router.navigateByUrl('/loading');
+            } else {
+                this.router.navigateByUrl('/login');
+            }
         });
     }
 
@@ -147,16 +155,23 @@ export class AppComponent {
     }
 
     loadAccountData() {
-        this.model.reset();
         if (this.model.playerId === this.model.activeAccountId) {
-            this.model.player.serviceAccount = false;
-            this.backendService.getPlayer().subscribe(data => {
-                console.log("Using player account " + data.player.name + " #" + data.player.id);
-            });
+            localStorage.removeItem(environment.serviceTokenKey);
+            localStorage.removeItem(environment.serviceAccountIdKey);
+            this.model.useServiceAccount = false;
+            this.loadingState.playerLoaded = false;
         } else {
-            this.backendService.useServiceAccount(this.model.activeAccountId).subscribe(data => {
-                console.log("Using service account " + data.player.name + " #" + data.player.id);
-            });
+            let localStorageAccountId = localStorage.getItem(environment.serviceAccountIdKey);
+            if (Number(localStorageAccountId) !== this.model.activeAccountId) {
+                localStorage.setItem(environment.serviceAccountIdKey, '' + this.model.activeAccountId);
+                this.loadingState.serviceAccountLoaded = false;
+            } else {
+                return;
+            }
         }
+        console.log("account change detected");
+        localStorage.setItem(environment.requestedPage, window.location.pathname);
+        this.menuCtrl.toggle();
+        this.router.navigateByUrl('/loading');
     }
 }

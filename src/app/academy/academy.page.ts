@@ -51,6 +51,9 @@ export class AcademyPage {
               private modalCtrl: ModalController,
               private storyService: StoryService) {
     console.log("AcademyPage.constructor");
+    if (!this.getBuilding()) {
+      this.close();
+    }
   }
 
   ionViewWillEnter() {

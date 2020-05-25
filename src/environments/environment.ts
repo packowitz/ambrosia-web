@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  requestedPage: 'page-requested',
+  tokenKey : 'jwt',
+  serviceAccountIdKey: 'service-id',
+  serviceTokenKey: 'jwt-service'
 };
 export const API_URL = "http://localhost:8080";
 

@@ -5,7 +5,9 @@ import {Model} from '../services/model.service';
 import {Router} from '@angular/router';
 import {PropertyService} from '../services/property.service';
 import {Enums, EnumService} from '../services/enum.service';
-import {API_URL} from '../../environments/environment';
+import {LoadingState} from '../services/loadingState.service';
+import {environment} from '../../environments/environment';
+import {JewelryService} from '../services/jewelry.service';
 
 @Component({
   selector: 'app-loading',
@@ -14,29 +16,34 @@ import {API_URL} from '../../environments/environment';
 })
 export class LoadingPage {
 
-  playerLoaded = false;
-  serviceAccountsLoaded = false;
-  enumsLoaded = false;
-  status = "Initializing Ambrosia";
+  status: string;
 
   constructor(private backendService: BackendService,
               private alertCtrl: AlertController,
               private propertyService: PropertyService,
               private model: Model,
+              private jewelryService: JewelryService,
               private router: Router,
-              private enumService: EnumService) {
+              private enumService: EnumService,
+              private loadingState: LoadingState) {
+  }
+
+  ionViewWillEnter() {
+    this.status = "Initializing Ambrosia";
     this.initApp();
   }
 
   initApp() {
-    if (!this.playerLoaded) {
+    if (!this.loadingState.playerLoaded) {
       this.loadPlayer();
-    } else if (this.model.player.admin === true && !this.serviceAccountsLoaded) {
+    } else if (this.model.player.admin === true && !this.loadingState.serviceAccountsLoaded) {
       this.loadServiceAccounts();
-    } else if (!this.enumsLoaded) {
+    } else if (!this.loadingState.serviceAccountLoaded) {
+      this.loadServiceAccount();
+    } else if (!this.loadingState.enumsLoaded) {
       this.loadEnums();
     } else {
-      let path = localStorage.getItem('ambrosia-page-requested');
+      let path = localStorage.getItem(environment.requestedPage);
       if (!path.startsWith('/battle') && this.model.ongoingBattle) {
         this.alertCtrl.create({
           subHeader: 'You have an unfinished battle',
@@ -59,7 +66,7 @@ export class LoadingPage {
     this.status = 'Loading static content';
     this.enumService.loadEnums().subscribe((data: Enums) => {
       this.enumService.enums = data;
-      this.enumsLoaded = true;
+      this.loadingState.enumsLoaded = true;
       this.initApp();
     }, error => {
       this.alertCtrl.create({
@@ -70,23 +77,44 @@ export class LoadingPage {
 
   loadPlayer() {
     this.status = 'Loading player data';
+    this.model.reset();
+    this.jewelryService.reset();
     this.backendService.getPlayer().subscribe(playerAction => {
       this.propertyService.loadInitialProperties();
       this.model.playerName = playerAction.player.name;
       this.model.playerId = playerAction.player.id;
       this.model.activeAccountId = playerAction.player.id;
-      this.playerLoaded = true;
+      this.loadingState.playerLoaded = true;
       this.initApp();
     }, error => {
       this.router.navigateByUrl('/login');
     });
   }
 
+  loadServiceAccount() {
+    let serviceAccountId = localStorage.getItem(environment.serviceAccountIdKey);
+    if (serviceAccountId) {
+      this.status = 'Loading service account data';
+      this.model.reset();
+      this.jewelryService.reset();
+      this.backendService.useServiceAccount(Number(serviceAccountId)).subscribe(data => {
+        this.model.activeAccountId = data.player.id;
+        this.model.useServiceAccount = true;
+        this.loadingState.serviceAccountLoaded = true;
+        this.initApp();
+        console.log("Using service account " + data.player.name + " #" + data.player.id);
+      });
+    } else {
+      this.loadingState.serviceAccountLoaded = true;
+      this.initApp();
+    }
+  }
+
   loadServiceAccounts() {
     this.status = 'Loading service accounts';
     this.backendService.getAllServiceAccounts().subscribe(data => {
       this.model.serviceAccounts = data;
-      this.serviceAccountsLoaded = true;
+      this.loadingState.serviceAccountsLoaded = true;
       this.initApp();
     });
   }

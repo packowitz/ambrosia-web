@@ -11,6 +11,10 @@ export class JewelryService {
 
   constructor(private enumService: EnumService) {}
 
+  reset() {
+    this.jewelries = {};
+  }
+
   updateJewelry(jewelry: Jewelry) {
     this.jewelries[jewelry.type] = jewelry;
   }

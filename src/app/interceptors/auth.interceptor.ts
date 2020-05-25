@@ -10,11 +10,13 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private model: Model) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let key = environment.production ? 'ambrosia-jwt' : 'jwt';
-        if (this.model.player && this.model.player.serviceAccount) {
-            key += '-service';
+        let token: string;
+        if (this.model.useServiceAccount) {
+            token = localStorage.getItem(environment.serviceTokenKey);
         }
-        let token = localStorage.getItem(key);
+        if (!token) {
+            token = localStorage.getItem(environment.tokenKey);
+        }
         if (token) {
             req = req.clone({setHeaders: {Authorization: 'Bearer ' + token}});
         }

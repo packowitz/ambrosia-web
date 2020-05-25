@@ -32,6 +32,9 @@ export class LaboratoryPage {
               private modalCtrl: ModalController,
               private alertCtrl: AlertController,
               private storyService: StoryService) {
+    if (!this.getBuilding()) {
+      this.close();
+    }
   }
 
   ionViewWillEnter() {
