@@ -12,7 +12,6 @@ import {SkillIconModal} from './skillIcon.modal';
 import {HeroAvatarModal} from './heroavatar.modal';
 import {Model} from '../services/model.service';
 import {NewSkillModal} from './newSkill.modal';
-import {Hero} from '../domain/hero.model';
 
 @Component({
     selector: 'herobase-edit',
@@ -281,6 +280,22 @@ export class HerobaseEditPage implements OnInit {
             this.skillActionsExpanded = 0;
         } else {
             this.skillActionsExpanded = position;
+        }
+    }
+
+    effectNeedsTarget(effectName?: string): boolean {
+        if (effectName) {
+            return this.enumService.getSkillActionEffects().find(e => e.name === effectName).needTarget;
+        } else {
+            return true;
+        }
+    }
+
+    effectNeedsDuration(effectName?: string): boolean {
+        if (effectName) {
+            return this.enumService.getSkillActionEffects().find(e => e.name === effectName).needDuration;
+        } else {
+            return false;
         }
     }
 

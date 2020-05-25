@@ -398,7 +398,7 @@
             <ion-col sizeMd="12">
               <div class="flex-space-between ml-2 mr-2">
                 <div class="pointer" (click)="toggleExpandAction(action.position)">
-                  {{action.position}}. {{action.trigger}}{{action.triggerValue ? ' (' + action.triggerValue + ')' : ''}} {{action.triggerChance}}% {{action.type}} {{action.effect}} ({{action.effectValue}}) on {{action.target}}<span *ngIf="action.effectDuration"> for {{action.effectDuration}} turn(s)</span>
+                  {{action.position}}. {{action.trigger}}{{action.triggerValue ? ' (' + action.triggerValue + ')' : ''}}: {{action.triggerChance}}% {{action.type}} {{action.effect}} ({{action.effectValue}}){{action.target ? ' on ' + action.target : ''}}<span *ngIf="action.effectDuration"> for {{action.effectDuration}} turn(s)</span>
                 </div>
                 <div class="flex-grow"></div>
                 <ion-button (click)="moveAction(action, -1)" fill="clear"
@@ -447,15 +447,6 @@
             </ion-col>
             <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
               <ion-item class="full-width">
-                <ion-label position="fixed">Action Target</ion-label>
-                <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.target" required>
-                  <ion-select-option *ngFor="let target of enumService.getSkillActionTargets()"
-                                     [value]="target">{{target}}</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </ion-col>
-            <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position">
-              <ion-item class="full-width">
                 <ion-label position="fixed">Action Effect</ion-label>
                 <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.effect" required>
                   <ion-select-option *ngFor="let effect of getSkillActionEffects(action)"
@@ -463,13 +454,25 @@
                 </ion-select>
               </ion-item>
             </ion-col>
+            <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position && effectNeedsTarget(action.effect)">
+              <ion-item class="full-width">
+                <ion-label position="fixed">Action Target</ion-label>
+                <ion-select slot="end" interface="popover" placeholder="Select" [(ngModel)]="action.target" required>
+                  <ion-select-option *ngFor="let target of enumService.getSkillActionTargets()"
+                                     [value]="target">{{target}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col sizeMd="5" *ngIf="skillActionsExpanded == action.position && !effectNeedsTarget(action.effect)" class="flex-center">
+              <i>no target needed</i>
+            </ion-col>
             <ion-col sizeMd="3" *ngIf="skillActionsExpanded == action.position">
               <ion-item class="full-width">
                 <ion-label position="fixed">E. Value</ion-label>
                 <ion-input slot="end" type="text" [(ngModel)]="action.effectValue" required></ion-input>
               </ion-item>
             </ion-col>
-            <ion-col sizeMd="4" *ngIf="skillActionsExpanded == action.position">
+            <ion-col sizeMd="4" *ngIf="skillActionsExpanded == action.position && effectNeedsDuration(action.effect)">
               <ion-item class="full-width">
                 <ion-label position="fixed">E. Duration</ion-label>
                 <ion-input slot="end" type="text" [(ngModel)]="action.effectDuration"></ion-input>
