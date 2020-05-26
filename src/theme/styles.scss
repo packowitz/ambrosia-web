@@ -195,8 +195,18 @@
   width: 60px;
 }
 
+.width-80 {
+  width: 80px;
+}
+
 .width-150 {
   width: 150px;
+}
+
+.width-500 {
+  width: 500px;
+  max-width: 500px;
+  min-width: 500px;
 }
 
 .height70 {
@@ -262,8 +272,13 @@ ion-row.table-row {
   width: 80px;
 }
 
-.hero-avatar-very-small {
+.hero-avatar-smaller {
   width: 60px;
+  min-width: 60px;
+}
+
+.hero-avatar-very-small {
+  width: 40px;
 }
 
 .vehicle-only-avatar {
@@ -305,10 +320,6 @@ ion-row.table-row {
       font-weight: 600;
     }
   }
-}
-
-.hero-avatar-very-small {
-  width: 40px;
 }
 
 .hero-tile-small {

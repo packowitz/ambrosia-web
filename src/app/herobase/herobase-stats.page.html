@@ -1,0 +1,112 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="flex-start">
+                Base hero stats
+                <ion-button class="ml-2" color="dark" size="small" fill="clear" (click)="showBaseHeroes()">show list</ion-button>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <div class="flex-space-between">
+            <div class="flex-grow">
+                <ion-item lines="none">
+                    <ion-label>Sorting</ion-label>
+                    <ion-select [(ngModel)]="sorting" (ionChange)="sort(heroes)">
+                        <ion-select-option value="RarityAsc">Rarity Asc</ion-select-option>
+                        <ion-select-option value="RarityDesc">Rarity Desc</ion-select-option>
+                        <ion-select-option value="NameAsc">Name Asc</ion-select-option>
+                        <ion-select-option value="NameDesc">Name Desc</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </div>
+            <div>
+                <ion-item lines="none">
+                    <ion-checkbox [(ngModel)]="onlyCloneable" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">Only cloneable</ion-label>
+                </ion-item>
+            </div>
+            <div>
+                <ion-item lines="none">
+                    <ion-checkbox [(ngModel)]="showFullySkilled" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">Fully Skilled</ion-label>
+                </ion-item>
+            </div>
+            <div>
+                <ion-item lines="none">
+                    <ion-checkbox [(ngModel)]="showSimpleHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">1*</ion-label>
+                </ion-item>
+            </div>
+            <div>
+                <ion-item lines="none">
+                    <ion-checkbox [(ngModel)]="showCommonHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">2*</ion-label>
+                </ion-item>
+            </div>
+            <div>
+                <ion-item lines="none">
+                    <ion-checkbox [(ngModel)]="showUncommonHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">3*</ion-label>
+                </ion-item>
+            </div>
+            <div>
+                <ion-item lines="none">
+                    <ion-checkbox [(ngModel)]="showRareHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">4*</ion-label>
+                </ion-item>
+            </div>
+            <div>
+                <ion-item lines="none">
+                    <ion-checkbox [(ngModel)]="showEpicHeroes" (ionChange)="setHeroList()"></ion-checkbox>
+                    <ion-label class="ml-1">5*</ion-label>
+                </ion-item>
+            </div>
+        </div>
+    </ion-card>
+    <div class="scrollable-vert">
+        <ion-row *ngFor="let hero of heroes" class="mt-1">
+            <ion-col>
+                <div class="flex-start font-small">
+                    <div class="flex-vert-center hero-avatar-smaller border-{{hero.color.toLowerCase()}} pointer" (click)="gotoHero(hero)">
+                        <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'"></ion-img>
+                        <ion-img [src]="'assets/img/star_' + converter.rarityStars(hero.rarity) + '.png'" class="hero-stars"></ion-img>
+                    </div>
+                    <div class="ml-2 flex-vert">
+                        <div class="bold">{{hero.name}}</div>
+                        <div class="mb-1">{{hero.heroClass}}<i>, {{converter.readableIdentifier(hero.heroType)}}</i></div>
+                        <div class="flex-start">
+                            <div class="width-60">Strength</div>
+                            <div class="width-60 flex-end">{{hero.strengthBase}}</div>
+                            <div class="width-60 flex-end">{{hero.strengthFull}}</div>
+                        </div>
+                        <div class="flex-start">
+                            <div class="width-60">HP</div>
+                            <div class="width-60 flex-end">{{hero.hpBase}}</div>
+                            <div class="width-60 flex-end">{{hero.hpFull}}</div>
+                        </div>
+                        <div class="flex-start">
+                            <div class="width-60">Armor</div>
+                            <div class="width-60 flex-end">{{hero.armorBase}}</div>
+                            <div class="width-60 flex-end">{{hero.armorFull}}</div>
+                        </div>
+                    </div>
+                    <div *ngFor="let skill of heroSkills(hero)" class="ml-2 width-500">
+                        <div>S{{skill.number}} {{skill.name}} ({{skill.maxLvl}} lvl max)</div>
+                        <div>{{skill.description}}</div>
+                        <div class="flex-start mt-1">DmgDef:<div *ngFor="let dmg of skill.damages" class="ml-1 bold">{{dmg.scale}} {{dmg.type}}</div></div>
+                        <div class="flex-start">Lvl1 Dmg:<div class="bold ml-1 mr-1">{{skill.baseDamage}}</div> Lvl60 Dmg: <div class="bold ml-1">{{skill.fullDamage}}</div></div>
+                        <div>deals {{skill.target}}</div>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div>
+
+</ion-content>

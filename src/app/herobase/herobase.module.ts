@@ -9,6 +9,7 @@ import {HerobaseEditPage} from './herobase-edit.page';
 import {SkillIconModal} from './skillIcon.modal';
 import {HeroAvatarModal} from './heroavatar.modal';
 import {NewSkillModal} from './newSkill.modal';
+import {HerobaseStatsPage} from './herobase-stats.page';
 
 @NgModule({
   imports: [
@@ -25,12 +26,16 @@ import {NewSkillModal} from './newSkill.modal';
         component: HerobaseListPage
       },
       {
+        path: 'stats',
+        component: HerobaseStatsPage
+      },
+      {
         path: 'edit/:id',
         component: HerobaseEditPage
       }
     ])
   ],
-  declarations: [HerobaseCreatePage, HerobaseListPage, HerobaseEditPage, SkillIconModal, HeroAvatarModal, NewSkillModal],
+  declarations: [HerobaseCreatePage, HerobaseListPage, HerobaseStatsPage, HerobaseEditPage, SkillIconModal, HeroAvatarModal, NewSkillModal],
   entryComponents: [SkillIconModal, HeroAvatarModal, NewSkillModal]
 })
 export class HerobaseModule {}

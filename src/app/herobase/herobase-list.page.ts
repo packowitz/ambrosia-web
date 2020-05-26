@@ -60,6 +60,10 @@ export class HerobaseListPage {
         }
     }
 
+    showStats() {
+        this.router.navigateByUrl('/herobase/stats');
+    }
+
     setHeroList() {
         let classList = [];
         this.model.baseHeroes.filter(h => {
