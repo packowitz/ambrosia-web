@@ -7,6 +7,8 @@ import {ConverterService} from '../services/converter.service';
 import {Model} from '../services/model.service';
 import {Router} from '@angular/router';
 import {HeroSkill} from '../domain/heroSkill.model';
+import {PropertyService} from '../services/property.service';
+import {DynamicProperty} from '../domain/property.model';
 
 export class SkillStat {
     number: number;
@@ -51,16 +53,23 @@ export class HerobaseStatsPage {
     showRareHeroes = true;
     showEpicHeroes = true;
 
+    damage = 2000;
+    armor = 600;
+    dmgArmRatio: number;
+    dmgArmProp: DynamicProperty;
+    armorLoss: number;
+    hpLoss: number;
+
     constructor(public enumService: EnumService,
                 private backendService: BackendService,
                 private toastCtrl: ToastController,
                 private converter: ConverterService,
+                private propertyService: PropertyService,
                 private model: Model,
                 private router: Router) {
     }
 
     ionViewWillEnter(): void {
-
         if (!this.model.baseHeroes) {
             this.backendService.getHeroBases().subscribe(data => {
                 this.model.baseHeroes = data;
@@ -68,6 +77,24 @@ export class HerobaseStatsPage {
             });
         } else {
             this.setHeroList();
+        }
+        this.dmgArmCalculation();
+    }
+
+    dmgArmCalculation() {
+        if (this.damage && this.armor) {
+            this.dmgArmRatio = 100 * this.damage / this.armor;
+
+            this.propertyService.getProperties('BATTLE_ARMOR').subscribe( armorProps => {
+                this.dmgArmProp = armorProps.find(p => this.dmgArmRatio <= p.level);
+                if (!this.dmgArmProp) {
+                    this.dmgArmProp = armorProps[armorProps.length - 1];
+                }
+                this.armorLoss = this.armor * this.dmgArmProp.value1 / 100;
+                this.hpLoss = this.damage * this.dmgArmProp.value2 / 100;
+            });
+            // val armorLoss = (hero.currentArmor * property.value1) / 100
+            // val healthLoss = (damage * property.value2!!) / 100
         }
     }
 
@@ -210,7 +237,6 @@ export class HerobaseStatsPage {
         } else {
             triggered = triggerValue.indexOf('' + level) !== -1;
         }
-        console.log("Checked trigger " + triggerValue + " for lvl " + level + ": " + triggered);
         return triggered;
     }
 }
