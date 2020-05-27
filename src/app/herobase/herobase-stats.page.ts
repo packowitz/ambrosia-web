@@ -190,27 +190,6 @@ export class HerobaseStatsPage {
                         stat.target += '; ';
                     }
                     stat.target += a.effectValue + '% on ' + a.target;
-                    // switch (a.target) {
-                    //     case 'TARGET':
-                    //         stat.target += 'T';
-                    //         break;
-                    //     case 'ALL_OPP':
-                    //         stat.target += 'AOE';
-                    //         break;
-                    //     case 'ALL_OTHER_OPP':
-                    //         stat.target += 'O_AOE';
-                    //         break;
-                    //     case 'RANDOM_OPP':
-                    //         stat.target += 'RDM';
-                    //         break;
-                    //     case 'RANDOM_OTHER_OPP':
-                    //         stat.target += 'RDM_O';
-                    //         break;
-                    //     case 'SELF':
-                    //         stat.target += 'SELF';
-                    //         break;
-                    //     default: stat.target += a.target;
-                    // }
                 }
             });
 
@@ -219,16 +198,19 @@ export class HerobaseStatsPage {
     }
 
     actionTriggered(triggerValue: string, level: number): boolean {
-        if (triggerValue.startsWith(">")) {
-            return level > Number(triggerValue.substring(1).trim());
-        } else if (triggerValue.startsWith(">=")) {
-            return level >= Number(triggerValue.substring(2).trim());
-        } else if (triggerValue.startsWith("<")) {
-            return level < Number(triggerValue.substring(1).trim());
+        let triggered = false;
+        if (triggerValue.startsWith(">=")) {
+            triggered = level >= Number(triggerValue.substring(2).trim());
+        } else if (triggerValue.startsWith(">")) {
+            triggered = level > Number(triggerValue.substring(1).trim());
         } else if (triggerValue.startsWith("<=")) {
-            return level <= Number(triggerValue.substring(2).trim());
+            triggered = level <= Number(triggerValue.substring(2).trim());
+        } else if (triggerValue.startsWith("<")) {
+            triggered = level < Number(triggerValue.substring(1).trim());
         } else {
-            return triggerValue.indexOf('' + level) !== -1;
+            triggered = triggerValue.indexOf('' + level) !== -1;
         }
+        console.log("Checked trigger " + triggerValue + " for lvl " + level + ": " + triggered);
+        return triggered;
     }
 }
