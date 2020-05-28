@@ -20,6 +20,8 @@ import {StoryService} from '../services/story.service';
 })
 export class LootedDirective {
 
+    gearStory = 'GEAR_FOUND';
+    jewelStory = 'JEWEL_FOUND';
     vehicleStory = 'VEHICLE_FOUND';
     genomeStory = 'GENOMES_FOUND';
 
@@ -30,6 +32,12 @@ export class LootedDirective {
     }
 
     lootCollected() {
+        if (this.storyService.storyUnknown(this.gearStory) && this.gearLooted()) {
+            this.storyService.showStory(this.gearStory).subscribe(() => console.log(this.gearStory + ' story finished'));
+        }
+        if (this.storyService.storyUnknown(this.jewelStory) && this.jewelLooted()) {
+            this.storyService.showStory(this.jewelStory).subscribe(() => console.log(this.jewelStory + ' story finished'));
+        }
         if (this.storyService.storyUnknown(this.vehicleStory) && this.vehicleLooted()) {
             this.storyService.showStory(this.vehicleStory).subscribe(() => console.log(this.vehicleStory + ' story finished'));
         }
@@ -38,6 +46,14 @@ export class LootedDirective {
         }
 
         this.model.looted = null;
+    }
+
+    gearLooted(): boolean {
+        return this.model.looted.findIndex(l => l.type === 'GEAR') >= 0;
+    }
+
+    jewelLooted(): boolean {
+        return this.model.looted.findIndex(l => l.type === 'JEWEL') >= 0;
     }
 
     vehicleLooted(): boolean {

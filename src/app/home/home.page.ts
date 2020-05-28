@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {Model} from '../services/model.service';
 import {PlayerMapTile} from '../domain/playerMapTile.model';
-import {BackendService, Looted} from '../services/backend.service';
-import {AlertController, ModalController, PopoverController} from '@ionic/angular';
+import {BackendService} from '../services/backend.service';
+import {AlertController, ModalController} from '@ionic/angular';
 import {PlayerMap} from '../domain/playerMap.model';
 import {Router} from '@angular/router';
 import {Building} from '../domain/building.model';
@@ -32,6 +32,13 @@ export class HomePage {
 
   map: PlayerMap;
   rows: number[];
+
+  mapFightFoundStory = 'MAP_FIGHT_REVEALED';
+  mapChestFoundStory = 'MAP_CHEST_REVEALED';
+  victoriousRepeatableFightStory = 'REPEATABLE_FIGHT_WON';
+  heroLevelledStory = 'HERO_LEVELLED';
+  heroMaxLevelStory = 'HERO_MAX_LEVEL';
+  heroAscLevelledStory = 'HERO_ASC_LEVELLED';
 
   constructor(public model: Model,
               private storyService: StoryService,
@@ -112,6 +119,7 @@ export class HomePage {
       this.backendService.discoverMapTile(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
         this.map = data.currentMap;
         this.saving = false;
+        this.checkStories();
       }, () => { this.saving = false; });
     } else if (tile.fightIcon) {
       this.router.navigateByUrl('/campaign/' + this.map.mapId + '/' + tile.posX + '/' + tile.posY);
@@ -166,6 +174,48 @@ export class HomePage {
         console.log("HomePage map story shown");
       });
     }
+  }
+
+  checkStories() {
+    if (this.storyService.storyUnknown(this.mapFightFoundStory) && this.map.tiles.findIndex(t => t.discovered && !!t.fightIcon) !== -1) {
+      this.storyService.showStory(this.mapFightFoundStory).subscribe(() => {
+        console.log("HomePage map fight revealed story shown");
+        this.checkStories();
+      });
+    } else if (this.storyService.storyUnknown(this.mapChestFoundStory) && this.mapHasUnopenedChest()) {
+      this.storyService.showStory(this.mapChestFoundStory).subscribe(() => {
+        console.log("HomePage map chest revealed story shown");
+        this.checkStories();
+      });
+    } else if (this.storyService.storyUnknown(this.victoriousRepeatableFightStory) && this.mapHasVictoriousRepeatableFight()) {
+      this.storyService.showStory(this.victoriousRepeatableFightStory).subscribe(() => {
+        console.log("HomePage victorious repeatable fight story shown");
+        this.checkStories();
+      });
+    } else if (this.storyService.storyUnknown(this.heroLevelledStory) && this.model.heroes.findIndex(h => h.level > 1) !== -1) {
+      this.storyService.showStory(this.heroLevelledStory).subscribe(() => {
+        console.log("HomePage hero levelled story shown");
+        this.checkStories();
+      });
+    } else if (this.storyService.storyUnknown(this.heroMaxLevelStory) && this.model.heroes.findIndex(h => h.level === (10 * h.stars) && h.xp === h.maxXp) !== -1) {
+      this.storyService.showStory(this.heroMaxLevelStory).subscribe(() => {
+        console.log("HomePage hero max level story shown");
+        this.checkStories();
+      });
+    } else if (this.storyService.storyUnknown(this.heroAscLevelledStory) && this.model.heroes.findIndex(h => h.ascLvl > 0) !== -1) {
+      this.storyService.showStory(this.heroAscLevelledStory).subscribe(() => {
+        console.log("HomePage hero asc levelled story shown");
+        this.checkStories();
+      });
+    }
+  }
+
+  mapHasUnopenedChest(): boolean {
+    return this.map.tiles.findIndex(t => t.discovered && !!t.structure && !t.portalToMapId && !t.buildingType && !t.chestOpened) !== -1;
+  }
+
+  mapHasVictoriousRepeatableFight(): boolean {
+    return this.map.tiles.findIndex(t => t.discovered && t.fightRepeatable && t.victoriousFight) !== -1;
   }
 
   gotoBuilding(type: string) {

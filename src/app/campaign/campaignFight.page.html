@@ -7,7 +7,14 @@
       <div class="flex-space-between">
         <div *ngIf="map">Fighting on {{map.name}} {{tile? tile.posX + 'x' + tile.posY: ''}}</div>
         <div *ngIf="testFight && fight">Testing Fight #{{fight.id}}</div>
-        <ion-icon name="close" class="pointer" (click)="close()"></ion-icon>
+        <div class="flex-center">
+          <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
+            <i class="ra ra-book font-larger"></i>
+          </ion-button>
+          <ion-button size="small" fill="clear" color="dark" (click)="close()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </div>
       </div>
     </ion-title>
   </ion-toolbar>

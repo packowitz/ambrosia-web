@@ -7,6 +7,7 @@ import {StoryPlaceholder} from '../domain/storyPlaceholder.model';
 import {PlaceholderPopover} from './placeholder.popover';
 import {Story} from '../domain/story.model';
 import {StoryPicSelectionPopover} from './storyPicSelection.popover';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'story',
@@ -26,12 +27,17 @@ export class StoryPage implements OnInit {
   constructor(public model: Model,
               public enumService: EnumService,
               private backendService: BackendService,
-              private popoverCtrl: PopoverController) {}
+              private popoverCtrl: PopoverController,
+              private storyService: StoryService) {}
 
   ngOnInit(): void {
     this.backendService.getStoryPlaceholder().subscribe(data => {
       this.placeholders = data;
     });
+  }
+
+  resetStoryLine() {
+    this.enumService.getStoryTriggerns().forEach(s => localStorage.removeItem('STORY_' + s));
   }
 
   newPlaceholder() {

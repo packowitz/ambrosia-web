@@ -6,6 +6,7 @@ import {HeroSkill} from '../domain/heroSkill.model';
 import {BackendService} from '../services/backend.service';
 import {BattleStep} from '../domain/battleStep.model';
 import {Router} from '@angular/router';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'app-battle',
@@ -28,12 +29,26 @@ export class BattlePage implements OnInit {
   nextStageBattle: Battle = null;
   loadingNextStageInitiated = false;
 
+  enterStory = 'BATTLE_ENTERED';
+  fightLostStory = 'CAMPAIGN_FIGHT_LOST';
+
   constructor(public model: Model,
               private backendService: BackendService,
+              private storyService: StoryService,
               private router: Router) {}
 
   ngOnInit() {
     setTimeout(() => this.initBattle(this.model.ongoingBattle), 1000);
+  }
+
+  ionViewWillEnter() {
+    if (this.storyService.storyUnknown(this.enterStory)) {
+      this.showStory();
+    }
+  }
+
+  showStory() {
+    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   resetBattle(battle: Battle) {
@@ -258,6 +273,9 @@ export class BattlePage implements OnInit {
     if (this.battle.type === 'TEST' && this.battle.fight) {
       this.router.navigateByUrl('/fights/' + this.battle.fight.id);
     } else {
+      if (this.battle.status === 'LOST' && !!this.battle.fight && this.storyService.storyUnknown(this.fightLostStory)) {
+        this.storyService.showStory(this.fightLostStory).subscribe(() => console.log(this.fightLostStory + ' story finished'));
+      }
       this.router.navigateByUrl('/home');
     }
   }

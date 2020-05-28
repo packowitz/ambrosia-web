@@ -14,6 +14,7 @@ import {VehicleSelectionPopover} from '../garage/vehicle-selection-popover';
 import {StartMissionPopover} from './start-mission-popover';
 import {ConverterService} from '../services/converter.service';
 import {FightStageResolved} from '../domain/fightStageResolved.model';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'campaign-fight',
@@ -36,13 +37,16 @@ export class CampaignFightPage {
 
   testFight = false;
 
+  enterStory = 'FIGHT_ENTERED';
+
   constructor(private route: ActivatedRoute,
               private backendService: BackendService,
               private router: Router,
               public model: Model,
               public enumService: EnumService,
               private popoverCtrl: PopoverController,
-              private converter: ConverterService) {
+              private converter: ConverterService,
+              private storyService: StoryService) {
   }
 
   ionViewWillEnter() {
@@ -65,6 +69,10 @@ export class CampaignFightPage {
     } else {
       this.initTeam();
     }
+
+    if (this.storyService.storyUnknown(this.enterStory)) {
+      this.showStory();
+    }
   }
 
   initMapCampaign(mapId: number, posX: number, posY: number) {
@@ -83,6 +91,10 @@ export class CampaignFightPage {
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  showStory() {
+    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   initTeam() {

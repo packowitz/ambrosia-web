@@ -3,13 +3,16 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Ongoing Battle</ion-title>
+    <ion-title>
+      <div class="flex-space-between">
+        Ongoing Battle
+        <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
+          <i class="ra ra-book font-larger"></i>
+        </ion-button>
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content *ngIf="!battle">
-  There is currently no battle going on
-</ion-content>
 
 <ion-content *ngIf="battle" class="loading-indicator-boundary">
   <ion-card>
