@@ -401,6 +401,9 @@
                   {{action.position}}. {{action.trigger}}{{action.triggerValue ? ' (' + action.triggerValue + ')' : ''}}: {{action.triggerChance}}% {{action.type}} {{action.effect}} ({{action.effectValue}}){{action.target ? ' on ' + action.target : ''}}<span *ngIf="action.effectDuration"> for {{action.effectDuration}} turn(s)</span>
                 </div>
                 <div class="flex-grow"></div>
+                <ion-button (click)="copy(action)" fill="clear">
+                  <ion-icon name="copy-outline"></ion-icon>
+                </ion-button>
                 <ion-button (click)="moveAction(action, -1)" fill="clear"
                             [disabled]="action.position <= 1">
                   <ion-icon name="arrow-up-circle-outline"></ion-icon>

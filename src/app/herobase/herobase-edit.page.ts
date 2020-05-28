@@ -319,4 +319,17 @@ export class HerobaseEditPage implements OnInit {
         this.skill.actions.filter(a => a.position > action.position).forEach(a => a.position--);
         this.skill.actions.splice(idx, 1);
     }
+
+    copy(action: HeroSkillAction) {
+        this.skill.actions.filter(a => a.position > action.position).forEach(a => a.position++);
+
+        let copy: HeroSkillAction = this.converter.dataClone(action);
+        copy.id = null;
+        copy.position = action.position + 1;
+
+        this.skill.actions.push(copy);
+        this.skill.actions.sort((a, b) => a.position - b.position);
+
+        this.skillActionsExpanded = copy.position;
+    }
 }
