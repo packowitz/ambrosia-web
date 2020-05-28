@@ -110,6 +110,16 @@ export class HerobaseEditPage implements OnInit {
         });
     }
 
+    moveSkillRight(skill: HeroSkill) {
+        let skillRight = this.hero.skills.find(s => s.number === (skill.number + 1));
+        if (skillRight) {
+            skillRight.number --;
+            this.hero.skills[skillRight.number - 1] = skillRight;
+            skill.number ++;
+            this.hero.skills[skill.number - 1] = skill;
+        }
+    }
+
     addSkill(copy?: HeroSkill) {
         let heroColor = this.hero.color.toLowerCase();
         let skillNumber = this.hero.skills.length + 1;
@@ -268,7 +278,7 @@ export class HerobaseEditPage implements OnInit {
 
     addSkillAction(skill: HeroSkill) {
         let action = new HeroSkillAction();
-        action.trigger = "S" + this.skill.number + "_LVL";
+        action.trigger = "ALWAYS";
         action.triggerChance = 100;
         action.position = skill.actions.length + 1;
         skill.actions.push(action);
