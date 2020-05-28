@@ -6,6 +6,7 @@ import {LootBox} from './lootBox.model';
 export class Fight {
     id: number;
     name: string;
+    description: string;
     serviceAccountId: number;
     resourceType: string;
     costs: number;

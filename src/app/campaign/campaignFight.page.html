@@ -55,8 +55,9 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>
-        <div class="flex-space-between">
-          {{fight.name}}
+        <div class="flex-space-between font-small">
+          <div>{{map.name}} {{tile? tile.posX + 'x' + tile.posY: ''}}: {{fight.description}}</div>
+          <i>recommended hero level: {{fight.level}}</i>
         </div>
       </ion-card-title>
     </ion-card-header>

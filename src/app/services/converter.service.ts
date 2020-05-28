@@ -83,6 +83,7 @@ export class ConverterService {
         return {
             id: fight.id,
             name: fight.name,
+            description: fight.description,
             serviceAccountId: fight.serviceAccount.id,
             resourceType: fight.resourceType,
             costs: fight.costs,

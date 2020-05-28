@@ -22,13 +22,19 @@
   <ion-card>
     <ion-card-content>
       <ion-row>
-        <ion-col sizeXs="4" sizeSm="4">
+        <ion-col sizeXs="3" sizeSm="2">
           <ion-item class="flex-grow">
             <ion-label position="floating">Name</ion-label>
             <ion-input [(ngModel)]="fight.name"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col sizeXs="4" sizeSm="4">
+        <ion-col sizeXs="9" sizeSm="6">
+          <ion-item class="flex-grow">
+            <ion-label position="floating">Description</ion-label>
+            <ion-input [(ngModel)]="fight.description"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeXs="6" sizeSm="2">
           <ion-item class="flex-grow">
             <ion-label position="floating">Resource</ion-label>
             <ion-select [(ngModel)]="fight.resourceType">
@@ -36,7 +42,7 @@
             </ion-select>
           </ion-item>
         </ion-col>
-        <ion-col sizeXs="4" sizeSm="4">
+        <ion-col sizeXs="6" sizeSm="2">
           <ion-item class="flex-grow">
             <ion-label position="floating">Costs</ion-label>
             <ion-input [(ngModel)]="fight.costs" type="number"></ion-input>
