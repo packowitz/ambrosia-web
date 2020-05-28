@@ -31,7 +31,7 @@
     <ion-card-content>
       <ion-row>
         <ion-col sizeMd="2">
-          <div (click)="selectVehicle()" class="pointer">
+          <div (click)="selectVehicle()" class="pointer" *ngIf="model.vehicles && model.vehicles.length > 0">
             <vehicle *ngIf="vehicle" [vehicle]="vehicle" [small]="true"></vehicle>
             <div *ngIf="!vehicle">
               <ion-img class="vehicle-avatar" src="/assets/img/vehicles/EMPTY_SLOT.png"></ion-img>
