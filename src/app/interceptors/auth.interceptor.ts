@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let token: string;
-        if (this.model.useServiceAccount && req.url.indexOf('/admin/') === -1) {
+        if (this.model.useServiceAccount && (req.url.indexOf('/admin/') === -1 || req.url.indexOf('/admin/hero/recruit') !== -1)) {
             token = localStorage.getItem(environment.serviceTokenKey);
         }
         if (!token) {
