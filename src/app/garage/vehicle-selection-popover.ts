@@ -33,7 +33,7 @@ export class VehicleSelectionPopover implements OnInit {
             if (this.showVehiclesOnMission) {
                 this.vehicles = this.model.vehicles.filter(v => v.slot != null);
             } else {
-                this.vehicles = this.model.vehicles.filter(v => v.slot != null && !v.missionId);
+                this.vehicles = this.model.vehicles.filter(v => v.slot != null && !v.missionId && !v.upgradeTriggered);
             }
         } else {
             this.vehicles = this.model.vehicles.filter(v => v.slot == null);

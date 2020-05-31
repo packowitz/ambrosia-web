@@ -117,7 +117,7 @@ export class CampaignFightPage {
       if (!this.hero4) { this.team.hero4Id = null; }
     }
     if (this.model.vehicles && this.model.vehicles.length > 0) {
-      this.vehicle = this.model.vehicles.find(v => v.slot != null && !v.missionId);
+      this.vehicle = this.model.vehicles.find(v => v.slot != null && !v.missionId && !v.upgradeTriggered);
     }
   }
 
