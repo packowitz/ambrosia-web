@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Model} from '../services/model.service';
 import {Battle} from '../domain/battle.model';
 import {BattleHero} from '../domain/battleHero.model';
@@ -13,7 +13,7 @@ import {StoryService} from '../services/story.service';
   templateUrl: './battle.page.html',
   styleUrls: ['./battle.page.scss'],
 })
-export class BattlePage implements OnInit {
+export class BattlePage {
 
   battle: Battle;
   activeHero: BattleHero;
@@ -37,8 +37,12 @@ export class BattlePage implements OnInit {
               private storyService: StoryService,
               private router: Router) {}
 
-  ngOnInit() {
-    setTimeout(() => this.initBattle(this.model.ongoingBattle), 1000);
+  ionViewDidEnter() {
+    if (this.model.ongoingBattle) {
+      this.initBattle(this.model.ongoingBattle);
+    } else {
+      setTimeout(() => this.initBattle(this.model.ongoingBattle), 500);
+    }
   }
 
   ionViewWillEnter() {
@@ -271,11 +275,13 @@ export class BattlePage implements OnInit {
 
   leaveBattle() {
     if (this.battle.type === 'TEST' && this.battle.fight) {
+      this.model.ongoingBattle = null;
       this.router.navigateByUrl('/fights/' + this.battle.fight.id);
     } else {
       if (this.battle.status === 'LOST' && !!this.battle.fight && this.storyService.storyUnknown(this.fightLostStory)) {
         this.storyService.showStory(this.fightLostStory).subscribe(() => console.log(this.fightLostStory + ' story finished'));
       }
+      this.model.ongoingBattle = null;
       this.router.navigateByUrl('/home');
     }
   }
