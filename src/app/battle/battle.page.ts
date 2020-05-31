@@ -38,6 +38,7 @@ export class BattlePage {
               private router: Router) {}
 
   ionViewDidEnter() {
+    console.log('Battle ionViewDidEnter for battle #' + this.model.ongoingBattle ? this.model.ongoingBattle.id : 'unknown');
     if (this.model.ongoingBattle) {
       this.initBattle(this.model.ongoingBattle);
     } else {
