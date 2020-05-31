@@ -275,12 +275,14 @@ export class BattlePage {
 
   leaveBattle() {
     if (this.battle.type === 'TEST' && this.battle.fight) {
+      this.battle = null;
       this.model.ongoingBattle = null;
       this.router.navigateByUrl('/fights/' + this.battle.fight.id);
     } else {
       if (this.battle.status === 'LOST' && !!this.battle.fight && this.storyService.storyUnknown(this.fightLostStory)) {
         this.storyService.showStory(this.fightLostStory).subscribe(() => console.log(this.fightLostStory + ' story finished'));
       }
+      this.battle = null;
       this.model.ongoingBattle = null;
       this.router.navigateByUrl('/home');
     }
