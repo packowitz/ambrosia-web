@@ -25,6 +25,9 @@ import {Gear} from '../domain/gear.model';
           <div *ngIf="item.gearId" class="ma-2">
             <gear-icon [gear]="getGear()" [type]="getGear().type"></gear-icon>
           </div>
+          <div *ngIf="item.jewelType" class="ma-2">
+            <img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.jewelLevel}}.png" class="jewel-icon">
+          </div>
           <div *ngIf="item.buildingType">
             Upgrading {{converter.readableIdentifier(item.buildingType)}} to level {{getNextLevel()}}
           </div>
@@ -33,6 +36,9 @@ import {Gear} from '../domain/gear.model';
           </div>
           <div *ngIf="item.vehiclePartId">
             Upgrading {{converter.readableIdentifier(getVehiclePart().type)}} to level {{getNextLevel()}}
+          </div>
+          <div *ngIf="item.jewelType">
+            Upgrading {{converter.readableIdentifier(item.jewelType.name)}} jewel to level {{item.jewelLevel + 1}}
           </div>
           <div *ngIf="item.gearId">
             {{getGearModificationText()}}

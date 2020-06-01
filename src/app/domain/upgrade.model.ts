@@ -1,3 +1,5 @@
+import {JewelType} from '../services/enum.service';
+
 export class Upgrade {
     id: number;
     playerId: number;
@@ -7,7 +9,7 @@ export class Upgrade {
     vehiclePartId: number;
     gearId: number;
     gearModification: string;
-    jewelType: string;
+    jewelType: JewelType;
     jewelLevel: number;
     finished: boolean;
     inProgress: boolean;

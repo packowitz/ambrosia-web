@@ -40,23 +40,23 @@ import {ConverterService} from '../services/converter.service';
           {{upgradeText[buildingType]}}
         </div>
         <div *ngIf="!getBuilding().upgradeTriggered">
-          <div class="mt-2 flex-center" *ngIf="!upgradeSeconds">Cannot upgrade {{converter.readableIdentifier(buildingType)}} higher than level {{getBuilding().level}}</div>
-          <div class="mt-3" *ngIf="upgradeSeconds">
+          <div class="mt-2 flex-center" *ngIf="!getUpgradeSeconds()">Cannot upgrade {{converter.readableIdentifier(buildingType)}} higher than level {{getBuilding().level}}</div>
+          <div class="mt-3" *ngIf="getUpgradeSeconds()">
             Upgrade {{converter.readableIdentifier(buildingType)}} to level {{getBuilding().level + 1}} to get:
             <ul>
               <li *ngFor="let upgrade of getUpgrades()">{{upgrade}}</li>
             </ul>
             <div class="flex-space-between">
-              <div *ngIf="hasEnoughResources">Upgrade costs</div>
-              <div *ngIf="!hasEnoughResources">Insufficient resources</div>
-              <div *ngFor="let cost of upgradeCosts" class="flex">
+              <div *ngIf="hasEnoughResources()">Upgrade costs</div>
+              <div *ngIf="!hasEnoughResources()">Insufficient resources</div>
+              <div *ngFor="let cost of getUpgradeCosts()" class="flex">
                 <div [class.color-red]="!model.hasEnoughResources(cost.resourceType, cost.value1)" [class.color-green]="model.hasEnoughResources(cost.resourceType, cost.value1)">{{model.getResourceAmount(cost.resourceType)}}</div>/{{cost.value1}}
                 <ion-img src="assets/icon/resources/{{cost.resourceType}}.png" class="resource-icon"></ion-img>
               </div>
             </div>
             <div class="mt-2 flex-center">
               <ion-button color="danger" fill="outline" (click)="closeModal()">Close</ion-button>
-              <ion-button [disabled]="!hasEnoughResources || saving || model.upgrades.length >= model.progress.builderQueueLength" (click)="performUpgrade()">Upgrade ({{converter.timeWithUnit(upgradeSeconds)}})</ion-button>
+              <ion-button [disabled]="!hasEnoughResources() || saving || model.upgrades.length >= model.progress.builderQueueLength" (click)="performUpgrade()">Upgrade ({{converter.timeWithUnit(getUpgradeSeconds())}})</ion-button>
             </div>
           </div>
         </div>
@@ -73,9 +73,6 @@ import {ConverterService} from '../services/converter.service';
 export class BuildingUpgradeModal {
 
     buildingType;
-    upgradeSeconds: number = null;
-    upgradeCosts: DynamicProperty[] = [];
-    hasEnoughResources = true;
 
     saving = false;
 
@@ -96,21 +93,26 @@ export class BuildingUpgradeModal {
                 private backendService: BackendService,
                 private propertyService: PropertyService) {
         this.buildingType = navParams.get('buildingType');
-        this.init();
     }
 
-    init() {
+    getUpgradeSeconds(): number {
         let upTimes = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1);
         if (upTimes.length === 1) {
-            this.upgradeSeconds = upTimes[0].value1;
+            return upTimes[0].value1;
         }
-        this.upgradeCosts = this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
-        this.hasEnoughResources = true;
-        this.upgradeCosts.forEach(c => {
+    }
+
+    getUpgradeCosts(): DynamicProperty[] {
+        return this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
+    }
+
+    hasEnoughResources(): boolean {
+        this.getUpgradeCosts().forEach(c => {
             if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
-                this.hasEnoughResources = false;
+                return false;
             }
         });
+        return true;
     }
 
     getBuilding() {
@@ -196,11 +198,10 @@ export class BuildingUpgradeModal {
     }
 
     performUpgrade() {
-        if (this.hasEnoughResources && this.upgradeSeconds && this.model.upgrades.length < this.model.progress.builderQueueLength && !this.getBuilding().upgradeTriggered) {
+        if (this.hasEnoughResources() && this.getUpgradeSeconds() && this.model.upgrades.length < this.model.progress.builderQueueLength && !this.getBuilding().upgradeTriggered) {
             this.saving = true;
             this.backendService.upgradeBuilding(this.buildingType).subscribe(data => {
                 this.saving = false;
-                this.init();
             }, () => {
                 this.saving = false;
             });
