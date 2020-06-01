@@ -6,6 +6,7 @@ export class BattleStepAction {
     crit?: boolean;
     superCrit?: boolean;
     baseDamage?: number;
+    baseDamageText?: string;
     targetArmor?: number;
     targetHealth?: number;
     armorDiff?: number;

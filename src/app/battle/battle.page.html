@@ -112,7 +112,7 @@
             </div>
             <div *ngIf="step.expanded">
               <div *ngFor="let action of step.actions">
-                <div *ngIf="action.type == 'DAMAGE'">{{action.heroName}}({{action.heroPosition}}): <i class="RED">{{action.healthDiff}}</i> health, <i class="RED">{{action.armorDiff}}</i> armor{{action.shieldAbsorb? ', shield absorbed ' + action.shieldAbsorb + ' base damage' : ''}}, {{action.crit ? (action.superCrit ? 'SUPER_CRIT, ' : 'CRIT, ') : ''}}{{action.baseDamage}} base damage, {{action.targetArmor}} target armor before, {{action.targetHealth}} target HP before</div>
+                <div *ngIf="action.type == 'DAMAGE'">{{action.heroName}}({{action.heroPosition}}): <i class="RED">{{action.healthDiff}}</i> health, <i class="RED">{{action.armorDiff}}</i> armor{{action.shieldAbsorb? ', shield absorbed ' + action.shieldAbsorb + ' base damage' : ''}}, {{action.crit ? (action.superCrit ? 'SUPER_CRIT, ' : 'CRIT, ') : ''}}{{action.baseDamage}} base damage{{action.baseDamageText ? ' (' + action.baseDamageText + ')' : ''}}, {{action.targetArmor}} target armor before, {{action.targetHealth}} target HP before</div>
                 <div *ngIf="action.type == 'DODGED'">{{action.heroName}}({{action.heroPosition}}) dodged and received no damage</div>
                 <div *ngIf="action.type == 'HEALING'">{{action.heroName}}({{action.heroPosition}}): <i class="GREEN">{{action.healthDiff}}</i> health</div>
                 <div *ngIf="action.type == 'BUFF'">{{action.heroName}}({{action.heroPosition}}) got {{action.buffIntensity}}* {{action.buff}} for {{action.buffDuration}} turns</div>
