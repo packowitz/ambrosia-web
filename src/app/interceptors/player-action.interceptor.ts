@@ -28,7 +28,7 @@ export class PlayerActionInterceptor implements HttpInterceptor {
                 catchError((error: HttpErrorResponse) => {
                     console.log("Interceptor caught error");
                     this.alertCtrl.create({
-                        header: 'Server error',
+                        header: error.error.title ? error.error.title : 'Unknown Server Error',
                         message: error.error.message,
                         buttons: [{text: 'Okay'}]
                     }).then(data => data.present());
