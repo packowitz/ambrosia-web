@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NavParams, PopoverController} from '@ionic/angular';
 import {Model} from '../services/model.service';
-import {Vehicle} from '../domain/vehicle.model';
 import {Fight} from '../domain/fight.model';
 import {ConverterService} from '../services/converter.service';
 

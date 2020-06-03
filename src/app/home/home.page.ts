@@ -50,36 +50,10 @@ export class HomePage {
               public modalCtrl: ModalController) {}
 
   ionViewWillEnter(): void {
-    if (this.storyService.storyUnknown(this.storyNewPlayer)) {
-      this.storyService.showStory(this.storyNewPlayer).subscribe(() => {
-        console.log("HomePage after new player story");
-        this.ionViewWillEnter();
-      });
-    } else if (!this.model.player.color) {
-      this.alertCtrl.create({
-        subHeader: 'Select your hero color',
-        backdropDismiss: false,
-        buttons: [
-          {text: 'Red', cssClass: 'RED', handler: () => this.saveColor('RED') },
-          {text: 'Green', cssClass: 'GREEN', handler: () => this.saveColor('GREEN') },
-          {text: 'Blue', cssClass: 'BLUE', handler: () => this.saveColor('BLUE') }
-        ]
-      }).then(alert => alert.present());
-    }
+    this.checkStories();
     this.map = this.model.currentMap;
     this.calcRows();
     this.calcBuildings();
-  }
-
-  saveColor(color: string) {
-    this.backendService.selectPlayerColor(color).subscribe(() => {
-      if (this.storyService.storyUnknown(this.storyColorSelected)) {
-        this.storyService.showStory(this.storyColorSelected).subscribe(() => {
-          console.log("HomePage after color selection story");
-          this.ionViewWillEnter();
-        });
-      }
-    });
   }
 
   private calcRows() {
@@ -177,7 +151,22 @@ export class HomePage {
   }
 
   checkStories() {
-    if (this.storyService.storyUnknown(this.mapFightFoundStory) && this.map.tiles.findIndex(t => t.discovered && !!t.fightIcon) !== -1) {
+    if (this.storyService.storyUnknown(this.storyNewPlayer)) {
+      this.storyService.showStory(this.storyNewPlayer).subscribe(() => {
+        console.log("HomePage after new player story");
+        this.ionViewWillEnter();
+      });
+    } else if (!this.model.player.color) {
+      this.alertCtrl.create({
+        subHeader: 'Select your hero color',
+        backdropDismiss: false,
+        buttons: [
+          {text: 'Red', cssClass: 'RED', handler: () => this.saveColor('RED') },
+          {text: 'Green', cssClass: 'GREEN', handler: () => this.saveColor('GREEN') },
+          {text: 'Blue', cssClass: 'BLUE', handler: () => this.saveColor('BLUE') }
+        ]
+      }).then(alert => alert.present());
+    } else if (this.storyService.storyUnknown(this.mapFightFoundStory) && this.map.tiles.findIndex(t => t.discovered && !!t.fightIcon) !== -1) {
       this.storyService.showStory(this.mapFightFoundStory).subscribe(() => {
         console.log("HomePage map fight revealed story shown");
         this.checkStories();
@@ -208,6 +197,17 @@ export class HomePage {
         this.checkStories();
       });
     }
+  }
+
+  saveColor(color: string) {
+    this.backendService.selectPlayerColor(color).subscribe(() => {
+      if (this.storyService.storyUnknown(this.storyColorSelected)) {
+        this.storyService.showStory(this.storyColorSelected).subscribe(() => {
+          console.log("HomePage after color selection story");
+          this.checkStories();
+        });
+      }
+    });
   }
 
   mapHasUnopenedChest(): boolean {
