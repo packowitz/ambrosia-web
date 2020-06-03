@@ -296,7 +296,7 @@
         </ion-col>
         <ion-col sizeMd="5">
           <ion-item>
-            <ion-input type="text" [(ngModel)]="skill.name" required></ion-input>
+            <ion-input type="text" maxlength="30" [(ngModel)]="skill.name" required></ion-input>
           </ion-item>
         </ion-col>
         <ion-col sizeMd="3">
@@ -370,7 +370,7 @@
         <ion-col sizeMd="12">
           <ion-item>
             <ion-label position="floating">Description</ion-label>
-            <ion-textarea [(ngModel)]="skill.description" required></ion-textarea>
+            <ion-textarea [(ngModel)]="skill.description" type="text" maxlength="255" required></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -385,7 +385,7 @@
           <ion-row *ngFor="let skillLevel of skill.skillLevel">
             <ion-item class="full-width">
               <ion-label>Lvl {{skillLevel.level}}</ion-label>
-              <ion-input [name]="'skillLevel' + skillLevel.level" type="text" [(ngModel)]="skillLevel.description" required></ion-input>
+              <ion-input [name]="'skillLevel' + skillLevel.level" type="text" maxlength="80" [(ngModel)]="skillLevel.description" required></ion-input>
             </ion-item>
           </ion-row>
         </ion-col>
