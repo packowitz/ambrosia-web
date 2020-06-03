@@ -62,6 +62,7 @@ export class Model {
     looted: Looted[];
 
     interval: number;
+    lastIntervalTimestamp: number = Date.now();
     updateResourcesInProgress = false;
     updateIncubatorsInProgress = false;
     useServiceAccount = false;
@@ -132,8 +133,14 @@ export class Model {
 
     startInterval() {
         this.interval = setInterval(() => {
+            let now = Date.now();
+            let pauseDetected = (now - this.lastIntervalTimestamp) > 5000;
+            if (pauseDetected) {
+                console.log("Pause detected. Updating all time based resources");
+            }
+            this.lastIntervalTimestamp = now;
             if (this.resources) {
-                let updateResources = false;
+                let updateResources = pauseDetected;
                 if (this.resources.steam < this.resources.steamMax) {
                     this.resources.steamProduceIn --;
                     updateResources = updateResources || this.resources.steamProduceIn <= 0;
@@ -158,7 +165,7 @@ export class Model {
                     mission.battles.forEach(battle => {
                         battle.secondsUntilDone --;
                     });
-                    if (mission.nextUpdateSeconds <= 0 && !mission.updating) {
+                    if (pauseDetected || mission.nextUpdateSeconds <= 0 && !mission.updating) {
                         mission.updating = true;
                         this.http.post<PlayerActionResponse>(API_URL + '/battle/mission/' + mission.id, null).subscribe(data => {
                             console.log("Updated mission " + data.missions[0].id);
@@ -171,7 +178,7 @@ export class Model {
                 let upgradeInProgress = this.upgrades.find(u => u.inProgress);
                 if (upgradeInProgress) {
                     upgradeInProgress.secondsUntilDone --;
-                    if (upgradeInProgress.secondsUntilDone <= 0 && !upgradeInProgress.updating) {
+                    if (pauseDetected || upgradeInProgress.secondsUntilDone <= 0 && !upgradeInProgress.updating) {
                         upgradeInProgress.updating = true;
                         this.http.post<PlayerActionResponse>(API_URL + '/upgrade/check', null).subscribe(() => {
                             console.log("Updated upgrades");
@@ -181,7 +188,7 @@ export class Model {
             }
 
             if (this.incubators) {
-                let incubatorUpdate = false;
+                let incubatorUpdate = pauseDetected;
                 this.incubators.filter(i => !i.finished).forEach(incubator => {
                     incubator.secondsUntilDone --;
                     if (incubator.secondsUntilDone <= 0) {
