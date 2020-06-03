@@ -50,10 +50,10 @@ export class HomePage {
               public modalCtrl: ModalController) {}
 
   ionViewWillEnter(): void {
-    this.checkStories();
     this.map = this.model.currentMap;
     this.calcRows();
     this.calcBuildings();
+    this.checkStories();
   }
 
   private calcRows() {
