@@ -203,14 +203,17 @@ export class CampaignFightPage {
     } else {
       this.team.vehicleId = null;
     }
+    this.saving = true;
     if (this.map) {
       this.backendService.startCampaignFight(this.map.mapId, this.tile.posX, this.tile.posY, this.team).subscribe(() => {
+        this.saving = false;
         this.router.navigateByUrl('/battle');
-      });
+      }, () => this.saving = false );
     } else {
       this.backendService.startTestFight(this.fight.id, this.team).subscribe(() => {
+        this.saving = false;
         this.router.navigateByUrl('/battle');
-      });
+      }, () => this.saving = false );
     }
   }
 
@@ -229,9 +232,11 @@ export class CampaignFightPage {
         if (dataReturned !== null && dataReturned.data) {
           this.model.updateTeam(this.team);
           this.team.vehicleId = this.vehicle.id;
+          this.saving = true;
           this.backendService.startMission(this.map.mapId, this.tile.posX, this.tile.posY, this.team, dataReturned.data).subscribe(() => {
+            this.saving = false;
             this.router.navigateByUrl('/home');
-          });
+          }, () => this.saving = false );
         }
       });
       modal.present();
