@@ -152,6 +152,7 @@
           <div *ngIf="selectedSkill.skillLevel.length > 0" class="mt-2">
             <div *ngFor="let lvl of selectedSkill.skillLevel" [class.strong]="getSkillLevel(selectedSkill) >= lvl.level">L{{lvl.level}} {{lvl.description}}</div>
           </div>
+          <div *ngIf="getSkillLevel(selectedSkill) <= 0 && selectedSkill.skillActiveTrigger == 'ASCENDED'"><i>Ascend hero to unlock this skill</i></div>
           <ion-button size="small" color="success" (click)="heroGainSkillLevel()" [disabled]="selectedHero.missionId || selectedHero.skillPoints <= 0">Skill up ({{selectedHero.skillPoints}})</ion-button>
           <ion-button size="small" color="warning" (click)="heroResetSkills()" [disabled]="selectedHero.missionId">Reset skills</ion-button>
         </div>
