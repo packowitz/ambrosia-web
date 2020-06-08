@@ -101,7 +101,7 @@
   <ion-card>
     <ion-list>
       <div class="flex-vert-reverse">
-        <div *ngFor="let step of battle.steps; let i = index" class="hover-grey">
+        <div *ngFor="let step of battleSteps; let i = index" class="hover-grey">
           <div *ngIf="!animateStep || i <= animationStepIdx" class="flex-vert ma-2">
             <div class="color-black flex-space-between">
               <div class="pointer" [class.RED]="animateStep && i == animationStepIdx" [class.strong]="lastKnownStepIdx < i" *ngIf="step.phase == 'MAIN'" (click)="step.expanded = !step.expanded">{{step.turn}}. {{step.actingHeroName}}({{step.actingHero}}) used {{step.usedSkillName}}(S{{step.usedSkill}}) on {{step.targetName}}({{step.target}})</div>

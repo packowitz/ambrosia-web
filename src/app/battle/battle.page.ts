@@ -16,6 +16,7 @@ import {StoryService} from '../services/story.service';
 export class BattlePage {
 
   battle: Battle;
+  battleSteps: BattleStep[] = [];
   activeHero: BattleHero;
   selectedSkill: HeroSkill;
 
@@ -39,11 +40,7 @@ export class BattlePage {
 
   ionViewDidEnter() {
     console.log('Battle ionViewDidEnter for battle #' + this.model.ongoingBattle ? this.model.ongoingBattle.id : 'unknown');
-    if (this.model.ongoingBattle) {
-      this.initBattle(this.model.ongoingBattle);
-    } else {
-      setTimeout(() => this.initBattle(this.model.ongoingBattle), 500);
-    }
+    this.resetBattle(this.model.ongoingBattle);
   }
 
   ionViewWillEnter() {
@@ -57,7 +54,8 @@ export class BattlePage {
   }
 
   resetBattle(battle: Battle) {
-    this.battle = this.nextStageBattle;
+    this.battle = battle;
+    this.battleSteps = [];
     this.activeHero = null;
     this.selectedSkill = null;
     this.lastKnownStepIdx = -1;
@@ -69,6 +67,13 @@ export class BattlePage {
   initBattle(battle: Battle) {
     if (battle) {
       this.battle = battle;
+      if (battle.steps) {
+        if (this.battleSteps.length === 0) {
+          this.battleSteps = battle.steps;
+        } else {
+          this.battleSteps = this.battleSteps.concat(battle.steps);
+        }
+      }
       if (this.battle.nextBattleId) {
         this.activateNextStageBattle();
       }
@@ -78,9 +83,9 @@ export class BattlePage {
 
   setActiveHero() {
     // animation
-    if (this.animationStepIdx < this.battle.steps.length - 1) {
+    if (this.animationStepIdx < this.battleSteps.length - 1) {
       this.animationStepIdx ++;
-      this.animateStep = this.battle.steps[this.animationStepIdx];
+      this.animateStep = this.battleSteps[this.animationStepIdx];
       setTimeout(() => this.setActiveHero(), 1000);
     } else {
       this.animateStep = null;
@@ -206,7 +211,7 @@ export class BattlePage {
   }
 
   selectTarget(hero: BattleHero) {
-    this.lastKnownStepIdx = this.battle.steps.length - 1;
+    this.lastKnownStepIdx = this.battleSteps.length - 1;
     this.loading = true;
     this.backendService.takeTurn(this.battle, this.activeHero, this.selectedSkill, hero).subscribe(data => {
       this.initBattle(data.ongoingBattle);
@@ -218,7 +223,7 @@ export class BattlePage {
 
   takeAutoTurn() {
     if (this.battle.status === 'PLAYER_TURN') {
-      this.lastKnownStepIdx = this.battle.steps.length - 1;
+      this.lastKnownStepIdx = this.battleSteps.length - 1;
       this.loading = true;
       this.backendService.takeAutoTurn(this.battle, this.activeHero).subscribe(data => {
         this.initBattle(data.ongoingBattle);
