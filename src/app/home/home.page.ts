@@ -35,6 +35,7 @@ export class HomePage {
 
   mapFightFoundStory = 'MAP_FIGHT_REVEALED';
   mapChestFoundStory = 'MAP_CHEST_REVEALED';
+  mapPortalFoundStory = 'MAP_PORTAL_REVEALED';
   victoriousRepeatableFightStory = 'REPEATABLE_FIGHT_WON';
   heroLevelledStory = 'HERO_LEVELLED';
   heroMaxLevelStory = 'HERO_MAX_LEVEL';
@@ -176,6 +177,11 @@ export class HomePage {
         console.log("HomePage map chest revealed story shown");
         this.checkStories();
       });
+    } else if (this.storyService.storyUnknown(this.mapPortalFoundStory) && this.mapHasPortal()) {
+      this.storyService.showStory(this.mapPortalFoundStory).subscribe(() => {
+        console.log("HomePage map portal revealed story shown");
+        this.checkStories();
+      });
     } else if (this.storyService.storyUnknown(this.victoriousRepeatableFightStory) && this.mapHasVictoriousRepeatableFight()) {
       this.storyService.showStory(this.victoriousRepeatableFightStory).subscribe(() => {
         console.log("HomePage victorious repeatable fight story shown");
@@ -216,6 +222,10 @@ export class HomePage {
 
   mapHasVictoriousRepeatableFight(): boolean {
     return this.map.tiles.findIndex(t => t.discovered && t.fightRepeatable && t.victoriousFight) !== -1;
+  }
+
+  mapHasPortal(): boolean {
+    return this.map.tiles.findIndex(t => t.discovered && !!t.portalToMapId) !== -1;
   }
 
   gotoBuilding(type: string) {
