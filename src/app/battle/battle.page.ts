@@ -196,7 +196,7 @@ export class BattlePage {
   }
 
   isTaunting(hero: BattleHero): boolean {
-    return hero && !!hero.buffs.find(b => b.buff === 'TAUNT_BUFF');
+    return this.isAlive(hero) && !!hero.buffs.find(b => b.buff === 'TAUNT_BUFF');
   }
 
   isAlive(hero: BattleHero): boolean {
