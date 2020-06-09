@@ -233,6 +233,9 @@ export class HomePage {
       case 'ACADEMY':
         this.router.navigateByUrl('/academy');
         break;
+      case 'ARENA':
+        this.router.navigateByUrl('/arena');
+        break;
       case 'BARRACKS':
         this.router.navigateByUrl('/barracks');
         break;
