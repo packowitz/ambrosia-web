@@ -562,9 +562,23 @@ ion-row.table-row {
 }
 .loot-item {
   margin: 0 12px;
+  width: 64px;
+  .loot-image {
+    width: 40px;
+  }
+  .loot-hero {
+    width: 54px;
+  }
 }
-.loot-image {
-  width: 40px;
+.small-loot-item {
+  margin: 0 12px;
+  width: 32px;
+  .loot-image {
+    width: 20px;
+  }
+  .loot-hero {
+    width: 27px;
+  }
 }
 
 .bar-outer {
@@ -650,6 +664,11 @@ ion-row.table-row {
 .widePopover .popover-content {
   width: 360px;
   top: 15vh !important;
+}
+
+.popover-scrollable {
+  max-height: 100%;
+  overflow-y: scroll;
 }
 
 .skill-tile {

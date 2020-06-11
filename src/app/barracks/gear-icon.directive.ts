@@ -8,7 +8,7 @@ import {ConverterService} from '../services/converter.service';
       <div class="flex-start border_{{getJewelCount()}}">
         <div class="flex-vert gear-icon-box">
           <ion-img *ngIf="!gear" [src]="'assets/img/sets/default_' + type + '.png'"></ion-img>
-          <ion-img *ngIf="gear" [src]="'assets/img/sets/' + gear.set + '_' + type + '.png'" class="border-right-grey"></ion-img>
+          <ion-img *ngIf="gear" [src]="'assets/img/sets/' + gear.set + '_' + type + '.png'" class="border-right-grey gear-{{gear.gearQuality}}"></ion-img>
           <i *ngIf="gear && gear.specialJewelSlot" class="gear-special-icon fas fa-circle inner"></i>
           <i *ngIf="gear && gear.specialJewelSlot" class="gear-special-icon far fa-circle"></i>
           <i *ngIf="gear && gear.specialJewelSlot && gear.specialJewelType"

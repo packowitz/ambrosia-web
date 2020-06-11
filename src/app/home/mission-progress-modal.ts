@@ -10,7 +10,7 @@ import {BackendService} from '../services/backend.service';
 @Component({
     selector: 'mission-progress-popover',
     template: `
-        <div class="ma-2">
+        <div class="ma-2 popover-scrollable">
           <div class="flex-space-around">
             <div *ngIf="vehicle">
               <vehicle [vehicle]="vehicle" [small]="true"></vehicle>
@@ -83,7 +83,7 @@ import {BackendService} from '../services/backend.service';
                 <span *ngIf="!battle.cancelled && !battle.battleStarted && !battle.battleFinished">Starting soon</span>
                 <span *ngIf="!battle.cancelled && battle.battleStarted && !battle.battleFinished">{{progressInPercent(battle)}}%</span>
                 <div *ngIf="battle.looted" class="flex-space-around">
-                  <loot-item *ngFor="let loot of battle.looted" [loot]="loot"></loot-item>
+                  <loot-item *ngFor="let loot of battle.looted" [loot]="loot" class="loot-item"></loot-item>
                 </div>
               </div>
             </ion-item>

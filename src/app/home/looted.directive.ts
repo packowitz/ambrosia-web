@@ -11,9 +11,9 @@ import {StoryService} from '../services/story.service';
         <div class="loot-window pa-2">
           <div class="flex-center">You received</div>
           <div class="flex-space-between mt-1">
-            <loot-item *ngFor="let loot of model.looted" [loot]="loot"></loot-item>
+            <loot-item *ngFor="let loot of model.looted" [loot]="loot" class="small-loot-item"></loot-item>
           </div>
-          <div class="flex-center mt-1"><i>(click anywhere to close)</i></div>
+          <div class="flex-center mt-1 color-grey font-small"><i>(click anywhere to close)</i></div>
         </div>
       </div>
   `
