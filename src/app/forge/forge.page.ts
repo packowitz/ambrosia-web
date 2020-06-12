@@ -62,6 +62,7 @@ export class ForgePage {
     if (this.storyService.storyUnknown(this.enterStory)) {
       this.showStory();
     }
+    this.model.gears.forEach(g => g.markedToBreakdown = false);
   }
 
   canUpgradeBuilding(): boolean {
@@ -142,6 +143,7 @@ export class ForgePage {
 
   getGear(): Gear[] {
     let gear = this.model.gears.filter(g => {
+      if (g.markedToBreakdown === true) { return true; }
       if (g.rarity === 'SIMPLE' && !this.showSimple) { return false; }
       if (g.rarity === 'COMMON' && !this.showCommon) { return false; }
       if (g.rarity === 'UNCOMMON' && !this.showUncommon) { return false; }
@@ -189,6 +191,10 @@ export class ForgePage {
         }
       }).then(modal => modal.present());
     }
+  }
+
+  markAllForBreakdown() {
+    this.getGear().forEach(g => g.markedToBreakdown = true);
   }
 
   breakdown() {

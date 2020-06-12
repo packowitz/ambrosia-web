@@ -739,13 +739,18 @@ ion-row.table-row {
   height: 40px;
 }
 
-.icon-selected {
-  box-shadow: 0 0 0 1px #dcb717, 0 0 0 2px #000000, 0 0 0 4px #dcb717;
+.medium-icon {
+  width: 30px;
+  height: 30px;
 }
 
 .small-icon {
   width: 20px;
   height: 20px;
+}
+
+.icon-selected {
+  box-shadow: 0 0 0 1px #dcb717, 0 0 0 2px #000000, 0 0 0 4px #dcb717;
 }
 
 .small-icon-selected {

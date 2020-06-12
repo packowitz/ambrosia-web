@@ -11,7 +11,6 @@
         </div>
         <div class="flex-center">
           <div class="font-small">Modify Lvl {{model.progress.gearModificationRarity}}, Breakdown Lvl {{model.progress.gearBreakDownRarity}}</div>
-          <ion-button fill="outline" color="danger" (click)="breakdown()" [disabled]="saving || gearForBreakdown().length == 0"><ion-icon name="trash"></ion-icon></ion-button>
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
             <i class="ra ra-book font-larger"></i>
           </ion-button>
@@ -29,24 +28,34 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
-      <div class="flex-space-between">
+      <div class="flex">
         <div class="width-60">Quality</div>
-        <div *ngFor="let qual of allQualities" class="pointer" [class.text-selected]="qualities.indexOf(qual) != -1" (click)="toggleQuality(qual)">{{converter.readableIdentifier(qual)}}</div>
-      </div>
-      <div class="mt-2 flex-space-between">
-        <div class="width-60">Stars</div>
-        <div class="pointer" [class.text-selected]="showSimple" (click)="showSimple = !showSimple">Simple</div>
-        <div class="pointer" [class.text-selected]="showCommon" (click)="showCommon = !showCommon">Common</div>
-        <div class="pointer" [class.text-selected]="showUncommon" (click)="showUncommon = !showUncommon">Uncommon</div>
-        <div class="pointer" [class.text-selected]="showRare" (click)="showRare = !showRare">Rare</div>
-        <div class="pointer" [class.text-selected]="showEpic" (click)="showEpic = !showEpic">Epic</div>
-        <div class="pointer" [class.text-selected]="showLegendary" (click)="showLegendary = !showLegendary">Legendary</div>
-      </div>
-      <div class="mt-2 flex-space-between">
-        <div class="width-60">Sets</div>
-        <div *ngFor="let set of enumService.getGearSets()">
-          <img src="assets/icon/gear/{{set}}.png" (click)="toggleSet(set)" class="small-icon pointer" [class.small-icon-selected]="sets.indexOf(set) >= 0">
+        <div class="flex-space-between flex-grow">
+          <div *ngFor="let qual of allQualities" class="pointer" [class.text-selected]="qualities.indexOf(qual) != -1" (click)="toggleQuality(qual)">{{converter.readableIdentifier(qual)}}</div>
         </div>
+      </div>
+      <div class="mt-2 flex">
+        <div class="width-60">Sets</div>
+        <div class="flex-space-between flex-grow">
+          <img *ngFor="let set of enumService.getGearSets()" src="assets/icon/gear/{{set}}.png" (click)="toggleSet(set)" class="medium-icon pointer" [class.small-icon-selected]="sets.indexOf(set) >= 0">
+        </div>
+      </div>
+      <div class="mt-2 flex">
+        <div class="width-60">Stars</div>
+        <div class="flex-space-between flex-grow">
+          <div class="pointer" [class.text-selected]="showSimple" (click)="showSimple = !showSimple">Simple</div>
+          <div class="pointer" [class.text-selected]="showCommon" (click)="showCommon = !showCommon">Common</div>
+          <div class="pointer" [class.text-selected]="showUncommon" (click)="showUncommon = !showUncommon">Uncommon</div>
+          <div class="pointer" [class.text-selected]="showRare" (click)="showRare = !showRare">Rare</div>
+          <div class="pointer" [class.text-selected]="showEpic" (click)="showEpic = !showEpic">Epic</div>
+          <div class="pointer" [class.text-selected]="showLegendary" (click)="showLegendary = !showLegendary">Legendary</div>
+        </div>
+      </div>
+      <div class="mt-2 flex-end">
+        <ion-button [fill]="gearForBreakdown().length == 0 ? 'outline' : 'solid'" size="small" color="danger" (click)="breakdown()" [disabled]="saving || gearForBreakdown().length == 0"><span *ngIf="gearForBreakdown().length > 0">
+          {{gearForBreakdown().length}}x </span><ion-icon name="trash"></ion-icon>
+        </ion-button>
+        <ion-button fill="outline" size="small" color="danger" (click)="markAllForBreakdown()">Mark all</ion-button>
       </div>
     </ion-card-content>
   </ion-card>
@@ -72,7 +81,7 @@
             <i class="font-small color-grey">Upgrade Forge to modify this piece</i>
           </div>
           <div *ngIf="model.progress.gearModificationRarity >= converter.rarityStars(gear.rarity) && !gear.modificationInProgress">
-            <ion-button (click)="modificationSelection(gear, $event)" [disabled]="saving">Modify</ion-button>
+            <ion-button fill="none" color="secondary" (click)="modificationSelection(gear, $event)" [disabled]="saving">Modify</ion-button>
           </div>
           <div *ngIf="gear.modificationInProgress">
             <ion-button (click)="openUpgradeModal()" [disabled]="saving">Modifying</ion-button>
