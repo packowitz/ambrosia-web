@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {BackendService, Looted} from '../services/backend.service';
+import {BackendService} from '../services/backend.service';
 import {ConverterService} from '../services/converter.service';
 import {Model} from '../services/model.service';
 import {PropertyService} from '../services/property.service';
@@ -22,6 +22,17 @@ export class ForgePage {
 
   saving = false;
 
+  showSimple = true;
+  showCommon = false;
+  showUncommon = false;
+  showRare = false;
+  showEpic = false;
+  showLegendary = false;
+
+  allQualities = ['SHABBY', 'RUSTY', 'ORDINARY', 'USEFUL', 'GOOD', 'AWESOME', 'FLAWLESS', 'PERFECT', 'GODLIKE'];
+  qualities = ['SHABBY', 'RUSTY', 'ORDINARY', 'USEFUL'];
+  sets: string[] = [];
+
   buildingType = "FORGE";
   enterStory = this.buildingType + '_ENTERED';
 
@@ -37,6 +48,14 @@ export class ForgePage {
     if (!this.getBuilding()) {
       this.close();
     }
+    this.model.gears.forEach(g => {
+      let stars = this.converter.rarityStars(g.rarity);
+      this.showCommon = this.showCommon || stars >= 3;
+      this.showUncommon = this.showUncommon || stars >= 4;
+      this.showRare = this.showRare || stars >= 5;
+      this.showEpic = this.showEpic || stars >= 6;
+    });
+    this.sets = converter.dataClone(this.enumService.getGearSets());
   }
 
   ionViewWillEnter() {
@@ -59,6 +78,24 @@ export class ForgePage {
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  toggleQuality(qual) {
+    let idx = this.qualities.indexOf(qual);
+    if (idx >= 0) {
+      this.qualities.splice(idx, 1);
+    } else {
+      this.qualities.push(qual);
+    }
+  }
+
+  toggleSet(set) {
+    let idx = this.sets.indexOf(set);
+    if (idx >= 0) {
+      this.sets.splice(idx, 1);
+    } else {
+      this.sets.push(set);
+    }
   }
 
   openBuildingUpgradeModal() {
@@ -104,7 +141,26 @@ export class ForgePage {
   }
 
   getGear(): Gear[] {
-    return this.model.gears;
+    let gear = this.model.gears.filter(g => {
+      if (g.rarity === 'SIMPLE' && !this.showSimple) { return false; }
+      if (g.rarity === 'COMMON' && !this.showCommon) { return false; }
+      if (g.rarity === 'UNCOMMON' && !this.showUncommon) { return false; }
+      if (g.rarity === 'RARE' && !this.showRare) { return false; }
+      if (g.rarity === 'EPIC' && !this.showEpic) { return false; }
+      if (g.rarity === 'LEGENDARY' && !this.showLegendary) { return false; }
+      if (this.sets.indexOf(g.set) === -1) { return false; }
+      if (this.qualities.indexOf(g.gearQuality) === -1) { return false; }
+      return true;
+    });
+    return gear.sort((a, b) => {
+      let aStars = this.converter.rarityStars(a.rarity);
+      let bStars = this.converter.rarityStars(b.rarity);
+      if (aStars === bStars) {
+        return a.statQuality - b.statQuality;
+      } else {
+        return aStars - bStars;
+      }
+    });
   }
 
   gearForBreakdown(): Gear[] {

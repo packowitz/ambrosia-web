@@ -29,6 +29,29 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
+      <div class="flex-space-between">
+        <div class="width-60">Quality</div>
+        <div *ngFor="let qual of allQualities" class="pointer" [class.text-selected]="qualities.indexOf(qual) != -1" (click)="toggleQuality(qual)">{{converter.readableIdentifier(qual)}}</div>
+      </div>
+      <div class="mt-2 flex-space-between">
+        <div class="width-60">Stars</div>
+        <div class="pointer" [class.text-selected]="showSimple" (click)="showSimple = !showSimple">Simple</div>
+        <div class="pointer" [class.text-selected]="showCommon" (click)="showCommon = !showCommon">Common</div>
+        <div class="pointer" [class.text-selected]="showUncommon" (click)="showUncommon = !showUncommon">Uncommon</div>
+        <div class="pointer" [class.text-selected]="showRare" (click)="showRare = !showRare">Rare</div>
+        <div class="pointer" [class.text-selected]="showEpic" (click)="showEpic = !showEpic">Epic</div>
+        <div class="pointer" [class.text-selected]="showLegendary" (click)="showLegendary = !showLegendary">Legendary</div>
+      </div>
+      <div class="mt-2 flex-space-between">
+        <div class="width-60">Sets</div>
+        <div *ngFor="let set of enumService.getGearSets()">
+          <img src="assets/icon/gear/{{set}}.png" (click)="toggleSet(set)" class="small-icon pointer" [class.small-icon-selected]="sets.indexOf(set) >= 0">
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
       <ion-item *ngFor="let gear of getGear()">
         <div class="full-width flex-space-between">
           <gear-icon [gear]="gear" [type]="gear.type" (click)="showGearDetails(gear)" [class.pointer]="!gear.modificationInProgress"></gear-icon>

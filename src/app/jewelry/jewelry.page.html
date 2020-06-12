@@ -33,7 +33,7 @@
         <div class="flex-vert-center" *ngFor="let level of levels">
           Level {{level}}
           <ion-button (click)="openJewelUpgradeModal(jewelry.type, level)" size="small" [fill]="jewelry['lvl' + level] < 4 || model.progress.maxJewelUpgradingLevel < level ? 'clear' : 'outline'" [color]="jewelry['lvl' + level] < 4 || model.progress.maxJewelUpgradingLevel < level ? 'dark' : 'success'" [disabled]="jewelry['lvl' + level] < 4 || model.progress.maxJewelUpgradingLevel < level">
-              {{jewelry['lvl' + level]}}x <img src="assets/img/jewels/{{jewelry.slot}}_{{level}}.png" class="jewel-icon">
+              {{jewelry['lvl' + level] > 0 ? jewelry['lvl' + level] + 'x ' : ''}}<img src="assets/img/jewels/{{jewelry.slot}}_{{level}}.png" class="jewel-icon">
           </ion-button>
           <div *ngFor="let bonus of propertyService.getJewelValueAndName(jewelry.type, level)">{{bonus}}</div>
         </div>
