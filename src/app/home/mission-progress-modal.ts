@@ -114,11 +114,7 @@ export class MissionProgressModal {
                 private model: Model,
                 private backendService: BackendService) {
         this.mission = navParams.get('mission');
-        this.vehicle = this.model.getVehicle(this.mission.vehicleId);
-        this.hero1 = this.mission.hero1Id ? this.model.getHero(this.mission.hero1Id) : null;
-        this.hero2 = this.mission.hero2Id ? this.model.getHero(this.mission.hero2Id) : null;
-        this.hero3 = this.mission.hero3Id ? this.model.getHero(this.mission.hero3Id) : null;
-        this.hero4 = this.mission.hero4Id ? this.model.getHero(this.mission.hero4Id) : null;
+        this.init();
 
         this.interval = setInterval(() => {
             if (!this.mission.missionFinished) {
@@ -134,6 +130,14 @@ export class MissionProgressModal {
         if (this.interval) {
             clearInterval(this.interval);
         }
+    }
+
+    init() {
+        this.vehicle = this.model.getVehicle(this.mission.vehicleId);
+        this.hero1 = this.mission.hero1Id ? this.model.getHero(this.mission.hero1Id) : null;
+        this.hero2 = this.mission.hero2Id ? this.model.getHero(this.mission.hero2Id) : null;
+        this.hero3 = this.mission.hero3Id ? this.model.getHero(this.mission.hero3Id) : null;
+        this.hero4 = this.mission.hero4Id ? this.model.getHero(this.mission.hero4Id) : null;
     }
 
     closeModal() {
@@ -153,6 +157,7 @@ export class MissionProgressModal {
     finishMission() {
         this.saving = true;
         this.backendService.finishMission(this.mission.id).subscribe(data => {
+            this.init();
             this.saving = false;
             if (data.missions && data.missions.length > 0) {
                 this.mission = data.missions[0];
