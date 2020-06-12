@@ -7,14 +7,14 @@ import {ConverterService} from '../services/converter.service';
     template: `
       <div class="flex-start border_{{getJewelCount()}}">
         <div class="flex-vert gear-icon-box">
-          <ion-img *ngIf="!gear" [src]="'assets/img/sets/default_' + type + '.png'"></ion-img>
-          <ion-img *ngIf="gear" [src]="'assets/img/sets/' + gear.set + '_' + type + '.png'" class="border-right-grey gear-{{gear.gearQuality}}"></ion-img>
+          <img *ngIf="!gear" [src]="'assets/img/sets/default_' + type + '.png'">
+          <img *ngIf="gear" [src]="'assets/img/sets/' + gear.set + '_' + type + '.png'" class="border-right-grey gear-{{gear.gearQuality}}">
           <i *ngIf="gear && gear.specialJewelSlot" class="gear-special-icon fas fa-circle inner"></i>
           <i *ngIf="gear && gear.specialJewelSlot" class="gear-special-icon far fa-circle"></i>
           <i *ngIf="gear && gear.specialJewelSlot && gear.specialJewelType"
              class="gear-special-icon color-orange ra ra-kaleidoscope jewel"></i>
           <div *ngIf="gear" class="flex-center gear-stars">
-            <ion-img [src]="'assets/img/star_' + converter.rarityStars(gear.rarity) + '.png'" class="hero-stars"></ion-img>
+            <img [src]="'assets/img/star_' + converter.rarityStars(gear.rarity) + '.png'" class="hero-stars">
           </div>
         </div>
         <div *ngIf="gear" class="gear-jewels flex-vert-space-between">
