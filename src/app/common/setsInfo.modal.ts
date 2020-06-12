@@ -16,11 +16,12 @@ import {DynamicProperty} from '../domain/property.model';
           <div class="mt-2 font-small">
             Wearing multiple items of the same set will grant a set bonus to the hero. The more items of the same gear a hero is wearing the better the set bonus. Click on a set to review the bonuses.
           </div>
+          
+          <div class="mt-3 pa-05 flex-space-between scrollable-vert">
+            <img *ngFor="let set of enumService.getGearSets()" src="assets/icon/gear/{{set}}.png" (click)="selectSet(set)" class="mr-1 large-icon pointer" [class.icon-selected]="selectedSet == set">
+          </div>
 
           <div class="mt-3 flex">
-            <div class="flex-vert">
-              <ion-button *ngFor="let set of enumService.getGearSets()" [fill]="selectedSet == set ? 'outline' : 'clear'" size="small" (click)="selectSet(set)" color="dark">{{converter.readableIdentifier(set)}}</ion-button>
-            </div>
             <div class="ml-2">
               <div class="bold mt-1 mb-2">{{converter.readableIdentifier(selectedSet)}}</div>
               <div *ngIf="pcs1.length > 0" class="mt-2 flex-start">

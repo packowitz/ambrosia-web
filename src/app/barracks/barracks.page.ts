@@ -13,6 +13,7 @@ import {SetsInfoModal} from '../common/setsInfo.modal';
 import {GearInfoModal} from '../common/gearInfo.modal';
 import {BuffInfoModal} from '../common/buffInfo.modal';
 import {StoryService} from '../services/story.service';
+import {EnumService} from '../services/enum.service';
 
 @Component({
   selector: 'barracks',
@@ -24,15 +25,17 @@ export class BarracksPage {
   selectedHero: Hero;
   tab = "stats";
   selectedSkill: HeroSkill;
-  gearTypeFilter: string[] = [];
+  gearTypeFilter = "WEAPON";
+  gearSetFilter = "STONE_SKIN";
 
   buildingType = 'BARRACKS';
   enterStory = this.buildingType + '_ENTERED';
   canUpgradeBuilding = false;
 
   constructor(private backendService: BackendService,
-              private converter: ConverterService,
+              public converter: ConverterService,
               public model: Model,
+              public enumService: EnumService,
               private router: Router,
               private propertyService: PropertyService,
               private modalCtrl: ModalController,
@@ -49,8 +52,7 @@ export class BarracksPage {
       }
     }
     if (this.model.heroes.length > 0) {
-      this.selectedHero = this.model.heroes[0];
-      this.selectSkill(1);
+      this.selectHero(this.model.heroes[0]);
     }
     this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
 
@@ -111,9 +113,12 @@ export class BarracksPage {
     }).then(p => p.present());
   }
 
-  selectHero(hero: Hero) {
+  selectHero(hero: Hero, keepFilter?: boolean) {
     this.selectedHero = hero;
-    this.selectSkill(this.selectedSkill.number);
+    if (!keepFilter && hero.sets && hero.sets.length > 0) {
+      this.gearSetFilter = hero.sets[0].gearSet;
+    }
+    this.selectSkill(!!this.selectedSkill ? this.selectedSkill.number : 1);
   }
 
   selectSkill(number: number) {
@@ -164,19 +169,24 @@ export class BarracksPage {
   }
 
   gearFilter(type: string) {
-    let idx = this.gearTypeFilter.indexOf(type);
-    if (idx >= 0) {
-      this.gearTypeFilter.splice(idx, 1);
-    } else {
-      this.gearTypeFilter.push(type);
-    }
+    this.gearTypeFilter = type;
+  }
+
+  setFilter(set: string) {
+    this.gearSetFilter = set;
   }
 
   getAvailableGears(): Gear[] {
-    if (this.gearTypeFilter.length > 0) {
-      return this.model.gears.filter(g => this.converter.rarityStars(g.rarity) <= this.selectedHero.stars && this.gearTypeFilter.indexOf(g.type) >= 0);
-    } else {
-      return this.model.gears.filter(g => this.converter.rarityStars(g.rarity) <= this.selectedHero.stars);
-    }
+    let gear = this.model.gears.filter(g =>
+        this.converter.rarityStars(g.rarity) <= this.selectedHero.stars && g.type === this.gearTypeFilter && g.set === this.gearSetFilter);
+    return gear.sort((a, b) => {
+      let aStars = this.converter.rarityStars(a.rarity);
+      let bStars = this.converter.rarityStars(b.rarity);
+      if (aStars === bStars) {
+        return b.statQuality - a.statQuality;
+      } else {
+        return bStars - aStars;
+      }
+    });
   }
 }

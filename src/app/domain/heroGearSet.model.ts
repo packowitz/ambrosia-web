@@ -1,5 +1,5 @@
 export class HeroGearSet {
-    gearSet: String;
+    gearSet: string;
     number: number;
     description: string;
 }

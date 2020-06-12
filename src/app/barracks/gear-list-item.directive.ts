@@ -10,8 +10,8 @@ import {PropertyService} from '../services/property.service';
 @Component({
   selector: 'gear-list-item',
   template: `
-      <div class="flex-start" [class.color-grey]="!gear" (click)="showGearDetails()" [class.pointer]="canShowDetails()">
-        <gear-icon [gear]="gear" [type]="type"></gear-icon>
+      <div class="flex-start" [class.color-grey]="!gear">
+        <gear-icon [gear]="gear" [type]="type" (click)="showGearDetails($event)" [class.pointer]="canShowDetails()"></gear-icon>
         <div *ngIf="gear" class="flex-vert font-small flex-grow ml-1">
           <div>{{converter.readableIdentifier(gear.gearQuality)}} {{converter.readableIdentifier(gear.set)}} {{converter.readableIdentifier(gear.type)}}</div>
           <gear-stat [stat]="gear.stat" [value]="gear.statValue"></gear-stat>
@@ -62,7 +62,8 @@ export class GearListItem {
     return !this.readonly && this.gear && !(this.hero.missionId && this.gear.equippedTo);
   }
 
-  showGearDetails() {
+  showGearDetails(ev) {
+    ev.stopPropagation();
     if (this.canShowDetails()) {
       this.modalCtrl.create({
         component: GearModal,

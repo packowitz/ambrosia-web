@@ -727,3 +727,21 @@ ion-row.table-row {
   height: 115px;
   margin: 0 5px;
 }
+
+.large-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.icon-selected {
+  box-shadow: 0 0 0 1px #dcb717, 0 0 0 2px #000000, 0 0 0 4px #dcb717;
+}
+
+.small-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.small-icon-selected {
+  box-shadow: 0 0 0 1px #dcb717, 0 0 0 2px #000000, 0 0 0 3px #dcb717;
+}
