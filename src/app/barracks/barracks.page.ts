@@ -25,7 +25,7 @@ export class BarracksPage {
   selectedHero: Hero;
   tab = "stats";
   selectedSkill: HeroSkill;
-  gearTypeFilter = "WEAPON";
+  gearTypeFilter: string[] = [];
   gearSetFilter = "STONE_SKIN";
 
   buildingType = 'BARRACKS';
@@ -169,7 +169,16 @@ export class BarracksPage {
   }
 
   gearFilter(type: string) {
-    this.gearTypeFilter = type;
+    let idx = this.gearTypeFilter.indexOf(type);
+    if (idx >= 0) {
+      this.gearTypeFilter.splice(idx, 1);
+    } else {
+      this.gearTypeFilter.push(type);
+    }
+  }
+
+  gearExclusiveFilter(type: string) {
+    this.gearTypeFilter = [type];
   }
 
   setFilter(set: string) {
@@ -178,7 +187,7 @@ export class BarracksPage {
 
   getAvailableGears(): Gear[] {
     let gear = this.model.gears.filter(g =>
-        this.converter.rarityStars(g.rarity) <= this.selectedHero.stars && g.type === this.gearTypeFilter && g.set === this.gearSetFilter);
+        this.converter.rarityStars(g.rarity) <= this.selectedHero.stars && (this.gearTypeFilter.length === 0 || this.gearTypeFilter.indexOf(g.type) >= 0) && g.set === this.gearSetFilter);
     return gear.sort((a, b) => {
       let aStars = this.converter.rarityStars(a.rarity);
       let bStars = this.converter.rarityStars(b.rarity);

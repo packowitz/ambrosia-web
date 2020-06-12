@@ -168,12 +168,12 @@
                   <ion-button fill="clear" (click)="openGearInfo()"><ion-img src="assets/icon/info.png" class="resource-icon"></ion-img></ion-button>
                 </div>
               </ion-item>
-              <ion-item class="mt-05" (click)="gearFilter('WEAPON')"><gear-list-item type="WEAPON" [hero]="selectedHero" [gear]="selectedHero.weapon" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
-              <ion-item class="mt-05" (click)="gearFilter('SHIELD')"><gear-list-item type="SHIELD" [hero]="selectedHero" [gear]="selectedHero.shield" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
-              <ion-item class="mt-05" (click)="gearFilter('HELMET')"><gear-list-item type="HELMET" [hero]="selectedHero" [gear]="selectedHero.helmet" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
-              <ion-item class="mt-05" (click)="gearFilter('ARMOR')"><gear-list-item type="ARMOR" [hero]="selectedHero" [gear]="selectedHero.armor" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
-              <ion-item class="mt-05" (click)="gearFilter('GLOVES')"><gear-list-item type="GLOVES" [hero]="selectedHero" [gear]="selectedHero.gloves" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
-              <ion-item class="mt-05" (click)="gearFilter('BOOTS')"><gear-list-item type="BOOTS" [hero]="selectedHero" [gear]="selectedHero.boots" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
+              <ion-item class="mt-05" (click)="gearExclusiveFilter('WEAPON')"><gear-list-item type="WEAPON" [hero]="selectedHero" [gear]="selectedHero.weapon" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
+              <ion-item class="mt-05" (click)="gearExclusiveFilter('SHIELD')"><gear-list-item type="SHIELD" [hero]="selectedHero" [gear]="selectedHero.shield" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
+              <ion-item class="mt-05" (click)="gearExclusiveFilter('HELMET')"><gear-list-item type="HELMET" [hero]="selectedHero" [gear]="selectedHero.helmet" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
+              <ion-item class="mt-05" (click)="gearExclusiveFilter('ARMOR')"><gear-list-item type="ARMOR" [hero]="selectedHero" [gear]="selectedHero.armor" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
+              <ion-item class="mt-05" (click)="gearExclusiveFilter('GLOVES')"><gear-list-item type="GLOVES" [hero]="selectedHero" [gear]="selectedHero.gloves" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
+              <ion-item class="mt-05" (click)="gearExclusiveFilter('BOOTS')"><gear-list-item type="BOOTS" [hero]="selectedHero" [gear]="selectedHero.boots" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
             </ion-list>
             <ion-list *ngIf="selectedHero.sets" lines="none">
               <ion-item>Set bonuses</ion-item>
@@ -188,12 +188,12 @@
                   <div class="flex-vert full-width pa-05">
                     <div class="flex-space-between">
                       Armory
-                      <ion-button [fill]="gearTypeFilter == 'WEAPON' ? 'outline' : 'clear'" color="dark" (click)="gearFilter('WEAPON')"><ion-img src="assets/img/sets/default_WEAPON.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button [fill]="gearTypeFilter == 'SHIELD' ? 'outline' : 'clear'" color="dark" (click)="gearFilter('SHIELD')"><ion-img src="assets/img/sets/default_SHIELD.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button [fill]="gearTypeFilter == 'HELMET' ? 'outline' : 'clear'" color="dark" (click)="gearFilter('HELMET')"><ion-img src="assets/img/sets/default_HELMET.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button [fill]="gearTypeFilter == 'ARMOR' ? 'outline' : 'clear'" color="dark" (click)="gearFilter('ARMOR')"><ion-img src="assets/img/sets/default_ARMOR.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button [fill]="gearTypeFilter == 'GLOVES' ? 'outline' : 'clear'" color="dark" (click)="gearFilter('GLOVES')"><ion-img src="assets/img/sets/default_GLOVES.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button [fill]="gearTypeFilter == 'BOOTS' ? 'outline' : 'clear'" color="dark" (click)="gearFilter('BOOTS')"><ion-img src="assets/img/sets/default_BOOTS.png" class="resource-icon"></ion-img></ion-button>
+                      <ion-button [fill]="gearTypeFilter.indexOf('WEAPON') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('WEAPON')"><ion-img src="assets/img/sets/default_WEAPON.png" class="resource-icon"></ion-img></ion-button>
+                      <ion-button [fill]="gearTypeFilter.indexOf('SHIELD') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('SHIELD')"><ion-img src="assets/img/sets/default_SHIELD.png" class="resource-icon"></ion-img></ion-button>
+                      <ion-button [fill]="gearTypeFilter.indexOf('HELMET') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('HELMET')"><ion-img src="assets/img/sets/default_HELMET.png" class="resource-icon"></ion-img></ion-button>
+                      <ion-button [fill]="gearTypeFilter.indexOf('ARMOR') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('ARMOR')"><ion-img src="assets/img/sets/default_ARMOR.png" class="resource-icon"></ion-img></ion-button>
+                      <ion-button [fill]="gearTypeFilter.indexOf('GLOVES') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('GLOVES')"><ion-img src="assets/img/sets/default_GLOVES.png" class="resource-icon"></ion-img></ion-button>
+                      <ion-button [fill]="gearTypeFilter.indexOf('BOOTS') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('BOOTS')"><ion-img src="assets/img/sets/default_BOOTS.png" class="resource-icon"></ion-img></ion-button>
                       <ion-button fill="clear" (click)="openSetsInfo()"><ion-img src="assets/icon/info.png" class="resource-icon"></ion-img></ion-button>
                     </div>
                     <div class="flex-space-between">
