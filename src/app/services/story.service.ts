@@ -24,21 +24,27 @@ export class StoryService {
     showStory(storyTrigger: string): Observable<any> {
         return new Observable(observer => {
             this.backendService.loadPlayerStory(storyTrigger).subscribe(data => {
-                this.popoverCtrl.create({
-                    component: StoryPopover,
-                    componentProps: {
-                        stories: data
-                    },
-                    cssClass: 'story-popover',
-                    backdropDismiss: false
-                }).then(p => {
-                    p.onDidDismiss().then(() => {
-                        this.storyShown(storyTrigger);
-                        observer.next(true);
-                        observer.complete();
+                if (data && data.length > 0) {
+                    this.popoverCtrl.create({
+                        component: StoryPopover,
+                        componentProps: {
+                            stories: data
+                        },
+                        cssClass: 'story-popover',
+                        backdropDismiss: false
+                    }).then(p => {
+                        p.onDidDismiss().then(() => {
+                            this.storyShown(storyTrigger);
+                            observer.next(true);
+                            observer.complete();
+                        });
+                        p.present();
                     });
-                    p.present();
-                });
+                } else {
+                    this.storyShown(storyTrigger);
+                    observer.next(true);
+                    observer.complete();
+                }
             }, () => observer.complete());
         });
     }

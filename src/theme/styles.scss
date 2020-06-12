@@ -669,6 +669,7 @@ ion-row.table-row {
 
 .widePopover .popover-content {
   width: 360px;
+  max-width: 90vw;
   top: 15vh !important;
 }
 
@@ -711,9 +712,8 @@ ion-row.table-row {
 }
 
 .story-popover .popover-content {
-  width: 66vw;
+  width: 90vw;
   max-width: 600px;
-  min-width: 550px;
 }
 
 .story-pic-wrapper {
