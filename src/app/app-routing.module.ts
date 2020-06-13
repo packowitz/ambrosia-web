@@ -46,6 +46,7 @@ const routes: Routes = [
         loadChildren: './story/story.module#StoryModule',
         canActivate: [AdminGuard]
     },
+    {path: 'account', loadChildren: './account/account.module#AccountPageModule'},
     {path: 'arena', loadChildren: './arena/arena.module#ArenaPageModule'},
     {path: 'barracks', loadChildren: './barracks/barracks.module#BarracksModule'},
     {path: 'vehiclebase', loadChildren: './vehicles/vehicles.module#VehiclesModule'},

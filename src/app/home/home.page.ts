@@ -262,6 +262,10 @@ export class HomePage {
     }
   }
 
+  gotoAccount() {
+    this.router.navigateByUrl('/account');
+  }
+
   openMission(mission: Mission) {
     this.modalCtrl.create({
       component: MissionProgressModal,

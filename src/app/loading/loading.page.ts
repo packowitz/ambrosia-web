@@ -79,16 +79,21 @@ export class LoadingPage {
     this.status = 'Loading player data';
     this.model.reset();
     this.jewelryService.reset();
-    this.backendService.getPlayer().subscribe(playerAction => {
-      this.propertyService.loadInitialProperties();
-      this.model.playerName = playerAction.player.name;
-      this.model.playerId = playerAction.player.id;
-      this.model.activeAccountId = playerAction.player.id;
-      this.loadingState.playerLoaded = true;
-      this.initApp();
-    }, error => {
+    let token = localStorage.getItem(environment.tokenKey);
+    if (!token) {
       this.router.navigateByUrl('/login');
-    });
+    } else {
+      this.backendService.getPlayer().subscribe(playerAction => {
+        this.propertyService.loadInitialProperties();
+        this.model.playerName = playerAction.player.name;
+        this.model.playerId = playerAction.player.id;
+        this.model.activeAccountId = playerAction.player.id;
+        this.loadingState.playerLoaded = true;
+        this.initApp();
+      }, error => {
+        this.router.navigateByUrl('/login');
+      });
+    }
   }
 
   loadServiceAccount() {

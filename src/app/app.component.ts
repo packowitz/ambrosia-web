@@ -117,12 +117,7 @@ export class AppComponent {
             });
             localStorage.setItem(environment.requestedPage, path);
 
-            let token = localStorage.getItem(environment.tokenKey);
-            if (token) {
-                this.router.navigateByUrl('/loading');
-            } else {
-                this.router.navigateByUrl('/login');
-            }
+            this.router.navigateByUrl('/loading');
         });
     }
 

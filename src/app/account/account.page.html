@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        <div class="flex-center">
+          Account
+        </div>
+        <div class="flex-center">
+          <ion-button size="small" fill="clear" color="dark" (click)="close()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{model.player.name}} #{{model.player.id}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngIf="model.player.admin"><i>You are an <strong>admin</strong>. Please be careful with admin functions.</i></div>
+      <div *ngIf="model.player.betaTester"><i>You are a <strong>beta tester</strong>. Thank you for that. Please use these functions only for testing purposes.</i></div>
+      <div>
+        <ion-button size="small" fill="outline" (click)="logout()">Logout</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
