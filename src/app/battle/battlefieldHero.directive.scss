@@ -1,7 +1,9 @@
 .container {
   position: relative;
   width: 120px;
+  max-width: 20vw;
   height: 120px;
+  max-height: 20vw;
   border: 1px solid black;
 
   &.container-empty {
@@ -9,8 +11,9 @@
   }
 
   &.container-active {
-    border-width: 3px;
-    border-color: #e0b516;
+    background-color: rgba(44, 195, 195, 0.5);
+    border: 0;
+    box-shadow: 0 0 0 1px #dcb717, 0 0 0 2px #000000, 0 0 0 4px #dcb717;
   }
 
   &.container-dead {
@@ -19,8 +22,8 @@
   }
 
   &.container-targetable {
-    outline: 2px solid #3e8011;
-    outline-offset: 1px;
+    box-shadow: 0 0 0 1px #000000, 0 0 0 3px #3e8011;
+    border: 0;
     cursor: pointer;
   }
 }
@@ -71,10 +74,11 @@
 
 .buffs {
   position: absolute;
-  top: 10%;
+  top: 13%;
   left: 0;
   font-size: 0.7em;
   display: flex;
+  flex-wrap: wrap;
   .buff {
     width: 18px;
     height: 18px;

@@ -7,6 +7,7 @@ import {BackendService} from '../services/backend.service';
 import {BattleStep} from '../domain/battleStep.model';
 import {Router} from '@angular/router';
 import {StoryService} from '../services/story.service';
+import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'app-battle',
@@ -36,10 +37,11 @@ export class BattlePage {
   constructor(public model: Model,
               private backendService: BackendService,
               private storyService: StoryService,
-              private router: Router) {}
+              private router: Router,
+              private alertCtrl: AlertController) {}
 
   ionViewDidEnter() {
-    console.log('Battle ionViewDidEnter for battle #' + this.model.ongoingBattle ? this.model.ongoingBattle.id : 'unknown');
+    console.log('Battle ionViewDidEnter for battle #' + !!this.model.ongoingBattle ? this.model.ongoingBattle.id : 'unknown');
     this.resetBattle(this.model.ongoingBattle);
   }
 
@@ -137,7 +139,9 @@ export class BattlePage {
       this.autobattle = false;
     } else {
       this.autobattle = true;
-      this.takeAutoTurn();
+      if (!this.loading && !this.animateStep) {
+        this.takeAutoTurn();
+      }
     }
   }
 
@@ -235,15 +239,21 @@ export class BattlePage {
   }
 
   surrender() {
-    if (this.battle.status === 'PLAYER_TURN') {
-      this.loading = true;
-      this.backendService.surrender(this.battle).subscribe(data => {
-        this.initBattle(data.ongoingBattle);
-        this.loading = false;
-      }, () => {
-        this.loading = false;
-      });
-    }
+    this.alertCtrl.create({
+      subHeader: 'Are you sure to surrender?',
+      buttons: [
+        {text: 'Cancel'},
+        {text: 'Surrender', handler: () => {
+          this.loading = true;
+          this.backendService.surrender(this.battle).subscribe(data => {
+            this.initBattle(data.ongoingBattle);
+            this.loading = false;
+          }, () => {
+            this.loading = false;
+          });
+        }}
+      ]
+    }).then(a => a.present());
   }
 
   getAnimateNumbers(position: string) {

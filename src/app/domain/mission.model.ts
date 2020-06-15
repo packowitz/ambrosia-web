@@ -5,6 +5,9 @@ export class Mission {
     id: number;
     playerId: number;
     fight: Fight;
+    mapId: number;
+    posX: number;
+    posY: number;
     vehicleId: number;
     slotNumber: number;
     hero1Id: number;

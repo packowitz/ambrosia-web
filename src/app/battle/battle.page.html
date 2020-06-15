@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>
       <div class="flex-space-between">
-        Ongoing Battle
+        Battle
         <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
           <i class="ra ra-book font-larger"></i>
         </ion-button>
@@ -16,7 +16,6 @@
 
 <ion-content *ngIf="battle" class="loading-indicator-boundary">
   <ion-card>
-    <div *ngIf="loading" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
     <div *ngIf="!animateStep && battle.status == 'STAGE_PASSED'" class="loading-indicator flex-center">
       <div class="color-white font-large bold">Stage {{battle.fightStage}} cleared</div>
     </div>
@@ -28,73 +27,78 @@
       <looted></looted>
     </div>
     <ion-card-header class="flex-space-between">
-      <ion-card-title>{{battle.playerName}}#{{battle.playerId}} vs {{battle.opponentName}}{{battle.opponentId ? '#' + battle.opponentId : ''}}</ion-card-title>
-      <ion-button [disabled]="animateStep || battle.status != 'PLAYER_TURN'" (click)="surrender()">Surrender</ion-button>
+      <ion-card-title>{{battle.playerName}} vs {{battle.opponentName}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-row class="flex-space-around">
-        <battlefield-hero [battle]="battle" [hero]="battle.oppHero1" [heroState]="getAnimationHeroState('OPP1')" [active]="isActive(battle.oppHero1)" [targetable]="selectable(battle.oppHero1)" (selected)="selectTarget($event)">
+      <div class="loading-indicator-boundary">
+        <div *ngIf="loading" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+        <ion-row class="flex-space-between">
+          <battlefield-hero [battle]="battle" [hero]="battle.oppHero1" [heroState]="getAnimationHeroState('OPP1')" [active]="isActive(battle.oppHero1)" [targetable]="selectable(battle.oppHero1)" (selected)="selectTarget($event)">
             <img *ngIf="showExplosion('OPP1')" class="effect explosion" src="assets/img/explosion.png">
             <div class="effect">
-                <div *ngFor="let number of getAnimateNumbers('OPP1'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+              <div *ngFor="let number of getAnimateNumbers('OPP1'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
             </div>
-        </battlefield-hero>
-        <battlefield-hero [battle]="battle" [hero]="battle.oppHero2" [heroState]="getAnimationHeroState('OPP2')" [active]="isActive(battle.oppHero2)" [targetable]="selectable(battle.oppHero2)" (selected)="selectTarget($event)">
+          </battlefield-hero>
+          <battlefield-hero [battle]="battle" [hero]="battle.oppHero2" [heroState]="getAnimationHeroState('OPP2')" [active]="isActive(battle.oppHero2)" [targetable]="selectable(battle.oppHero2)" (selected)="selectTarget($event)">
             <img *ngIf="showExplosion('OPP2')" class="effect explosion" src="assets/img/explosion.png">
             <div class="effect">
-                <div *ngFor="let number of getAnimateNumbers('OPP2'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+              <div *ngFor="let number of getAnimateNumbers('OPP2'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
             </div>
-        </battlefield-hero>
-        <battlefield-hero [battle]="battle" [hero]="battle.oppHero3" [heroState]="getAnimationHeroState('OPP3')" [active]="isActive(battle.oppHero3)" [targetable]="selectable(battle.oppHero3)" (selected)="selectTarget($event)">
+          </battlefield-hero>
+          <battlefield-hero [battle]="battle" [hero]="battle.oppHero3" [heroState]="getAnimationHeroState('OPP3')" [active]="isActive(battle.oppHero3)" [targetable]="selectable(battle.oppHero3)" (selected)="selectTarget($event)">
             <img *ngIf="showExplosion('OPP3')" class="effect explosion" src="assets/img/explosion.png">
             <div class="effect">
-                <div *ngFor="let number of getAnimateNumbers('OPP3'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+              <div *ngFor="let number of getAnimateNumbers('OPP3'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
             </div>
-        </battlefield-hero>
-        <battlefield-hero [battle]="battle" [hero]="battle.oppHero4" [heroState]="getAnimationHeroState('OPP4')" [active]="isActive(battle.oppHero4)" [targetable]="selectable(battle.oppHero4)" (selected)="selectTarget($event)">
+          </battlefield-hero>
+          <battlefield-hero [battle]="battle" [hero]="battle.oppHero4" [heroState]="getAnimationHeroState('OPP4')" [active]="isActive(battle.oppHero4)" [targetable]="selectable(battle.oppHero4)" (selected)="selectTarget($event)">
             <img *ngIf="showExplosion('OPP4')" class="effect explosion" src="assets/img/explosion.png">
             <div class="effect">
-                <div *ngFor="let number of getAnimateNumbers('OPP4'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+              <div *ngFor="let number of getAnimateNumbers('OPP4'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
             </div>
-        </battlefield-hero>
-      </ion-row>
-      <ion-row class="mt-4 flex-space-around">
-        <battlefield-hero [battle]="battle" [hero]="battle.hero1" [heroState]="getAnimationHeroState('HERO1')" [active]="isActive(battle.hero1)" [targetable]="selectable(battle.hero1)" (selected)="selectTarget($event)">
+          </battlefield-hero>
+        </ion-row>
+        <ion-row class="mt-4 flex-space-between">
+          <battlefield-hero [battle]="battle" [hero]="battle.hero1" [heroState]="getAnimationHeroState('HERO1')" [active]="isActive(battle.hero1)" [targetable]="selectable(battle.hero1)" (selected)="selectTarget($event)">
             <img *ngIf="showExplosion('HERO1')" class="effect explosion" src="assets/img/explosion.png">
             <div class="effect">
-                <div *ngFor="let number of getAnimateNumbers('HERO1'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+              <div *ngFor="let number of getAnimateNumbers('HERO1'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
             </div>
-        </battlefield-hero>
-        <battlefield-hero [battle]="battle" [hero]="battle.hero2" [heroState]="getAnimationHeroState('HERO2')" [active]="isActive(battle.hero2)" [targetable]="selectable(battle.hero2)" (selected)="selectTarget($event)">
+          </battlefield-hero>
+          <battlefield-hero [battle]="battle" [hero]="battle.hero2" [heroState]="getAnimationHeroState('HERO2')" [active]="isActive(battle.hero2)" [targetable]="selectable(battle.hero2)" (selected)="selectTarget($event)">
             <img *ngIf="showExplosion('HERO2')" class="effect explosion" src="assets/img/explosion.png">
             <div class="effect">
-                <div *ngFor="let number of getAnimateNumbers('HERO2'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+              <div *ngFor="let number of getAnimateNumbers('HERO2'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
             </div>
-        </battlefield-hero>
-        <battlefield-hero [battle]="battle" [hero]="battle.hero3" [heroState]="getAnimationHeroState('HERO3')" [active]="isActive(battle.hero3)" [targetable]="selectable(battle.hero3)" (selected)="selectTarget($event)">
+          </battlefield-hero>
+          <battlefield-hero [battle]="battle" [hero]="battle.hero3" [heroState]="getAnimationHeroState('HERO3')" [active]="isActive(battle.hero3)" [targetable]="selectable(battle.hero3)" (selected)="selectTarget($event)">
             <img *ngIf="showExplosion('HERO3')" class="effect explosion" src="assets/img/explosion.png">
             <div class="effect">
-                <div *ngFor="let number of getAnimateNumbers('HERO3'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+              <div *ngFor="let number of getAnimateNumbers('HERO3'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
             </div>
-        </battlefield-hero>
-        <battlefield-hero [battle]="battle" [hero]="battle.hero4" [heroState]="getAnimationHeroState('HERO4')" [active]="isActive(battle.hero4)" [targetable]="selectable(battle.hero4)" (selected)="selectTarget($event)">
+          </battlefield-hero>
+          <battlefield-hero [battle]="battle" [hero]="battle.hero4" [heroState]="getAnimationHeroState('HERO4')" [active]="isActive(battle.hero4)" [targetable]="selectable(battle.hero4)" (selected)="selectTarget($event)">
             <img *ngIf="showExplosion('HERO4')" class="effect explosion" src="assets/img/explosion.png">
             <div class="effect">
-                <div *ngFor="let number of getAnimateNumbers('HERO4'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
+              <div *ngFor="let number of getAnimateNumbers('HERO4'); let i = index" class = "effect-{{i}} fadeOutUp {{number.css}}">{{number.number}}</div>
             </div>
-        </battlefield-hero>
-      </ion-row>
+          </battlefield-hero>
+        </ion-row>
+      </div>
       <ion-row *ngIf="activeHero" class="mt-4 flex-space-around">
-        <ion-button fill="clear" (click)="toggleAutobattle()" [color]="autobattle? 'success' : 'dark'">Autobattle {{autobattle? 'on' : 'off'}}</ion-button>
+        <ion-icon class="pointer mr-1 font-larger" name="stop" color="danger" (click)="surrender()"></ion-icon>
+        <ion-icon class="pointer mr-1 font-larger" [name]="autobattle ? 'pause' : 'play'" color="success" (click)="toggleAutobattle()"></ion-icon>
         <div class="flex-grow">&nbsp;</div>
-        <div *ngFor="let skill of getSkills()" class="skill_icon_tile ml-2 pointer" (click)="selectSkill(skill)">
-          <ion-img [src]="'assets/icon/skills/' + skill.icon + '.png'" class="skill_icon" [class.skill_selected]="skill == selectedSkill"></ion-img>
-          <i *ngIf="skill.passive" class="skill_passive">p</i>
-          <div *ngIf="activeHero['skill' + skill.number + 'Cooldown'] > 0" class="locked"><ion-icon name="lock"></ion-icon></div>
-          <div *ngIf="activeHero['skill' + skill.number + 'Cooldown'] > 0" class="skill_cooldown">{{activeHero['skill' + skill.number + 'Cooldown']}}</div>
+        <div *ngIf="!loading && !animateStep" class="flex-center">
+          <div *ngFor="let skill of getSkills()" class="skill_icon_tile ml-2 pointer" (click)="selectSkill(skill)">
+            <img [src]="'assets/icon/skills/' + skill.icon + '.png'" class="large-icon" [class.icon-selected]="skill == selectedSkill">
+            <i *ngIf="skill.passive" class="skill_passive">p</i>
+            <div *ngIf="activeHero['skill' + skill.number + 'Cooldown'] > 0" class="locked"><ion-icon name="lock"></ion-icon></div>
+            <div *ngIf="activeHero['skill' + skill.number + 'Cooldown'] > 0" class="skill_cooldown">{{activeHero['skill' + skill.number + 'Cooldown']}}</div>
+          </div>
         </div>
       </ion-row>
-        <ion-row *ngIf="selectedSkill" class="flex-space-around"><strong>{{selectedSkill.name}}:</strong><i *ngIf="selectedSkill.passive">passive</i><i *ngIf="activeHero['skill' + selectedSkill.number + 'Cooldown'] > 0">usable in {{activeHero['skill' + selectedSkill.number + 'Cooldown']}} turn(s)</i> {{selectedSkill.description}}</ion-row>
+      <ion-row *ngIf="selectedSkill && !loading && !animateStep" class="flex-space-around"><strong>{{selectedSkill.name}}:</strong><i *ngIf="selectedSkill.passive">passive</i><i *ngIf="activeHero['skill' + selectedSkill.number + 'Cooldown'] > 0">usable in {{activeHero['skill' + selectedSkill.number + 'Cooldown']}} turn(s)</i> {{selectedSkill.description}}</ion-row>
     </ion-card-content>
   </ion-card>
 

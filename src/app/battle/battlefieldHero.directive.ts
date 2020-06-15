@@ -13,19 +13,19 @@ import {BattleStepHeroState} from '../domain/battleStepHeroState.model';
            [class.container-dead]="isDead()"
            [class.container-targetable]="targetable"
            (click)="selectHero()">
-        <ion-img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="full-width"></ion-img>
+        <img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="full-width">
         <div class="bars flex-start">
-          <div class="ml-1 level-bubble background-{{hero.color}}">{{hero.level}}</div>
+          <div class="ml-05 level-bubble background-{{hero.color}}">{{hero.level}}</div>
           <div class="flex-grow" *ngIf="!isDead()">
-            <div class="ml-1 mr-1 health-bar">
+            <div class="ml-05 mr-05 health-bar">
               <span *ngIf="heroState" class="health-bar-inner" [style.width]="heroState.hpPerc + '%'"></span>
               <span *ngIf="!heroState" class="health-bar-inner" [style.width]="(100 * hero.currentHp / hero.heroHp) + '%'"></span>
             </div>
-            <div class="ml-1 mr-1 armor-bar">
+            <div class="ml-05 mr-05 armor-bar">
               <span *ngIf="heroState" class="armor-bar-inner" [style.width]="heroState.armorPerc + '%'"></span>
               <span *ngIf="!heroState" class="armor-bar-inner" [style.width]="(100 * hero.currentArmor / hero.heroArmor) + '%'"></span>
             </div>
-            <div class="ml-1 mr-1">
+            <div class="ml-05 mr-05">
               <div *ngIf="heroState" class="speedbar" [style.width]="heroState.speedbarPerc + '%'"></div>
               <div *ngIf="!heroState" class="speedbar"
                    [style.width]="hero.currentSpeedBar > 10000 ? '100%' : (hero.currentSpeedBar / 100) + '%'"></div>
@@ -35,7 +35,7 @@ import {BattleStepHeroState} from '../domain/battleStepHeroState.model';
             <i class="color-orange">DEAD</i>
           </div>
         </div>
-        <div class="buffs ml-1 mr-1 mt-1">
+        <div class="buffs ml-05 mr-05 mt-1">
           <div *ngFor="let buff of heroState ? heroState.buffs : hero.buffs"
                class="buff flex-center">
             <img src="assets/icon/buffs/{{buff.buff}}_{{buff.intensity}}.png" class="buff-icon">
