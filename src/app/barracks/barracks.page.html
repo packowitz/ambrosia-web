@@ -66,25 +66,25 @@
 
       <div *ngIf="tab == 'stats'">
         <ion-row class="flex-start mt-2 ml-1 mr-1">
-          <span style="width: 120px;">Lvl {{selectedHero.level}}</span>
+          <span class="width-80">Lvl {{selectedHero.level}}</span>
           <span class="flex-grow bar-outer with-text xp max-width-50p ml-2">
             <span class="bar-filled" [style.width]="(100 * selectedHero.xp / selectedHero.maxXp) + '%'"></span>
             <span class="bar-text">{{selectedHero.xp == selectedHero.maxXp ? 'MAX' : selectedHero.xp + ' / ' + selectedHero.maxXp + ' XP'}}</span>
           </span>
           <span *ngIf="model.player.betaTester" class="ml-4">
-            Modify level
+            <span class="ion-hide-md-down">Modify level</span>
             <ion-button size="small" fill="clear" (click)="betaTesterHeroLooseLevel()"><ion-icon name="remove"></ion-icon></ion-button>
             <ion-button size="small" fill="clear" (click)="betaTesterHeroGainLevel()"><ion-icon name="add"></ion-icon></ion-button>
           </span>
         </ion-row>
         <div class="flex-start mt-2 ml-1 mr-1">
-          <span style="width: 120px;">Ascension Level {{selectedHero.ascLvl}}</span>
+          <span class="width-80">Asc Level {{selectedHero.ascLvl}}</span>
           <span class="flex-grow bar-outer with-text asc max-width-50p ml-2">
             <span class="bar-filled" [style.width]="(100 * selectedHero.ascPoints / selectedHero.ascPointsMax) + '%'"></span>
             <span class="bar-text">{{selectedHero.ascPoints == selectedHero.ascPointsMax ? 'MAX' : selectedHero.ascPoints + ' / ' + selectedHero.ascPointsMax + ' pts'}}</span>
           </span>
           <span *ngIf="model.player.betaTester" class="ml-4">
-            Modify asc level
+            <span class="ion-hide-md-down">Modify asc level</span>
             <ion-button size="small" fill="clear" (click)="betaTesterHeroLooseAscLevel()"><ion-icon name="remove"></ion-icon></ion-button>
             <ion-button size="small" fill="clear" (click)="betaTesterHeroGainAscLevel()"><ion-icon name="add"></ion-icon></ion-button>
           </span>
@@ -190,13 +190,13 @@
               <div class="flex-vert full-width pa-05">
                 <div class="flex-space-between">
                   Armory
-                  <ion-button [fill]="gearTypeFilter.indexOf('WEAPON') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('WEAPON')"><ion-img src="assets/img/sets/default_WEAPON.png" class="resource-icon"></ion-img></ion-button>
-                  <ion-button [fill]="gearTypeFilter.indexOf('SHIELD') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('SHIELD')"><ion-img src="assets/img/sets/default_SHIELD.png" class="resource-icon"></ion-img></ion-button>
-                  <ion-button [fill]="gearTypeFilter.indexOf('HELMET') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('HELMET')"><ion-img src="assets/img/sets/default_HELMET.png" class="resource-icon"></ion-img></ion-button>
-                  <ion-button [fill]="gearTypeFilter.indexOf('ARMOR') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('ARMOR')"><ion-img src="assets/img/sets/default_ARMOR.png" class="resource-icon"></ion-img></ion-button>
-                  <ion-button [fill]="gearTypeFilter.indexOf('GLOVES') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('GLOVES')"><ion-img src="assets/img/sets/default_GLOVES.png" class="resource-icon"></ion-img></ion-button>
-                  <ion-button [fill]="gearTypeFilter.indexOf('BOOTS') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('BOOTS')"><ion-img src="assets/img/sets/default_BOOTS.png" class="resource-icon"></ion-img></ion-button>
-                  <ion-button fill="clear" (click)="openSetsInfo()"><ion-img src="assets/icon/info.png" class="resource-icon"></ion-img></ion-button>
+                  <img src="assets/img/sets/default_WEAPON.png" class="resource-icon pointer" (click)="gearFilter('WEAPON')" [class.black-border]="gearTypeFilter.indexOf('WEAPON') >= 0">
+                  <img src="assets/img/sets/default_SHIELD.png" class="resource-icon pointer" (click)="gearFilter('SHIELD')" [class.black-border]="gearTypeFilter.indexOf('SHIELD') >= 0">
+                  <img src="assets/img/sets/default_HELMET.png" class="resource-icon pointer" (click)="gearFilter('HELMET')" [class.black-border]="gearTypeFilter.indexOf('HELMET') >= 0">
+                  <img src="assets/img/sets/default_ARMOR.png" class="resource-icon pointer" (click)="gearFilter('ARMOR')" [class.black-border]="gearTypeFilter.indexOf('ARMOR') >= 0">
+                  <img src="assets/img/sets/default_GLOVES.png" class="resource-icon pointer" (click)="gearFilter('GLOVES')" [class.black-border]="gearTypeFilter.indexOf('GLOVES') >= 0">
+                  <img src="assets/img/sets/default_BOOTS.png" class="resource-icon pointer" (click)="gearFilter('BOOTS')" [class.black-border]="gearTypeFilter.indexOf('BOOTS') >= 0">
+                  <img src="assets/icon/info.png" class="resource-icon pointer" (click)="openSetsInfo()">
                 </div>
                 <div class="flex-space-between">
                   <img *ngFor="let set of enumService.getGearSets()" src="assets/icon/gear/{{set}}.png" (click)="setFilter(set)" class="small-icon pointer" [class.small-icon-selected]="gearSetFilter == set">
