@@ -6,17 +6,17 @@ import {HeroInfoPopup} from './heroInfo.popup';
 @Component({
     selector: 'hero-icon',
     template: `
-      <div *ngIf="hero" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center mr-2" [class.pointer]="isClickable(hero)" [class.selected-tile]="selected">
-        <ion-img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="hero-avatar-small border-bottom-grey"></ion-img>
+      <div *ngIf="hero" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center" [class.pointer]="isClickable(hero)" [class.selected-tile]="selected">
+        <img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="border-bottom-grey">
         <div *ngIf="showOnMission && hero.missionId" class="on-mission flex-vert-center">
           <div class="text">On Mission</div>
         </div>
         <div class="top-left-bubble level-bubble background-{{hero.heroBase.color}}">{{hero.level}}</div>
-        <ion-img *ngIf="showInfo" class="top-right-bubble resource-icon pointer" (click)="info(hero, $event)" src="assets/icon/info.png"></ion-img>
-        <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
+        <img *ngIf="showInfo" class="top-right-bubble resource-icon pointer" (click)="info(hero, $event)" src="assets/icon/info.png">
+        <img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars">
       </div>
-      <div *ngIf="!hero" class="hero-tile-small border-grey">
-        <ion-img src="assets/icon/chars/placeholder.png" class="hero-avatar-small"></ion-img>
+      <div *ngIf="!hero" class="hero-tile-small border-grey flex-center">
+        <img src="assets/icon/chars/placeholder.png">
       </div>
   `
 })

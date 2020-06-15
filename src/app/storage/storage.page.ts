@@ -3,7 +3,7 @@ import {BackendService} from '../services/backend.service';
 import {ConverterService} from '../services/converter.service';
 import {Model} from '../services/model.service';
 import {PropertyService} from '../services/property.service';
-import {ModalController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 
@@ -23,8 +23,8 @@ export class StoragePage {
               private propertyService: PropertyService,
               public model: Model,
               private router: Router,
-              private modalCtrl: ModalController) {
-    console.log("StoragePage.constructor");
+              private modalCtrl: ModalController,
+              private alertCtrl: AlertController) {
     if (!this.getBuilding()) {
       this.close();
     }
@@ -38,8 +38,22 @@ export class StoragePage {
     return this.model.getBuilding(this.buildingType);
   }
 
+  upgradeInProgress(): boolean {
+    return this.getBuilding().upgradeTriggered && !this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
+  upgradeFinished(): boolean {
+    return this.getBuilding().upgradeTriggered && !!this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  info(text: string) {
+    this.alertCtrl.create({
+      subHeader: text
+    }).then(a => a.present());
   }
 
   openUpgradeModal() {

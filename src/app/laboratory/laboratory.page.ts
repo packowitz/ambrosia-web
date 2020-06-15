@@ -52,8 +52,22 @@ export class LaboratoryPage {
     return this.model.getBuilding(this.buildingType);
   }
 
+  upgradeInProgress(): boolean {
+    return this.getBuilding().upgradeTriggered && !this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
+  upgradeFinished(): boolean {
+    return this.getBuilding().upgradeTriggered && !!this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  info(text: string) {
+    this.alertCtrl.create({
+      subHeader: text
+    }).then(a => a.present());
   }
 
   openUpgradeModal() {

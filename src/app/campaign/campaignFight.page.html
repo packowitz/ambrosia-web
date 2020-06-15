@@ -5,8 +5,8 @@
     </ion-buttons>
     <ion-title>
       <div class="flex-space-between">
-        <div *ngIf="map">Fighting on {{map.name}} {{tile? tile.posX + 'x' + tile.posY: ''}}</div>
-        <div *ngIf="testFight && fight">Testing Fight #{{fight.id}}</div>
+        <div *ngIf="map">Campaign</div>
+        <div *ngIf="testFight && fight">Test</div>
         <div class="flex-center">
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
             <i class="ra ra-book font-larger"></i>
@@ -30,32 +30,28 @@
     </ion-card-header>
     <ion-card-content>
       <div class="scrollable-list">
-        <hero-icon *ngFor="let hero of model.heroes" [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [selected]="hero == hero1 || hero == hero2 || hero == hero3 || hero == hero4"></hero-icon>
+        <hero-icon *ngFor="let hero of model.heroes" [hero]="hero" class="mr-2" [clickable]="true" (clicked)="selectHero(hero)" [selected]="hero == hero1 || hero == hero2 || hero == hero3 || hero == hero4"></hero-icon>
       </div>
     </ion-card-content>
   </ion-card>
   <ion-card>
     <ion-card-content>
-      <ion-row>
-        <ion-col sizeMd="2">
-          <div (click)="selectVehicle()" class="pointer" *ngIf="model.vehicles && model.vehicles.length > 0">
-            <vehicle *ngIf="vehicle" [vehicle]="vehicle" [small]="true"></vehicle>
-            <div *ngIf="!vehicle">
-              <ion-img class="vehicle-avatar" src="/assets/img/vehicles/EMPTY_SLOT.png"></ion-img>
-            </div>
+      <div class="flex-space-between flex-wrap">
+        <div (click)="selectVehicle()" class="pointer" *ngIf="model.vehicles && model.vehicles.length > 0">
+          <vehicle *ngIf="vehicle" [vehicle]="vehicle" [small]="true"></vehicle>
+          <div *ngIf="!vehicle">
+            <ion-img class="vehicle-avatar" src="/assets/img/vehicles/EMPTY_SLOT.png"></ion-img>
           </div>
-        </ion-col>
-        <ion-col sizeMd="2" *ngFor="let hero of getSelectedHeroes()">
-          <hero-icon [hero]="hero" [clickable]="true" (clicked)="selectHero($event)"></hero-icon>
-        </ion-col>
-        <ion-col sizeMd="2" class="flex-vert-center">
-          <ion-button color="success" (click)="start()" [disabled]="!canStartBattle()">
-            <div *ngIf="!testFight" class="flex-center">Start ({{fight.costs}}<ion-img src="assets/icon/resources/{{fight.resourceType}}.png" class="resource-icon"></ion-img>)</div>
-            <div *ngIf="testFight">Start</div>
-          </ion-button>
-          <ion-button *ngIf="offlineBattleEnabled()" (click)="openMission()" [disabled]="!vehicle || !canStartBattle()">Mission</ion-button>
-        </ion-col>
-      </ion-row>
+        </div>
+        <hero-icon *ngFor="let hero of getSelectedHeroes()" [hero]="hero" [clickable]="true" (clicked)="selectHero($event)"></hero-icon>
+      </div>
+      <div class="flex-space-around">
+        <ion-button color="success" size="small" (click)="start()" [disabled]="!canStartBattle()">
+          <div *ngIf="!testFight" class="flex-center">Start ({{fight.costs}}<ion-img src="assets/icon/resources/{{fight.resourceType}}.png" class="resource-icon"></ion-img>)</div>
+          <div *ngIf="testFight">Start</div>
+        </ion-button>
+        <ion-button size="small" *ngIf="offlineBattleEnabled()" (click)="openMission()" [disabled]="!vehicle || !canStartBattle()">Mission</ion-button>
+      </div>
     </ion-card-content>
   </ion-card>
 
@@ -64,17 +60,15 @@
       <ion-card-title>
         <div class="flex-space-between font-small">
           <div>{{map.name}} {{tile? tile.posX + 'x' + tile.posY: ''}}: {{fight.description}}</div>
-          <i>recommended hero level: {{fight.level}}</i>
+          <i>difficulty: {{fight.level}}</i>
         </div>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-row *ngFor="let fightStage of fight.stages">
-        <ion-col sizeMd="2" class="flex-center">Stage {{fightStage.stage}}</ion-col>
-        <ion-col sizeMd="2" *ngFor="let stageHero of getStageHeroe(fightStage)">
-          <hero-icon [hero]="stageHero"></hero-icon>
-        </ion-col>
-      </ion-row>
+      <div *ngFor="let fightStage of fight.stages" class="flex-space-between mt-2">
+        <div class="flex-center">Stage {{fightStage.stage}}</div>
+        <hero-icon *ngFor="let stageHero of getStageHeroe(fightStage)" [hero]="stageHero"></hero-icon>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

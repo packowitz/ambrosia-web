@@ -81,6 +81,14 @@ export class ForgePage {
     this.router.navigateByUrl('/home');
   }
 
+  upgradeInProgress(): boolean {
+    return this.getBuilding().upgradeTriggered && !this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
+  upgradeFinished(): boolean {
+    return this.getBuilding().upgradeTriggered && !!this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
   toggleQuality(qual) {
     let idx = this.qualities.indexOf(qual);
     if (idx >= 0) {

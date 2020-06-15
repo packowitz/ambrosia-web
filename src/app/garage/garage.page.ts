@@ -70,6 +70,14 @@ export class GaragePage {
     return this.model.getBuilding(this.buildingType);
   }
 
+  upgradeInProgress(): boolean {
+    return this.getBuilding().upgradeTriggered && !this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
+  upgradeFinished(): boolean {
+    return this.getBuilding().upgradeTriggered && !!this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
   getVehicleStorage(): number {
     return this.model.vehicles.filter(v => !v.slot).length;
   }
@@ -86,7 +94,7 @@ export class GaragePage {
     this.initSpareParts();
   }
 
-  openUpgradeGarageModal() {
+  openUpgradeModal() {
     this.modalCtrl.create({
       component: BuildingUpgradeModal,
       componentProps: {

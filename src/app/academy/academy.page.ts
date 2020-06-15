@@ -71,6 +71,14 @@ export class AcademyPage {
     return this.model.getBuilding(this.buildingType);
   }
 
+  upgradeInProgress(): boolean {
+    return this.getBuilding().upgradeTriggered && !this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
+  upgradeFinished(): boolean {
+    return this.getBuilding().upgradeTriggered && !!this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
   openUpgradeModal() {
     this.modalCtrl.create({
       component: BuildingUpgradeModal,
@@ -187,7 +195,7 @@ export class AcademyPage {
       if (!this.selectedHero) {
         if (hero.level > this.model.progress.maxTrainingLevel) {
           this.alertCtrl.create({
-            subHeader: 'You cannot train or evolve heroes of level higher than ' + this.model.progress.maxTrainingLevel,
+            subHeader: 'You cannot train or evolve heroes of level higher than ' + this.model.progress.maxTrainingLevel + '. You need to upgrade Academy.',
             buttons: [{text: 'OK'}]
           }).then(alert => alert.present());
         } else {
@@ -198,9 +206,11 @@ export class AcademyPage {
           this.currentAscLevelMaxPoints = hero.ascPointsMax;
           if (hero.xp === hero.maxXp && hero.level === 10 * hero.stars) {
             this.feedForEvolve = true;
+            console.log("set fodder size for evolve to " + hero.stars);
             this.fodderSize = hero.stars;
           } else {
             this.feedForEvolve = false;
+            console.log("set fodder size for levelUp to 6");
             this.fodderSize = 6;
           }
         }
@@ -264,6 +274,12 @@ export class AcademyPage {
   }
 
   getFodder(): Hero[] {
-    return [this.fodder1, this.fodder2, this.fodder3, this.fodder4, this.fodder5, this.fodder6];
+    let fodder = [this.fodder1];
+    if (this.fodderSize >= 2) { fodder.push(this.fodder2); }
+    if (this.fodderSize >= 3) { fodder.push(this.fodder3); }
+    if (this.fodderSize >= 4) { fodder.push(this.fodder4); }
+    if (this.fodderSize >= 5) { fodder.push(this.fodder5); }
+    if (this.fodderSize >= 6) { fodder.push(this.fodder6); }
+    return fodder;
   }
 }

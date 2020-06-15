@@ -4,12 +4,14 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      <div class="flex-space-between">
-        <div class="flex-center">
-          Barracks - Level {{getBuilding().level}}
-          <ion-button class="ml-2" *ngIf="canUpgradeBuilding" size="small" color="success" (click)="openUpgradeModal()">{{getBuilding().upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
+      <div class="flex-space-between scrollable-vert">
+        <div class="position-relative pointer" (click)="openUpgradeModal()">
+          Academy L{{getBuilding().level}}
+          <div *ngIf="upgradeInProgress()" class="upgrade-in-progress-bubble">!</div>
+          <div *ngIf="upgradeFinished()" class="upgrade-done-bubble">!</div>
+          <div *ngIf="!getBuilding().upgradeTriggered && canUpgradeBuilding" class="upgrade-possible-bubble">!</div>
         </div>
-        <div class="flex-center">
+        <div class="flex-center font-small ml-4">
           <div [class.color-red]="model.heroes.length >= model.progress.barrackSize">{{model.heroes.length}}/{{model.progress.barrackSize}}</div>
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
             <i class="ra ra-book font-larger"></i>
@@ -32,7 +34,7 @@
     </ion-card-header>
     <ion-card-content>
       <div class="scrollable-list">
-        <hero-icon *ngFor="let hero of model.heroes" [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [clickableOnMission]="true" [showInfo]="false" [selected]="hero == selectedHero"></hero-icon>
+        <hero-icon *ngFor="let hero of model.heroes" class="mr-2" [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [clickableOnMission]="true" [showInfo]="false" [selected]="hero == selectedHero"></hero-icon>
       </div>
     </ion-card-content>
   </ion-card>
@@ -134,9 +136,9 @@
       </div>
 
       <div *ngIf="tab == 'skills'">
-        <div class="skill-list">
-          <div *ngFor="let skill of selectedHero.heroBase.skills" (click)="selectSkill(skill.number)" class="skill-tile flex-vert-center mr-2" [class.selected-skill]="skill.number == selectedSkill.number">
-            <ion-img [src]="'assets/icon/skills/' + skill.icon + '.png'" class="skill_icon pointer"></ion-img>
+        <div class="skill-list mt-2">
+          <div *ngFor="let skill of selectedHero.heroBase.skills" (click)="selectSkill(skill.number)" class="skill-tile flex-vert-center pointer mr-2" [class.icon-selected]="skill.number == selectedSkill.number">
+            <ion-img [src]="'assets/icon/skills/' + skill.icon + '.png'" class="large-icon"></ion-img>
             <div *ngIf="getSkillLevel(skill) > 0" class="skill-level">{{getSkillLevel(skill)}}</div>
             <div *ngIf="getSkillLevel(skill) == 0" class="locked"><ion-icon name="lock-closed"></ion-icon></div>
           </div>
@@ -160,7 +162,7 @@
 
       <div *ngIf="tab == 'gear'">
         <ion-row>
-          <ion-col sizeMd="6">
+          <ion-col sizeMd="6" sizeXs="12">
             <ion-list>
               <ion-item>
                 <div class="flex-space-between full-width">
@@ -175,38 +177,39 @@
               <ion-item class="mt-05" (click)="gearExclusiveFilter('GLOVES')"><gear-list-item type="GLOVES" [hero]="selectedHero" [gear]="selectedHero.gloves" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
               <ion-item class="mt-05" (click)="gearExclusiveFilter('BOOTS')"><gear-list-item type="BOOTS" [hero]="selectedHero" [gear]="selectedHero.boots" (callback)="selectHero($event, true)" class="full-width"></gear-list-item></ion-item>
             </ion-list>
-            <ion-list *ngIf="selectedHero.sets" lines="none">
-              <ion-item>Set bonuses</ion-item>
-              <ion-item *ngFor="let set of selectedHero.sets">{{converter.readableIdentifier(set.gearSet)}} ({{set.number}} pieces): {{set.description ? set.description : 'no bonus'}}</ion-item>
-            </ion-list>
+            <ion-item *ngIf="selectedHero.sets" lines="none">
+              <div>
+                <div>Set bonuses</div>
+                <div class="font-small" *ngFor="let set of selectedHero.sets">{{set.number}}x {{converter.readableIdentifier(set.gearSet)}}: {{set.description ? set.description : 'no bonus'}}</div>
+              </div>
+            </ion-item>
           </ion-col>
 
-          <ion-col sizeMd="6">
+          <ion-col sizeMd="6" sizeXs="12">
+            <ion-item>
+              <div class="flex-vert full-width pa-05">
+                <div class="flex-space-between">
+                  Armory
+                  <ion-button [fill]="gearTypeFilter.indexOf('WEAPON') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('WEAPON')"><ion-img src="assets/img/sets/default_WEAPON.png" class="resource-icon"></ion-img></ion-button>
+                  <ion-button [fill]="gearTypeFilter.indexOf('SHIELD') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('SHIELD')"><ion-img src="assets/img/sets/default_SHIELD.png" class="resource-icon"></ion-img></ion-button>
+                  <ion-button [fill]="gearTypeFilter.indexOf('HELMET') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('HELMET')"><ion-img src="assets/img/sets/default_HELMET.png" class="resource-icon"></ion-img></ion-button>
+                  <ion-button [fill]="gearTypeFilter.indexOf('ARMOR') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('ARMOR')"><ion-img src="assets/img/sets/default_ARMOR.png" class="resource-icon"></ion-img></ion-button>
+                  <ion-button [fill]="gearTypeFilter.indexOf('GLOVES') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('GLOVES')"><ion-img src="assets/img/sets/default_GLOVES.png" class="resource-icon"></ion-img></ion-button>
+                  <ion-button [fill]="gearTypeFilter.indexOf('BOOTS') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('BOOTS')"><ion-img src="assets/img/sets/default_BOOTS.png" class="resource-icon"></ion-img></ion-button>
+                  <ion-button fill="clear" (click)="openSetsInfo()"><ion-img src="assets/icon/info.png" class="resource-icon"></ion-img></ion-button>
+                </div>
+                <div class="flex-space-between">
+                  <img *ngFor="let set of enumService.getGearSets()" src="assets/icon/gear/{{set}}.png" (click)="setFilter(set)" class="small-icon pointer" [class.small-icon-selected]="gearSetFilter == set">
+                </div>
+              </div>
+            </ion-item>
             <div class="armory">
               <ion-list>
-                <ion-item>
-                  <div class="flex-vert full-width pa-05">
-                    <div class="flex-space-between">
-                      Armory
-                      <ion-button [fill]="gearTypeFilter.indexOf('WEAPON') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('WEAPON')"><ion-img src="assets/img/sets/default_WEAPON.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button [fill]="gearTypeFilter.indexOf('SHIELD') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('SHIELD')"><ion-img src="assets/img/sets/default_SHIELD.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button [fill]="gearTypeFilter.indexOf('HELMET') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('HELMET')"><ion-img src="assets/img/sets/default_HELMET.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button [fill]="gearTypeFilter.indexOf('ARMOR') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('ARMOR')"><ion-img src="assets/img/sets/default_ARMOR.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button [fill]="gearTypeFilter.indexOf('GLOVES') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('GLOVES')"><ion-img src="assets/img/sets/default_GLOVES.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button [fill]="gearTypeFilter.indexOf('BOOTS') >= 0 ? 'outline' : 'clear'" color="dark" (click)="gearFilter('BOOTS')"><ion-img src="assets/img/sets/default_BOOTS.png" class="resource-icon"></ion-img></ion-button>
-                      <ion-button fill="clear" (click)="openSetsInfo()"><ion-img src="assets/icon/info.png" class="resource-icon"></ion-img></ion-button>
-                    </div>
-                    <div class="flex-space-between">
-                      <img *ngFor="let set of enumService.getGearSets()" src="assets/icon/gear/{{set}}.png" (click)="setFilter(set)" class="small-icon pointer" [class.small-icon-selected]="gearSetFilter == set">
-                    </div>
-                  </div>
-                </ion-item>
                 <ion-item *ngFor="let gear of getAvailableGears()" class="mt-05">
                   <gear-list-item [hero]="selectedHero" [type]="gear.type" [gear]="gear" (callback)="selectHero($event, true)" class="full-width"></gear-list-item>
                 </ion-item>
               </ion-list>
             </div>
-
           </ion-col>
         </ion-row>
       </div>

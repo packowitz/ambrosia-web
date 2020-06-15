@@ -4,13 +4,14 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      <div class="flex-space-between">
-        <div class="flex-center">
-          Forge - Level {{getBuilding().level}}
-          <ion-button class="ml-2" *ngIf="canUpgradeBuilding()" size="small" color="success" (click)="openBuildingUpgradeModal()">{{getBuilding().upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
+      <div class="flex-space-between scrollable-vert">
+        <div class="position-relative pointer" (click)="openUpgradeModal()">
+          Forge L{{getBuilding().level}}
+          <div *ngIf="upgradeInProgress()" class="upgrade-in-progress-bubble">!</div>
+          <div *ngIf="upgradeFinished()" class="upgrade-done-bubble">!</div>
+          <div *ngIf="!getBuilding().upgradeTriggered && canUpgradeBuilding" class="upgrade-possible-bubble">!</div>
         </div>
         <div class="flex-center">
-          <div class="font-small">Modify Lvl {{model.progress.gearModificationRarity}}, Breakdown Lvl {{model.progress.gearBreakDownRarity}}</div>
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
             <i class="ra ra-book font-larger"></i>
           </ion-button>
@@ -28,27 +29,52 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
+      <div class="flex-space-between font-small">
+        <div class="flex">{{model.resources.wood}}/{{model.resources.woodMax}}
+          <ion-img src="assets/icon/resources/WOOD.png" class="resource-icon"></ion-img>
+        </div>
+        <div class="flex">{{model.resources.brownCoal}}/{{model.resources.brownCoalMax}}
+          <ion-img src="assets/icon/resources/BROWN_COAL.png" class="resource-icon"></ion-img>
+        </div>
+        <div class="flex">{{model.resources.blackCoal}}/{{model.resources.blackCoalMax}}
+          <ion-img src="assets/icon/resources/BLACK_COAL.png" class="resource-icon"></ion-img>
+        </div>
+        <div class="flex">{{model.resources.coins}}
+          <ion-img src="assets/icon/resources/COINS.png" class="resource-icon"></ion-img>
+        </div>
+        <div class="flex">{{model.resources.rubies}}
+          <ion-img src="assets/icon/resources/RUBIES.png" class="resource-icon"></ion-img>
+        </div>
+      </div>
+      <div class="flex-space-between">
+        <div>Modify gear with max {{model.progress.gearModificationRarity}} stars</div>
+        <div>Breakdown gear with max {{model.progress.gearBreakDownRarity}} stars</div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
       <div class="flex">
         <div class="width-60">Quality</div>
-        <div class="flex-space-between flex-grow">
-          <div *ngFor="let qual of allQualities" class="pointer" [class.text-selected]="qualities.indexOf(qual) != -1" (click)="toggleQuality(qual)">{{converter.readableIdentifier(qual)}}</div>
+        <div class="flex-space-between flex-grow flex-wrap">
+          <div *ngFor="let qual of allQualities" class="pointer mt-1 mr-1" [class.text-selected]="qualities.indexOf(qual) != -1" (click)="toggleQuality(qual)">{{converter.readableIdentifier(qual)}}</div>
         </div>
       </div>
       <div class="mt-2 flex">
         <div class="width-60">Sets</div>
-        <div class="flex-space-between flex-grow">
-          <img *ngFor="let set of enumService.getGearSets()" src="assets/icon/gear/{{set}}.png" (click)="toggleSet(set)" class="medium-icon pointer" [class.small-icon-selected]="sets.indexOf(set) >= 0">
+        <div class="flex-space-between flex-grow flex-wrap">
+          <img *ngFor="let set of enumService.getGearSets()" src="assets/icon/gear/{{set}}.png" (click)="toggleSet(set)" class="medium-icon pointer mt-1 mr-1" [class.small-icon-selected]="sets.indexOf(set) >= 0">
         </div>
       </div>
       <div class="mt-2 flex">
         <div class="width-60">Stars</div>
-        <div class="flex-space-between flex-grow">
-          <div class="pointer" [class.text-selected]="showSimple" (click)="showSimple = !showSimple">Simple</div>
-          <div class="pointer" [class.text-selected]="showCommon" (click)="showCommon = !showCommon">Common</div>
-          <div class="pointer" [class.text-selected]="showUncommon" (click)="showUncommon = !showUncommon">Uncommon</div>
-          <div class="pointer" [class.text-selected]="showRare" (click)="showRare = !showRare">Rare</div>
-          <div class="pointer" [class.text-selected]="showEpic" (click)="showEpic = !showEpic">Epic</div>
-          <div class="pointer" [class.text-selected]="showLegendary" (click)="showLegendary = !showLegendary">Legendary</div>
+        <div class="flex-space-between flex-grow flex-wrap">
+          <div class="pointer mt-1 mr-1" [class.text-selected]="showSimple" (click)="showSimple = !showSimple">Simple</div>
+          <div class="pointer mt-1 mr-1" [class.text-selected]="showCommon" (click)="showCommon = !showCommon">Common</div>
+          <div class="pointer mt-1 mr-1" [class.text-selected]="showUncommon" (click)="showUncommon = !showUncommon">Uncommon</div>
+          <div class="pointer mt-1 mr-1" [class.text-selected]="showRare" (click)="showRare = !showRare">Rare</div>
+          <div class="pointer mt-1 mr-1" [class.text-selected]="showEpic" (click)="showEpic = !showEpic">Epic</div>
+          <div class="pointer mt-1 mr-1" [class.text-selected]="showLegendary" (click)="showLegendary = !showLegendary">Legendary</div>
         </div>
       </div>
       <div class="mt-2 flex-end">

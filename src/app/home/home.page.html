@@ -15,17 +15,17 @@
   <ion-card class="pa-2">
     <div class="flex-space-around">
       <div class="flex">
-        Tokens
+        <div class="ion-hide-md-down">Tokens</div>
         <div class="flex ml-2 mr-2">{{model.resources.premiumTokens}}/{{model.resources.premiumTokensMax}}<ion-img src="assets/icon/resources/PREMIUM_TOKENS.png" class="resource-icon" alt="premium tokens"></ion-img></div>
         <div class="flex pointer" (click)="tokensTimer = !tokensTimer">{{tokensTimer ? ( model.resources.tokens >= model.resources.tokensMax ? 'max' : converter.time(model.resources.tokensProduceIn) ) : model.resources.tokens + '/' + model.resources.tokensMax}}<ion-img src="assets/icon/resources/TOKENS.png" class="resource-icon" alt="tokens"></ion-img></div>
       </div>
       <div class="flex">
-        Cogwheels
+        <div class="ion-hide-md-down">Cogwheels</div>
         <div class="flex ml-2 mr-2">{{model.resources.premiumCogwheels}}/{{model.resources.premiumCogwheelsMax}}<ion-img src="assets/icon/resources/PREMIUM_COGWHEELS.png" class="resource-icon" alt="premium cogwheels"></ion-img></div>
         <div class="flex pointer" (click)="cogwheelsTimer = !cogwheelsTimer">{{cogwheelsTimer ? ( model.resources.cogwheels >= model.resources.cogwheelsMax ? 'max' : converter.time(model.resources.cogwheelsProduceIn) ) : model.resources.cogwheels + '/' + model.resources.cogwheelsMax}}<ion-img src="assets/icon/resources/COGWHEELS.png" class="resource-icon" alt="cogwheels"></ion-img></div>
       </div>
       <div class="flex">
-        Steam
+        <div class="ion-hide-md-down">Steam</div>
         <div class="flex ml-2 mr-2">{{model.resources.premiumSteam}}/{{model.resources.premiumSteamMax}}<ion-img src="assets/icon/resources/PREMIUM_STEAM.png" class="resource-icon" alt="premium steam"></ion-img></div>
         <div class="flex pointer" (click)="steamTimer = !steamTimer">{{steamTimer ? ( model.resources.steam >= model.resources.steamMax ? 'max' : converter.time(model.resources.steamProduceIn) ) : model.resources.steam + '/' + model.resources.steamMax}}<ion-img src="assets/icon/resources/STEAM.png" class="resource-icon" alt="steam"></ion-img></div>
       </div>
@@ -44,13 +44,14 @@
 
   <ion-card *ngIf="model.missions && model.missions.length > 0">
     <div class="scrollable-list pa-2">
-      <div *ngFor="let mission of model.missions">
+      <div *ngFor="let mission of model.missions" class="position-relative">
         <div class="mission-avatar pointer" (click)="openMission(mission)">
-          <ion-img src="assets/img/vehicles/{{model.getVehicle(mission.vehicleId).baseVehicle.avatar}}.png"></ion-img>
+          <img src="assets/img/vehicles/{{model.getVehicle(mission.vehicleId).baseVehicle.avatar}}.png">
           <div class="ml-1 mr-1 time-bar">
             <span class="time-bar-inner" [style.width]="(100 * (mission.duration - mission.secondsUntilDone) / mission.duration) + '%'"></span>
           </div>
         </div>
+        <div *ngIf="mission.missionFinished" class="avatar-done-bubble">!</div>
       </div>
     </div>
   </ion-card>

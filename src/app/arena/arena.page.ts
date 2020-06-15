@@ -77,6 +77,10 @@ export class ArenaPage implements OnInit {
     }
   }
 
+  getSelectedHeroes(): Hero[] {
+    return [this.hero1, this.hero2, this.hero3, this.hero4];
+  }
+
   loadOtherTeams() {
     this.otherTeams = [];
     this.backendService.getOtherTeams('DUELL').subscribe(data => {

@@ -4,13 +4,17 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      <div class="flex-space-between">
-        <div class="flex-center">
-          Storage - Level {{getBuilding().level}}
-          <ion-button class="ml-2" *ngIf="canUpgradeBuilding" size="small" color="success" (click)="openUpgradeModal()">{{getBuilding().upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
+      <div class="flex-space-between scrollable-vert">
+        <div class="position-relative pointer" (click)="openUpgradeModal()">
+          Storage L{{getBuilding().level}}
+          <div *ngIf="upgradeInProgress()" class="upgrade-in-progress-bubble">!</div>
+          <div *ngIf="upgradeFinished()" class="upgrade-done-bubble">!</div>
+          <div *ngIf="!getBuilding().upgradeTriggered && canUpgradeBuilding" class="upgrade-possible-bubble">!</div>
         </div>
         <div class="flex-center">
-          <ion-icon name="close" class="ml-2 pointer" (click)="close()"></ion-icon>
+          <ion-button size="small" fill="clear" color="dark" (click)="close()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
         </div>
       </div>
     </ion-title>
@@ -25,10 +29,13 @@
     <ion-card-content>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/COINS.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/COINS.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Coins</b> are the currency in Ambrosia. Every service you use you need need to pay coins for. You will find coins mostly by doing missions.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Coins</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Coins are the currency in Ambrosia. Every service you use you need need to pay coins for. You will find coins mostly by doing missions.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -44,10 +51,13 @@
       </ion-row>
       <ion-row class="mt-1">
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/RUBIES.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/RUBIES.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Rubies</b> are very rare and valuable. Spending rubies can make your life easier. You can speed up everything with them. They can be found time by time on missions and they are granted as rewards for tasks.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Rubies</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Rubies are very rare and valuable. Spending rubies can make your life easier. You can speed up everything with them. They can be found time by time on missions and they are granted as rewards for tasks.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -71,10 +81,13 @@
     <ion-card-content>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/STEAM.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/STEAM.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Steam</b> is the resources you need mostly for doing missions. You also need it to discover tiles on maps. Steam is generated over time. Levelling up your Storage will increase the amount of Steam you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Steam</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Steam is the resources you need mostly for doing missions. You also need it to discover tiles on maps. Steam is generated over time. Levelling up your Storage will increase the amount of Steam you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -90,10 +103,13 @@
       </ion-row>
       <ion-row class="mt-1">
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/PREMIUM_STEAM.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/PREMIUM_STEAM.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Premium Steam</b> is used for the same things you can use Steam for but it doesn't get generated over time. But you can gain it as reward for tasks or can be purchased in the shop. Levelling up your Storage will increase the amount of Premium Steam you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Premium Steam</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Premium Steam is used for the same things you can use Steam for but it doesn\'t get generated over time. But you can gain it as reward for tasks or can be purchased in the shop. Levelling up your Storage will increase the amount of Premium Steam you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -109,10 +125,13 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/COGWHEELS.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/COGWHEELS.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Cogwheels</b> are needed to fight some special battles on the map. Cogwheels are generated over time. Levelling up your Storage will increase the number of Cogwheels you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Cogwheels</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Cogwheels are needed to fight some special battles on the map. Cogwheels are generated over time. Levelling up your Storage will increase the number of Cogwheels you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -128,10 +147,13 @@
       </ion-row>
       <ion-row class="mt-1">
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/PREMIUM_COGWHEELS.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/PREMIUM_COGWHEELS.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Premium Cogwheels</b> are used for the same things you can use Cogwheels for but they don't get generated over time. But you can gain them as reward for tasks or can be purchased in the shop. Levelling up your Storage will increase the number of Premium Cogwheels you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Premium Cogwheels</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Premium Cogwheels are used for the same things you can use Cogwheels for but they don\'t get generated over time. But you can gain them as reward for tasks or can be purchased in the shop. Levelling up your Storage will increase the number of Premium Cogwheels you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -147,10 +169,13 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/TOKENS.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/TOKENS.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Tokens</b> are needed to fight against teams of other players in the arena. Tokens are generated over time. Levelling up your Storage will increase the number of Tokens you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Tokens</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Tokens are needed to fight against teams of other players in the arena. Tokens are generated over time. Levelling up your Storage will increase the number of Tokens you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -166,10 +191,13 @@
       </ion-row>
       <ion-row class="mt-1">
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/PREMIUM_TOKENS.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/PREMIUM_TOKENS.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Premium Tokens</b> are used for the same things you can use Tokens for but they don't get generated over time. But you can gain them as reward for tasks or can be purchased in the shop. Levelling up your Storage will increase the number of Premium Tokens you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Premium Tokens</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Premium Tokens are used for the same things you can use Tokens for but they don\'t get generated over time. But you can gain them as reward for tasks or can be purchased in the shop. Levelling up your Storage will increase the number of Premium Tokens you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -193,10 +221,13 @@
     <ion-card-content>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/METAL.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/METAL.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Metal</b> is the base material needed to perform upgrades on buildings and vehicles. Levelling up your Storage will increase the amount of Metal you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Metal</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Metal is the base material needed to perform upgrades on buildings and vehicles. Levelling up your Storage will increase the amount of Metal you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -212,10 +243,13 @@
       </ion-row>
       <ion-row class="mt-1">
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/IRON.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/IRON.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
-          <b>IRON</b> has better quality as Metal so it is used for higher upgrades. Levelling up your Storage will increase the amount of Iron you can store.
+        <ion-col sizeMd="6" class="ion-hide-md-down">
+          <b>Iron</b> has better quality as Metal so it is used for higher upgrades. Levelling up your Storage will increase the amount of Iron you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Iron</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Iron has better quality as Metal so it is used for higher upgrades. Levelling up your Storage will increase the amount of Iron you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -231,10 +265,13 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/STEAL.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/STEAL.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Steal</b> is the finest material needed for upgrades and is needed for the highest levels. Levelling up your Storage will increase the amount of Steal you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Steal</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Steal is the finest material needed for upgrades and is needed for the highest levels. Levelling up your Storage will increase the amount of Steal you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -258,10 +295,13 @@
     <ion-card-content>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/WOOD.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/WOOD.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Wood</b> is the base material needed to perform simple modifications in the Forge. Levelling up your Storage will increase the amount of Wood you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Wood</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Wood is the base material needed to perform simple modifications in the Forge. Levelling up your Storage will increase the amount of Wood you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -277,10 +317,13 @@
       </ion-row>
       <ion-row class="mt-1">
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/BROWN_COAL.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/BROWN_COAL.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Brown coal</b> has better quality as Wood so it is used for more complicated modifications. Levelling up your Storage will increase the amount of Brown coal you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Brown coal</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Brown coal has better quality as Wood so it is used for more complicated modifications. Levelling up your Storage will increase the amount of Brown coal you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -296,10 +339,13 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/BLACK_COAL.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/BLACK_COAL.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Black coal</b> is the finest material needed for most complicated modifications in the Forge. Levelling up your Storage will increase the amount of Black coal you can store.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Black coal</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Cogwheels is the finest material needed for most complicated modifications in the Forge. Levelling up your Storage will increase the amount of Black coal you can store.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -323,10 +369,13 @@
     <ion-card-content>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/SIMPLE_GENOME.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/SIMPLE_GENOME.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Simple Genomes</b> are used in the laboratory to clone a simple (1*) hero.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Simple Genomes</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Simple Genomes are used in the laboratory to clone a simple (1*) hero.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -342,10 +391,13 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/COMMON_GENOME.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/COMMON_GENOME.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Common Genomes</b> are used in the laboratory to clone a common (2*) hero.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Common Genomes</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Common Genomes are used in the laboratory to clone a common (2*) hero.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -361,10 +413,13 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/UNCOMMON_GENOME.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/UNCOMMON_GENOME.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Uncommon Genomes</b> are used in the laboratory to clone an uncommon (3*) hero.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Uncommon Genomes</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Uncommon Genomes are used in the laboratory to clone an uncommon (3*) hero.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -380,10 +435,13 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/RARE_GENOME.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/RARE_GENOME.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Rare Genomes</b> are used in the laboratory to clone a rare (4*) hero.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Rare Genomes</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Rare Genomes are used in the laboratory to clone a rare (4*) hero.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">
@@ -399,10 +457,13 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center">
-          <ion-img src="assets/icon/resources/EPIC_GENOME.png" class="resource-icon-large"></ion-img>
+          <img src="assets/icon/resources/EPIC_GENOME.png" class="resource-icon-large">
         </ion-col>
-        <ion-col sizeMd="6">
+        <ion-col sizeMd="6" class="ion-hide-md-down">
           <b>Epic Genomes</b> are used in the laboratory to clone an epic (5*) hero.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Epic Genomes</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Epic Genomes are used in the laboratory to clone an epic (5*) hero.')">
         </ion-col>
         <ion-col sizeMd="1" class="flex-end">
           <div class="bold flex-center">

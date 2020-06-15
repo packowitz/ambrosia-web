@@ -4,13 +4,14 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      <div class="flex-space-between">
-        <div class="flex-center">
-          Jewelry - Level {{getBuilding().level}}
-          <ion-button class="ml-2" *ngIf="canUpgradeBuilding()" size="small" color="success" (click)="openUpgradeModal()">{{getBuilding().upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
+      <div class="flex-space-between scrollable-vert">
+        <div class="position-relative pointer" (click)="openUpgradeModal()">
+          Jewelry L{{getBuilding().level}}
+          <div *ngIf="upgradeInProgress()" class="upgrade-in-progress-bubble">!</div>
+          <div *ngIf="upgradeFinished()" class="upgrade-done-bubble">!</div>
+          <div *ngIf="!getBuilding().upgradeTriggered && canUpgradeBuilding" class="upgrade-possible-bubble">!</div>
         </div>
         <div class="flex-center">
-          <div class="font-small">max jewel upgrade level: {{model.progress.maxJewelUpgradingLevel}}</div>
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
             <i class="ra ra-book font-larger"></i>
           </ion-button>
@@ -24,18 +25,31 @@
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-content>
+      <div class="flex-space-between font-small">
+        <div>Jewel upgrade level: {{model.progress.maxJewelUpgradingLevel}}</div>
+        <div class="flex">{{model.resources.coins}}
+          <ion-img src="assets/icon/resources/COINS.png" class="resource-icon"></ion-img>
+        </div>
+        <div class="flex">{{model.resources.rubies}}
+          <ion-img src="assets/icon/resources/RUBIES.png" class="resource-icon"></ion-img>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
   <ion-card *ngFor="let jewelry of jewelryService.getAllJewelries()">
     <ion-card-header>
       <ion-card-title>{{converter.readableIdentifier(jewelry.type)}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <div class="flex-space-between scrollable-vert">
-        <div class="flex-vert-center" *ngFor="let level of levels">
+        <div class="flex-vert-center flex-no-shrink" *ngFor="let level of levels">
           Level {{level}}
           <ion-button (click)="openJewelUpgradeModal(jewelry.type, level)" size="small" [fill]="jewelry['lvl' + level] < 4 || model.progress.maxJewelUpgradingLevel < level ? 'clear' : 'outline'" [color]="jewelry['lvl' + level] < 4 || model.progress.maxJewelUpgradingLevel < level ? 'dark' : 'success'" [disabled]="jewelry['lvl' + level] < 4 || model.progress.maxJewelUpgradingLevel < level">
               {{jewelry['lvl' + level] > 0 ? jewelry['lvl' + level] + 'x ' : ''}}<img src="assets/img/jewels/{{jewelry.slot}}_{{level}}.png" class="jewel-icon">
           </ion-button>
-          <div *ngFor="let bonus of propertyService.getJewelValueAndName(jewelry.type, level)">{{bonus}}</div>
+          <div *ngFor="let bonus of propertyService.getJewelValueAndName(jewelry.type, level)" class="pl-1 pr-1">{{bonus}}</div>
         </div>
       </div>
     </ion-card-content>

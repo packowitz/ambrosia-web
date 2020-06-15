@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
 import {ArenaPage} from './arena.page';
+import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    CommonAmbrosiaModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)

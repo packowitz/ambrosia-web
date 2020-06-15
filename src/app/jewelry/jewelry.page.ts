@@ -56,6 +56,14 @@ export class JewelryPage {
     return this.model.getBuilding(this.buildingType);
   }
 
+  upgradeInProgress(): boolean {
+    return this.getBuilding().upgradeTriggered && !this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
+  upgradeFinished(): boolean {
+    return this.getBuilding().upgradeTriggered && !!this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  }
+
   close() {
     this.router.navigateByUrl('/home');
   }
