@@ -6,9 +6,9 @@ import {Story} from '../domain/story.model';
     selector: 'story-popover',
     template: `
       <div class="ma-2">
-        <div class="flex-space-between">
+        <div class="story-wrapper">
           <div class="story-pic-wrapper">
-            <ion-img *ngIf="story?.leftPic" src="assets/icon/story/{{story?.leftPic}}.png" class="story-pic"></ion-img>
+            <img *ngIf="story?.leftPic" src="assets/icon/story/{{story?.leftPic}}.png">
           </div>
           <div class="flex-vert flex-grow story-text-block">
             <div *ngIf="story?.title" class="bold">{{story?.title}}</div>
@@ -18,7 +18,7 @@ import {Story} from '../domain/story.model';
             </div>
           </div>
           <div class="story-pic-wrapper">
-            <ion-img *ngIf="story?.rightPic" src="assets/icon/story/{{story?.rightPic}}.png" class="story-pic"></ion-img>
+            <img *ngIf="story?.rightPic" src="assets/icon/story/{{story?.rightPic}}.png">
           </div>
         </div>
       </div>

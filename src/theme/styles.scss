@@ -514,7 +514,8 @@ ion-row.table-row {
   width: 20px;
   max-width: 20%;
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.6em;
+  white-space: nowrap;
 }
 
 .position-relative {
@@ -777,13 +778,19 @@ ion-row.table-row {
   max-width: 600px;
 }
 
-.story-pic-wrapper {
-  width: 100px;
-  min-width: 100px;
-  height: 100px;
-  min-height: 100px;
+.story-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
 
-  .story-pic {
+.story-pic-wrapper {
+  max-width: 100px;
+  width: 20vw;
+  max-height: 100px;
+  height: 20vw;
+
+  img {
     border: 1px solid grey;
     border-radius: 5px;
   }
@@ -791,7 +798,7 @@ ion-row.table-row {
 }
 
 .story-text-block {
-  height: 115px;
+  min-height: 100px;
   margin: 0 5px;
 }
 
