@@ -7,7 +7,7 @@ import {Story} from '../domain/story.model';
     template: `
       <div class="ma-2">
         <div class="story-wrapper">
-          <div class="story-pic-wrapper">
+          <div class="story-pic-wrapper flex-no-shrink">
             <img *ngIf="story?.leftPic" src="assets/icon/story/{{story?.leftPic}}.png">
           </div>
           <div class="flex-vert flex-grow story-text-block">
@@ -17,7 +17,7 @@ import {Story} from '../domain/story.model';
               <ion-button color="dark" size="small" fill="clear" (click)="next()">{{story?.buttonText}}</ion-button>
             </div>
           </div>
-          <div class="story-pic-wrapper">
+          <div class="story-pic-wrapper flex-no-shrink">
             <img *ngIf="story?.rightPic" src="assets/icon/story/{{story?.rightPic}}.png">
           </div>
         </div>
