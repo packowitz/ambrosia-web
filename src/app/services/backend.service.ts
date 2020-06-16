@@ -45,7 +45,7 @@ export class PlayerActionResponse {
     player?: Player;
     progress?: Progress;
     token?: string;
-    resources: Resources;
+    resources?: Resources;
     hero?: Hero;
     heroes?: Hero[];
     heroIdsRemoved?: number[];
@@ -62,10 +62,11 @@ export class PlayerActionResponse {
     looted?: Looted[];
     missions?: Mission[];
     missionIdFinished?: number;
-    upgrades: Upgrade[];
-    upgradeRemoved: number;
-    incubators: Incubator[];
-    incubatorDone: number;
+    upgrades?: Upgrade[];
+    upgradeRemoved?: number;
+    incubators?: Incubator[];
+    incubatorDone?: number;
+    knownStories?: string[];
 }
 
 @Injectable({
@@ -554,11 +555,20 @@ export class BackendService {
         return this.http.get<Story[]>(API_URL + '/admin/story/' + storyTrigger);
     }
 
-    saveStoryLine(stories: Story[], toDelete: number[]): Observable<Story[]> {
+    saveStoryLine(stories: Story[], lootBoxId: number, toDelete: number[]): Observable<Story[]> {
         let request = {
             stories: stories,
+            lootBoxId: lootBoxId,
             toDelete: toDelete
         };
         return this.http.post<Story[]>(API_URL + '/admin/story', request);
+    }
+
+    finishStory(story: string): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/story/' + story + '/finish', null);
+    }
+
+    resetStoryLine(): Observable<any> {
+        return this.http.post<any>(API_URL + '/admin/story/reset', null);
     }
 }

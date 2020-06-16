@@ -7,7 +7,6 @@ import {StoryPlaceholder} from '../domain/storyPlaceholder.model';
 import {PlaceholderPopover} from './placeholder.popover';
 import {Story} from '../domain/story.model';
 import {StoryPicSelectionPopover} from './storyPicSelection.popover';
-import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'story',
@@ -20,6 +19,7 @@ export class StoryPage implements OnInit {
   placeholders: StoryPlaceholder[];
 
   storyTrigger: string;
+  lootBoxId: number;
 
   stories: Story[];
   storiesToDelete: Story[] = [];
@@ -27,17 +27,23 @@ export class StoryPage implements OnInit {
   constructor(public model: Model,
               public enumService: EnumService,
               private backendService: BackendService,
-              private popoverCtrl: PopoverController,
-              private storyService: StoryService) {}
+              private popoverCtrl: PopoverController) {}
 
   ngOnInit(): void {
     this.backendService.getStoryPlaceholder().subscribe(data => {
       this.placeholders = data;
     });
+    if (!this.model.lootBoxes) {
+      this.backendService.loadAllLootBoxes().subscribe(data => {
+        this.model.lootBoxes = data;
+      });
+    }
   }
 
   resetStoryLine() {
-    this.enumService.getStoryTriggerns().forEach(s => localStorage.removeItem('STORY_' + s));
+    this.backendService.resetStoryLine().subscribe(() => {
+      this.model.knownStories = [];
+    });
   }
 
   newPlaceholder() {
@@ -104,6 +110,11 @@ export class StoryPage implements OnInit {
       this.stories = [];
       this.backendService.loadStory(this.storyTrigger).subscribe(data => {
         this.stories = data;
+        if (this.stories && this.stories.length > 0) {
+          this.lootBoxId = this.stories[0].lootBoxId;
+        } else {
+          this.lootBoxId = null;
+        }
         this.storiesToDelete = [];
         this.saving = false;
       }, () => this.saving = false);
@@ -140,10 +151,6 @@ export class StoryPage implements OnInit {
     this.stories = this.stories.sort((a, b) => a.number - b.number);
   }
 
-  storiesModified(): boolean {
-    return this.stories.findIndex(s => s.dirty === true) >= 0 || this.storiesToDelete.length > 0;
-  }
-
   changeTitle(story: Story, event) {
     if (story.title !== event.detail.value) {
       story.title = event.detail.value;
@@ -171,14 +178,11 @@ export class StoryPage implements OnInit {
 
   saveStoryLine() {
     this.saving = true;
-    let stories = this.stories.filter(s => s.dirty === true);
-    this.backendService.saveStoryLine(stories, this.storiesToDelete.map(s => s.id)).subscribe(data => {
-      data.forEach(story => {
-        let idx = this.stories.findIndex(s => s.number === story.number);
-        if (idx >= 0) {
-          this.stories[idx] = story;
-        }
-      });
+    if (this.stories && this.stories.length > 0) {
+      this.stories[0].lootBoxId = this.lootBoxId;
+    }
+    this.backendService.saveStoryLine(this.stories, this.lootBoxId, this.storiesToDelete.map(s => s.id)).subscribe(data => {
+      this.stories = data;
       this.storiesToDelete = [];
       this.saving = false;
     }, () => this.saving = false);

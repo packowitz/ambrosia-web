@@ -36,7 +36,7 @@
         <div class="flex-space-between">
           Story line
           <div class="flex-start">
-            <ion-button size="small" color="success" [disabled]="!storiesModified()" *ngIf="stories" (click)="saveStoryLine()" class="mr-2">save</ion-button>
+            <ion-button size="small" color="success" *ngIf="stories" (click)="saveStoryLine()" class="mr-2">save</ion-button>
             <ion-select [(ngModel)]="storyTrigger" (ionChange)="storyTriggerChanged()" class="font-small" placeholder="Select">
               <ion-select-option *ngFor="let trigger of enumService.getStoryTriggerns()">{{trigger}}</ion-select-option>
             </ion-select>
@@ -44,6 +44,15 @@
         </div>
       </ion-card-title>
       <ion-card-content *ngIf="stories">
+        <div>
+          <ion-item>
+            <ion-label>LootBox</ion-label>
+            <ion-select [(ngModel)]="lootBoxId" placeholder="select">
+              <ion-select-option [value]="null">None</ion-select-option>
+              <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
         <div *ngFor="let story of stories">
           <div class="flex-space-between">
             {{story.number}}. part

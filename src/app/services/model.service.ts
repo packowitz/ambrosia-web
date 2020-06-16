@@ -59,6 +59,7 @@ export class Model {
     missions: Mission[];
     upgrades: Upgrade[];
     incubators: Incubator[];
+    knownStories: string[];
     looted: Looted[];
 
     interval: number;
@@ -353,6 +354,13 @@ export class Model {
                 this.incubators.splice(idx, 1);
             }
         }
+        if (data.knownStories) {
+            if (this.knownStories) {
+                data.knownStories.forEach(s => this.finishedStory(s));
+            } else {
+                this.knownStories = data.knownStories;
+            }
+        }
         if (data.looted) {
             this.looted = data.looted;
         }
@@ -572,6 +580,14 @@ export class Model {
                 this.incubators[idx] = incubator;
             } else {
                 this.incubators.push(incubator);
+            }
+        }
+    }
+
+    finishedStory(story: string) {
+        if (story) {
+            if (this.knownStories.indexOf(story) === -1) {
+                this.knownStories.push(story);
             }
         }
     }

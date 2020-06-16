@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {BackendService} from './backend.service';
 import {PopoverController} from '@ionic/angular';
 import {StoryPopover} from '../common/story.popover';
+import {Model} from './model.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,15 +11,12 @@ import {StoryPopover} from '../common/story.popover';
 export class StoryService {
 
     constructor(private backendService: BackendService,
+                private model: Model,
                 private popoverCtrl: PopoverController) {}
 
 
     storyUnknown(storyTrigger: string): boolean {
-        return !localStorage.getItem('STORY_' + storyTrigger);
-    }
-
-    storyShown(storyTrigger: string) {
-        localStorage.setItem('STORY_' + storyTrigger, 'true');
+        return this.model.knownStories.indexOf(storyTrigger) === -1;
     }
 
     showStory(storyTrigger: string): Observable<any> {
@@ -34,16 +32,18 @@ export class StoryService {
                         backdropDismiss: false
                     }).then(p => {
                         p.onDidDismiss().then(() => {
-                            this.storyShown(storyTrigger);
-                            observer.next(true);
-                            observer.complete();
+                            this.backendService.finishStory(storyTrigger).subscribe(() => {
+                                observer.next(true);
+                                observer.complete();
+                            });
                         });
                         p.present();
                     });
                 } else {
-                    this.storyShown(storyTrigger);
-                    observer.next(true);
-                    observer.complete();
+                    this.backendService.finishStory(storyTrigger).subscribe(() => {
+                        observer.next(true);
+                        observer.complete();
+                    });
                 }
             }, () => observer.complete());
         });
