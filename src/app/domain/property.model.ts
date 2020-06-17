@@ -4,6 +4,7 @@ export class DynamicProperty {
     type: string;
     level?: number;
     stat?: string;
+    progressStat?: string;
     resourceType?: string;
     buildingType?: string;
     vehicleStat?: string;

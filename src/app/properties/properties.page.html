@@ -9,6 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
 <ion-content>
   <ion-card>
     <ion-card-header>
@@ -38,6 +39,7 @@
       <ion-row>
         <ion-col sizeMd="2">{{category.levelName}}</ion-col>
         <ion-col sizeMd="3" *ngIf="category.showStat || type.showStat">Stat</ion-col>
+        <ion-col sizeMd="5" *ngIf="category.showProgressStat || type.showProgressStat">Progress</ion-col>
         <ion-col sizeMd="3" *ngIf="category.showResources || type.showResources">Resource</ion-col>
         <ion-col sizeMd="3" *ngIf="category.showVehicleStat || type.showVehicleStat">Vehicle Stat</ion-col>
         <ion-col sizeMd="2">{{type.value1name ? type.value1name : category.value1name}}</ion-col>
@@ -54,6 +56,13 @@
           <ion-item class="full-width">
             <ion-select interface="popover" placeholder="Select" [(ngModel)]="prop.stat" [selectedText]="prop.stat" class="full-width no-max-width">
               <ion-select-option *ngFor="let stat of enumService.getHeroStats()" [value]="stat">{{stat}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col sizeMd="5" *ngIf="category.showProgressStat || type.showProgressStat">
+          <ion-item class="full-width">
+            <ion-select interface="popover" placeholder="Select" [(ngModel)]="prop.progressStat" [selectedText]="prop.progressStat" class="full-width no-max-width">
+              <ion-select-option *ngFor="let stat of enumService.getProgressStats()" [value]="stat">{{stat}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>

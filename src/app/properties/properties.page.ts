@@ -9,6 +9,8 @@ import {PropertyService} from '../services/property.service';
 })
 export class PropertiesPage {
 
+  saving = false;
+
   category: PropertyCategory;
   types: PropertyType[] = [];
   type: PropertyType;
@@ -41,9 +43,11 @@ export class PropertiesPage {
   }
 
   save() {
+    this.saving = true;
     this.propertyService.saveProperties(this.type.name, this.properties).subscribe(data => {
       this.properties = data;
-    });
+      this.saving = false;
+    }, () => this.saving = false );
   }
 
   delete(prop: DynamicProperty) {

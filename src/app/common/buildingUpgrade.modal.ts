@@ -80,7 +80,7 @@ export class BuildingUpgradeModal {
         ACADEMY: 'Upgrade Academy to increase the level of heroes that can be trained',
         BARRACKS: 'Upgrade Barracks to increase space for heroes',
         FORGE: 'Upgrade Forge to improve your modification skills',
-        GARAGE: 'Upgrade Garage to increase space for unused vehicles and parts',
+        GARAGE: 'Upgrade Garage to increase upgrade level for vehicles and parts',
         JEWELRY: 'Upgrade Jewelry to learn how to upgrade jewels to a higher level',
         LABORATORY: 'Upgrade Laboratory to gain more incubators and speed up cloning',
         STORAGE: 'Upgrade Storage to increase space for resources'
@@ -124,65 +124,32 @@ export class BuildingUpgradeModal {
         let nextLevel = this.getBuilding().level + 1;
         if (this.buildingType === 'ACADEMY') {
             this.propertyService.getProps('ACADEMY_BUILDING', nextLevel).forEach(p => {
-                upgrades.push('Max hero training level ' + p.value1);
+                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'BARRACKS') {
             this.propertyService.getProps('BARRACKS_BUILDING', nextLevel).forEach(p => {
-                upgrades.push('+' + p.value1 + ' space for heroes');
+                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'FORGE') {
-            this.propertyService.getProps('FORGE_MOD_RARITY', nextLevel).forEach(p => {
-                upgrades.push('Modification level ' + p.value1);
-            });
-            this.propertyService.getProps('FORGE_MOD_SPEED', nextLevel).forEach(p => {
-                upgrades.push('+' + p.value1 + '% modification speed');
-            });
-            this.propertyService.getProps('FORGE_BREAKDOWN_RARITY', nextLevel).forEach(p => {
-                upgrades.push('Breakdown level ' + p.value1);
-            });
-            this.propertyService.getProps('FORGE_BREAKDOWN_RES', nextLevel).forEach(p => {
-                upgrades.push('+' + p.value1 + '% resources when breaking down');
-            });
-            this.propertyService.getProps('FORGE_REROLL_QUAL', nextLevel).forEach(p => {
-                upgrades.push('New modification: Re roll quality');
-            });
-            this.propertyService.getProps('FORGE_REROLL_STAT', nextLevel).forEach(p => {
-                upgrades.push('New modification: Re roll stat');
-            });
-            this.propertyService.getProps('FORGE_INC_RARITY', nextLevel).forEach(p => {
-                upgrades.push('New modification: Increase rarity');
-            });
-            this.propertyService.getProps('FORGE_REROLL_JEWEL', nextLevel).forEach(p => {
-                upgrades.push('New modification: Re roll jewel slots');
-            });
-            this.propertyService.getProps('FORGE_ADD_JEWEL', nextLevel).forEach(p => {
-                upgrades.push('New modification: Add jewel slot');
-            });
-            this.propertyService.getProps('FORGE_ADD_SP_JEWEL', nextLevel).forEach(p => {
-                upgrades.push('New modification: Add set jewel slot');
+            this.propertyService.getProps('FORGE_BUILDING', nextLevel).forEach(p => {
+                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'GARAGE') {
             this.propertyService.getProps('GARAGE_BUILDING', nextLevel).forEach(p => {
-                upgrades.push('+' + p.value1 + ' space for unused vehicles');
-                if (p.value2) {
-                    upgrades.push('+' + p.value2 + ' space for unused vehicle parts');
-                }
+                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'JEWELRY') {
             this.propertyService.getProps('JEWELRY_BUILDING', nextLevel).forEach(p => {
-                upgrades.push('Jewel upgrade level ' + p.value1);
+                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'LABORATORY') {
-            this.propertyService.getProps('LABORATORY_INCUBATORS', nextLevel).forEach(p => {
-                upgrades.push('+' + p.value1 + ' incubator');
-            });
-            this.propertyService.getProps('LABORATORY_SPEED', nextLevel).forEach(p => {
-                upgrades.push('+' + p.value1 + '% cloning speed');
+            this.propertyService.getProps('LABORATORY_BUILDING', nextLevel).forEach(p => {
+                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'STORAGE') {
@@ -206,6 +173,33 @@ export class BuildingUpgradeModal {
                 this.saving = false;
             });
 
+        }
+    }
+
+    readableProgressStat(stat: string, value: number): string {
+        switch(stat) {
+            case 'GARAGE_SLOT': return '+' + value + ' Garage slot';
+            case 'MISSION_SPEED': return '+' + value + '% Mission speed';
+            case 'MISSION_MAX_BATTLES': return '+' + value + ' Battles per mission';
+            case 'BUILDER_QUEUE': return '+' + value + ' Builder queue size';
+            case 'BUILDER_SPEED': return '+' + value + '% Builder speed';
+            case 'BARRACKS_SIZE': return '+' + value + ' Barracks space';
+            case 'HERO_TRAIN_LEVEL': return '+' + value + ' Hero train level';
+            case 'VEHICLE_UPGRADE_LEVEL': return '+' + value + ' Vehicle upgrade level';
+            case 'INCUBATORS': return '+' + value + ' Incubator(s)';
+            case 'LAB_SPEED': return '+' + value + '% Incubation speed';
+            case 'JEWEL_UPGRADE_LEVEL': return '+' + value + ' Jewel upgrade level';
+            case 'GEAR_MOD_RARITY': return '+' + value + ' Gear rarity allowed to modify';
+            case 'GEAR_MOD_SPEED': return '+' + value + '% Gear modification speed';
+            case 'GEAR_BREAKDOWN_RARITY': return '+' + value + ' Gear rarity allowed to breakdown';
+            case 'GEAR_BREAKDOWN_RESOURCES': return '+' + value + '% Resources when breaking down gear';
+            case 'REROLL_GEAR_QUALITY': return 'New modification: Re roll quality';
+            case 'REROLL_GEAR_STAT': return 'New modification: Re roll stat';
+            case 'INC_GEAR_RARITY': return 'New modification: Increase rarity';
+            case 'REROLL_GEAR_JEWEL': return 'New modification: Re roll jewel slots';
+            case 'ADD_GEAR_JEWEL': return 'New modification: Add jewel slot';
+            case 'ADD_GEAR_SPECIAL_JEWEL': return 'New modification: Add set jewel slot';
+            default: return '';
         }
     }
 }

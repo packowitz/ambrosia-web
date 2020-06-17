@@ -19,7 +19,10 @@ export class PropertyService {
 
   getProperties(type: string): Observable<DynamicProperty[]> {
     if (this.properties[type]) {
-      return Observable.create(obs => obs.next(this.properties[type]));
+      return new Observable(observer => {
+        observer.next(this.properties[type]);
+        observer.complete();
+      });
     } else {
       return this.http.get<DynamicProperty[]>(API_URL + '/properties/type/' + type).pipe(map(p => {
         this.properties[type] = p;

@@ -11,8 +11,7 @@
           <div *ngIf="upgradeFinished()" class="upgrade-done-bubble">!</div>
           <div *ngIf="!getBuilding().upgradeTriggered && canUpgradeBuilding" class="upgrade-possible-bubble">!</div>
         </div>
-        <div class="flex-center font-small ml-4">
-          <div>Train Lvl: {{model.progress.maxTrainingLevel}}</div>
+        <div class="flex-center">
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
             <i class="ra ra-book font-larger"></i>
           </ion-button>
@@ -30,7 +29,10 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>
+        <div class="flex-space-between">
           Your Heroes
+          <div class="font-small">Train Lvl: {{model.progress.maxTrainingLevel}}</div>
+        </div>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
