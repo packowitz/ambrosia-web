@@ -11,8 +11,7 @@
           <div *ngIf="upgradeFinished()" class="upgrade-done-bubble">!</div>
           <div *ngIf="!getBuilding().upgradeTriggered && canUpgradeBuilding" class="upgrade-possible-bubble">!</div>
         </div>
-        <div class="flex-center font-small ml-4">
-          <div [class.color-red]="model.heroes.length >= model.progress.barrackSize">{{model.heroes.length}}/{{model.progress.barrackSize}}</div>
+        <div class="flex-center">
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
             <i class="ra ra-book font-larger"></i>
           </ion-button>
@@ -30,7 +29,10 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>
-          Your Heroes
+          <div class="flex-space-between">
+            Your Heroes
+            <div class="font-small" [class.color-red]="model.heroes.length >= model.progress.barrackSize">{{model.heroes.length}}/{{model.progress.barrackSize}}</div>
+          </div>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
