@@ -135,11 +135,11 @@ export class GaragePage {
   }
 
   canUpgradeVehicle(): boolean {
-    return this.vehicle && !this.vehicle.missionId && this.vehicle.level < this.vehicle.baseVehicle.maxLevel;
+    return this.vehicle && this.model.progress.vehicleUpgradeLevel > this.vehicle.level && !this.vehicle.missionId && this.vehicle.level < this.vehicle.baseVehicle.maxLevel;
   }
 
   canUpgradeVehiclePart(part: VehiclePart): boolean {
-    return !!this.propertyService.getUpgradeTime('PART_' + part.quality, part.level + 1);
+    return this.model.progress.vehicleUpgradeLevel > part.level && !!this.propertyService.getUpgradeTime('PART_' + part.quality, part.level + 1);
   }
 
   reloadVehicle() {

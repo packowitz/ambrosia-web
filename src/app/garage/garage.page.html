@@ -32,7 +32,7 @@
       <ion-card-title>
         <div class="flex-space-between">
           Your Garage Slots
-          <div class="font-small">Unused vehicle: {{getVehicleStorage()}}/{{model.progress.vehicleStorage}}</div>
+          <div class="font-small">Vehicle upgrade level: {{model.progress.vehicleUpgradeLevel}}</div>
         </div>
       </ion-card-title>
     </ion-card-header>
@@ -155,7 +155,6 @@
               <ion-item>
                 <div class="full-width flex-space-between">
                   <div>Spare Parts</div>
-                  <div>{{spareParts.length}}/{{model.progress.vehiclePartStorage}}</div>
                 </div></ion-item>
               <ion-item *ngFor="let part of spareParts">
                 <ion-img src="/assets/img/vehicles/parts/{{part.type + '_' + part.quality}}.png"></ion-img>

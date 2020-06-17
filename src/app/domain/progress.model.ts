@@ -7,8 +7,7 @@ export class Progress {
     builderSpeed: number;
     barrackSize: number;
     maxTrainingLevel: number;
-    vehicleStorage: number;
-    vehiclePartStorage: number;
+    vehicleUpgradeLevel: number;
     incubators: number;
     labSpeed: number;
     maxJewelUpgradingLevel: number;
