@@ -11,8 +11,12 @@ import {ConverterService} from '../services/converter.service';
           <div class="flex-space-between mb-2">
             <div class="flex-grow">&nbsp;</div>
             <div class="flex" *ngIf="fight.resourceType == 'STEAM'">
-              <div class="flex ml-2 mr-2">{{model.resources.premiumSteam}}/{{model.resources.premiumSteamMax}}<ion-img src="assets/icon/resources/PREMIUM_STEAM.png" class="resource-icon" alt="premium steam"></ion-img></div>
-              <div class="flex pointer" (click)="timer = !timer">{{timer ? ( model.resources.steam >= model.resources.steamMax ? 'max' : converter.time(model.resources.steamProduceIn) ) : model.resources.steam + '/' + model.resources.steamMax}}<ion-img src="assets/icon/resources/STEAM.png" class="resource-icon" alt="steam"></ion-img></div>
+              <div class="flex ml-2 mr-2">{{model.resources.premiumSteam}}/{{model.resources.premiumSteamMax}}<img src="assets/icon/resources/PREMIUM_STEAM.png" class="resource-icon" alt="premium steam"></div>
+              <div class="flex pointer" (click)="timer = !timer">{{timer ? ( model.resources.steam >= model.resources.steamMax ? 'max' : converter.time(model.resources.steamProduceIn) ) : model.resources.steam + '/' + model.resources.steamMax}}<img src="assets/icon/resources/STEAM.png" class="resource-icon" alt="steam"></div>
+            </div>
+            <div class="flex" *ngIf="fight.resourceType == 'COGWHEELS'">
+              <div class="flex ml-2 mr-2">{{model.resources.premiumCogwheels}}/{{model.resources.premiumCogwheelsMax}}<img src="assets/icon/resources/PREMIUM_COGWHEELS.png" class="resource-icon" alt="premium cogwheels"></div>
+              <div class="flex pointer" (click)="timer = !timer">{{timer ? ( model.resources.cogwheels >= model.resources.cogwheelsMax ? 'max' : converter.time(model.resources.cogwheelsProduceIn) ) : model.resources.cogwheels + '/' + model.resources.cogwheelsMax}}<img src="assets/icon/resources/COGWHEELS.png" class="resource-icon" alt="cogwheels"></div>
             </div>
           </div>
           <ion-range min="1" [max]="max" [(ngModel)]="numberOfBattles">
