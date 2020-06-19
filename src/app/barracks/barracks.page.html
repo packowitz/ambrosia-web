@@ -140,7 +140,7 @@
 
       <div *ngIf="tab == 'skills'">
         <div class="skill-list mt-2">
-          <div *ngFor="let skill of selectedHero.heroBase.skills" (click)="selectSkill(skill.number)" class="skill-tile flex-vert-center pointer mr-2" [class.icon-selected]="skill.number == selectedSkill.number">
+          <div *ngFor="let skill of getSkills()" (click)="selectSkill(skill.number)" class="skill-tile flex-vert-center pointer mr-2" [class.icon-selected]="skill.number == selectedSkill.number">
             <img [src]="'assets/icon/skills/' + skill.icon + '.png'" class="large-icon">
             <div *ngIf="getSkillLevel(skill) > 0" class="skill-level">{{getSkillLevel(skill)}}</div>
             <div *ngIf="getSkillLevel(skill) == 0" class="locked"><ion-icon name="lock-closed"></ion-icon></div>
@@ -148,7 +148,7 @@
         </div>
         <div *ngIf="selectedSkill">
           <div class="flex-space-between mt-1">
-            <div><strong>{{selectedSkill.name}}</strong><i *ngIf="selectedSkill.passive"> - passive</i></div>
+            <div><strong>{{selectedSkill.name}}</strong><i *ngIf="selectedSkill.passive"> - passive</i><i *ngIf="selectedSkill.skillActiveTrigger == 'NPC_ONLY'"> - NPC Skill</i></div>
             <div class="fake-link" (click)="openBuffInfo()">Buffs</div>
           </div>
           <div>{{selectedSkill.description}}</div>

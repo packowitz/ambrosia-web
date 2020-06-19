@@ -85,14 +85,14 @@ import {HeroSkill} from '../domain/heroSkill.model';
 
           <div *ngIf="tab == 'skills'" class="font-small">
             <div class="flex-start">
-              <div *ngFor="let heroSkill of hero.heroBase.skills" (click)="skill = heroSkill" class="skill-tile flex-vert-center pointer mr-2" [class.selected-skill]="heroSkill == skill">
+              <div *ngFor="let heroSkill of getSkills()" (click)="skill = heroSkill" class="skill-tile flex-vert-center pointer mr-2" [class.selected-skill]="heroSkill == skill">
                 <ion-img [src]="'assets/icon/skills/' + heroSkill.icon + '.png'" class="skill_icon"></ion-img>
                 <div *ngIf="getSkillLevel(heroSkill) > 0" class="skill-level">{{getSkillLevel(heroSkill)}}</div>
                 <div *ngIf="getSkillLevel(heroSkill) == 0" class="locked"><ion-icon name="lock-closed"></ion-icon></div>
               </div>
             </div>
             <div *ngIf="skill">
-              <div class="mt-1 bold">{{skill.name}}</div>
+              <div class="mt-1"><strong>{{skill.name}}</strong><i *ngIf="skill.passive"> - passive</i><i *ngIf="skill.skillActiveTrigger == 'NPC_ONLY'"> - NPC Skill</i></div>
               <div>{{skill.description}}</div>
               <div class="mt-1 flex-space-between">
                 <div>{{skill.cooldown > 1 ? 'Cooldown of ' + skill.cooldown : ' '}}</div>
@@ -130,6 +130,10 @@ export class HeroInfoPopup {
 
     close() {
         this.popoverController.dismiss();
+    }
+
+    getSkills(): HeroSkill[] {
+        return this.hero.heroBase.skills.filter(s => s.skillActiveTrigger !== 'NPC_ONLY' || this.getSkillLevel(s) > 0);
     }
 
     getSkillLevel(skill: HeroSkill): number {
