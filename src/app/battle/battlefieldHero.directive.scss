@@ -10,6 +10,10 @@
     border-color: #d6d6d6;
   }
 
+  &.container-boss {
+    background-color: rgba(116, 21, 136, 0.5);
+  }
+
   &.container-active {
     background-color: rgba(44, 195, 195, 0.5);
     border: 0;

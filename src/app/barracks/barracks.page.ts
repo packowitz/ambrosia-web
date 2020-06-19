@@ -168,6 +168,12 @@ export class BarracksPage {
     });
   }
 
+  setBoss(hero: Hero, issBoss: boolean) {
+    this.backendService.markHeroAsBoss(hero, issBoss).subscribe(data => {
+      this.selectHero(data);
+    });
+  }
+
   heroGainSkillLevel() {
     this.backendService.heroGainSkillLevel(this.selectedHero, this.selectedSkill.number).subscribe(data => {
       this.selectHero(data);

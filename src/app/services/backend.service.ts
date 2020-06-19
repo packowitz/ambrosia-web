@@ -178,6 +178,11 @@ export class BackendService {
             .pipe(map(action => action.hero));
     }
 
+    markHeroAsBoss(hero: Hero, isBoss: boolean): Observable<Hero> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/admin/hero/' + hero.id + '/boss/' + isBoss, null)
+            .pipe(map(action => action.hero));
+    }
+
     heroGainSkillLevel(hero: Hero, skillNumber: number): Observable<Hero> {
         return this.http.post<PlayerActionResponse>(API_URL + '/hero/' + hero.id + '/skill_up/' + skillNumber, null)
             .pipe(map(action => action.hero));

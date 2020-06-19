@@ -68,6 +68,13 @@
       <div *ngIf="isConfiguredInFight()" class="mt-1 mb-1 pt-1 pb-1 background-RED color-white flex-center bold">Be careful, this hero is already configured for fights!!</div>
 
       <div *ngIf="tab == 'stats'">
+        <ion-row *ngIf="model.player.serviceAccount">
+          <div class="flex-center full-width">
+            <div *ngIf="!selectedHero.markedAsBoss">This hero is not marked as 'Boss'</div>
+            <div *ngIf="selectedHero.markedAsBoss">This hero is marked as 'Boss'</div>
+            <ion-button class="ml-2" size="small" (click)="setBoss(selectedHero, !selectedHero.markedAsBoss)">Change it</ion-button>
+          </div>
+        </ion-row>
         <ion-row class="flex-start mt-2 ml-1 mr-1">
           <span class="width-80">Lvl {{selectedHero.level}}</span>
           <span class="flex-grow bar-outer with-text xp max-width-50p ml-2">

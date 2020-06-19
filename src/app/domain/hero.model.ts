@@ -22,6 +22,7 @@ export class Hero {
     ascLvl: number;
     ascPoints: number;
     ascPointsMax: number;
+    markedAsBoss: boolean;
     weapon?: Gear;
     shield?: Gear;
     helmet?: Gear;

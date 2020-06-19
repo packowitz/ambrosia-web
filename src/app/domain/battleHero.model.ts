@@ -12,6 +12,7 @@ export class BattleHero {
     level: number;
     stars: number;
     ascLvl: number;
+    markedAsBoss: boolean;
 
     buffs: BattleHeroBuff[];
 

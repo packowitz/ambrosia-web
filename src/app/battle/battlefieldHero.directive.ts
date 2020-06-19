@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Gear} from '../domain/gear.model';
 import {ConverterService} from '../services/converter.service';
 import {BattleHero} from '../domain/battleHero.model';
 import {Battle} from '../domain/battle.model';
@@ -12,6 +11,7 @@ import {BattleStepHeroState} from '../domain/battleStepHeroState.model';
            [class.container-active]="active"
            [class.container-dead]="isDead()"
            [class.container-targetable]="targetable"
+           [class.container-boss]="hero.markedAsBoss"
            (click)="selectHero()">
         <img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="full-width">
         <div class="bars flex-start">
