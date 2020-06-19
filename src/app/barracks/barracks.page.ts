@@ -137,7 +137,7 @@ export class BarracksPage {
   }
 
   getSkills(): HeroSkill[] {
-    return this.selectedHero.heroBase.skills.filter(s => s.skillActiveTrigger !== 'NPC_ONLY' || this.getSkillLevel(s) > 0);
+    return this.selectedHero.heroBase.skills.filter(s => s.skillActiveTrigger !== 'NPC_ONLY' || this.model.player.serviceAccount);
   }
 
   getSkillLevel(skill: HeroSkill): number {
