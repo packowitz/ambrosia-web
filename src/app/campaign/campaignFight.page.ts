@@ -38,6 +38,7 @@ export class CampaignFightPage {
   testFight = false;
 
   enterStory = 'FIGHT_ENTERED';
+  fightTooHighStory = 'FIGHT_TOO_HIGH';
 
   constructor(private route: ActivatedRoute,
               private backendService: BackendService,
@@ -72,6 +73,13 @@ export class CampaignFightPage {
 
     if (this.storyService.storyUnknown(this.enterStory)) {
       this.showStory();
+    }
+    if (this.storyService.storyUnknown(this.fightTooHighStory)) {
+      let highestHeroLevel = 0;
+      this.model.heroes.forEach(h => { if (h.level > highestHeroLevel) { highestHeroLevel = h.level; } });
+      if ((highestHeroLevel + 3) < this.fight.level) {
+        this.storyService.showStory(this.fightTooHighStory).subscribe(() => console.log(this.fightTooHighStory + ' story finished'));
+      }
     }
   }
 
