@@ -4,19 +4,19 @@
     <div>{{register ? 'Register with': 'Login to'}} Ambrosia</div>
     <ion-item *ngIf="register">
       <ion-label position="floating">InGameName</ion-label>
-      <ion-input type="text" [(ngModel)]="name" minlength="4" required></ion-input>
+      <ion-input type="text" [(ngModel)]="name" minlength="4" required (keyup.enter)="register ? doRegister() : doLogin()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" [(ngModel)]="email" minlength="6" required></ion-input>
+      <ion-input type="text" [(ngModel)]="email" minlength="6" required (keyup.enter)="register ? doRegister() : doLogin()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" [(ngModel)]="password" minlength="8" required></ion-input>
+      <ion-input type="password" [(ngModel)]="password" minlength="8" required (keyup.enter)="register ? doRegister() : doLogin()"></ion-input>
     </ion-item>
     <ion-item *ngIf="register">
       <ion-label position="floating">Retype password</ion-label>
-      <ion-input type="password" [(ngModel)]="rePassword"></ion-input>
+      <ion-input type="password" [(ngModel)]="rePassword" (keyup.enter)="register ? doRegister() : doLogin()"></ion-input>
     </ion-item>
     <ion-item lines="none" text-center *ngIf="!register">
       <ion-button (click)="doLogin()" [disabled]="!email || !password">Login</ion-button>
