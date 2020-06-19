@@ -74,13 +74,6 @@ export class CampaignFightPage {
     if (this.storyService.storyUnknown(this.enterStory)) {
       this.showStory();
     }
-    if (this.storyService.storyUnknown(this.fightTooHighStory)) {
-      let highestHeroLevel = 0;
-      this.model.heroes.forEach(h => { if (h.level > highestHeroLevel) { highestHeroLevel = h.level; } });
-      if ((highestHeroLevel + 3) < this.fight.level) {
-        this.storyService.showStory(this.fightTooHighStory).subscribe(() => console.log(this.fightTooHighStory + ' story finished'));
-      }
-    }
   }
 
   initMapCampaign(mapId: number, posX: number, posY: number) {
@@ -88,6 +81,7 @@ export class CampaignFightPage {
     this.tile = this.map.tiles.find(t => t.posX === posX && t.posY === posY);
     this.backendService.getFight(this.tile.fightId).subscribe(data => {
       this.fight = data;
+      this.checkFightTooHighStory();
     });
   }
 
@@ -95,6 +89,16 @@ export class CampaignFightPage {
     this.backendService.getFight(fightId).subscribe(data => {
       this.fight = data;
     });
+  }
+
+  checkFightTooHighStory() {
+    if (this.storyService.storyUnknown(this.fightTooHighStory)) {
+      let highestHeroLevel = 0;
+      this.model.heroes.forEach(h => { if (h.level > highestHeroLevel) { highestHeroLevel = h.level; } });
+      if ((highestHeroLevel + 3) < this.fight.level) {
+        this.storyService.showStory(this.fightTooHighStory).subscribe(() => console.log(this.fightTooHighStory + ' story finished'));
+      }
+    }
   }
 
   close() {
