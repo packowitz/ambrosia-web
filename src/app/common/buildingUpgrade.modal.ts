@@ -17,7 +17,7 @@ import {ConverterService} from '../services/converter.service';
           <div class="flex">{{model.resources.iron}}/{{model.resources.ironMax}}
             <ion-img src="assets/icon/resources/IRON.png" class="resource-icon"></ion-img>
           </div>
-          <div class="flex">{{model.resources.steal}}/{{model.resources.stealMax}}
+          <div class="flex">{{model.resources.steel}}/{{model.resources.steelMax}}
             <ion-img src="assets/icon/resources/STEEL.png" class="resource-icon"></ion-img>
           </div>
           <div class="flex">{{model.resources.coins}}
@@ -40,7 +40,8 @@ import {ConverterService} from '../services/converter.service';
           {{upgradeText[buildingType]}}
         </div>
         <div *ngIf="!getBuilding().upgradeTriggered">
-          <div class="mt-2 flex-center" *ngIf="!getUpgradeSeconds()">Cannot upgrade {{converter.readableIdentifier(buildingType)}} higher than level {{getBuilding().level}}</div>
+          <div class="mt-2 flex-center" *ngIf="!getUpgradeSeconds()">Cannot upgrade {{converter.readableIdentifier(buildingType)}} higher
+            than level {{getBuilding().level}}</div>
           <div class="mt-3" *ngIf="getUpgradeSeconds()">
             Upgrade {{converter.readableIdentifier(buildingType)}} to level {{getBuilding().level + 1}} to get:
             <ul>
@@ -50,13 +51,17 @@ import {ConverterService} from '../services/converter.service';
               <div *ngIf="hasEnoughResources()">Upgrade costs</div>
               <div *ngIf="!hasEnoughResources()">Insufficient resources</div>
               <div *ngFor="let cost of getUpgradeCosts()" class="flex">
-                <div [class.color-red]="!model.hasEnoughResources(cost.resourceType, cost.value1)" [class.color-green]="model.hasEnoughResources(cost.resourceType, cost.value1)">{{model.getResourceAmount(cost.resourceType)}}</div>/{{cost.value1}}
+                <div [class.color-red]="!model.hasEnoughResources(cost.resourceType, cost.value1)"
+                     [class.color-green]="model.hasEnoughResources(cost.resourceType, cost.value1)">{{model.getResourceAmount(cost.resourceType)}}</div>
+                /{{cost.value1}}
                 <ion-img src="assets/icon/resources/{{cost.resourceType}}.png" class="resource-icon"></ion-img>
               </div>
             </div>
             <div class="mt-2 flex-center">
               <ion-button color="danger" fill="outline" (click)="closeModal()">Close</ion-button>
-              <ion-button [disabled]="!hasEnoughResources() || saving || model.upgrades.length >= model.progress.builderQueueLength" (click)="performUpgrade()">Upgrade ({{converter.timeWithUnit(getUpgradeSeconds())}})</ion-button>
+              <ion-button [disabled]="!hasEnoughResources() || saving || model.upgrades.length >= model.progress.builderQueueLength"
+                          (click)="performUpgrade()">Upgrade ({{converter.timeWithUnit(getUpgradeSeconds())}})
+              </ion-button>
             </div>
           </div>
         </div>

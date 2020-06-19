@@ -17,8 +17,8 @@ import {ConverterService} from '../services/converter.service';
           <div class="flex">{{model.resources.iron}}/{{model.resources.ironMax}}
             <ion-img src="assets/icon/resources/IRON.png" class="resource-icon"></ion-img>
           </div>
-          <div class="flex">{{model.resources.steal}}/{{model.resources.stealMax}}
-            <ion-img src="assets/icon/resources/STEAL.png" class="resource-icon"></ion-img>
+          <div class="flex">{{model.resources.steel}}/{{model.resources.steelMax}}
+            <ion-img src="assets/icon/resources/STEEL.png" class="resource-icon"></ion-img>
           </div>
           <div class="flex">{{model.resources.coins}}
             <ion-img src="assets/icon/resources/COINS.png" class="resource-icon"></ion-img>

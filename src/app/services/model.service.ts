@@ -120,7 +120,7 @@ export class Model {
         if (type === 'RUBIES') { return this.resources.rubies; }
         if (type === 'METAL') { return this.resources.metal; }
         if (type === 'IRON') { return this.resources.iron; }
-        if (type === 'STEAL') { return this.resources.steal; }
+        if (type === 'STEEL') { return this.resources.steel; }
         if (type === 'WOOD') { return this.resources.wood; }
         if (type === 'BROWN_COAL') { return this.resources.brownCoal; }
         if (type === 'BLACK_COAL') { return this.resources.blackCoal; }

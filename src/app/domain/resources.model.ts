@@ -21,8 +21,8 @@ export class Resources {
     metalMax: number;
     iron: number;
     ironMax: number;
-    steal: number;
-    stealMax: number;
+    steel: number;
+    steelMax: number;
     wood: number;
     woodMax: number;
     brownCoal: number;
