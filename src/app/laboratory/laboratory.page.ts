@@ -9,6 +9,7 @@ import {Incubator} from '../domain/incubator.model';
 import {Hero} from '../domain/hero.model';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {StoryService} from '../services/story.service';
+import {DynamicProperty} from '../domain/property.model';
 
 @Component({
   selector: 'laboratory',
@@ -20,7 +21,6 @@ export class LaboratoryPage {
 
   buildingType = "LABORATORY";
   enterStory = this.buildingType + '_ENTERED';
-  canUpgradeBuilding = false;
 
   hero: Hero;
 
@@ -38,7 +38,6 @@ export class LaboratoryPage {
   }
 
   ionViewWillEnter() {
-    this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
     if (this.storyService.storyUnknown(this.enterStory)) {
       this.showStory();
     }
@@ -46,6 +45,27 @@ export class LaboratoryPage {
 
   showStory() {
     this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
+  }
+
+  getUpgradeState(): string {
+    if (this.upgradeInProgress()) { return 'in-progress'; }
+    if (this.upgradeFinished()) { return 'done'; }
+    if (this.canUpgradeBuilding()) { return 'possible'; }
+    return 'not-possible';
+  }
+
+  getUpgradeCosts(): DynamicProperty[] {
+    return this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
+  }
+
+  canUpgradeBuilding(): boolean {
+    let enoughResources = true;
+    this.getUpgradeCosts().forEach(c => {
+      if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
+        enoughResources = false;
+      }
+    });
+    return enoughResources;
   }
 
   getBuilding() {

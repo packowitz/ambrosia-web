@@ -13,6 +13,7 @@ import {UpgradeModal} from '../common/upgrade.modal';
 import {GearUpgradeModal} from './gearUpgrade.modal';
 import {ModificationSelectionPopover} from './modification-selection-popover';
 import {StoryService} from '../services/story.service';
+import {DynamicProperty} from '../domain/property.model';
 
 @Component({
   selector: 'forge',
@@ -65,12 +66,29 @@ export class ForgePage {
     this.model.gears.forEach(g => g.markedToBreakdown = false);
   }
 
-  canUpgradeBuilding(): boolean {
-    return this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
-  }
-
   showStory() {
     this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
+  }
+
+  getUpgradeState(): string {
+    if (this.upgradeInProgress()) { return 'in-progress'; }
+    if (this.upgradeFinished()) { return 'done'; }
+    if (this.canUpgradeBuilding()) { return 'possible'; }
+    return 'not-possible';
+  }
+
+  getUpgradeCosts(): DynamicProperty[] {
+    return this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
+  }
+
+  canUpgradeBuilding(): boolean {
+    let enoughResources = true;
+    this.getUpgradeCosts().forEach(c => {
+      if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
+        enoughResources = false;
+      }
+    });
+    return enoughResources;
   }
 
   getBuilding() {

@@ -7,9 +7,7 @@
       <div class="flex-space-between scrollable-vert">
         <div class="position-relative pointer" (click)="openUpgradeModal()">
           Barracks L{{getBuilding().level}}
-          <div *ngIf="upgradeInProgress()" class="upgrade-in-progress-bubble">!</div>
-          <div *ngIf="upgradeFinished()" class="upgrade-done-bubble">!</div>
-          <div *ngIf="!getBuilding().upgradeTriggered && canUpgradeBuilding" class="upgrade-possible-bubble">!</div>
+          <div class="upgrade-bubble upgrade-{{getUpgradeState()}}">!</div>
         </div>
         <div class="flex-center">
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">

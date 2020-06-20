@@ -112,12 +112,13 @@ export class BuildingUpgradeModal {
     }
 
     hasEnoughResources(): boolean {
+        let enoughResources = true;
         this.getUpgradeCosts().forEach(c => {
             if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
-                return false;
+                enoughResources = false;
             }
         });
-        return true;
+        return enoughResources;
     }
 
     getBuilding() {

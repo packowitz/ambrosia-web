@@ -6,6 +6,7 @@ import {PropertyService} from '../services/property.service';
 import {AlertController, ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
+import {DynamicProperty} from '../domain/property.model';
 
 @Component({
   selector: 'storage',
@@ -16,7 +17,6 @@ export class StoragePage {
   saving = false;
 
   buildingType = "STORAGE";
-  canUpgradeBuilding = false;
 
   constructor(private backendService: BackendService,
               private converter: ConverterService,
@@ -30,8 +30,25 @@ export class StoragePage {
     }
   }
 
-  ionViewWillEnter() {
-    this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+  getUpgradeState(): string {
+    if (this.upgradeInProgress()) { return 'in-progress'; }
+    if (this.upgradeFinished()) { return 'done'; }
+    if (this.canUpgradeBuilding()) { return 'possible'; }
+    return 'not-possible';
+  }
+
+  getUpgradeCosts(): DynamicProperty[] {
+    return this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
+  }
+
+  canUpgradeBuilding(): boolean {
+    let enoughResources = true;
+    this.getUpgradeCosts().forEach(c => {
+      if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
+        enoughResources = false;
+      }
+    });
+    return enoughResources;
   }
 
   getBuilding() {
@@ -63,7 +80,6 @@ export class StoragePage {
         buildingType: this.buildingType
       }
     }).then(modal => {
-      modal.onDidDismiss().then(() => this.ionViewWillEnter());
       modal.present();
     });
   }

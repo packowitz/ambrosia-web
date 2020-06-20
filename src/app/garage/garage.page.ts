@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {StoryService} from '../services/story.service';
+import {DynamicProperty} from '../domain/property.model';
 
 export class GarageSlot {
   slot: number;
@@ -33,7 +34,6 @@ export class GaragePage {
 
   buildingType = "GARAGE";
   enterStory = this.buildingType + '_ENTERED';
-  canUpgradeBuilding = false;
 
   slots: GarageSlot[] = [];
   vehicle: Vehicle;
@@ -54,7 +54,6 @@ export class GaragePage {
   }
 
   ionViewWillEnter() {
-    this.canUpgradeBuilding = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
     this.vehicle = null;
     this.initSlots();
     if (this.storyService.storyUnknown(this.enterStory)) {
@@ -64,6 +63,27 @@ export class GaragePage {
 
   showStory() {
     this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
+  }
+
+  getUpgradeState(): string {
+    if (this.upgradeInProgress()) { return 'in-progress'; }
+    if (this.upgradeFinished()) { return 'done'; }
+    if (this.canUpgradeBuilding()) { return 'possible'; }
+    return 'not-possible';
+  }
+
+  getUpgradeCosts(): DynamicProperty[] {
+    return this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
+  }
+
+  canUpgradeBuilding(): boolean {
+    let enoughResources = true;
+    this.getUpgradeCosts().forEach(c => {
+      if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
+        enoughResources = false;
+      }
+    });
+    return enoughResources;
   }
 
   getBuilding() {
@@ -101,7 +121,6 @@ export class GaragePage {
         buildingType: this.buildingType
       }
     }).then(modal => {
-      modal.onDidDismiss().then(() => this.ionViewWillEnter());
       modal.present();
     });
   }

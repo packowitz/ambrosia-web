@@ -10,6 +10,7 @@ import {JewelryService} from '../services/jewelry.service';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {JewelUpgradeModal} from './jewelUpgrade.modal';
 import {StoryService} from '../services/story.service';
+import {DynamicProperty} from '../domain/property.model';
 
 @Component({
   selector: 'jewelry',
@@ -48,8 +49,25 @@ export class JewelryPage {
     this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
+  getUpgradeState(): string {
+    if (this.upgradeInProgress()) { return 'in-progress'; }
+    if (this.upgradeFinished()) { return 'done'; }
+    if (this.canUpgradeBuilding()) { return 'possible'; }
+    return 'not-possible';
+  }
+
+  getUpgradeCosts(): DynamicProperty[] {
+    return this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
+  }
+
   canUpgradeBuilding(): boolean {
-    return this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1).length > 0;
+    let enoughResources = true;
+    this.getUpgradeCosts().forEach(c => {
+      if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
+        enoughResources = false;
+      }
+    });
+    return enoughResources;
   }
 
   getBuilding() {

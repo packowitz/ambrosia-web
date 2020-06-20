@@ -534,49 +534,31 @@ ion-row.table-row {
   right: 2px;
 }
 
-.upgrade-in-progress-bubble {
+.upgrade-bubble {
   position: absolute;
   top: -4px;
   right: -14px;
   width: 18px;
   height: 18px;
-  background-color: rgba(247, 207, 13, 0.75);
-  color: #000000;
   border-radius: 50%;
   font-size: 12px;
   font-weight: 600;
   text-align: center;
-  border: 1px solid #b1b1b1;
-}
+  color: #000000;
 
-.upgrade-possible-bubble {
-  position: absolute;
-  top: -4px;
-  right: -14px;
-  width: 18px;
-  height: 18px;
-  background-color: rgba(16, 127, 29, 0.75);
-  color: #000000;
-  border-radius: 50%;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
   border: 1px solid #b1b1b1;
-}
-
-.upgrade-done-bubble {
-  position: absolute;
-  top: -4px;
-  right: -14px;
-  width: 18px;
-  height: 18px;
-  background-color: rgba(234, 20, 20, 0.75);
-  color: #000000;
-  border-radius: 50%;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
-  border: 1px solid #b1b1b1;
+  &.upgrade-in-progress {
+    background-color: rgba(247, 207, 13, 0.75);
+  }
+  &.upgrade-done {
+    background-color: rgba(234, 20, 20, 0.75);
+  }
+  &.upgrade-possible {
+    background-color: rgba(16, 127, 29, 0.75);
+  }
+  &.upgrade-not-possible {
+    background-color: rgba(255, 255, 255, 0.75);
+  }
 }
 
 .avatar-done-bubble {
