@@ -3,8 +3,8 @@ import {ModalController, NavParams} from '@ionic/angular';
 import {Model} from '../services/model.service';
 import {BackendService} from '../services/backend.service';
 import {PropertyService} from '../services/property.service';
-import {DynamicProperty} from '../domain/property.model';
 import {ConverterService} from '../services/converter.service';
+import {BuildingService} from '../services/building.service';
 
 @Component({
     selector: 'building-upgrade-modal',
@@ -40,17 +40,17 @@ import {ConverterService} from '../services/converter.service';
           {{upgradeText[buildingType]}}
         </div>
         <div *ngIf="!getBuilding().upgradeTriggered">
-          <div class="mt-2 flex-center" *ngIf="!getUpgradeSeconds()">Cannot upgrade {{converter.readableIdentifier(buildingType)}} higher
+          <div class="mt-2 flex-center" *ngIf="buildingService.getUpgradeSeconds(buildingType) < 0">Cannot upgrade {{converter.readableIdentifier(buildingType)}} higher
             than level {{getBuilding().level}}</div>
-          <div class="mt-3" *ngIf="getUpgradeSeconds()">
+          <div class="mt-3" *ngIf="buildingService.getUpgradeSeconds(buildingType) > 0">
             Upgrade {{converter.readableIdentifier(buildingType)}} to level {{getBuilding().level + 1}} to get:
             <ul>
               <li *ngFor="let upgrade of getUpgrades()">{{upgrade}}</li>
             </ul>
             <div class="flex-space-between">
-              <div *ngIf="hasEnoughResources()">Upgrade costs</div>
-              <div *ngIf="!hasEnoughResources()">Insufficient resources</div>
-              <div *ngFor="let cost of getUpgradeCosts()" class="flex">
+              <div *ngIf="buildingService.canEffortUpgradeBuilding(buildingType)">Upgrade costs</div>
+              <div *ngIf="!buildingService.canEffortUpgradeBuilding(buildingType)">Insufficient resources</div>
+              <div *ngFor="let cost of buildingService.getUpgradeCosts(buildingType)" class="flex">
                 <div [class.color-red]="!model.hasEnoughResources(cost.resourceType, cost.value1)"
                      [class.color-green]="model.hasEnoughResources(cost.resourceType, cost.value1)">{{model.getResourceAmount(cost.resourceType)}}</div>
                 /{{cost.value1}}
@@ -59,8 +59,8 @@ import {ConverterService} from '../services/converter.service';
             </div>
             <div class="mt-2 flex-center">
               <ion-button color="danger" fill="outline" (click)="closeModal()">Close</ion-button>
-              <ion-button [disabled]="!hasEnoughResources() || saving || model.upgrades.length >= model.progress.builderQueueLength"
-                          (click)="performUpgrade()">Upgrade ({{converter.timeWithUnit(getUpgradeSeconds())}})
+              <ion-button [disabled]="!buildingService.canEffortUpgradeBuilding(buildingType) || saving || model.upgrades.length >= model.progress.builderQueueLength"
+                          (click)="performUpgrade()">Upgrade ({{converter.timeWithUnit(buildingService.getUpgradeSeconds(buildingType))}})
               </ion-button>
             </div>
           </div>
@@ -95,34 +95,14 @@ export class BuildingUpgradeModal {
                 private navParams: NavParams,
                 public model: Model,
                 public converter: ConverterService,
+                public buildingService: BuildingService,
                 private backendService: BackendService,
                 private propertyService: PropertyService) {
         this.buildingType = navParams.get('buildingType');
     }
 
-    getUpgradeSeconds(): number {
-        let upTimes = this.propertyService.getUpgradeTime(this.buildingType, this.getBuilding().level + 1);
-        if (upTimes.length === 1) {
-            return upTimes[0].value1;
-        }
-    }
-
-    getUpgradeCosts(): DynamicProperty[] {
-        return this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
-    }
-
-    hasEnoughResources(): boolean {
-        let enoughResources = true;
-        this.getUpgradeCosts().forEach(c => {
-            if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
-                enoughResources = false;
-            }
-        });
-        return enoughResources;
-    }
-
     getBuilding() {
-        return this.model.getBuilding(this.buildingType);
+        return this.buildingService.getBuilding(this.buildingType);
     }
 
     getUpgrades(): string[] {
@@ -171,7 +151,7 @@ export class BuildingUpgradeModal {
     }
 
     performUpgrade() {
-        if (this.hasEnoughResources() && this.getUpgradeSeconds() && this.model.upgrades.length < this.model.progress.builderQueueLength && !this.getBuilding().upgradeTriggered) {
+        if (this.buildingService.canEffortUpgradeBuilding(this.buildingType) && this.model.upgrades.length < this.model.progress.builderQueueLength && !this.getBuilding().upgradeTriggered) {
             this.saving = true;
             this.backendService.upgradeBuilding(this.buildingType).subscribe(data => {
                 this.saving = false;

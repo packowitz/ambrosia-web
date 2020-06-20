@@ -13,7 +13,7 @@ import {UpgradeModal} from '../common/upgrade.modal';
 import {GearUpgradeModal} from './gearUpgrade.modal';
 import {ModificationSelectionPopover} from './modification-selection-popover';
 import {StoryService} from '../services/story.service';
-import {DynamicProperty} from '../domain/property.model';
+import {BuildingService} from '../services/building.service';
 
 @Component({
   selector: 'forge',
@@ -40,13 +40,14 @@ export class ForgePage {
   constructor(private backendService: BackendService,
               private converter: ConverterService,
               public propertyService: PropertyService,
+              public buildingService: BuildingService,
               public model: Model,
               public enumService: EnumService,
               private router: Router,
               private modalCtrl: ModalController,
               private popoverCtrl: PopoverController,
               private storyService: StoryService) {
-    if (!this.getBuilding()) {
+    if (!this.buildingService.getBuilding(this.buildingType)) {
       this.close();
     }
     this.model.gears.forEach(g => {
@@ -70,41 +71,16 @@ export class ForgePage {
     this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
-  getUpgradeState(): string {
-    if (this.upgradeInProgress()) { return 'in-progress'; }
-    if (this.upgradeFinished()) { return 'done'; }
-    if (this.canUpgradeBuilding()) { return 'possible'; }
-    return 'not-possible';
-  }
-
-  getUpgradeCosts(): DynamicProperty[] {
-    return this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
-  }
-
-  canUpgradeBuilding(): boolean {
-    let enoughResources = true;
-    this.getUpgradeCosts().forEach(c => {
-      if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
-        enoughResources = false;
-      }
-    });
-    return enoughResources;
-  }
-
-  getBuilding() {
-    return this.model.getBuilding(this.buildingType);
-  }
-
   close() {
     this.router.navigateByUrl('/home');
   }
 
-  upgradeInProgress(): boolean {
-    return this.getBuilding().upgradeTriggered && !this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
-  }
-
-  upgradeFinished(): boolean {
-    return this.getBuilding().upgradeTriggered && !!this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
+  modificationFinished(gear: Gear): boolean {
+    let idx = this.model.upgrades.findIndex(u => u.gearId === gear.id);
+    if (idx !== -1) {
+      return this.model.upgrades[idx].finished;
+    }
+    return false;
   }
 
   toggleQuality(qual) {

@@ -34,8 +34,11 @@
   <ion-card>
     <div class="scrollable-list pa-2" *ngIf="model.buildings">
       <div *ngFor="let building of buildings" class="flex-vert-center mr-4">
-        <div class="building-avatar">
-          <ion-img src="assets/icon/buildings/{{building.type}}.png" class="pointer" (click)="gotoBuilding(building.type)"></ion-img>
+        <div class="position-relative">
+          <div class="building-avatar">
+            <img src="assets/icon/buildings/{{building.type}}.png" class="pointer" (click)="gotoBuilding(building.type)">
+          </div>
+          <div *ngIf="showBuildingAlert(building)" class="avatar-bubble alert">!</div>
         </div>
         <div class="mt-1">{{converter.readableIdentifier(building.type)}}</div>
       </div>
@@ -44,14 +47,14 @@
 
   <ion-card *ngIf="model.missions && model.missions.length > 0">
     <div class="scrollable-list pa-2">
-      <div *ngFor="let mission of model.missions" class="position-relative">
+      <div *ngFor="let mission of model.missions" class="position-relative mr-4">
         <div class="mission-avatar pointer" (click)="openMission(mission)">
           <img src="assets/img/vehicles/{{model.getVehicle(mission.vehicleId).baseVehicle.avatar}}.png">
           <div class="ml-1 mr-1 time-bar">
             <span class="time-bar-inner" [style.width]="(100 * (mission.duration - mission.secondsUntilDone) / mission.duration) + '%'"></span>
           </div>
         </div>
-        <div *ngIf="mission.missionFinished" class="avatar-done-bubble">!</div>
+        <div *ngIf="showMissionAlert(mission)" class="avatar-bubble alert">!</div>
       </div>
     </div>
   </ion-card>

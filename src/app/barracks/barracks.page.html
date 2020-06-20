@@ -6,8 +6,8 @@
     <ion-title>
       <div class="flex-space-between scrollable-vert">
         <div class="position-relative pointer" (click)="openUpgradeModal()">
-          Barracks L{{getBuilding().level}}
-          <div class="upgrade-bubble upgrade-{{getUpgradeState()}}">!</div>
+          Barracks L{{buildingService.getBuilding(buildingType).level}}
+          <div class="upgrade-bubble {{buildingService.getUpgradeCss(buildingType)}}">!</div>
         </div>
         <div class="flex-center">
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
@@ -34,8 +34,11 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div class="scrollable-list">
-        <hero-icon *ngFor="let hero of model.heroes" class="mr-2" [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [clickableOnMission]="true" [showInfo]="false" [selected]="hero == selectedHero"></hero-icon>
+      <div class="scrollable-list pt-2">
+        <div *ngFor="let hero of model.heroes" class="position-relative mr-2">
+          <hero-icon [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [clickableOnMission]="true" [showInfo]="false" [selected]="hero == selectedHero"></hero-icon>
+          <div *ngIf="hero.skillPoints > 0" class="avatar-bubble alert">!</div>
+        </div>
       </div>
     </ion-card-content>
   </ion-card>
@@ -56,7 +59,7 @@
           <ion-label>Stats</ion-label>
         </ion-segment-button>
         <ion-segment-button value="skills">
-          <ion-label>Skills</ion-label>
+          <ion-label class="position-relative">Skills<div *ngIf="selectedHero.skillPoints > 0" class="upgrade-bubble upgrade-done">!</div></ion-label>
         </ion-segment-button>
         <ion-segment-button value="gear">
           <ion-label>Gear</ion-label>

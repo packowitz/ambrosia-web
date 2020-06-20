@@ -14,7 +14,7 @@ import {GearInfoModal} from '../common/gearInfo.modal';
 import {BuffInfoModal} from '../common/buffInfo.modal';
 import {StoryService} from '../services/story.service';
 import {EnumService} from '../services/enum.service';
-import {DynamicProperty} from '../domain/property.model';
+import {BuildingService} from '../services/building.service';
 
 @Component({
   selector: 'barracks',
@@ -38,6 +38,7 @@ export class BarracksPage {
               public enumService: EnumService,
               private router: Router,
               private propertyService: PropertyService,
+              public buildingService: BuildingService,
               private modalCtrl: ModalController,
               private storyService: StoryService) {
     console.log("BarracksPage.constructor");
@@ -61,39 +62,6 @@ export class BarracksPage {
 
   showStory() {
     this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
-  }
-
-  getUpgradeState(): string {
-    if (this.upgradeInProgress()) { return 'in-progress'; }
-    if (this.upgradeFinished()) { return 'done'; }
-    if (this.canUpgradeBuilding()) { return 'possible'; }
-    return 'not-possible';
-  }
-
-  getUpgradeCosts(): DynamicProperty[] {
-    return this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
-  }
-
-  canUpgradeBuilding(): boolean {
-    let enoughResources = true;
-    this.getUpgradeCosts().forEach(c => {
-      if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
-        enoughResources = false;
-      }
-    });
-    return enoughResources;
-  }
-
-  getBuilding() {
-    return this.model.getBuilding(this.buildingType);
-  }
-
-  upgradeInProgress(): boolean {
-    return this.getBuilding().upgradeTriggered && !this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
-  }
-
-  upgradeFinished(): boolean {
-    return this.getBuilding().upgradeTriggered && !!this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
   }
 
   close() {

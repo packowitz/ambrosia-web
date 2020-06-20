@@ -7,6 +7,7 @@ import {BackendService} from '../services/backend.service';
 import {OtherTeam} from '../domain/otherTeam.model';
 import {Router} from '@angular/router';
 import {StoryService} from '../services/story.service';
+import {BuildingService} from '../services/building.service';
 
 @Component({
   selector: 'app-arena',
@@ -29,6 +30,7 @@ export class ArenaPage implements OnInit {
               private converter: ConverterService,
               private backendService: BackendService,
               private storyService: StoryService,
+              public buildingService: BuildingService,
               private router: Router) { }
 
   ngOnInit() {
@@ -51,10 +53,6 @@ export class ArenaPage implements OnInit {
 
   showStory() {
     this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
-  }
-
-  getBuilding() {
-    return this.model.getBuilding(this.buildingType);
   }
 
   close() {

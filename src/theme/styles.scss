@@ -369,7 +369,7 @@ ion-row.table-row {
   width: 50px;
   overflow: hidden;
   box-shadow: 0 0 0 2px #ce7f45, 0 0 0 5px #a9650d, 0 0 0 7px #7d4e0a;
-  ion-img {
+  img {
     padding: 4px;
   }
   &:hover {
@@ -542,6 +542,7 @@ ion-row.table-row {
   height: 18px;
   border-radius: 50%;
   font-size: 12px;
+  line-height: normal;
   font-weight: 600;
   text-align: center;
   color: #000000;
@@ -561,18 +562,24 @@ ion-row.table-row {
   }
 }
 
-.avatar-done-bubble {
+.avatar-bubble {
   position: absolute;
   top: -6px;
   right: -8px;
   width: 18px;
   height: 18px;
-  background-color: rgba(234, 20, 20, 0.9);
   color: #000000;
   border-radius: 50%;
   font-size: 12px;
   font-weight: 600;
   text-align: center;
+
+  &.alert {
+    background-color: rgba(234, 20, 20, 0.9);
+  }
+  &.info {
+    background-color: rgba(16, 127, 29, 0.75);
+  }
 }
 
 .hero-stars {

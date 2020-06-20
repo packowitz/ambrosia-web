@@ -6,7 +6,7 @@
     <ion-title>
       <div class="flex-space-between">
         <div class="flex-center">
-          Arena L{{getBuilding().level}}
+          Arena L{{buildingService.getBuilding(buildingType).level}}
         </div>
         <div class="flex-center">
           <ion-button size="small" fill="clear" color="dark" (click)="close()">

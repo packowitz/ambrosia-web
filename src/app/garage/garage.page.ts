@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {StoryService} from '../services/story.service';
-import {DynamicProperty} from '../domain/property.model';
+import {BuildingService} from '../services/building.service';
 
 export class GarageSlot {
   slot: number;
@@ -46,9 +46,10 @@ export class GaragePage {
               private popoverCtrl: PopoverController,
               public converter: ConverterService,
               public propertyService: PropertyService,
+              public buildingService: BuildingService,
               private modalCtrl: ModalController,
               private storyService: StoryService) {
-    if (!this.getBuilding()) {
+    if (!this.buildingService.getBuilding(this.buildingType)) {
       this.close();
     }
   }
@@ -63,43 +64,6 @@ export class GaragePage {
 
   showStory() {
     this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
-  }
-
-  getUpgradeState(): string {
-    if (this.upgradeInProgress()) { return 'in-progress'; }
-    if (this.upgradeFinished()) { return 'done'; }
-    if (this.canUpgradeBuilding()) { return 'possible'; }
-    return 'not-possible';
-  }
-
-  getUpgradeCosts(): DynamicProperty[] {
-    return this.propertyService.getUpgradeCosts(this.buildingType, this.getBuilding().level + 1);
-  }
-
-  canUpgradeBuilding(): boolean {
-    let enoughResources = true;
-    this.getUpgradeCosts().forEach(c => {
-      if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
-        enoughResources = false;
-      }
-    });
-    return enoughResources;
-  }
-
-  getBuilding() {
-    return this.model.getBuilding(this.buildingType);
-  }
-
-  upgradeInProgress(): boolean {
-    return this.getBuilding().upgradeTriggered && !this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
-  }
-
-  upgradeFinished(): boolean {
-    return this.getBuilding().upgradeTriggered && !!this.model.upgrades.find(u => u.buildingType === this.buildingType && u.finished);
-  }
-
-  getVehicleStorage(): number {
-    return this.model.vehicles.filter(v => !v.slot).length;
   }
 
   initSlots() {

@@ -6,8 +6,8 @@
     <ion-title>
       <div class="flex-space-between scrollable-vert">
         <div class="position-relative pointer" (click)="openBuildingUpgradeModal()">
-          Forge L{{getBuilding().level}}
-          <div class="upgrade-bubble upgrade-{{getUpgradeState()}}">!</div>
+          Forge L{{buildingService.getBuilding(buildingType).level}}
+          <div class="upgrade-bubble {{buildingService.getUpgradeCss(buildingType)}}">!</div>
         </div>
         <div class="flex-center">
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
@@ -107,8 +107,9 @@
           <div *ngIf="model.progress.gearModificationRarity >= converter.rarityStars(gear.rarity) && !gear.modificationInProgress">
             <ion-button fill="none" color="secondary" (click)="modificationSelection(gear, $event)" [disabled]="saving">Modify</ion-button>
           </div>
-          <div *ngIf="gear.modificationInProgress">
-            <ion-button (click)="openUpgradeModal()" [disabled]="saving">Modifying</ion-button>
+          <div *ngIf="gear.modificationInProgress" class="position-relative">
+            <ion-button fill="none" color="secondary" (click)="openUpgradeModal()" [disabled]="saving">Modifying</ion-button>
+            <div *ngIf="modificationFinished(gear)" class="avatar-bubble alert" style="top: 0; right: 0;">!</div>
           </div>
           <ion-button *ngIf="converter.rarityStars(gear.rarity) <= model.progress.gearBreakDownRarity" [fill]="gear.markedToBreakdown ? 'outline' : 'clear'" color="danger" (click)="gear.markedToBreakdown = !gear.markedToBreakdown" [disabled]="saving || gear.modificationInProgress">
             <ion-icon name="trash"></ion-icon>

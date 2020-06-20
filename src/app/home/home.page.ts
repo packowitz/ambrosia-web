@@ -11,6 +11,8 @@ import {PropertyService} from '../services/property.service';
 import {Mission} from '../domain/mission.model';
 import {MissionProgressModal} from './mission-progress-modal';
 import {StoryService} from '../services/story.service';
+import {BuildingService} from '../services/building.service';
+import {JewelryService} from '../services/jewelry.service';
 
 @Component({
   selector: 'app-home',
@@ -46,6 +48,8 @@ export class HomePage {
               private backendService: BackendService,
               private alertCtrl: AlertController,
               private router: Router,
+              public buildingService: BuildingService,
+              public jewelryService: JewelryService,
               public converter: ConverterService,
               public propertyService: PropertyService,
               public modalCtrl: ModalController) {}
@@ -264,6 +268,39 @@ export class HomePage {
 
   gotoAccount() {
     this.router.navigateByUrl('/account');
+  }
+
+  showBuildingAlert(building: Building): boolean {
+    if (this.buildingService.upgradeFinished(building.type)) { return true; }
+    switch (building.type) {
+      case 'BARRACKS': {
+        if (this.model.heroes.findIndex(h => h.skillPoints > 0) !== -1) { return true; }
+        break;
+      }
+      case 'LABORATORY': {
+        if (this.model.incubators.findIndex(i => i.finished) !== -1) { return true; }
+        break;
+      }
+      case 'FORGE': {
+        let gearFinished = this.model.gears.filter(g => {
+          if (g.modificationInProgress) {
+            let idx = this.model.upgrades.findIndex(u => u.gearId === g.id);
+            if (idx !== -1) {
+              return this.model.upgrades[idx].finished;
+            }
+          }
+          return false;
+        });
+        if (gearFinished.length > 0) { return true; }
+        break;
+      }
+    }
+    return false;
+  }
+
+
+  showMissionAlert(mission: Mission): boolean {
+    return mission.missionFinished || mission.battles.findIndex(b => b.battleSuccess === false) !== -1;
   }
 
   openMission(mission: Mission) {

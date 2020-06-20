@@ -6,8 +6,8 @@
     <ion-title>
       <div class="flex-space-between scrollable-vert">
         <div class="position-relative pointer" (click)="openUpgradeModal()">
-          Laboratory L{{getBuilding().level}}
-          <div class="upgrade-bubble upgrade-{{getUpgradeState()}}">!</div>
+          Laboratory L{{buildingService.getBuilding(buildingType).level}}
+          <div class="upgrade-bubble {{buildingService.getUpgradeCss(buildingType)}}">!</div>
         </div>
         <div class="flex-center">
           <ion-button size="small" fill="clear" color="dark" (click)="showStory()">
