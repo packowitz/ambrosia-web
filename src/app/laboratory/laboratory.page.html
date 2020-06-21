@@ -51,9 +51,11 @@
     </ion-card-header>
     <ion-card-content>
       <div class="flex">
-        <div *ngFor="let incubator of model.incubators" class="flex-vert-center border-grey pt-1 pl-2 pr-2 mr-3 pointer" (click)="finishIncubation(incubator)">
-          <ion-img src="assets/icon/resources/{{incubator.type}}.png" class="resource-icon-large"></ion-img>
-          <div>{{converter.time(incubator.secondsUntilDone)}}</div>
+        <div *ngFor="let incubator of model.incubators" class="flex-vert-center position-relative border-grey pt-1 pl-2 pr-2 mr-3 pointer" (click)="finishIncubation(incubator)">
+          <img src="assets/icon/resources/{{incubator.type}}.png" class="resource-icon-large">
+          <div *ngIf="incubator.secondsUntilDone > 0">{{converter.time(incubator.secondsUntilDone)}}</div>
+          <div *ngIf="incubator.secondsUntilDone <= 0">done</div>
+          <div *ngIf="incubator.secondsUntilDone <= 0" class="avatar-bubble alert">!</div>
         </div>
       </div>
     </ion-card-content>

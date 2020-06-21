@@ -38,7 +38,7 @@
           <div class="building-avatar">
             <img src="assets/icon/buildings/{{building.type}}.png" class="pointer" (click)="gotoBuilding(building.type)">
           </div>
-          <div *ngIf="showBuildingAlert(building)" class="avatar-bubble alert">!</div>
+          <div class="avatar-bubble {{getBuildingAlertCss(building)}}">!</div>
         </div>
         <div class="mt-1">{{converter.readableIdentifier(building.type)}}</div>
       </div>

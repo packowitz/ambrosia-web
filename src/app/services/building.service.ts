@@ -48,6 +48,10 @@ export class BuildingService {
         return enoughResources;
     }
 
+    freeUpgradeQueue(): boolean {
+        return this.model.progress.builderQueueLength > this.model.upgrades.length;
+    }
+
     upgradeInProgress(buildingType: string): boolean {
         return this.getBuilding(buildingType).upgradeTriggered && !this.model.upgrades.find(u => u.buildingType === buildingType && u.finished);
     }

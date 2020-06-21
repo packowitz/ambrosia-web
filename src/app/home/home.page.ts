@@ -270,15 +270,18 @@ export class HomePage {
     this.router.navigateByUrl('/account');
   }
 
-  showBuildingAlert(building: Building): boolean {
-    if (this.buildingService.upgradeFinished(building.type)) { return true; }
+  getBuildingAlertCss(building: Building): string {
+    if (this.buildingService.upgradeFinished(building.type)) { return 'alert'; }
     switch (building.type) {
+      case 'ARENA':
+      case 'BAZAAR':
+        return 'none';
       case 'BARRACKS': {
-        if (this.model.heroes.findIndex(h => h.skillPoints > 0) !== -1) { return true; }
+        if (this.model.heroes.findIndex(h => h.skillPoints > 0) !== -1) { return 'alert'; }
         break;
       }
       case 'LABORATORY': {
-        if (this.model.incubators.findIndex(i => i.finished) !== -1) { return true; }
+        if (this.model.incubators.findIndex(i => i.finished) !== -1) { return 'alert'; }
         break;
       }
       case 'FORGE': {
@@ -291,11 +294,13 @@ export class HomePage {
           }
           return false;
         });
-        if (gearFinished.length > 0) { return true; }
+        if (gearFinished.length > 0) { return 'alert'; }
         break;
       }
     }
-    return false;
+    if (this.buildingService.upgradeInProgress(building.type)) { return 'progress'; }
+    if (this.buildingService.freeUpgradeQueue() && this.buildingService.canEffortUpgradeBuilding(building.type)) { return 'info'; }
+    return 'none';
   }
 
 

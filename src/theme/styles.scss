@@ -580,6 +580,12 @@ ion-row.table-row {
   &.info {
     background-color: rgba(16, 127, 29, 0.75);
   }
+  &.progress {
+    background-color: rgba(247, 207, 13, 0.75);
+  }
+  &.none {
+    display: none;
+  }
 }
 
 .hero-stars {
