@@ -27,6 +27,8 @@ export class CampaignFightPage {
   map: PlayerMap;
   tile: PlayerMapTile;
 
+  showStages = false;
+
   fight: FightResolved;
   team: Team;
   vehicle?: Vehicle;

@@ -57,18 +57,27 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        <div class="flex-space-between font-small">
-          <div>{{map.name}} {{tile? tile.posX + 'x' + tile.posY: ''}}: {{fight.description}}</div>
-          <i>difficulty: {{fight.level}}</i>
-        </div>
-      </ion-card-title>
-    </ion-card-header>
     <ion-card-content>
-      <div *ngFor="let fightStage of fight.stages" class="flex-space-between mt-2">
-        <div class="flex-center">Stage {{fightStage.stage}}</div>
-        <hero-icon *ngFor="let stageHero of getStageHeroe(fightStage)" [hero]="stageHero"></hero-icon>
+      <div class="flex-space-between">
+        <div>{{map.name}} {{tile? tile.posX + 'x' + tile.posY: ''}}</div>
+        <div>Description: {{fight.description}}</div>
+      </div>
+      <div class="flex-space-between">
+        <div>Difficulty: {{fight.level}}</div>
+        <div>XP: {{fight.xp}}</div>
+        <div>Asc: {{fight.ascPoints}}</div>
+      </div>
+      <div *ngIf="fight.stages.length > 1" class="strong">{{fight.stages.length}} Stages <span class="fake-link" (click)="showStages = !showStages">{{showStages ? 'hide' : 'show'}}</span></div>
+      <div *ngIf="fight.stages.length == 1" class="strong">1 Stage</div>
+      <div *ngIf="showStages">
+        <div *ngFor="let fightStage of fight.stages" class="mt-2 flex-start">
+          <div class="flex-center strong mr-2 font-enlarged">{{fightStage.stage}}.</div>
+          <div class="flex-space-between mt-2 flex-grow">
+            <div *ngFor="let stageHero of getStageHeroe(fightStage)">
+              <hero-icon *ngIf="stageHero" [hero]="stageHero"></hero-icon>
+            </div>
+          </div>
+        </div>
       </div>
     </ion-card-content>
   </ion-card>
