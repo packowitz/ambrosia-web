@@ -76,6 +76,11 @@
               <div class="map-hexagon-overlay" [class.structure]="tile.discovered && tile.structure && !tile.fightIcon" [class.fight]="tile.discovered && tile.fightIcon" (click)="selectTile(tile)" [class.hover]="tile.discoverable || (tile.discovered && (tile.structure || tile.fightIcon))" [class.pointer]="tile.discoverable || (tile.discovered && (tile.structure || tile.fightIcon))">
                 <img *ngIf="tile.discovered && tile.structure" src="assets/icon/map/structures/{{tile.structure}}.png" class="structure">
                 <img *ngIf="tile.discovered && tile.fightIcon" src="assets/icon/map/monster/{{tile.fightIcon}}.png" class="monster">
+                <div *ngIf="getTileMission(tile) as mission" class="time-bar-wrapper">
+                  <div class="time-bar">
+                    <span class="time-bar-inner" [style.width]="(100 * (mission.duration - mission.secondsUntilDone) / mission.duration) + '%'"></span>
+                  </div>
+                </div>
                 <div *ngIf="tile.discoverable" class="costs">
                   {{map.discoverySteamCost}}<ion-img src="assets/icon/resources/STEAM.png" class="resource-icon"></ion-img>
                 </div>

@@ -92,6 +92,12 @@ export class HomePage {
     return Math.abs(row) % 2 === 0;
   }
 
+  getTileMission(tile: PlayerMapTile): Mission {
+    if (tile.fightRepeatable && tile.victoriousFight) {
+      return this.model.missions.find(m => m.mapId === this.map.mapId && m.posX === tile.posX && m.posY === tile.posY);
+    }
+  }
+
   selectTile(tile: PlayerMapTile) {
     if (tile.discoverable) {
       this.saving = true;
@@ -101,7 +107,12 @@ export class HomePage {
         this.checkStories();
       }, () => { this.saving = false; });
     } else if (tile.fightIcon) {
-      this.router.navigateByUrl('/campaign/' + this.map.mapId + '/' + tile.posX + '/' + tile.posY);
+      let mission  = this.getTileMission(tile);
+      if (mission) {
+        this.openMission(mission);
+      } else {
+        this.router.navigateByUrl('/campaign/' + this.map.mapId + '/' + tile.posX + '/' + tile.posY);
+      }
     } else if (tile.structure) {
       if (tile.portalToMapId) {
         // change map to portalToMapId
