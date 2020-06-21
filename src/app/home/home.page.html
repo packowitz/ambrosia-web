@@ -54,7 +54,7 @@
             <span class="time-bar-inner" [style.width]="(100 * (mission.duration - mission.secondsUntilDone) / mission.duration) + '%'"></span>
           </div>
         </div>
-        <div *ngIf="showMissionAlert(mission)" class="avatar-bubble alert">!</div>
+        <div class="avatar-bubble {{getMissionAlertCss(mission)}}">!</div>
       </div>
     </div>
   </ion-card>

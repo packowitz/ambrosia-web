@@ -304,8 +304,10 @@ export class HomePage {
   }
 
 
-  showMissionAlert(mission: Mission): boolean {
-    return mission.missionFinished || mission.battles.findIndex(b => b.battleSuccess === false) !== -1;
+  getMissionAlertCss(mission: Mission): string {
+    if (mission.battles.findIndex(b => b.battleSuccess === false) !== -1) { return 'alert'; }
+    if (mission.missionFinished) { return 'info'; }
+    return 'none';
   }
 
   openMission(mission: Mission) {
