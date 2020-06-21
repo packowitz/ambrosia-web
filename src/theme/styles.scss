@@ -659,6 +659,10 @@ ion-row.table-row {
   height: 8px;
   overflow: hidden;
 
+  &.thin {
+    height: 4px;
+  }
+
   &.with-text {
     height: inherit;
     border: 1px solid black;

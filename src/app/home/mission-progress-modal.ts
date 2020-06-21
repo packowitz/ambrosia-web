@@ -6,12 +6,15 @@ import {Mission} from '../domain/mission.model';
 import {Hero} from '../domain/hero.model';
 import {OfflineBattle} from '../domain/offlineBattle.model';
 import {BackendService} from '../services/backend.service';
+import {PlayerMap} from '../domain/playerMap.model';
+import {PlayerMapTile} from '../domain/playerMapTile.model';
 
 @Component({
     selector: 'mission-progress-popover',
     template: `
         <div class="ma-2 popover-scrollable">
-          <div class="flex-space-around">
+          <div>{{map.name}} {{tile? tile.posX + 'x' + tile.posY: ''}}</div>
+          <div class="flex-space-between mt-2">
             <div *ngIf="vehicle">
               <vehicle [vehicle]="vehicle" [small]="true"></vehicle>
             </div>
@@ -19,10 +22,10 @@ import {BackendService} from '../services/backend.service';
               <div class="bar-outer xp">
                 <span class="bar-filled" [style.width]="(100 * hero1.xp / hero1.maxXp) + '%'"></span>
               </div>
-              <div class="bar-outer asc" style="margin-top: 1px;">
+              <div class="bar-outer thin asc mt-01">
                 <span class="bar-filled" [style.width]="(100 * hero1.ascPoints / hero1.ascPointsMax) + '%'"></span>
               </div>
-              <div class="mt-05 hero-tile-small border-grey flex-vert-center">
+              <div class="mt-01 hero-tile-small border-grey flex-vert-center">
                 <ion-img [src]="'assets/icon/chars/' + hero1.heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
                 <div class="top-left-bubble level-bubble background-{{hero1.heroBase.color}}">{{hero1.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero1.stars + '.png'" class="hero-stars"></ion-img>
@@ -32,10 +35,10 @@ import {BackendService} from '../services/backend.service';
               <div class="bar-outer xp">
                 <span class="bar-filled" [style.width]="(100 * hero2.xp / hero2.maxXp) + '%'"></span>
               </div>
-              <div class="bar-outer asc" style="margin-top: 1px;">
+              <div class="bar-outer thin asc mt-01">
                 <span class="bar-filled" [style.width]="(100 * hero2.ascPoints / hero2.ascPointsMax) + '%'"></span>
               </div>
-              <div class="hero-tile-small border-grey flex-vert-center">
+              <div class="mt-01 hero-tile-small border-grey flex-vert-center">
                 <ion-img [src]="'assets/icon/chars/' + hero2.heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
                 <div class="top-left-bubble level-bubble background-{{hero2.heroBase.color}}">{{hero2.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero2.stars + '.png'" class="hero-stars"></ion-img>
@@ -45,10 +48,10 @@ import {BackendService} from '../services/backend.service';
               <div class="bar-outer xp">
                 <span class="bar-filled" [style.width]="(100 * hero3.xp / hero3.maxXp) + '%'"></span>
               </div>
-              <div class="bar-outer asc" style="margin-top: 1px;">
+              <div class="bar-outer thin asc mt-01">
                 <span class="bar-filled" [style.width]="(100 * hero3.ascPoints / hero3.ascPointsMax) + '%'"></span>
               </div>
-              <div class="hero-tile-small border-grey flex-vert-center">
+              <div class="mt-01 hero-tile-small border-grey flex-vert-center">
                 <ion-img [src]="'assets/icon/chars/' + hero3.heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
                 <div class="top-left-bubble level-bubble background-{{hero3.heroBase.color}}">{{hero3.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero3.stars + '.png'" class="hero-stars"></ion-img>
@@ -58,10 +61,10 @@ import {BackendService} from '../services/backend.service';
               <div class="bar-outer xp">
                 <span class="bar-filled" [style.width]="(100 * hero4.xp / hero4.maxXp) + '%'"></span>
               </div>
-              <div class="bar-outer asc" style="margin-top: 1px;">
+              <div class="bar-outer thin asc mt-01">
                 <span class="bar-filled" [style.width]="(100 * hero4.ascPoints / hero4.ascPointsMax) + '%'"></span>
               </div>
-              <div class="hero-tile-small border-grey flex-vert-center">
+              <div class="mt-01 hero-tile-small border-grey flex-vert-center">
                 <ion-img [src]="'assets/icon/chars/' + hero4.heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
                 <div class="top-left-bubble level-bubble background-{{hero4.heroBase.color}}">{{hero4.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero4.stars + '.png'" class="hero-stars"></ion-img>
@@ -106,6 +109,9 @@ export class MissionProgressModal {
     hero3: Hero;
     hero4: Hero;
 
+    map: PlayerMap;
+    tile: PlayerMapTile;
+
     saving = false;
     interval: number;
 
@@ -138,6 +144,8 @@ export class MissionProgressModal {
         this.hero2 = this.mission.hero2Id ? this.model.getHero(this.mission.hero2Id) : null;
         this.hero3 = this.mission.hero3Id ? this.model.getHero(this.mission.hero3Id) : null;
         this.hero4 = this.mission.hero4Id ? this.model.getHero(this.mission.hero4Id) : null;
+        this.map = this.model.playerMaps.find(m => m.mapId === this.mission.mapId);
+        this.tile = this.map.tiles.find(t => t.posX === this.mission.posX && t.posY === this.mission.posY);
     }
 
     closeModal() {
