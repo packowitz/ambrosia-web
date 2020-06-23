@@ -13,7 +13,7 @@ import {PlayerMapTile} from '../domain/playerMapTile.model';
     selector: 'mission-progress-popover',
     template: `
         <div class="ma-2 popover-scrollable">
-          <div>{{map.name}} {{tile? tile.posX + 'x' + tile.posY: ''}}</div>
+          <div>{{mapName}} {{mission.posX + 'x' + mission.posY}}</div>
           <div class="flex-space-between mt-2">
             <div *ngIf="vehicle">
               <vehicle [vehicle]="vehicle" [small]="true"></vehicle>
@@ -109,8 +109,7 @@ export class MissionProgressModal {
     hero3: Hero;
     hero4: Hero;
 
-    map: PlayerMap;
-    tile: PlayerMapTile;
+    mapName: string;
 
     saving = false;
     interval: number;
@@ -144,8 +143,8 @@ export class MissionProgressModal {
         this.hero2 = this.mission.hero2Id ? this.model.getHero(this.mission.hero2Id) : null;
         this.hero3 = this.mission.hero3Id ? this.model.getHero(this.mission.hero3Id) : null;
         this.hero4 = this.mission.hero4Id ? this.model.getHero(this.mission.hero4Id) : null;
-        this.map = this.model.playerMaps.find(m => m.mapId === this.mission.mapId);
-        this.tile = this.map.tiles.find(t => t.posX === this.mission.posX && t.posY === this.mission.posY);
+        let playerMap = this.model.playerMaps.find(m => m.mapId === this.mission.mapId);
+        this.mapName = playerMap ? playerMap.name : 'Unknown';
     }
 
     closeModal() {
