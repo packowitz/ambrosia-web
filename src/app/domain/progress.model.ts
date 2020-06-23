@@ -1,5 +1,9 @@
 export class Progress {
     playerId: number;
+    xp: number;
+    maxXp: number;
+    level: number;
+    currentMapId: number;
     garageSlots: number;
     offlineBattleSpeed: number;
     maxOfflineBattlesPerMission: number;

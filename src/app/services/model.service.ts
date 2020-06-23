@@ -242,6 +242,9 @@ export class Model {
             }
             localStorage.setItem(key, data.token);
         }
+        if (data.progress) {
+            this.progress = data.progress;
+        }
         if (data.upgrades) {
             if (this.upgrades) {
                 data.upgrades.forEach(u => this.updateUpgrade(u));
@@ -254,9 +257,6 @@ export class Model {
             if (idx >= 0) {
                 this.upgrades.splice(idx, 1);
             }
-        }
-        if (data.progress) {
-            this.progress = data.progress;
         }
         if (data.resources) {
             this.resources = data.resources;
@@ -444,7 +444,7 @@ export class Model {
             } else {
                 this.playerMaps.push(map);
             }
-            if (map.mapId === this.player.currentMapId) {
+            if (map.mapId === this.progress.currentMapId) {
                 this.currentMap = map;
             }
         }

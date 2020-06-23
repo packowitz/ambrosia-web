@@ -4,9 +4,5 @@ export class Player {
     admin: boolean;
     betaTester: boolean;
     serviceAccount: boolean;
-    xp: number;
-    maxXp: number;
-    level: number;
     color: string;
-    currentMapId: number;
 }
