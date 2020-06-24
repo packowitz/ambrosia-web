@@ -11,6 +11,10 @@ import {ConverterService} from '../services/converter.service';
         <img src="assets/icon/resources/{{loot.resourceType}}.png" class="loot-image">
         <div class="font-small">{{loot.value}}x</div>
       </div>
+      <div *ngIf="loot.type == 'PROGRESS'" class="flex-vert-center">
+        <img src="assets/icon/progress/{{loot.progressStat}}.png" class="loot-image">
+        <div class="font-small">{{getProgressStatText(loot.progressStat, loot.value)}}</div>
+      </div>
       <div *ngIf="loot.type == 'HERO'" class="border-grey flex-vert-center loot-hero">
         <ion-img [src]="'assets/icon/chars/' + model.getHero(loot.value).heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
         <ion-img [src]="'assets/img/star_' + model.getHero(loot.value).stars + '.png'" class="hero-stars"></ion-img>
@@ -43,6 +47,21 @@ export class LootItemDirective {
     getGear() {
         if (this.loot.type === 'GEAR') {
             return this.model.getGear(this.loot.value);
+        }
+    }
+
+    getProgressStatText(progressStat: string, bonus: number): string {
+        switch (progressStat) {
+            case 'PLAYER_XP': return '+' + bonus + ' XP';
+            case 'EXPEDITION_LEVEL': return '+' + bonus + ' Expedition Lvl';
+            case 'GARAGE_SLOT': return '+' + bonus + ' Garage slot';
+            case 'MISSION_SPEED': return '+' + bonus + '% Mission speed';
+            case 'MISSION_MAX_BATTLES': return '+' + bonus + ' Mission battles';
+            case 'BUILDER_QUEUE': return '+' + bonus + ' Upgrade queue';
+            case 'BUILDER_SPEED': return '+' + bonus + '% Upgrade speed';
+            case 'BARRACKS_SIZE': return '+' + bonus + ' Barracks space';
+            case 'INCUBATORS': return '+' + bonus + ' Incubator';
+            case 'LAB_SPEED': return '+' + bonus + '% Lab speed';
         }
     }
 }

@@ -16,4 +16,6 @@ export class LootItem {
     vehicleBaseId: number;
     vehiclePartType: string;
     vehiclePartQuality: string;
+    progressStat: string;
+    progressStatBonus: number;
 }

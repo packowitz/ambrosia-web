@@ -38,6 +38,7 @@ import {Story} from '../domain/story.model';
 export class Looted {
     type: string;
     resourceType: string;
+    progressStat: string;
     jewelType: JewelType;
     value: number;
 }

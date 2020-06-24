@@ -4,7 +4,10 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      <div class="pointer" (click)="gotoAccount()">{{model.player.name}}</div>
+      <div class="flex-space-between">
+        {{model.player.name}}
+        <ion-button (click)="gotoAccount()" fill="clear"><ion-icon name="person"></ion-icon></ion-button>
+      </div>
     </ion-title>
   </ion-toolbar>
 </ion-header>

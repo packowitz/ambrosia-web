@@ -77,6 +77,18 @@
             </ion-select>
           </ion-item>
         </div>
+        <div class="flex-space-between" *ngIf="item.type == 'PROGRESS'">
+          <div class="flex-grow">&nbsp;</div>
+          <ion-item>
+            <ion-label>Bonus</ion-label>
+            <ion-input type="number" [(ngModel)]="item.progressStatBonus" value="1" style="max-width: 50px;"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-select [(ngModel)]="item.progressStat" style="max-width: 100%">
+              <ion-select-option *ngFor="let stat of enumService.getProgressStats()" [value]="stat">{{stat}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
         <div class="flex-space-between" *ngIf="item.type == 'JEWEL'">
           <div class="flex-grow">&nbsp;</div>
           <div>
