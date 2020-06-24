@@ -320,11 +320,6 @@ export class Model {
         }
         if (data.currentMap) {
             this.updatePlayerMap(data.currentMap);
-            if (!this.currentMap) {
-                console.log("currentMap not set");
-                console.log(data.currentMap);
-                console.log(this.progress);
-            }
         }
         if (data.ongoingBattle) {
             if (data.ongoingBattle.status === 'WON' || data.ongoingBattle.status === 'LOST') {
