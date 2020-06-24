@@ -113,7 +113,7 @@
     </ion-card-header>
     <ion-card-content>
       <div class="scrollable-list">
-        <hero-icon *ngFor="let hero of heroes" [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [selected]="hero.id == stage?.hero1?.id || hero.id == stage?.hero2?.id || hero.id == stage?.hero3?.id || hero.id == stage?.hero4?.id"></hero-icon>
+        <hero-icon *ngFor="let hero of heroes" class="mr-2" [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [selected]="hero.id == stage?.hero1?.id || hero.id == stage?.hero2?.id || hero.id == stage?.hero3?.id || hero.id == stage?.hero4?.id"></hero-icon>
       </div>
     </ion-card-content>
   </ion-card>

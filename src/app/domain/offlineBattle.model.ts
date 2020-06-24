@@ -1,4 +1,4 @@
-import {Looted} from '../services/backend.service';
+import {LootedItem} from '../services/backend.service';
 
 export class OfflineBattle {
     battleId: number;
@@ -10,5 +10,5 @@ export class OfflineBattle {
     battleSuccess: boolean;
     cancelled: boolean;
 
-    looted?: Looted[];
+    lootedItems?: LootedItem[];
 }

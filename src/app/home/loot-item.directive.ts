@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Looted} from '../services/backend.service';
+import {LootedItem} from '../services/backend.service';
 import {Model} from '../services/model.service';
 import {PropertyService} from '../services/property.service';
 import {ConverterService} from '../services/converter.service';
@@ -38,7 +38,7 @@ import {ConverterService} from '../services/converter.service';
   `
 })
 export class LootItemDirective {
-    @Input() loot: Looted;
+    @Input() loot: LootedItem;
 
     constructor(public model: Model,
                 public propertyService: PropertyService,

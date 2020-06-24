@@ -9,9 +9,13 @@ import {StoryService} from '../services/story.service';
     template: `
       <div *ngIf="model.looted" class="loading-indicator" (click)="lootCollected()">
         <div class="loot-window pa-2">
-          <div class="flex-center">You received</div>
-          <div class="flex-space-between mt-1">
-            <loot-item *ngFor="let loot of model.looted" [loot]="loot" class="loot-item"></loot-item>
+          <div class="flex-center" *ngIf="model.looted.type == 'CHEST'">Chest contained</div>
+          <div class="flex-center" *ngIf="model.looted.type == 'BATTLE'">Battle trophy</div>
+          <div class="flex-center" *ngIf="model.looted.type == 'BREAKDOWN'">Remnants collected</div>
+          <div class="flex-center" *ngIf="model.looted.type == 'STORY'">Docs gift</div>
+          <div class="flex-center" *ngIf="model.looted.type == 'LEVEL_UP'">You reached level {{model.progress.level}}</div>
+          <div class="mt-1" [class.flex-space-between]="model.looted.items.length > 1" [class.flex-center]="model.looted.items.length == 1">
+            <loot-item *ngFor="let loot of model.looted.items" [loot]="loot" class="loot-item"></loot-item>
           </div>
           <div class="flex-center mt-1 color-grey font-small"><i>(click anywhere to close)</i></div>
         </div>
@@ -49,18 +53,18 @@ export class LootedDirective {
     }
 
     gearLooted(): boolean {
-        return this.model.looted.findIndex(l => l.type === 'GEAR') >= 0;
+        return this.model.looted.items.findIndex(l => l.type === 'GEAR') >= 0;
     }
 
     jewelLooted(): boolean {
-        return this.model.looted.findIndex(l => l.type === 'JEWEL') >= 0;
+        return this.model.looted.items.findIndex(l => l.type === 'JEWEL') >= 0;
     }
 
     vehicleLooted(): boolean {
-        return this.model.looted.findIndex(l => l.type === 'VEHICLE') >= 0;
+        return this.model.looted.items.findIndex(l => l.type === 'VEHICLE') >= 0;
     }
 
     genomesLooted(): boolean {
-        return this.model.looted.findIndex(l => l.type === 'RESOURCE' && l.resourceType.endsWith('GENOME')) >= 0;
+        return this.model.looted.items.findIndex(l => l.type === 'RESOURCE' && l.resourceType.endsWith('GENOME')) >= 0;
     }
 }

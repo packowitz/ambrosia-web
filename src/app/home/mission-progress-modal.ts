@@ -6,8 +6,6 @@ import {Mission} from '../domain/mission.model';
 import {Hero} from '../domain/hero.model';
 import {OfflineBattle} from '../domain/offlineBattle.model';
 import {BackendService} from '../services/backend.service';
-import {PlayerMap} from '../domain/playerMap.model';
-import {PlayerMapTile} from '../domain/playerMapTile.model';
 
 @Component({
     selector: 'mission-progress-popover',
@@ -80,13 +78,13 @@ import {PlayerMapTile} from '../domain/playerMapTile.model';
             <ion-item *ngFor="let battle of mission.battles; let idx = index">
               <div class="flex-space-between full-width">
                 {{idx + 1}}. Battle:
-                <span *ngIf="!battle.looted && battle.battleSuccess">WON</span>
+                <span *ngIf="!battle.lootedItems && battle.battleSuccess">WON</span>
                 <span *ngIf="battle.battleFinished && !battle.battleSuccess">LOST</span>
                 <span *ngIf="battle.cancelled">CANCELLED</span>
                 <span *ngIf="!battle.cancelled && !battle.battleStarted && !battle.battleFinished">Starting soon</span>
                 <span *ngIf="!battle.cancelled && battle.battleStarted && !battle.battleFinished">{{progressInPercent(battle)}}%</span>
-                <div *ngIf="battle.looted" class="flex-space-around">
-                  <loot-item *ngFor="let loot of battle.looted" [loot]="loot" class="loot-item"></loot-item>
+                <div *ngIf="battle.lootedItems" class="flex-space-around">
+                  <loot-item *ngFor="let loot of battle.lootedItems" [loot]="loot" class="loot-item"></loot-item>
                 </div>
               </div>
             </ion-item>

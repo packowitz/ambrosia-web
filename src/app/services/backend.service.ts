@@ -38,6 +38,10 @@ import {ExpeditionBase} from '../domain/expeditionBase.model';
 
 export class Looted {
     type: string;
+    items: LootedItem[];
+}
+export class LootedItem {
+    type: string;
     resourceType: string;
     progressStat: string;
     jewelType: JewelType;
@@ -61,7 +65,7 @@ export class PlayerActionResponse {
     playerMaps?: PlayerMap[];
     currentMap?: PlayerMap;
     ongoingBattle?: Battle;
-    looted?: Looted[];
+    looted?: Looted;
     missions?: Mission[];
     missionIdFinished?: number;
     upgrades?: Upgrade[];

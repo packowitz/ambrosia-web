@@ -61,7 +61,7 @@ export class Model {
     upgrades: Upgrade[];
     incubators: Incubator[];
     knownStories: string[];
-    looted: Looted[];
+    looted: Looted;
     expeditionBases: ExpeditionBase[];
 
     interval: number;
