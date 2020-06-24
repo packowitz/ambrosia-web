@@ -7,5 +7,6 @@ export class ExpeditionBase {
     level: number;
     rarity: string;
     durationMinutes: number;
+    xp: number
     lootBox: LootBox;
 }

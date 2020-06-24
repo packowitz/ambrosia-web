@@ -37,6 +37,11 @@ export class ExpeditionsPage implements OnInit {
     this.newExpedition = new ExpeditionBase();
     this.newExpedition.level = 1;
     this.newExpedition.durationMinutes = 60;
+    this.newExpedition.xp = 500;
+  }
+
+  compareById(o1, o2): boolean {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
   }
 
   expeditionIncomplete(expedition: ExpeditionBase): boolean {
@@ -46,6 +51,7 @@ export class ExpeditionsPage implements OnInit {
         expedition.level <= 0 ||
         expedition.level > 6 ||
         !expedition.durationMinutes ||
+        !expedition.xp ||
         !expedition.rarity ||
         !expedition.lootBox;
   }
