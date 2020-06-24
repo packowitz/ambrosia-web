@@ -590,4 +590,8 @@ export class BackendService {
     saveExpeditionBases(expedition: ExpeditionBase): Observable<ExpeditionBase> {
         return this.http.post<ExpeditionBase>(API_URL + '/admin/expedition', expedition);
     }
+
+    playerLevelUp(): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/progress/level_up', null);
+    }
 }

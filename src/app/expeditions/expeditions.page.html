@@ -12,7 +12,7 @@
 </ion-header>
 
 <div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
-<ion-content *ngIf="model.expeditionBases">
+<ion-content *ngIf="model.expeditionBases && model.lootBoxes">
   <ion-list>
     <div *ngFor="let expedition of model.expeditionBases" class="mt-2">
       <div class="flex-space-between">
@@ -36,13 +36,13 @@
             </ion-item>
             <ion-item lines="none">
               <ion-label position="floating">Rarity</ion-label>
-              <ion-select [(ngModel)]="expedition.rarity" placeholder="select">
+              <ion-select [(ngModel)]="expedition.rarity">
                 <ion-select-option *ngFor="let rarity of enumService.getRarities()" [value]="rarity">{{rarity}}</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item lines="none">
               <ion-label position="floating">Loot</ion-label>
-              <ion-select [(ngModel)]="expedition.lootBox" placeholder="select" [compareWith]="compareById">
+              <ion-select [(ngModel)]="expedition.lootBox" [compareWith]="compareById">
                 <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot">{{loot.name}}</ion-select-option>
               </ion-select>
             </ion-item>

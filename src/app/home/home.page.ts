@@ -217,6 +217,11 @@ export class HomePage {
         console.log("HomePage hero asc levelled story shown");
         this.checkStories();
       });
+    } else if (this.model.progress.level < 60 && this.model.progress.xp >= this.model.progress.maxXp) {
+      this.saving = true;
+      this.backendService.playerLevelUp().subscribe(data => {
+        this.saving = false;
+      });
     }
   }
 
