@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        Expeditions
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+<ion-content *ngIf="model.expeditionBases">
+  <ion-list>
+    <ion-item *ngFor="let expedition of model.expeditionBases">
+      <div class="mt-2">
+        <div class="flex-space-between">
+          <div class="flex-grow">
+            <div class="flex-space-between">
+              <ion-item lines="none">
+                <ion-label position="floating">Name</ion-label>
+                <ion-input [(ngModel)]="expedition.name" placeholder="name me"></ion-input>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label position="floating">Level</ion-label>
+                <ion-input [(ngModel)]="expedition.level" type="number" min="1" max="6"></ion-input>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label position="floating">Minutes</ion-label>
+                <ion-input [(ngModel)]="expedition.durationMinutes" type="number" min="1"></ion-input>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label position="floating">Rarity</ion-label>
+                <ion-select [(ngModel)]="expedition.rarity" placeholder="select">
+                  <ion-select-option *ngFor="let rarity of enumService.getRarities()" [value]="rarity">{{rarity}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label position="floating">Loot</ion-label>
+                <ion-select [(ngModel)]="expedition.lootBox" placeholder="select">
+                  <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot">{{loot.name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <ion-item>
+              <ion-label>Description</ion-label>
+              <ion-input [(ngModel)]="expedition.description" placeholder="describe me"></ion-input>
+            </ion-item>
+          </div>
+          <ion-button size="small" color="success" (click)="saveExpedition(expedition)" [disabled]="expeditionIncomplete(expedition)">Update</ion-button>
+        </div>
+      </div>
+    </ion-item>
+    <div class="mt-2">
+      <div class="flex-space-between">
+        <div class="flex-grow">
+          <div class="flex-space-between">
+            <ion-item lines="none">
+              <ion-label position="floating">Name</ion-label>
+              <ion-input [(ngModel)]="newExpedition.name" placeholder="name me"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Level</ion-label>
+              <ion-input [(ngModel)]="newExpedition.level" type="number" min="1" max="6"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Minutes</ion-label>
+              <ion-input [(ngModel)]="newExpedition.durationMinutes" type="number" min="1"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Rarity</ion-label>
+              <ion-select [(ngModel)]="newExpedition.rarity" placeholder="select">
+                <ion-select-option *ngFor="let rarity of enumService.getRarities()" [value]="rarity">{{rarity}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Loot</ion-label>
+              <ion-select [(ngModel)]="newExpedition.lootBox" placeholder="select">
+                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot">{{loot.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <ion-item>
+            <ion-label>Description</ion-label>
+            <ion-input [(ngModel)]="newExpedition.description" placeholder="describe me"></ion-input>
+          </ion-item>
+        </div>
+        <ion-button size="small" color="success" (click)="saveExpedition(newExpedition)" [disabled]="expeditionIncomplete(newExpedition)">Create</ion-button>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>

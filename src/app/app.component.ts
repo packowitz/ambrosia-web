@@ -87,6 +87,11 @@ export class AppComponent {
             icon: 'book'
         },
         {
+            title: 'Expeditions',
+            url: '/expeditions',
+            icon: 'wooden-sign'
+        },
+        {
             title: 'Ongoing Battle',
             url: '/battle',
             icon: 'dripping-sword'

@@ -22,6 +22,11 @@ const routes: Routes = [
         canActivate: [AdminGuard]
     },
     {
+        path: 'expeditions',
+        loadChildren: './expeditions/expeditions.module#ExpeditionsModule',
+        canActivate: [AdminGuard]
+    },
+    {
         path: 'fights',
         loadChildren: './fights/fights.module#FightsModule',
         canActivate: [AdminGuard]

@@ -26,6 +26,7 @@ import {Upgrade} from '../domain/upgrade.model';
 import {Incubator} from '../domain/incubator.model';
 import {FightResolved} from '../domain/fightResolved.model';
 import {ConverterService} from './converter.service';
+import {ExpeditionBase} from '../domain/expeditionBase.model';
 
 @Injectable({
     providedIn: 'root'
@@ -61,6 +62,7 @@ export class Model {
     incubators: Incubator[];
     knownStories: string[];
     looted: Looted[];
+    expeditionBases: ExpeditionBase[];
 
     interval: number;
     lastIntervalTimestamp: number = Date.now();

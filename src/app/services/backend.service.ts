@@ -34,6 +34,7 @@ import {Upgrade} from '../domain/upgrade.model';
 import {Incubator} from '../domain/incubator.model';
 import {StoryPlaceholder} from '../domain/storyPlaceholder.model';
 import {Story} from '../domain/story.model';
+import {ExpeditionBase} from '../domain/expeditionBase.model';
 
 export class Looted {
     type: string;
@@ -576,5 +577,13 @@ export class BackendService {
 
     resetStoryLine(): Observable<any> {
         return this.http.post<any>(API_URL + '/admin/story/reset', null);
+    }
+
+    loadExpeditionBases(): Observable<ExpeditionBase[]> {
+        return this.http.get<ExpeditionBase[]>(API_URL + '/admin/expedition');
+    }
+
+    saveExpeditionBases(expedition: ExpeditionBase): Observable<ExpeditionBase> {
+        return this.http.post<ExpeditionBase>(API_URL + '/admin/expedition', expedition);
     }
 }
