@@ -53,7 +53,7 @@ export class ExpeditionsPage implements OnInit {
         !expedition.durationMinutes ||
         !expedition.xp ||
         !expedition.rarity ||
-        !expedition.lootBox;
+        !expedition.lootBoxId;
   }
 
   saveExpedition(expedition: ExpeditionBase) {

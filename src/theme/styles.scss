@@ -381,13 +381,28 @@ ion-row.table-row {
   }
 }
 
-.mission-avatar {
+.avatar {
   border-radius: 500px;
   width: 50px;
   height: 50px;
   overflow: hidden;
-  box-shadow: 0 0 0 1px #5fc9ec, 0 0 0 2px #427fce, 0 0 0 5px #5a69e2;
-  ion-img {
+
+  &.mission {
+    box-shadow: 0 0 0 1px #5fc9ec, 0 0 0 2px #427fce, 0 0 0 5px #5a69e2;
+  }
+  &.expedition {
+    box-shadow: 0 0 0 1px #b3a107, 0 0 0 2px #8a8711, 0 0 0 5px #d2c30a;
+    color: #1e1e1e;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &.player-expedition {
+    box-shadow: 0 0 0 1px #a5b307, 0 0 0 2px #768a11, 0 0 0 5px #bcd20a;
+  }
+
+  img {
     padding: 4px;
   }
   &:hover {
@@ -396,7 +411,7 @@ ion-row.table-row {
 }
 
 .time-bar {
-  border: 1px solid #045022;
+  border: 1px solid #04361b;
   position: relative;
   height: 6px;
   overflow: hidden;
@@ -407,6 +422,24 @@ ion-row.table-row {
     top: 0;
     left: 0;
     height: 8px;
+    &.SIMPLE {
+      background-color: #b0c8ae;
+    }
+    &.COMMON {
+      background-color: #7ba073;
+    }
+    &.UNCOMMON {
+      background-color: #6bb7dc;
+    }
+    &.RARE {
+      background-color: #267822;
+    }
+    &.EPIC {
+      background-color: #ad53d6;
+    }
+    &.LEGENDARY {
+      background-color: #e6d61c;
+    }
   }
 }
 

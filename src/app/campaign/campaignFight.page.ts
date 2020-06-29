@@ -121,17 +121,17 @@ export class CampaignFightPage {
     if (!this.team) {
       this.team = new Team(this.testFight ? 'TEST' : 'CAMPAIGN');
     } else {
-      this.hero1 = this.team.hero1Id ? this.model.heroes.find(h => h.id === this.team.hero1Id && !h.missionId) : null;
+      this.hero1 = this.team.hero1Id ? this.model.heroes.find(h => h.id === this.team.hero1Id && !h.missionId && !h.playerExpeditionId) : null;
       if (!this.hero1) { this.team.hero1Id = null; }
-      this.hero2 = this.team.hero2Id ? this.model.heroes.find(h => h.id === this.team.hero2Id && !h.missionId) : null;
+      this.hero2 = this.team.hero2Id ? this.model.heroes.find(h => h.id === this.team.hero2Id && !h.missionId && !h.playerExpeditionId) : null;
       if (!this.hero2) { this.team.hero2Id = null; }
-      this.hero3 = this.team.hero3Id ? this.model.heroes.find(h => h.id === this.team.hero3Id && !h.missionId) : null;
+      this.hero3 = this.team.hero3Id ? this.model.heroes.find(h => h.id === this.team.hero3Id && !h.missionId && !h.playerExpeditionId) : null;
       if (!this.hero3) { this.team.hero3Id = null; }
-      this.hero4 = this.team.hero4Id ? this.model.heroes.find(h => h.id === this.team.hero4Id && !h.missionId) : null;
+      this.hero4 = this.team.hero4Id ? this.model.heroes.find(h => h.id === this.team.hero4Id && !h.missionId && !h.playerExpeditionId) : null;
       if (!this.hero4) { this.team.hero4Id = null; }
     }
     if (this.model.vehicles && this.model.vehicles.length > 0) {
-      this.vehicle = this.model.vehicles.find(v => v.slot != null && !v.missionId && !v.upgradeTriggered);
+      this.vehicle = this.model.vehicles.find(v => v.slot != null && !v.missionId && !v.upgradeTriggered && !v.playerExpeditionId);
     }
   }
 
@@ -159,7 +159,7 @@ export class CampaignFightPage {
       componentProps: {
         noVehicle: true,
         vehiclesInSlot: true,
-        showVehiclesOnMission: false
+        showBusyVehicles: false
       }
     }).then(modal => {
       modal.onDidDismiss().then((dataReturned) => {

@@ -28,7 +28,7 @@
     </ion-card-header>
     <ion-card-content>
       <div class="scrollable-list">
-        <hero-icon *ngFor="let hero of model.heroes" [showOnMission]="false" [clickableOnMission]="true" [hero]="hero" class="mr-2" [clickable]="true" (clicked)="selectHero(hero)" [selected]="isHeroSelected(hero)"></hero-icon>
+        <hero-icon *ngFor="let hero of model.heroes" [showBusy]="false" [busyClickable]="true" [hero]="hero" class="mr-2" [clickable]="true" (clicked)="selectHero(hero)" [selected]="isHeroSelected(hero)"></hero-icon>
       </div>
     </ion-card-content>
   </ion-card>
@@ -39,7 +39,7 @@
         <ion-button color="success" size="small" (click)="saveTeam()">Save team as defense</ion-button>
       </div>
       <div class="flex-space-between">
-        <hero-icon *ngFor="let hero of getSelectedHeroes()" [showOnMission]="false" [clickableOnMission]="true" [hero]="hero" [clickable]="true" (clicked)="selectHero($event)"></hero-icon>
+        <hero-icon *ngFor="let hero of getSelectedHeroes()" [showBusy]="false" [busyClickable]="true" [hero]="hero" [clickable]="true" (clicked)="selectHero($event)"></hero-icon>
       </div>
     </ion-card-content>
   </ion-card>
@@ -55,10 +55,10 @@
           <ion-button color="danger" size="small" (click)="fight(otherTeam)">fight</ion-button>
         </div>
         <div class="flex-space-between">
-          <hero-icon [showOnMission]="false" [hero]="otherTeam.hero1"></hero-icon>
-          <hero-icon [showOnMission]="false" [hero]="otherTeam.hero2"></hero-icon>
-          <hero-icon [showOnMission]="false" [hero]="otherTeam.hero3"></hero-icon>
-          <hero-icon [showOnMission]="false" [hero]="otherTeam.hero4"></hero-icon>
+          <hero-icon [showBusy]="false" [hero]="otherTeam.hero1"></hero-icon>
+          <hero-icon [showBusy]="false" [hero]="otherTeam.hero2"></hero-icon>
+          <hero-icon [showBusy]="false" [hero]="otherTeam.hero3"></hero-icon>
+          <hero-icon [showBusy]="false" [hero]="otherTeam.hero4"></hero-icon>
         </div>
       </div>
     </ion-card-content>

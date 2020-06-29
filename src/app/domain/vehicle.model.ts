@@ -5,6 +5,7 @@ export class Vehicle {
     id: number;
     playerId: number;
     missionId: number;
+    playerExpeditionId: number;
     baseVehicle: VehicleBase;
     level: number;
     upgradeTriggered: boolean;

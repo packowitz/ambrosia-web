@@ -1,5 +1,3 @@
-import {LootBox} from './lootBox.model';
-
 export class ExpeditionBase {
     id: number;
     name: string;
@@ -7,6 +5,6 @@ export class ExpeditionBase {
     level: number;
     rarity: string;
     durationMinutes: number;
-    xp: number
-    lootBox: LootBox;
+    xp: number;
+    lootBoxId: number;
 }

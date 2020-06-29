@@ -35,6 +35,8 @@ import {Incubator} from '../domain/incubator.model';
 import {StoryPlaceholder} from '../domain/storyPlaceholder.model';
 import {Story} from '../domain/story.model';
 import {ExpeditionBase} from '../domain/expeditionBase.model';
+import {Expedition} from '../domain/expedition.model';
+import {PlayerExpedition} from '../domain/playerExpedition.model';
 
 export class Looted {
     type: string;
@@ -73,6 +75,9 @@ export class PlayerActionResponse {
     incubators?: Incubator[];
     incubatorDone?: number;
     knownStories?: string[];
+    expeditions?: Expedition[];
+    playerExpeditions?: PlayerExpedition[];
+    playerExpeditionCancelled?: number;
 }
 
 @Injectable({
@@ -593,5 +598,13 @@ export class BackendService {
 
     playerLevelUp(): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/progress/level_up', null);
+    }
+
+    startExpedition(expedition: Expedition, team: Team): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/expedition/' + expedition.id + '/start', team);
+    }
+
+    finishExpedition(expeditionId: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/expedition/' + expeditionId + '/finish', null);
     }
 }

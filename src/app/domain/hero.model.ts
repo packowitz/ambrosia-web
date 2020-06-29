@@ -6,6 +6,7 @@ export class Hero {
     id: number;
     playerId: number;
     missionId: number;
+    playerExpeditionId: number;
     heroBase: HeroBase;
     stars: number;
     level: number;

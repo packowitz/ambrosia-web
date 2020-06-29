@@ -23,10 +23,10 @@ import {PropertyService} from '../services/property.service';
             <i *ngFor="let bonus of propertyService.getJewelValueAndName(gear.specialJewelType, gear.specialJewelLevel)">{{bonus}}</i>
           </div>
         </div>
-        <div *ngIf="!readonly && gear && !gear.equippedTo && !hero.missionId">
+        <div *ngIf="!readonly && gear && !gear.equippedTo && !hero.missionId && !hero.playerExpeditionId">
           <ion-button fill="clear" size="small" (click)="equipGear($event)"><ion-img class="equip-icon" src="/assets/img/equip.png"></ion-img></ion-button>
         </div>
-        <div *ngIf="!readonly && gear && gear.equippedTo && !hero.missionId">
+        <div *ngIf="!readonly && gear && gear.equippedTo && !hero.missionId && !hero.playerExpeditionId">
           <ion-button fill="clear" size="small" (click)="unequipGear($event)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
         </div>
       </div>
@@ -59,7 +59,7 @@ export class GearListItem {
   }
 
   canShowDetails(): boolean {
-    return !this.readonly && this.gear && !(this.hero.missionId && this.gear.equippedTo);
+    return !this.readonly && this.gear && !((this.hero.missionId || this.hero.playerExpeditionId) && this.gear.equippedTo);
   }
 
   showGearDetails(ev) {

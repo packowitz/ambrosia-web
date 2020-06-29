@@ -13,6 +13,9 @@ import {MissionProgressModal} from './mission-progress-modal';
 import {StoryService} from '../services/story.service';
 import {BuildingService} from '../services/building.service';
 import {JewelryService} from '../services/jewelry.service';
+import {Expedition} from '../domain/expedition.model';
+import {PlayerExpedition} from '../domain/playerExpedition.model';
+import {ExpeditionProgressModal} from './expedition-progress-modal';
 
 @Component({
   selector: 'app-home',
@@ -319,6 +322,32 @@ export class HomePage {
     return 'none';
   }
 
+  getPlayerExpeditions(): PlayerExpedition[] {
+    if (this.model.playerExpeditions && this.model.playerExpeditions.length > 0) {
+      return this.model.playerExpeditions.filter(p => !p.completed);
+    }
+    return [];
+  }
+
+  openPlayerExpedition(playerExpedition: PlayerExpedition) {
+    this.modalCtrl.create({
+      component: ExpeditionProgressModal,
+      componentProps: {
+        playerExpedition: playerExpedition
+      }
+    }).then(modal => modal.present());
+  }
+
+  getAvailableExpeditions(): Expedition[] {
+    if (this.model.progress.expeditionLevel > 0) {
+      return this.model.expeditions.filter(e => this.model.playerExpeditions.findIndex(p => p.expeditionId === e.id) === -1);
+    }
+    return [];
+  }
+
+  openExpedition(expedition: Expedition) {
+    this.router.navigateByUrl('/home/expedition/' + expedition.id);
+  }
 
   getMissionAlertCss(mission: Mission): string {
     if (mission.battles.findIndex(b => b.battleSuccess === false) !== -1) { return 'alert'; }

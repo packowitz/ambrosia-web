@@ -39,7 +39,7 @@
         <div *ngFor="let slot of slots" class="mr-2">
           <div class="ion-text-center">Slot {{slot.slot}}</div>
           <div *ngIf="slot.vehicle" [class.selected-tile]="slot.slot == vehicle?.slot" (click)="selectVehicle(slot.vehicle)" class="pointer">
-            <vehicle [vehicle]="slot.vehicle" [showMission]="true"></vehicle>
+            <vehicle [vehicle]="slot.vehicle" [showBusy]="true"></vehicle>
           </div>
           <div *ngIf="!slot.vehicle" (click)="emptySlot(slot.slot)" class="pointer">
             <ion-img src="/assets/img/vehicles/EMPTY_SLOT.png"></ion-img>
@@ -58,7 +58,7 @@
             Lvl {{vehicle.level}} / {{vehicle.baseVehicle.maxLevel}}
             <ion-button class="ml-2" *ngIf="canUpgradeVehicle()" size="small" color="success" (click)="openUpgradeVehicleModal()">{{vehicle.upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
           </div>
-          <div class="flex-center">Slot {{vehicle.slot}} <ion-button *ngIf="!vehicle.missionId && !vehicle.upgradeTriggered" size="small" (click)="deactivate()">Deactivate</ion-button></div>
+          <div class="flex-center">Slot {{vehicle.slot}} <ion-button *ngIf="!vehicle.missionId && !vehicle.upgradeTriggered && !vehicle.playerExpeditionId" size="small" (click)="deactivate()">Deactivate</ion-button></div>
         </div>
       </ion-card-title>
       <ion-card-content>
@@ -73,7 +73,7 @@
                     <div>Lvl {{vehicle.engine.level}} {{converter.readableIdentifier(vehicle.engine.quality)}} Engine</div>
                     <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.engine)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
                   </div>
-                  <ion-button *ngIf="!vehicle.missionId" fill="clear" size="small" (click)="unplug(vehicle.engine)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                  <ion-button *ngIf="!vehicle.missionId && !vehicle.playerExpeditionId" fill="clear" size="small" (click)="unplug(vehicle.engine)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
                 </div>
                 <div *ngIf="!vehicle.engine" class="ml-2 font-small color-grey">
                   Engine max quality: {{converter.readableIdentifier(vehicle.baseVehicle.engineQuality)}}
@@ -86,7 +86,7 @@
                     <div>Lvl {{vehicle.frame.level}} {{converter.readableIdentifier(vehicle.frame.quality)}} Frame</div>
                     <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.frame)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
                   </div>
-                  <ion-button *ngIf="!vehicle.missionId" fill="clear" size="small" (click)="unplug(vehicle.frame)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                  <ion-button *ngIf="!vehicle.missionId && !vehicle.playerExpeditionId" fill="clear" size="small" (click)="unplug(vehicle.frame)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
                 </div>
                 <div *ngIf="!vehicle.frame" class="ml-2 font-small color-grey">
                   Frame max quality: {{converter.readableIdentifier(vehicle.baseVehicle.frameQuality)}}
@@ -99,7 +99,7 @@
                     <div>Lvl {{vehicle.computer.level}} {{converter.readableIdentifier(vehicle.computer.quality)}} Computer</div>
                     <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.computer)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
                   </div>
-                  <ion-button *ngIf="!vehicle.missionId" fill="clear" size="small" (click)="unplug(vehicle.computer)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                  <ion-button *ngIf="!vehicle.missionId && !vehicle.playerExpeditionId" fill="clear" size="small" (click)="unplug(vehicle.computer)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
                 </div>
                 <div *ngIf="!vehicle.computer" class="ml-2 font-small color-grey">
                   Computer max quality: {{converter.readableIdentifier(vehicle.baseVehicle.computerQuality)}}
@@ -113,7 +113,7 @@
                     <div>Lvl {{vehicle.specialPart1.level}} {{converter.readableIdentifier(vehicle.specialPart1.quality)}} {{converter.readableIdentifier(vehicle.specialPart1.type)}}</div>
                     <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.specialPart1)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
                   </div>
-                  <ion-button *ngIf="!vehicle.missionId" fill="clear" size="small" (click)="unplug(vehicle.specialPart1)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                  <ion-button *ngIf="!vehicle.missionId && !vehicle.playerExpeditionId" fill="clear" size="small" (click)="unplug(vehicle.specialPart1)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
                 </div>
                 <div *ngIf="!vehicle.specialPart1" class="ml-2 font-small color-grey">
                   {{converter.readableIdentifier(vehicle.baseVehicle.specialPart1)}} max quality: {{converter.readableIdentifier(vehicle.baseVehicle.specialPart1Quality)}}
@@ -126,7 +126,7 @@
                     <div>Lvl {{vehicle.specialPart2.level}} {{converter.readableIdentifier(vehicle.specialPart2.quality)}} {{converter.readableIdentifier(vehicle.specialPart2.type)}}</div>
                     <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.specialPart2)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
                   </div>
-                  <ion-button *ngIf="!vehicle.missionId" fill="clear" size="small" (click)="unplug(vehicle.specialPart2)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                  <ion-button *ngIf="!vehicle.missionId && !vehicle.playerExpeditionId" fill="clear" size="small" (click)="unplug(vehicle.specialPart2)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
                 </div>
                 <div *ngIf="!vehicle.specialPart2" class="ml-2 font-small color-grey">
                   {{converter.readableIdentifier(vehicle.baseVehicle.specialPart2)}} max quality: {{converter.readableIdentifier(vehicle.baseVehicle.specialPart2Quality)}}
@@ -139,7 +139,7 @@
                     <div>Lvl {{vehicle.specialPart3.level}} {{converter.readableIdentifier(vehicle.specialPart3.quality)}} {{converter.readableIdentifier(vehicle.specialPart3.type)}}</div>
                     <div *ngFor="let prop of propertyService.getVehiclePartProperties(vehicle.specialPart3)">+{{prop.value1}} {{converter.readableIdentifier(prop.vehicleStat)}}</div>
                   </div>
-                  <ion-button *ngIf="!vehicle.missionId" fill="clear" size="small" (click)="unplug(vehicle.specialPart3)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
+                  <ion-button *ngIf="!vehicle.missionId && !vehicle.playerExpeditionId" fill="clear" size="small" (click)="unplug(vehicle.specialPart3)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
                 </div>
                 <div *ngIf="!vehicle.specialPart3" class="ml-2 font-small color-grey">
                   {{converter.readableIdentifier(vehicle.baseVehicle.specialPart3)}} max quality: {{converter.readableIdentifier(vehicle.baseVehicle.specialPart3Quality)}}
@@ -163,7 +163,7 @@
                   </div>
                   <div>
                     <ion-button *ngIf="canUpgradeVehiclePart(part)" [fill]="part.upgradeTriggered ? 'outline' : 'clear'" size="small" (click)="openUpgradeVehiclePartModal(part)"><ion-img class="equip-icon" src="/assets/img/upgrade.png"></ion-img></ion-button>
-                    <ion-button *ngIf="!vehicle.missionId" fill="clear" size="small" (click)="plugin(part)" [disabled]="part.upgradeTriggered"><ion-img class="equip-icon" src="/assets/img/equip.png"></ion-img></ion-button>
+                    <ion-button *ngIf="!vehicle.missionId && !vehicle.playerExpeditionId" fill="clear" size="small" (click)="plugin(part)" [disabled]="part.upgradeTriggered"><ion-img class="equip-icon" src="/assets/img/equip.png"></ion-img></ion-button>
                   </div>
                 </div>
               </ion-item>

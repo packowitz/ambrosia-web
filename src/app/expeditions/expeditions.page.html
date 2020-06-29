@@ -42,8 +42,8 @@
             </ion-item>
             <ion-item lines="none">
               <ion-label position="floating">Loot</ion-label>
-              <ion-select [(ngModel)]="expedition.lootBox" [compareWith]="compareById">
-                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot">{{loot.name}}</ion-select-option>
+              <ion-select [(ngModel)]="expedition.lootBoxId">
+                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
               </ion-select>
             </ion-item>
           </div>
@@ -83,8 +83,8 @@
             </ion-item>
             <ion-item lines="none">
               <ion-label position="floating">Loot</ion-label>
-              <ion-select [(ngModel)]="newExpedition.lootBox" placeholder="select" [compareWith]="compareById">
-                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot">{{loot.name}}</ion-select-option>
+              <ion-select [(ngModel)]="newExpedition.lootBoxId" placeholder="select">
+                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
               </ion-select>
             </ion-item>
           </div>

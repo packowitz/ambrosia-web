@@ -169,6 +169,6 @@ export class MissionProgressModal {
             } else {
                 this.closeModal();
             }
-        });
+        }, () => this.saving = false );
     }
 }

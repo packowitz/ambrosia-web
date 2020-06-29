@@ -36,7 +36,7 @@
     <ion-card-content>
       <div class="scrollable-list pt-2">
         <div *ngFor="let hero of model.heroes" class="position-relative mr-2">
-          <hero-icon [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [clickableOnMission]="true" [showInfo]="false" [selected]="hero == selectedHero"></hero-icon>
+          <hero-icon [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [busyClickable]="true" [showInfo]="false" [selected]="hero == selectedHero"></hero-icon>
           <div *ngIf="hero.skillPoints > 0" class="avatar-bubble alert">!</div>
         </div>
       </div>
@@ -166,8 +166,8 @@
             <div *ngFor="let lvl of selectedSkill.skillLevel" [class.strong]="getSkillLevel(selectedSkill) >= lvl.level">L{{lvl.level}} {{lvl.description}}</div>
           </div>
           <div *ngIf="getSkillLevel(selectedSkill) <= 0 && selectedSkill.skillActiveTrigger == 'ASCENDED'"><i>Ascend hero to unlock this skill</i></div>
-          <ion-button size="small" color="success" (click)="heroGainSkillLevel()" [disabled]="selectedHero.missionId || selectedHero.skillPoints <= 0">Skill up ({{selectedHero.skillPoints}})</ion-button>
-          <ion-button size="small" color="warning" (click)="heroResetSkills()" [disabled]="selectedHero.missionId">Reset skills</ion-button>
+          <ion-button size="small" color="success" (click)="heroGainSkillLevel()" [disabled]="selectedHero.missionId || selectedHero.playerExpeditionId || selectedHero.skillPoints <= 0">Skill up ({{selectedHero.skillPoints}})</ion-button>
+          <ion-button size="small" color="warning" (click)="heroResetSkills()" [disabled]="selectedHero.missionId || selectedHero.playerExpeditionId">Reset skills</ion-button>
         </div>
       </div>
 

@@ -156,7 +156,7 @@ export class AcademyPage {
   }
 
   selectHero(hero: Hero) {
-    if (hero.missionId) { return; }
+    if (hero.missionId || hero.playerExpeditionId) { return; }
     if (this.selectedHero && this.selectedHero.id === hero.id) {
       this.selectedHero = null;
       this.resetFodder();

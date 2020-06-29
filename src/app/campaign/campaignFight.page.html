@@ -67,8 +67,7 @@
         <div>XP: {{fight.xp}}</div>
         <div>Asc: {{fight.ascPoints}}</div>
       </div>
-      <div *ngIf="fight.stages.length > 1" class="strong">{{fight.stages.length}} Stages <span class="fake-link" (click)="showStages = !showStages">{{showStages ? 'hide' : 'show'}}</span></div>
-      <div *ngIf="fight.stages.length == 1" class="strong">1 Stage</div>
+      <div class="strong">{{fight.stages.length}} Stage{{fight.stages.length > 1 ? 's' : ''}} <span class="fake-link" (click)="showStages = !showStages">{{showStages ? 'hide' : 'show'}}</span></div>
       <div *ngIf="showStages">
         <div *ngFor="let fightStage of fight.stages" class="mt-2 flex-start">
           <div class="flex-center strong mr-2 font-enlarged">{{fightStage.stage}}.</div>

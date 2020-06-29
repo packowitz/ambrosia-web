@@ -27,6 +27,8 @@ import {Incubator} from '../domain/incubator.model';
 import {FightResolved} from '../domain/fightResolved.model';
 import {ConverterService} from './converter.service';
 import {ExpeditionBase} from '../domain/expeditionBase.model';
+import {Expedition} from '../domain/expedition.model';
+import {PlayerExpedition} from '../domain/playerExpedition.model';
 
 @Injectable({
     providedIn: 'root'
@@ -61,13 +63,18 @@ export class Model {
     upgrades: Upgrade[];
     incubators: Incubator[];
     knownStories: string[];
+    expeditions: Expedition[];
+    playerExpeditions: PlayerExpedition[];
     looted: Looted;
     expeditionBases: ExpeditionBase[];
 
     interval: number;
     lastIntervalTimestamp: number = Date.now();
+    expeditionsCheckedTimestamp: number = Date.now();
     updateResourcesInProgress = false;
     updateIncubatorsInProgress = false;
+    updatePlayerExpeditionsInProgress = false;
+    updateExpeditionsInProgress = false;
     useServiceAccount = false;
 
     constructor(private http: HttpClient,
@@ -141,6 +148,11 @@ export class Model {
             if (pauseDetected) {
                 console.log("Pause detected. Updating all time based resources");
             }
+
+            if ((now - this.expeditionsCheckedTimestamp) > 300000) {
+                this.updateExpeditions();
+            }
+
             this.lastIntervalTimestamp = now;
             if (this.resources) {
                 let updateResources = pauseDetected;
@@ -202,6 +214,14 @@ export class Model {
                     this.updateIncubators();
                 }
             }
+
+            if (this.playerExpeditions && this.playerExpeditions.length > 0) {
+                this.playerExpeditions.filter(p => !p.completed).forEach(p => p.secondsUntilDone --);
+                if (pauseDetected) {
+                    this.updatePlayerExpeditions();
+                }
+            }
+
         }, 1000);
     }
 
@@ -233,6 +253,38 @@ export class Model {
         }
     }
 
+    updatePlayerExpeditions() {
+        if (!this.updatePlayerExpeditionsInProgress) {
+            this.updatePlayerExpeditionsInProgress = true;
+            this.http.get<PlayerExpedition[]>(API_URL + '/expedition/in-progress').subscribe(data => {
+                this.playerExpeditions = data;
+                this.updatePlayerExpeditionsInProgress = false;
+            }, () => {
+                this.updatePlayerExpeditionsInProgress = false;
+                console.log('player expeditions update failed');
+            });
+        }
+    }
+
+    updateExpeditions() {
+        if (this.progress.expeditionLevel === 0) {
+            this.expeditionsCheckedTimestamp = Date.now();
+            return;
+        }
+        if (!this.updateExpeditionsInProgress) {
+            this.updateExpeditionsInProgress = true;
+            console.log('Updating active expeditions');
+            this.http.get<Expedition[]>(API_URL + '/expedition/active').subscribe(data => {
+                this.expeditions = data;
+                this.expeditionsCheckedTimestamp = Date.now();
+                this.updateExpeditionsInProgress = false;
+            }, () => {
+                this.updateExpeditionsInProgress = false;
+                console.log('expeditions update failed');
+            });
+        }
+    }
+
     update(data: PlayerActionResponse) {
         if (data.player) {
             this.player = data.player;
@@ -245,6 +297,9 @@ export class Model {
             localStorage.setItem(key, data.token);
         }
         if (data.progress) {
+            if (this.progress && this.progress.expeditionLevel !== data.progress.expeditionLevel) {
+                this.updateExpeditions();
+            }
             this.progress = data.progress;
         }
         if (data.upgrades) {
@@ -361,6 +416,22 @@ export class Model {
                 data.knownStories.forEach(s => this.finishedStory(s));
             } else {
                 this.knownStories = data.knownStories;
+            }
+        }
+        if (data.expeditions) {
+            this.expeditions = data.expeditions;
+        }
+        if (data.playerExpeditions) {
+            if (this.playerExpeditions) {
+                data.playerExpeditions.forEach(p => this.updatePlayerExpedition(p));
+            } else {
+                this.playerExpeditions = data.playerExpeditions;
+            }
+        }
+        if (!!data.playerExpeditionCancelled) {
+            let idx = this.playerExpeditions.findIndex(p => p.id === data.playerExpeditionCancelled);
+            if (idx >= 0) {
+                this.playerExpeditions.splice(idx, 1);
             }
         }
         if (data.looted) {
@@ -582,6 +653,17 @@ export class Model {
                 this.incubators[idx] = incubator;
             } else {
                 this.incubators.push(incubator);
+            }
+        }
+    }
+
+    updatePlayerExpedition(playerExpedition?: PlayerExpedition) {
+        if (playerExpedition) {
+            let idx = this.playerExpeditions.findIndex(p => p.id === playerExpedition.id);
+            if (idx >= 0) {
+                this.playerExpeditions[idx] = playerExpedition;
+            } else {
+                this.playerExpeditions.push(playerExpedition);
             }
         }
     }
