@@ -14,7 +14,7 @@ import {BackendService} from '../services/backend.service';
           <div>{{mapName}} {{mission.posX + 'x' + mission.posY}}</div>
           <div class="flex-space-between mt-2">
             <div *ngIf="vehicle">
-              <vehicle [vehicle]="vehicle" [small]="true"></vehicle>
+              <vehicle [vehicle]="vehicle" [small]="true" [showName]="false"></vehicle>
             </div>
             <div *ngIf="hero1">
               <div class="bar-outer xp">

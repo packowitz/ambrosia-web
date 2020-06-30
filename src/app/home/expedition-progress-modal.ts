@@ -18,7 +18,7 @@ import {ConverterService} from '../services/converter.service';
           </div>
           <div class="flex-space-between mt-2">
             <div *ngIf="vehicle">
-              <vehicle [vehicle]="vehicle" [small]="true"></vehicle>
+              <vehicle [vehicle]="vehicle" [small]="true" [showName]="false"></vehicle>
             </div>
             <div *ngIf="hero1">
               <div class="bar-outer xp">

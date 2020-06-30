@@ -43,6 +43,7 @@ export class StartExpeditionPage {
     if (!this.expedition || this.model.playerExpeditions.findIndex(p => p.expeditionId === expeditionId) !== -1) {
       this.close();
     }
+    this.vehicle = this.model.vehicles.find(v => v.slot && !v.missionId && !v.playerExpeditionId && !v.upgradeTriggered);
   }
 
   close() {
@@ -74,8 +75,6 @@ export class StartExpeditionPage {
       modal.onDidDismiss().then((dataReturned) => {
         if (dataReturned !== null && dataReturned.data) {
           this.vehicle = dataReturned.data;
-        } else {
-          this.vehicle = null;
         }
       });
       modal.present();

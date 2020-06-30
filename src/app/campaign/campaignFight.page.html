@@ -39,9 +39,9 @@
     <ion-card-content>
       <div class="flex-space-between flex-wrap">
         <div (click)="selectVehicle()" class="pointer" *ngIf="model.vehicles && model.vehicles.length > 0">
-          <vehicle *ngIf="vehicle" [vehicle]="vehicle" [small]="true"></vehicle>
+          <vehicle *ngIf="vehicle" [vehicle]="vehicle" [small]="true" [showName]="false"></vehicle>
           <div *ngIf="!vehicle">
-            <ion-img class="vehicle-avatar" src="/assets/img/vehicles/EMPTY_SLOT.png"></ion-img>
+            <ion-img class="vehicle-avatar small" src="/assets/img/vehicles/EMPTY_SLOT.png"></ion-img>
           </div>
         </div>
         <hero-icon *ngFor="let hero of getSelectedHeroes()" [hero]="hero" [clickable]="true" (clicked)="selectHero($event)"></hero-icon>

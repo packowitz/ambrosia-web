@@ -13,8 +13,8 @@ import {Vehicle} from '../domain/vehicle.model';
             <div class="text" *ngIf="vehicle.playerExpeditionId">On Expedition</div>
           </div>
         </div>
-        <div class="ion-text-center">{{vehicle.baseVehicle.name}}</div>
-        <div class="flex-space-around">
+        <div class="ion-text-center" *ngIf="showName">{{vehicle.baseVehicle.name}}</div>
+        <div class="flex-space-around" [class.mt-05]="!showName">
           <ion-img class="vehicle-part" src="/assets/img/vehicles/parts/ENGINE_{{vehicle.engine ? vehicle.engine.quality : 'NONE'}}.png"></ion-img>
           <ion-img class="vehicle-part" src="/assets/img/vehicles/parts/FRAME_{{vehicle.frame ? vehicle.frame.quality : 'NONE'}}.png"></ion-img>
           <ion-img class="vehicle-part" src="/assets/img/vehicles/parts/COMPUTER_{{vehicle.computer ? vehicle.computer.quality : 'NONE'}}.png"></ion-img>
@@ -31,4 +31,5 @@ export class VehicleDirective {
   @Input() vehicle: Vehicle;
   @Input() small = false;
   @Input() showBusy = false;
+  @Input() showName = true;
 }
