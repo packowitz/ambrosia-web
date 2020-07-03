@@ -29,6 +29,9 @@ import {ConverterService} from './converter.service';
 import {ExpeditionBase} from '../domain/expeditionBase.model';
 import {Expedition} from '../domain/expedition.model';
 import {PlayerExpedition} from '../domain/playerExpedition.model';
+import {OddJobBase} from '../domain/oddJobBase.model';
+import {OddJob} from '../domain/oddJob.model';
+import {DailyActivity} from '../domain/dailyActivity.model';
 
 @Injectable({
     providedIn: 'root'
@@ -65,8 +68,11 @@ export class Model {
     knownStories: string[];
     expeditions: Expedition[];
     playerExpeditions: PlayerExpedition[];
+    oddJobs: OddJob[];
     looted: Looted;
     expeditionBases: ExpeditionBase[];
+    oddJobBases: OddJobBase[];
+    dailyActivity: DailyActivity;
 
     interval: number;
     lastIntervalTimestamp: number = Date.now();
@@ -149,7 +155,7 @@ export class Model {
                 console.log("Pause detected. Updating all time based resources");
             }
 
-            if ((now - this.expeditionsCheckedTimestamp) > 300000) {
+            if (this.progress.expeditionLevel > 0 && (now - this.expeditionsCheckedTimestamp) > 300000) {
                 this.updateExpeditions();
             }
 
@@ -267,10 +273,6 @@ export class Model {
     }
 
     updateExpeditions() {
-        if (this.progress.expeditionLevel === 0) {
-            this.expeditionsCheckedTimestamp = Date.now();
-            return;
-        }
         if (!this.updateExpeditionsInProgress) {
             this.updateExpeditionsInProgress = true;
             console.log('Updating active expeditions');
@@ -428,11 +430,27 @@ export class Model {
                 this.playerExpeditions = data.playerExpeditions;
             }
         }
-        if (!!data.playerExpeditionCancelled) {
+        if (data.playerExpeditionCancelled) {
             let idx = this.playerExpeditions.findIndex(p => p.id === data.playerExpeditionCancelled);
             if (idx >= 0) {
                 this.playerExpeditions.splice(idx, 1);
             }
+        }
+        if (data.oddJobs) {
+            if (this.oddJobs) {
+                data.oddJobs.forEach(o => this.updateOddJob(o));
+            } else {
+                this.oddJobs = data.oddJobs;
+            }
+        }
+        if (data.oddJobDone) {
+            let idx = this.oddJobs.findIndex(o => o.id === data.oddJobDone);
+            if (idx >= 0) {
+                this.oddJobs.splice(idx, 1);
+            }
+        }
+        if (data.dailyActivity) {
+            this.dailyActivity = data.dailyActivity;
         }
         if (data.looted) {
             this.looted = data.looted;
@@ -664,6 +682,17 @@ export class Model {
                 this.playerExpeditions[idx] = playerExpedition;
             } else {
                 this.playerExpeditions.push(playerExpedition);
+            }
+        }
+    }
+
+    updateOddJob(oddJob?: OddJob) {
+        if (oddJob) {
+            let idx = this.oddJobs.findIndex(o => o.id === oddJob.id);
+            if (idx >= 0) {
+                this.oddJobs[idx] = oddJob;
+            } else {
+                this.oddJobs.push(oddJob);
             }
         }
     }

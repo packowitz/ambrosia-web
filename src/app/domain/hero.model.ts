@@ -49,32 +49,4 @@ export class Hero {
     resistanceTotal: number;
 
     sets: HeroGearSet[];
-
-    strengthAbsBonus: number;
-    strengthPercBonus: number;
-    hpAbsBonus: number;
-    hpPercBonus: number;
-    armorAbsBonus: number;
-    armorPercBonus: number;
-    initiativeBonus: number;
-    critBonus: number;
-    critMultBonus: number;
-    dexterityBonus: number;
-    resistanceBonus: number;
-
-    lifesteal: number;
-    counterChance: number;
-    reflect: number;
-    evasionChance: number;
-    speedBarFilling: number;
-    armorPiercing: number;
-    armorExtraDmg: number;
-    healthExtraDmg: number;
-    redDamageInc: number;
-    greenDamageInc: number;
-    blueDamageInc: number;
-    healingInc: number;
-    superCritChance: number;
-    buffIntensityInc: number;
-    debuffIntensityInc: number;
 }

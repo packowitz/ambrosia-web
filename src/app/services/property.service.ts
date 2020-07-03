@@ -11,7 +11,7 @@ import {VehiclePart} from '../domain/vehiclePart.model';
 })
 export class PropertyService {
 
-  initialCategories = ['GEAR', 'JEWEL', 'HERO', 'SET', 'BUFF', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
+  initialCategories = ['PLAYER', 'GEAR', 'JEWEL', 'HERO', 'SET', 'BUFF', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
 
   properties = {};
 

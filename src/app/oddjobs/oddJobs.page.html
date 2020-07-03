@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        Odd Jobs
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+<ion-content *ngIf="model.oddJobBases && model.lootBoxes">
+  <ion-list>
+    <div *ngFor="let oddJob of model.oddJobBases" class="mt-2">
+      <div class="flex-space-between">
+        <div class="flex-grow">
+          <div class="flex-space-between">
+            <ion-item lines="none">
+              <ion-label>Active</ion-label>
+              <ion-checkbox slot="start" [(ngModel)]="oddJob.active"></ion-checkbox>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Level</ion-label>
+              <ion-input [(ngModel)]="oddJob.level" type="number" min="1" max="6" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Rarity</ion-label>
+              <ion-select [(ngModel)]="oddJob.rarity">
+                <ion-select-option *ngFor="let rarity of enumService.getRarities()" [value]="rarity">{{rarity}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Type</ion-label>
+              <ion-select [(ngModel)]="oddJob.jobType">
+                <ion-select-option *ngFor="let type of enumService.getOddJobTypes()" [value]="type">{{type}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Amount</ion-label>
+              <ion-input [(ngModel)]="oddJob.jobAmount" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Loot</ion-label>
+              <ion-select [(ngModel)]="oddJob.lootBoxId">
+                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+        <ion-button size="small" color="success" (click)="saveOddJob(oddJob)" [disabled]="oddJobIncomplete(oddJob)">Update</ion-button>
+      </div>
+    </div>
+    <div class="mt-2">
+      <div class="flex-space-between">
+        <div class="flex-grow">
+          <div class="flex-space-between">
+            <ion-item lines="none">
+              <ion-label>Active</ion-label>
+              <ion-checkbox slot="start" [(ngModel)]="newOddJob.active"></ion-checkbox>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Level</ion-label>
+              <ion-input [(ngModel)]="newOddJob.level" type="number" min="1" max="6" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Rarity</ion-label>
+              <ion-select [(ngModel)]="newOddJob.rarity">
+                <ion-select-option *ngFor="let rarity of enumService.getRarities()" [value]="rarity">{{rarity}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Type</ion-label>
+              <ion-select [(ngModel)]="newOddJob.jobType" placeholder="select">
+                <ion-select-option *ngFor="let type of enumService.getOddJobTypes()" [value]="type">{{type}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Amount</ion-label>
+              <ion-input [(ngModel)]="newOddJob.jobAmount" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Loot</ion-label>
+              <ion-select [(ngModel)]="newOddJob.lootBoxId" placeholder="select">
+                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+        <ion-button size="small" color="success" (click)="saveOddJob(newOddJob)" [disabled]="oddJobIncomplete(newOddJob)">Create</ion-button>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>

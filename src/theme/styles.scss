@@ -387,6 +387,15 @@ ion-row.table-row {
   height: 50px;
   overflow: hidden;
 
+  &.small {
+    width: 35px;
+    height: 35px;
+    font-size: 0.8em;
+    .resource-icon {
+      width: 14px;
+    }
+  }
+
   &.mission {
     box-shadow: 0 0 0 1px #5fc9ec, 0 0 0 2px #427fce, 0 0 0 5px #5a69e2;
   }
@@ -400,6 +409,26 @@ ion-row.table-row {
   }
   &.player-expedition {
     box-shadow: 0 0 0 1px #a5b307, 0 0 0 2px #768a11, 0 0 0 5px #bcd20a;
+  }
+  &.odd-job {
+    box-shadow: 0 0 0 1px #7a6d84, 0 0 0 2px #1b36c3, 0 0 0 5px #b451f1;
+    img {
+      width: 80%
+    }
+  }
+  &.daily {
+    box-shadow: 0 0 0 1px #404248, 0 0 0 3px #b5b4ca;
+    &.today {
+      box-shadow: 0 0 0 1px #98970a, 0 0 0 3px #e0dc12;
+      background-color: #f3f2ca;
+    }
+    &.claimed {
+      box-shadow: 0 0 0 1px #768a11, 0 0 0 3px #bcd20a;
+      background-color: #e2f3db;
+    }
+    .resource-icon {
+      padding: 0;
+    }
   }
 
   img {
@@ -416,6 +445,9 @@ ion-row.table-row {
   height: 6px;
   overflow: hidden;
   border-radius: 2px;
+  &.light-border {
+    border: 1px solid #d9d9d9;
+  }
   .time-bar-inner {
     background-color: #1ec35f;
     position: absolute;

@@ -37,6 +37,9 @@ import {Story} from '../domain/story.model';
 import {ExpeditionBase} from '../domain/expeditionBase.model';
 import {Expedition} from '../domain/expedition.model';
 import {PlayerExpedition} from '../domain/playerExpedition.model';
+import {OddJobBase} from '../domain/oddJobBase.model';
+import {OddJob} from '../domain/oddJob.model';
+import {DailyActivity} from '../domain/dailyActivity.model';
 
 export class Looted {
     type: string;
@@ -78,6 +81,9 @@ export class PlayerActionResponse {
     expeditions?: Expedition[];
     playerExpeditions?: PlayerExpedition[];
     playerExpeditionCancelled?: number;
+    oddJobs?: OddJob[];
+    oddJobDone?: number;
+    dailyActivity?: DailyActivity;
 }
 
 @Injectable({
@@ -606,5 +612,25 @@ export class BackendService {
 
     finishExpedition(expeditionId: number): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/expedition/' + expeditionId + '/finish', null);
+    }
+
+    loadOddJobBases(): Observable<OddJobBase[]> {
+        return this.http.get<OddJobBase[]>(API_URL + '/admin/oddjob');
+    }
+
+    saveOddJobBase(oddJobBase: OddJobBase): Observable<OddJobBase> {
+        return this.http.post<OddJobBase>(API_URL + '/admin/oddjob', oddJobBase);
+    }
+
+    removeOddJob(oddJob: OddJob): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/oddjob/' + oddJob.id + '/remove', null);
+    }
+
+    claimOddJob(oddJob: OddJob): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/oddjob/' + oddJob.id + '/claim', null);
+    }
+
+    claimDaily(day: number): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/oddjob/daily/' + day, null);
     }
 }

@@ -92,6 +92,11 @@ export class AppComponent {
             icon: 'wooden-sign'
         },
         {
+            title: 'Odd Jobs',
+            url: '/oddjobs',
+            icon: 'rune-stone'
+        },
+        {
             title: 'Ongoing Battle',
             url: '/battle',
             icon: 'dripping-sword'

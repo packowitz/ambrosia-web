@@ -44,6 +44,7 @@ export class Enums {
     modifications: string[];
     storyTriggers: string[];
     progressStats: string[];
+    oddJobTypes: string[];
 }
 
 @Injectable({
@@ -182,5 +183,9 @@ export class EnumService {
 
     getProgressStats(): string[] {
         return this.enums.progressStats;
+    }
+
+    getOddJobTypes(): string[] {
+        return this.enums.oddJobTypes;
     }
 }

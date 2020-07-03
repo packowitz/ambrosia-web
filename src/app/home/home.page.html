@@ -50,6 +50,13 @@
 
   <ion-card *ngIf="model.missions.length > 0 || getPlayerExpeditions().length > 0 || getAvailableExpeditions().length > 0">
     <div class="scrollable-list pa-2">
+      <div *ngIf="model.progress.expeditionLevel > 0 || model.oddJobs.length > 0" class="position-relative mr-4">
+        <div class="avatar odd-job flex-center pointer" (click)="openOddJobs()">
+          <img src="assets/icon/resources/ODD_JOB.png">
+        </div>
+        <div class="avatar-bubble info" *ngIf="hasOddJobToClaim()">!</div>
+      </div>
+
       <div *ngFor="let mission of model.missions" class="position-relative mr-4">
         <div class="avatar mission pointer" (click)="openMission(mission)">
           <img src="assets/img/vehicles/{{model.getVehicle(mission.vehicleId).baseVehicle.avatar}}.png">

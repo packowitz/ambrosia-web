@@ -8,6 +8,7 @@ import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {MissionProgressModal} from './mission-progress-modal';
 import {StartExpeditionPage} from './start-expedition.page';
 import {ExpeditionProgressModal} from './expedition-progress-modal';
+import {OddJobsModal} from './odd-jobs-modal';
 
 @NgModule({
     imports: [
@@ -26,8 +27,8 @@ import {ExpeditionProgressModal} from './expedition-progress-modal';
             }
         ])
     ],
-    declarations: [HomePage, StartExpeditionPage, MissionProgressModal, ExpeditionProgressModal],
-    entryComponents: [MissionProgressModal, ExpeditionProgressModal]
+    declarations: [HomePage, StartExpeditionPage, MissionProgressModal, ExpeditionProgressModal, OddJobsModal],
+    entryComponents: [MissionProgressModal, ExpeditionProgressModal, OddJobsModal]
 })
 export class HomePageModule {
 }

@@ -27,6 +27,11 @@ const routes: Routes = [
         canActivate: [AdminGuard]
     },
     {
+        path: 'oddjobs',
+        loadChildren: './oddjobs/oddJobs.module#OddJobsModule',
+        canActivate: [AdminGuard]
+    },
+    {
         path: 'fights',
         loadChildren: './fights/fights.module#FightsModule',
         canActivate: [AdminGuard]

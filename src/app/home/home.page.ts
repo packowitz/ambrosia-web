@@ -16,6 +16,7 @@ import {JewelryService} from '../services/jewelry.service';
 import {Expedition} from '../domain/expedition.model';
 import {PlayerExpedition} from '../domain/playerExpedition.model';
 import {ExpeditionProgressModal} from './expedition-progress-modal';
+import {OddJobsModal} from './odd-jobs-modal';
 
 @Component({
   selector: 'app-home',
@@ -43,6 +44,7 @@ export class HomePage {
   mapPortalFoundStory = 'MAP_PORTAL_REVEALED';
   victoriousRepeatableFightStory = 'REPEATABLE_FIGHT_WON';
   heroLevelledStory = 'HERO_LEVELLED';
+  heroLevel5Story = 'HERO_LEVEL_5';
   heroMaxLevelStory = 'HERO_MAX_LEVEL';
   heroAscLevelledStory = 'HERO_ASC_LEVELLED';
 
@@ -210,6 +212,11 @@ export class HomePage {
         console.log("HomePage hero levelled story shown");
         this.checkStories();
       });
+    } else if (this.storyService.storyUnknown(this.heroLevel5Story) && this.model.vehicles.length > 0 && this.model.heroes.findIndex(h => h.level >= 5) !== -1) {
+      this.storyService.showStory(this.heroLevel5Story).subscribe(() => {
+        console.log("HomePage hero level 5 story shown");
+        this.checkStories();
+      });
     } else if (this.storyService.storyUnknown(this.heroMaxLevelStory) && this.model.heroes.findIndex(h => h.level === (10 * h.stars) && h.xp === h.maxXp) !== -1) {
       this.storyService.showStory(this.heroMaxLevelStory).subscribe(() => {
         console.log("HomePage hero max level story shown");
@@ -347,6 +354,16 @@ export class HomePage {
 
   openExpedition(expedition: Expedition) {
     this.router.navigateByUrl('/home/expedition/' + expedition.id);
+  }
+
+  openOddJobs() {
+    this.modalCtrl.create({
+      component: OddJobsModal
+    }).then(modal => modal.present());
+  }
+
+  hasOddJobToClaim(): boolean {
+    return !!this.model.oddJobs.find(o => o.jobAmountDone >= o.jobAmount);
   }
 
   getMissionAlertCss(mission: Mission): string {
