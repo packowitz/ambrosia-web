@@ -101,6 +101,11 @@ export class Model {
         this.upgrades = null;
         this.incubators = null;
         this.looted = null;
+        this.knownStories = null;
+        this.expeditions = null;
+        this.playerExpeditions = null;
+        this.oddJobs = null;
+        this.dailyActivity = null;
     }
 
     getHero(id: number): Hero {
