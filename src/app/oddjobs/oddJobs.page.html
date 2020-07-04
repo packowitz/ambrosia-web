@@ -67,7 +67,7 @@
             </ion-item>
             <ion-item lines="none">
               <ion-label position="floating">Rarity</ion-label>
-              <ion-select [(ngModel)]="newOddJob.rarity">
+              <ion-select [(ngModel)]="newOddJob.rarity" placeholder="select">
                 <ion-select-option *ngFor="let rarity of enumService.getRarities()" [value]="rarity">{{rarity}}</ion-select-option>
               </ion-select>
             </ion-item>
