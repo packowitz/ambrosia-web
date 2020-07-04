@@ -91,7 +91,7 @@ export class OddJobsModal {
 
     constructor(private modalCtrl: ModalController,
                 private navParams: NavParams,
-                private model: Model,
+                public model: Model,
                 private propertyService: PropertyService,
                 private backendService: BackendService,
                 private alertCtrl: AlertController) {
