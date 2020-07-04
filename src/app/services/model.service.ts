@@ -160,7 +160,7 @@ export class Model {
                 console.log("Pause detected. Updating all time based resources");
             }
 
-            if (this.progress.expeditionLevel > 0 && (now - this.expeditionsCheckedTimestamp) > 300000) {
+            if (this.progress && this.progress.expeditionLevel > 0 && (now - this.expeditionsCheckedTimestamp) > 300000) {
                 this.updateExpeditions();
             }
 
