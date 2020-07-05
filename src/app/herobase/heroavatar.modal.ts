@@ -49,7 +49,7 @@ export class HeroAvatarModal implements OnInit {
     greenIcons = [];
     redIconCount = 23;
     redIcons = [];
-    neutralIconCount = 9;
+    neutralIconCount = 11;
     neutralIcons = [];
 
     constructor(private modalController: ModalController, private navParams: NavParams) {
