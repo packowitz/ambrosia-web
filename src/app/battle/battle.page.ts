@@ -129,10 +129,6 @@ export class BattlePage {
         setTimeout(() => {
           this.resetBattle(this.nextStageBattle);
         }, 1000);
-      } else {
-        setTimeout(() => {
-          this.activateNextStageBattle();
-        }, 100);
       }
     }
   }
