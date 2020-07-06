@@ -129,7 +129,7 @@ export class AcademyPage {
         this.currentLevelMaxXp = this.propertyService.getHeroMaxXp(this.currentLevel);
         diffToMax = this.currentLevelMaxXp;
       } else {
-        this.xpGainCurrentLevel = this.currentLevelMaxXp;
+        this.xpGainCurrentLevel = diffToMax;
       }
     }
   }
@@ -146,7 +146,7 @@ export class AcademyPage {
         this.currentAscLevelMaxPoints = this.propertyService.getHeroMaxAsc(this.currentAscLevel);
         diffToMax = this.currentAscLevelMaxPoints;
       } else {
-        this.ascGainCurrentLevel = this.currentAscLevelMaxPoints;
+        this.ascGainCurrentLevel = diffToMax;
       }
     }
   }
