@@ -56,7 +56,6 @@ export class BattlePage {
   }
 
   resetBattle(battle: Battle) {
-    this.battle = battle;
     this.battleSteps = [];
     this.activeHero = null;
     this.selectedSkill = null;
@@ -130,6 +129,10 @@ export class BattlePage {
         setTimeout(() => {
           this.resetBattle(this.nextStageBattle);
         }, 1000);
+      } else {
+        setTimeout(() => {
+          this.activateNextStageBattle();
+        }, 100);
       }
     }
   }
