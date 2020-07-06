@@ -101,13 +101,11 @@ export class BuffInfoModal {
 
     selectBuff(buff: Buff) {
         this.selectedBuff = buff;
-        this.propertyService.getProperties(this.selectedBuff.propertyType).subscribe(d => {
-            this.veryLight = d.filter(p => p.level === 1);
-            this.light = d.filter(p => p.level === 2);
-            this.normal = d.filter(p => p.level === 3);
-            this.strong = d.filter(p => p.level === 4);
-            this.veryStrong = d.filter(p => p.level === 5);
-        });
+        this.veryLight = this.propertyService.getProps(this.selectedBuff.propertyType, 1);
+        this.light = this.propertyService.getProps(this.selectedBuff.propertyType, 2);
+        this.normal = this.propertyService.getProps(this.selectedBuff.propertyType, 3);
+        this.strong = this.propertyService.getProps(this.selectedBuff.propertyType, 4);
+        this.veryStrong = this.propertyService.getProps(this.selectedBuff.propertyType, 5);
     }
 
     getBuffs(): Buff[] {

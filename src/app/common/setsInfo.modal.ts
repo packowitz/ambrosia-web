@@ -85,14 +85,12 @@ export class SetsInfoModal {
 
     selectSet(set: string) {
         this.selectedSet = set;
-        this.propertyService.getProperties(this.selectedSet + '_SET').subscribe(d => {
-            this.pcs1 = d.filter(p => p.level === 1);
-            this.pcs2 = d.filter(p => p.level === 2);
-            this.pcs3 = d.filter(p => p.level === 3);
-            this.pcs4 = d.filter(p => p.level === 4);
-            this.pcs5 = d.filter(p => p.level === 5);
-            this.pcs6 = d.filter(p => p.level === 6);
-        });
+        this.pcs1 = this.propertyService.getProps(this.selectedSet + '_SET', 1);
+        this.pcs2 = this.propertyService.getProps(this.selectedSet + '_SET', 2);
+        this.pcs3 = this.propertyService.getProps(this.selectedSet + '_SET', 3);
+        this.pcs4 = this.propertyService.getProps(this.selectedSet + '_SET', 4);
+        this.pcs5 = this.propertyService.getProps(this.selectedSet + '_SET', 5);
+        this.pcs6 = this.propertyService.getProps(this.selectedSet + '_SET', 6);
     }
 
     close() {

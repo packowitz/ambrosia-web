@@ -6,55 +6,104 @@ import {map} from 'rxjs/operators';
 import {API_URL} from '../../environments/environment';
 import {VehiclePart} from '../domain/vehiclePart.model';
 
+export class PropertyCache {
+  type: string;
+  version: number;
+  props: DynamicProperty[];
+
+  constructor(type: string, version: number, props: DynamicProperty[]) {
+    this.type = type;
+    this.version = version;
+    this.props = props;
+  }
+}
+export class PropertyVersion {
+  propertyType: string;
+  version: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class PropertyService {
 
-  initialCategories = ['PLAYER', 'GEAR', 'JEWEL', 'HERO', 'SET', 'BUFF', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
+  cache: PropertyCache[] = [];
+  versions: PropertyVersion[];
+  localStoragePrefix = 'PROP_';
 
+  initialCategories = ['BATTLE', 'PLAYER', 'GEAR', 'JEWEL', 'HERO', 'SET', 'BUFF', 'VEHICLE', 'UPGRADE_TIME', 'UPGRADE_COST', 'BUILDING'];
+
+  // deprecated
   properties = {};
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getProperties(type: string): Observable<DynamicProperty[]> {
-    if (this.properties[type]) {
-      return new Observable(observer => {
-        observer.next(this.properties[type]);
-        observer.complete();
-      });
-    } else {
-      return this.http.get<DynamicProperty[]>(API_URL + '/properties/type/' + type).pipe(map(p => {
-        this.properties[type] = p;
-        return p;
-      }));
-    }
-  }
-
-  loadInitialProperties() {
-    this.http.get<any>(API_URL + '/properties/categories/' + this.initialCategories.join()).subscribe(data => {
-      data.forEach(p => {
-        if (this.properties[p.type]) {
-          this.properties[p.type].push(p);
-        } else {
-          this.properties[p.type] = [p];
-        }
-      });
+  init() {
+    this.http.get<PropertyVersion[]>(API_URL + '/properties/versions').subscribe(data => {
+      this.versions = data;
+      this.loadInitialCategoryTypes();
     });
   }
 
-  getProps(type: string, level: number): DynamicProperty[] {
-    let props = this.properties[type];
-    if (props) {
-      return props.filter((p: DynamicProperty) => p.level === level);
+  loadInitialCategoryTypes() {
+    this.http.get<string[]>(API_URL + '/properties/category/types/' + this.initialCategories.join()).subscribe(data => {
+      data.forEach(t => this.loadType(t));
+    });
+  }
+
+  loadType(type: string) {
+    let lsString = localStorage.getItem(this.localStoragePrefix + type);
+    let cached: PropertyCache;
+    if (lsString) {
+      cached = JSON.parse(lsString);
     }
+    let version = this.getVersion(type);
+    if (!cached || cached.version !== version) {
+      this.loadProperties(type, version);
+    } else {
+      this.updateCache(cached);
+    }
+  }
+
+  loadProperties(type: string, version: number) {
+    this.http.get<DynamicProperty[]>(API_URL + '/properties/type/' + type + '/v/' + version).subscribe(data => {
+      let cached = new PropertyCache(type, version, data);
+      localStorage.setItem(this.localStoragePrefix + type, JSON.stringify(cached));
+      this.updateCache(cached);
+    });
+  }
+
+  updateCache(cached: PropertyCache) {
+    let idx = this.cache.findIndex(v => v.type === cached.type);
+    if (idx >= 0) {
+      this.cache[idx] = cached;
+    } else {
+      this.cache.push(cached);
+    }
+  }
+
+  getVersion(type: string): number {
+    let version = this.versions.find(v => v.propertyType === type);
+    return !!version ? version.version : -1;
+  }
+
+  getProperties(type: string): Observable<DynamicProperty[]> {
+    return this.http.get<DynamicProperty[]>(API_URL + '/properties/type/' + type);
+  }
+
+  getProps(type: string, level: number): DynamicProperty[] {
+    let cached = this.cache.find(c => c.type === type);
+    if (cached) {
+      return cached.props.filter(p => p.level === level);
+    }
+    console.log('Cannot find cached prop ' + type + ' lvl ' + level);
     return [];
   }
 
   getJewelValue(type: string, level: number): number {
-    let props = this.properties[type + '_JEWEL'];
-    if (props) {
-      let jewelProperty = props.find((p: DynamicProperty) => p.level === level);
+    let cached = this.cache.find(c => c.type === type + '_JEWEL');
+    if (cached) {
+      let jewelProperty = cached.props.find((p: DynamicProperty) => p.level === level);
       if (jewelProperty) {
         return jewelProperty.value1;
       }
@@ -64,9 +113,9 @@ export class PropertyService {
 
   getJewelValueAndName(type: string, level: number): string[] {
     if (!type || !level) { return []; }
-    let props = this.properties[type + '_JEWEL'];
-    if (props) {
-      return props.filter((p: DynamicProperty) => p.level === level).map(prop => this.statAsText(prop) );
+    let cached = this.cache.find(c => c.type === type + '_JEWEL');
+    if (cached) {
+      return cached.props.filter((p: DynamicProperty) => p.level === level).map(prop => this.statAsText(prop) );
     }
     return [];
   }
@@ -117,9 +166,9 @@ export class PropertyService {
   }
 
   getHeroMaxXp(level: number): number {
-    let props = this.properties['XP_MAX_HERO'];
-    if (props) {
-      let lvlProp = props.find((p: DynamicProperty) => p.level === level);
+    let cached = this.cache.find(c => c.type === 'XP_MAX_HERO');
+    if (cached) {
+      let lvlProp = cached.props.find((p: DynamicProperty) => p.level === level);
       if (lvlProp) {
         return lvlProp.value1;
       }
@@ -128,9 +177,9 @@ export class PropertyService {
   }
 
   getHeroMergeXp(level: number): number {
-    let props = this.properties['MERGE_XP_HERO'];
-    if (props) {
-      let lvlProp = props.find((p: DynamicProperty) => p.level === level);
+    let cached = this.cache.find(c => c.type === 'MERGE_XP_HERO');
+    if (cached) {
+      let lvlProp = cached.props.find((p: DynamicProperty) => p.level === level);
       if (lvlProp) {
         return lvlProp.value1;
       }
@@ -139,9 +188,9 @@ export class PropertyService {
   }
 
   getHeroMaxAsc(ascLevel: number): number {
-    let props = this.properties['ASC_POINTS_MAX_HERO'];
-    if (props) {
-      let lvlProp = props.find((p: DynamicProperty) => p.level === ascLevel);
+    let cached = this.cache.find(c => c.type === 'ASC_POINTS_MAX_HERO');
+    if (cached) {
+      let lvlProp = cached.props.find((p: DynamicProperty) => p.level === ascLevel);
       if (lvlProp) {
         return lvlProp.value1;
       }
@@ -150,9 +199,9 @@ export class PropertyService {
   }
 
   getHeroMergeAsc(rarity: number): number {
-    let props = this.properties['MERGE_ASC_HERO'];
-    if (props) {
-      let lvlProp = props.find((p: DynamicProperty) => p.level === rarity);
+    let cached = this.cache.find(c => c.type === 'MERGE_ASC_HERO');
+    if (cached) {
+      let lvlProp = cached.props.find((p: DynamicProperty) => p.level === rarity);
       if (lvlProp) {
         return lvlProp.value1;
       }
@@ -161,9 +210,9 @@ export class PropertyService {
   }
 
   getVehiclePartProperties(part: VehiclePart): DynamicProperty[] {
-    let props = this.properties[part.type + '_PART_' + part.quality];
-    if (props) {
-      return props.filter((p: DynamicProperty) => p.level === part.level);
+    let cached = this.cache.find(c => c.type === part.type + '_PART_' + part.quality);
+    if (cached) {
+      return cached.props.filter((p: DynamicProperty) => p.level === part.level);
     }
     return [];
   }
@@ -191,7 +240,6 @@ export class PropertyService {
 
   saveProperties(type: string, properties: DynamicProperty[]): Observable<DynamicProperty[]> {
     return this.http.post<DynamicProperty[]>(API_URL + '/admin/properties/type/' + type, properties).pipe(map(p => {
-      this.properties[type] = p;
       return p;
     }));
   }

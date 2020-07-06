@@ -84,14 +84,12 @@ export class GearInfoModal {
 
     selectType(type: string) {
         this.selectedType = type;
-        this.propertyService.getProperties(this.selectedType + '_GEAR').subscribe(d => {
-            this.simple = d.filter(p => p.level === 1);
-            this.common = d.filter(p => p.level === 2);
-            this.uncommon = d.filter(p => p.level === 3);
-            this.rare = d.filter(p => p.level === 4);
-            this.epic = d.filter(p => p.level === 5);
-            this.legendary = d.filter(p => p.level === 6);
-        });
+        this.simple = this.propertyService.getProps(this.selectedType + '_GEAR', 1);
+        this.common = this.propertyService.getProps(this.selectedType + '_GEAR', 2);
+        this.uncommon = this.propertyService.getProps(this.selectedType + '_GEAR', 3);
+        this.rare = this.propertyService.getProps(this.selectedType + '_GEAR', 4);
+        this.epic = this.propertyService.getProps(this.selectedType + '_GEAR', 5);
+        this.legendary = this.propertyService.getProps(this.selectedType + '_GEAR', 6);
     }
 
     close() {

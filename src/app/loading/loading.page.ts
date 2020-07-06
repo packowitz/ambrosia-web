@@ -84,7 +84,7 @@ export class LoadingPage {
       this.router.navigateByUrl('/login');
     } else {
       this.backendService.getPlayer().subscribe(playerAction => {
-        this.propertyService.loadInitialProperties();
+        this.propertyService.init();
         this.model.playerName = playerAction.player.name;
         this.model.playerId = playerAction.player.id;
         this.model.activeAccountId = playerAction.player.id;
