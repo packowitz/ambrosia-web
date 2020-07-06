@@ -90,7 +90,22 @@ export class HomePage {
   }
 
   getRow(y: number): PlayerMapTile[] {
-    return this.map.tiles.filter(t => t.posY === y).sort((a, b) => a.posX - b.posX);
+    let knownRowTiles = this.map.tiles.filter(t => t.posY === y);
+    let tiles: PlayerMapTile[] = [];
+    for (let i = this.map.minX; i <= this.map.maxX; i++) {
+      let knownTile = knownRowTiles.find(t => t.posX === i);
+      if (knownTile) {
+        tiles.push(knownTile);
+      } else {
+        let emptyTile = new PlayerMapTile();
+        emptyTile.posX = i;
+        emptyTile.posY = y;
+        emptyTile.discovered = false;
+        emptyTile.discoverable = false;
+        tiles.push(emptyTile);
+      }
+    }
+    return tiles;
   }
 
   isEven(row: number): boolean {
