@@ -174,6 +174,11 @@ export class BuildingUpgradeModal {
             case 'VEHICLE_UPGRADE_LEVEL': return '+' + value + ' Vehicle upgrade level';
             case 'INCUBATORS': return '+' + value + ' Incubator(s)';
             case 'LAB_SPEED': return '+' + value + '% Incubation speed';
+            case 'SIMPLE_GENOMES_NEEDED': return value + ' Simple genomes needed';
+            case 'COMMON_GENOMES_NEEDED': return value + ' Common genomes needed';
+            case 'UNCOMMON_GENOMES_NEEDED': return value + ' Uncommon genomes needed';
+            case 'RARE_GENOMES_NEEDED': return value + ' Rare genomes needed';
+            case 'EPIC_GENOMES_NEEDED': return value + ' Epic genomes needed';
             case 'JEWEL_UPGRADE_LEVEL': return '+' + value + ' Jewel upgrade level';
             case 'GEAR_MOD_RARITY': return '+' + value + ' Gear rarity allowed to modify';
             case 'GEAR_MOD_SPEED': return '+' + value + '% Gear modification speed';

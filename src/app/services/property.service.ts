@@ -229,10 +229,6 @@ export class PropertyService {
     return this.getProps(genome + '_TIME', 1);
   }
 
-  getIncubationCosts(genome: string): DynamicProperty[] {
-    return this.getProps(genome + '_COST', 1);
-  }
-
   getPossibleGearStats(type: string, stars: number): string[] {
     if (!type || !stars) { return []; }
     return this.getProps(type + '_GEAR', stars).map(p => p.stat);

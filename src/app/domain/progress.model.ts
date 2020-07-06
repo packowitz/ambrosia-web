@@ -16,6 +16,11 @@ export class Progress {
     vehicleUpgradeLevel: number;
     incubators: number;
     labSpeed: number;
+    simpleGenomesNeeded: number;
+    commonGenomesNeeded: number;
+    uncommonGenomesNeeded: number;
+    rareGenomesNeeded: number;
+    epicGenomesNeeded: number;
     maxJewelUpgradingLevel: number;
     gearModificationRarity: number;
     gearModificationSpeed: number;

@@ -75,11 +75,14 @@ export class LaboratoryPage {
   }
 
   genomesNeeded(genome: string): number {
-    let props = this.propertyService.getIncubationCosts(genome);
-    if (props && props.length > 0) {
-      return props[0].value1;
+    switch (genome) {
+      case 'SIMPLE_GENOME': return this.model.progress.simpleGenomesNeeded;
+      case 'COMMON_GENOME': return this.model.progress.commonGenomesNeeded;
+      case 'UNCOMMON_GENOME': return this.model.progress.uncommonGenomesNeeded;
+      case 'RARE_GENOME': return this.model.progress.rareGenomesNeeded;
+      case 'EPIC_GENOME': return this.model.progress.epicGenomesNeeded;
+      default: return 9999;
     }
-    return 9999;
   }
 
   hasEnoughGenomes(genome: string): boolean {
