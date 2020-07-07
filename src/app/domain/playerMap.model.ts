@@ -10,6 +10,7 @@ export class PlayerMap {
     maxX: number;
     minY: number;
     maxY: number;
+    secondsToReset?: number;
 
     tiles: PlayerMapTile[];
 }

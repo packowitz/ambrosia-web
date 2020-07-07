@@ -81,6 +81,7 @@ export class Model {
     updateIncubatorsInProgress = false;
     updatePlayerExpeditionsInProgress = false;
     updateExpeditionsInProgress = false;
+    updateCurrentMapInProgress = false;
     useServiceAccount = false;
 
     constructor(private http: HttpClient,
@@ -233,6 +234,13 @@ export class Model {
                 }
             }
 
+            if (this.currentMap && !!this.currentMap.secondsToReset) {
+                this.currentMap.secondsToReset --;
+                if (pauseDetected || this.currentMap.secondsToReset <= 0) {
+                    this.updateCurrentMap();
+                }
+            }
+
         }, 1000);
     }
 
@@ -289,6 +297,15 @@ export class Model {
                 this.updateExpeditionsInProgress = false;
                 console.log('expeditions update failed');
             });
+        }
+    }
+
+    updateCurrentMap() {
+        if (!this.updateCurrentMapInProgress) {
+            this.updateCurrentMapInProgress = true;
+            this.http.post<PlayerActionResponse>(API_URL + '/map/' + this.currentMap.mapId + '/current', null).subscribe(() => {
+                this.updateCurrentMapInProgress = false;
+            }, () => this.updateCurrentMapInProgress = false );
         }
     }
 

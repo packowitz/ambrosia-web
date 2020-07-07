@@ -40,6 +40,20 @@
           <ion-checkbox [(ngModel)]="map.startingMap" [disabled]="isCurrentStartingMap" slot="start"></ion-checkbox>
         </ion-item>
       </div>
+      <div class="flex-space-between">
+        <ion-item>
+          <ion-label>Reset Hours</ion-label>
+          <ion-input [(ngModel)]="map.resetIntervalHours" type="number"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Reset Start</ion-label>
+          <ion-datetime [(ngModel)]="map.intervalFrom" [disabled]="!map.resetIntervalHours" placeholder="select" displayFormat="YYYY-MM-DD HH:mm" [yearValues]="possibleYears()" minuteValues="0,30"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>Next Reset</ion-label>
+          <ion-datetime [(ngModel)]="map.intervalTo" [disabled]="!map.resetIntervalHours || !map.intervalTo" placeholder="select" displayFormat="YYYY-MM-DD HH:mm" [yearValues]="possibleYears()" minuteValues="0,30"></ion-datetime>
+        </ion-item>
+      </div>
       <div class="flex">
         <div class="flex-grow">
           <ion-item>

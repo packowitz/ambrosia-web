@@ -88,11 +88,11 @@
     </div>
   </ion-card>
 
-  <ion-card *ngIf="map">
+  <ion-card *ngIf="model.currentMap as map">
     <ion-card-header>
       <ion-card-title>
         <div class="flex-space-between">
-          {{map.name}}
+          <div>{{map.name}}<span *ngIf="map.secondsToReset" class="font-small color-grey"> (reset in {{converter.timeWithUnit(map.secondsToReset)}})</span></div>
           <ion-button *ngIf="model.player.betaTester" (click)="resetMap()" fill="clear">Reset Map</ion-button>
         </div>
       </ion-card-title>

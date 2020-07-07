@@ -226,10 +226,21 @@ export class MapDetailsPage implements OnInit {
 
   save() {
     this.saving = true;
+    if (this.map.intervalFrom) {
+      this.map.intervalFrom = this.map.intervalFrom.substr(0, 16);
+    }
+    if (this.map.intervalTo) {
+      this.map.intervalTo = this.map.intervalTo.substr(0, 16);
+    }
     this.backendService.saveMap(this.map).subscribe(data => {
       this.setMap(data);
       this.model.updateMap(data);
       this.saving = false;
     }, () => { this.saving = false; });
+  }
+
+  possibleYears() {
+    let thisYear = (new Date()).getFullYear();
+    return thisYear + ',' + (thisYear + 1);
   }
 }

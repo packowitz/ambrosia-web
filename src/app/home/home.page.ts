@@ -3,7 +3,6 @@ import {Model} from '../services/model.service';
 import {PlayerMapTile} from '../domain/playerMapTile.model';
 import {BackendService} from '../services/backend.service';
 import {AlertController, ModalController} from '@ionic/angular';
-import {PlayerMap} from '../domain/playerMap.model';
 import {Router} from '@angular/router';
 import {Building} from '../domain/building.model';
 import {ConverterService} from '../services/converter.service';
@@ -36,7 +35,6 @@ export class HomePage {
 
   buildings: Building[];
 
-  map: PlayerMap;
   rows: number[];
 
   mapFightFoundStory = 'MAP_FIGHT_REVEALED';
@@ -60,14 +58,13 @@ export class HomePage {
               public modalCtrl: ModalController) {}
 
   ionViewWillEnter(): void {
-    this.map = this.model.currentMap;
     this.calcRows();
     this.calcBuildings();
     this.checkStories();
   }
 
   private calcRows() {
-    this.rows = Array.from({length: (this.map.maxY - this.map.minY + 1)}, (v, k) => k + this.map.minY);
+    this.rows = Array.from({length: (this.model.currentMap.maxY - this.model.currentMap.minY + 1)}, (v, k) => k + this.model.currentMap.minY);
   }
 
   private calcBuildings() {
@@ -90,9 +87,9 @@ export class HomePage {
   }
 
   getRow(y: number): PlayerMapTile[] {
-    let knownRowTiles = this.map.tiles.filter(t => t.posY === y);
+    let knownRowTiles = this.model.currentMap.tiles.filter(t => t.posY === y);
     let tiles: PlayerMapTile[] = [];
-    for (let i = this.map.minX; i <= this.map.maxX; i++) {
+    for (let i = this.model.currentMap.minX; i <= this.model.currentMap.maxX; i++) {
       let knownTile = knownRowTiles.find(t => t.posX === i);
       if (knownTile) {
         tiles.push(knownTile);
@@ -114,15 +111,14 @@ export class HomePage {
 
   getTileMission(tile: PlayerMapTile): Mission {
     if (tile.fightRepeatable && tile.victoriousFight) {
-      return this.model.missions.find(m => m.mapId === this.map.mapId && m.posX === tile.posX && m.posY === tile.posY);
+      return this.model.missions.find(m => m.mapId === this.model.currentMap.mapId && m.posX === tile.posX && m.posY === tile.posY);
     }
   }
 
   selectTile(tile: PlayerMapTile) {
     if (tile.discoverable) {
       this.saving = true;
-      this.backendService.discoverMapTile(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
-        this.map = data.currentMap;
+      this.backendService.discoverMapTile(this.model.currentMap.mapId, tile.posX, tile.posY).subscribe(() => {
         this.saving = false;
         this.checkStories();
       }, () => { this.saving = false; });
@@ -131,7 +127,7 @@ export class HomePage {
       if (mission) {
         this.openMission(mission);
       } else {
-        this.router.navigateByUrl('/campaign/' + this.map.mapId + '/' + tile.posX + '/' + tile.posY);
+        this.router.navigateByUrl('/campaign/' + this.model.currentMap.mapId + '/' + tile.posX + '/' + tile.posY);
       }
     } else if (tile.structure) {
       if (tile.portalToMapId) {
@@ -140,14 +136,12 @@ export class HomePage {
         let toMap = this.model.playerMaps.find(m => m.mapId === tile.portalToMapId);
         if (toMap) {
           this.backendService.setCurrentMap(toMap.mapId).subscribe(() => {
-            this.map = this.model.currentMap;
             this.calcRows();
             this.saving = false;
             this.showMapStory();
           }, () => { this.saving = false; });
         } else {
-          this.backendService.discoverMap(tile.portalToMapId).subscribe(data => {
-            this.map = data.currentMap;
+          this.backendService.discoverMap(tile.portalToMapId).subscribe(() => {
             this.calcRows();
             this.saving = false;
             this.showMapStory();
@@ -159,7 +153,7 @@ export class HomePage {
           this.gotoBuilding(tile.buildingType);
         } else {
           this.saving = true;
-          this.backendService.discoverBuilding(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
+          this.backendService.discoverBuilding(this.model.currentMap.mapId, tile.posX, tile.posY).subscribe(() => {
             this.saving = false;
             this.calcBuildings();
             let discoverStory = tile.buildingType + '_DISCOVERED';
@@ -170,17 +164,16 @@ export class HomePage {
         }
       } else if (!tile.chestOpened) {
         this.saving = true;
-        this.backendService.openChest(this.map.mapId, tile.posX, tile.posY).subscribe(data => {
+        this.backendService.openChest(this.model.currentMap.mapId, tile.posX, tile.posY).subscribe(() => {
           this.saving = false;
-          this.map = data.currentMap;
         }, () => { this.saving = false; });
       }
     }
   }
 
   showMapStory() {
-    if (this.map.storyTrigger && this.storyService.storyUnknown(this.map.storyTrigger)) {
-      this.storyService.showStory(this.map.storyTrigger).subscribe(() => {
+    if (this.model.currentMap.storyTrigger && this.storyService.storyUnknown(this.model.currentMap.storyTrigger)) {
+      this.storyService.showStory(this.model.currentMap.storyTrigger).subscribe(() => {
         console.log("HomePage map story shown");
       });
     }
@@ -202,7 +195,7 @@ export class HomePage {
           {text: 'Blue', cssClass: 'BLUE', handler: () => this.saveColor('BLUE') }
         ]
       }).then(alert => alert.present());
-    } else if (this.storyService.storyUnknown(this.mapFightFoundStory) && this.map.tiles.findIndex(t => t.discovered && !!t.fightIcon) !== -1) {
+    } else if (this.storyService.storyUnknown(this.mapFightFoundStory) && this.model.currentMap.tiles.findIndex(t => t.discovered && !!t.fightIcon) !== -1) {
       this.storyService.showStory(this.mapFightFoundStory).subscribe(() => {
         console.log("HomePage map fight revealed story shown");
         this.checkStories();
@@ -244,7 +237,7 @@ export class HomePage {
       });
     } else if (this.model.progress.level < 60 && this.model.progress.xp >= this.model.progress.maxXp) {
       this.saving = true;
-      this.backendService.playerLevelUp().subscribe(data => {
+      this.backendService.playerLevelUp().subscribe(() => {
         this.saving = false;
       });
     }
@@ -262,15 +255,15 @@ export class HomePage {
   }
 
   mapHasUnopenedChest(): boolean {
-    return this.map.tiles.findIndex(t => t.discovered && !!t.structure && !t.portalToMapId && !t.buildingType && !t.chestOpened) !== -1;
+    return this.model.currentMap.tiles.findIndex(t => t.discovered && !!t.structure && !t.portalToMapId && !t.buildingType && !t.chestOpened) !== -1;
   }
 
   mapHasVictoriousRepeatableFight(): boolean {
-    return this.map.tiles.findIndex(t => t.discovered && t.fightRepeatable && t.victoriousFight) !== -1;
+    return this.model.currentMap.tiles.findIndex(t => t.discovered && t.fightRepeatable && t.victoriousFight) !== -1;
   }
 
   mapHasPortal(): boolean {
-    return this.map.tiles.findIndex(t => t.discovered && !!t.portalToMapId) !== -1;
+    return this.model.currentMap.tiles.findIndex(t => t.discovered && !!t.portalToMapId) !== -1;
   }
 
   gotoBuilding(type: string) {
@@ -438,8 +431,7 @@ export class HomePage {
                 if (item === 'fights') { fights = true; }
                 if (item === 'chests') { chests = true; }
               });
-              this.backendService.resetMap(this.map.mapId, discovered, fights, chests).subscribe(response => {
-                this.map = response.currentMap;
+              this.backendService.resetMap(this.model.currentMap.mapId, discovered, fights, chests).subscribe(() => {
                 this.saving = false;
               }, () => { this.saving = false; });
             }

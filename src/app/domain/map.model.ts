@@ -11,5 +11,8 @@ export class Map {
     minY: number;
     maxY: number;
     background: string;
+    resetIntervalHours?: number;
+    intervalFrom?: string;
+    intervalTo?: string;
     tiles: MapTile[];
 }
