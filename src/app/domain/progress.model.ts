@@ -21,6 +21,10 @@ export class Progress {
     uncommonGenomesNeeded: number;
     rareGenomesNeeded: number;
     epicGenomesNeeded: number;
+    simpleIncubationUpPerMil: number;
+    commonIncubationUpPerMil: number;
+    uncommonIncubationUpPerMil: number;
+    rareIncubationUpPerMil: number;
     maxJewelUpgradingLevel: number;
     gearModificationRarity: number;
     gearModificationSpeed: number;

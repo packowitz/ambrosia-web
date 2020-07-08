@@ -71,7 +71,33 @@ export class LaboratoryPage {
   }
 
   incubationtime(genome: string): string {
-    return this.converter.timeWithUnit(this.propertyService.getIncubationTime(genome)[0].value1);
+    let time = this.propertyService.getIncubationTime(genome)[0].value1;
+    let upChance = 0;
+    let nextLevelTime = 0;
+    switch (genome) {
+      case 'SIMPLE_GENOME': {
+        upChance = this.model.progress.simpleIncubationUpPerMil;
+        nextLevelTime = this.propertyService.getIncubationTime('COMMON_GENOME')[0].value1;
+        break;
+      }
+      case 'COMMON_GENOME': {
+        upChance = this.model.progress.commonIncubationUpPerMil;
+        nextLevelTime = this.propertyService.getIncubationTime('UNCOMMON_GENOME')[0].value1;
+        break;
+      }
+      case 'UNCOMMON_GENOME': {
+        upChance = this.model.progress.uncommonIncubationUpPerMil;
+        nextLevelTime = this.propertyService.getIncubationTime('RARE_GENOME')[0].value1;
+        break;
+      }
+      case 'RARE_GENOME': {
+        upChance = this.model.progress.rareIncubationUpPerMil;
+        nextLevelTime = this.propertyService.getIncubationTime('EPIC_GENOME')[0].value1;
+        break;
+      }
+    }
+    time += Math.round((upChance * nextLevelTime) / 100);
+    return this.converter.timeWithUnit(time);
   }
 
   genomesNeeded(genome: string): number {
@@ -83,6 +109,10 @@ export class LaboratoryPage {
       case 'EPIC_GENOME': return this.model.progress.epicGenomesNeeded;
       default: return 9999;
     }
+  }
+
+  perMilToPercent(perMil: number): string {
+    return (perMil / 10) + '%';
   }
 
   hasEnoughGenomes(genome: string): boolean {

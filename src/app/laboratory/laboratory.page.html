@@ -74,10 +74,10 @@
           <ion-img src="assets/icon/resources/SIMPLE_GENOME.png" class="medium-icon"></ion-img>
         </ion-col>
         <ion-col sizeMd="6" class="ion-hide-md-down">
-          Incubating <b>Simple Genomes</b> will clone a simple (1*) hero.
+          Incubating <b>Simple Genomes</b> will clone a simple (1*) hero.{{model.progress.simpleIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.simpleIncubationUpPerMil) + ' chance to clone a common (2*) hero.' : ''}}
         </ion-col>
         <ion-col sizeMd="6" class="flex-start ion-hide-md-up">
-          <b>Simple</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-05" (click)="info('Incubating Simple Genomes will clone a simple (1*) hero.')">
+          <b>Simple</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-05" (click)="info('Incubating Simple Genomes will clone a simple (1*) hero.' + model.progress.simpleIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.simpleIncubationUpPerMil) + ' chance to clone a common (2*) hero.' : '')">
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
@@ -96,10 +96,10 @@
           <ion-img src="assets/icon/resources/COMMON_GENOME.png" class="medium-icon"></ion-img>
         </ion-col>
         <ion-col sizeMd="6" class="ion-hide-md-down">
-          Incubating <b>Common Genomes</b> will clone a common (2*) hero.
+          Incubating <b>Common Genomes</b> will clone a common (2*) hero.{{model.progress.commonIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.commonIncubationUpPerMil) + ' chance to clone an uncommon (3*) hero.' : ''}}
         </ion-col>
         <ion-col sizeMd="6" class="flex-start ion-hide-md-up">
-          <b>Common</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-05" (click)="info('Incubating Common Genomes will clone a common (2*) hero.')">
+          <b>Common</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-05" (click)="info('Incubating Common Genomes will clone a common (2*) hero.' + model.progress.commonIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.commonIncubationUpPerMil) + ' chance to clone an uncommon (3*) hero.' : '')">
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
@@ -118,10 +118,10 @@
           <ion-img src="assets/icon/resources/UNCOMMON_GENOME.png" class="medium-icon"></ion-img>
         </ion-col>
         <ion-col sizeMd="6" class="ion-hide-md-down">
-          Incubating <b>Uncommon Genomes</b> will clone a uncommon (3*) hero.
+          Incubating <b>Uncommon Genomes</b> will clone a uncommon (3*) hero.{{model.progress.uncommonIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.uncommonIncubationUpPerMil) + ' chance to clone a rare (4*) hero.' : ''}}
         </ion-col>
         <ion-col sizeMd="6" class="flex-start ion-hide-md-up">
-          <b>Uncommon</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-05" (click)="info('Incubating Uncommon Genomes will clone a uncommon (3*) hero.')">
+          <b>Uncommon</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-05" (click)="info('Incubating Uncommon Genomes will clone a uncommon (3*) hero.' + model.progress.uncommonIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.uncommonIncubationUpPerMil) + ' chance to clone a rare (4*) hero.' : '')">
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
@@ -140,10 +140,10 @@
           <ion-img src="assets/icon/resources/RARE_GENOME.png" class="medium-icon"></ion-img>
         </ion-col>
         <ion-col sizeMd="6" class="ion-hide-md-down">
-          Incubating <b>Rare Genomes</b> will clone a rare (4*) hero.
+          Incubating <b>Rare Genomes</b> will clone a rare (4*) hero.{{model.progress.rareIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.rareIncubationUpPerMil) + ' chance to clone an epic (5*) hero.' : ''}}
         </ion-col>
         <ion-col sizeMd="6" class="flex-start ion-hide-md-up">
-          <b>Rare</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-05" (click)="info('Incubating Rare Genomes will clone a rare (4*) hero.')">
+          <b>Rare</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-05" (click)="info('Incubating Rare Genomes will clone a rare (4*) hero.' + model.progress.rareIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.rareIncubationUpPerMil) + ' chance to clone an epic (5*) hero.' : '')">
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
