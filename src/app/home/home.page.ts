@@ -316,6 +316,15 @@ export class HomePage {
       }
       case 'LABORATORY': {
         if (this.model.incubators.findIndex(i => i.finished) !== -1) { return 'alert'; }
+        if (this.model.incubators.length < this.model.progress.incubators ) {
+          if (this.model.resources.simpleGenome >= this.model.progress.simpleGenomesNeeded ||
+              this.model.resources.commonGenome >= this.model.progress.commonGenomesNeeded ||
+              this.model.resources.uncommonGenome >= this.model.progress.uncommonGenomesNeeded ||
+              this.model.resources.rareGenome >= this.model.progress.rareGenomesNeeded ||
+              this.model.resources.epicGenome >= this.model.progress.epicGenomesNeeded) {
+            return 'info';
+          }
+        }
         break;
       }
       case 'FORGE': {
