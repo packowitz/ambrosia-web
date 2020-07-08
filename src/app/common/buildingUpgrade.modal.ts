@@ -179,6 +179,10 @@ export class BuildingUpgradeModal {
             case 'UNCOMMON_GENOMES_NEEDED': return value + ' Uncommon genomes needed';
             case 'RARE_GENOMES_NEEDED': return value + ' Rare genomes needed';
             case 'EPIC_GENOMES_NEEDED': return value + ' Epic genomes needed';
+            case 'SIMPLE_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + ' Chance to clone a common hero using simple genomes';
+            case 'COMMON_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + ' Chance to clone an uncommon hero using common genomes';
+            case 'UNCOMMON_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + ' Chance to clone a rare hero using uncommon genomes';
+            case 'RARE_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + ' Chance to clone an epic hero using rare genomes';
             case 'JEWEL_UPGRADE_LEVEL': return '+' + value + ' Jewel upgrade level';
             case 'GEAR_MOD_RARITY': return '+' + value + ' Gear rarity allowed to modify';
             case 'GEAR_MOD_SPEED': return '+' + value + '% Gear modification speed';
@@ -192,5 +196,9 @@ export class BuildingUpgradeModal {
             case 'ADD_GEAR_SPECIAL_JEWEL': return 'New modification: Add set jewel slot';
             default: return '';
         }
+    }
+
+    perMilToPercent(perMil: number): string {
+        return (perMil / 10) + '%';
     }
 }
