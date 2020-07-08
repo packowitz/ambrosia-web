@@ -39,6 +39,9 @@ export class CampaignFightPage {
 
   testFight = false;
 
+  steamTimer = false;
+  cogwheelsTimer = false;
+
   enterStory = 'FIGHT_ENTERED';
   fightTooHighStory = 'FIGHT_TOO_HIGH';
 
