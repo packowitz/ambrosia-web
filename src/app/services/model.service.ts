@@ -32,6 +32,7 @@ import {PlayerExpedition} from '../domain/playerExpedition.model';
 import {OddJobBase} from '../domain/oddJobBase.model';
 import {OddJob} from '../domain/oddJob.model';
 import {DailyActivity} from '../domain/dailyActivity.model';
+import {Achievements} from '../domain/achievements.model';
 
 @Injectable({
     providedIn: 'root'
@@ -43,6 +44,7 @@ export class Model {
     activeAccountId: number;
     player: Player;
     progress: Progress;
+    achievements: Achievements;
     resources: Resources;
     baseHeroes: HeroBase[];
     heroes: Hero[];
@@ -325,6 +327,9 @@ export class Model {
                 this.updateExpeditions();
             }
             this.progress = data.progress;
+        }
+        if (data.achievements) {
+            this.achievements = data.achievements;
         }
         if (data.upgrades) {
             if (this.upgrades) {

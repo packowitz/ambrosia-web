@@ -40,6 +40,7 @@ import {PlayerExpedition} from '../domain/playerExpedition.model';
 import {OddJobBase} from '../domain/oddJobBase.model';
 import {OddJob} from '../domain/oddJob.model';
 import {DailyActivity} from '../domain/dailyActivity.model';
+import {Achievements} from '../domain/achievements.model';
 
 export class Looted {
     type: string;
@@ -55,6 +56,7 @@ export class LootedItem {
 export class PlayerActionResponse {
     player?: Player;
     progress?: Progress;
+    achievements?: Achievements;
     token?: string;
     resources?: Resources;
     hero?: Hero;
@@ -604,6 +606,10 @@ export class BackendService {
 
     playerLevelUp(): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/progress/level_up', null);
+    }
+
+    expeditionLevelUp(): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/progress/exp_level_up', null);
     }
 
     startExpedition(expedition: Expedition, team: Team): Observable<PlayerActionResponse> {
