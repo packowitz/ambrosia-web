@@ -5,6 +5,7 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {BarracksPage} from './barracks.page';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
+import {BarracksUpgradeInfoModal} from './barracks-upgrade-info.modal';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
             }
         ])
     ],
-    declarations: [BarracksPage]
+    declarations: [BarracksPage, BarracksUpgradeInfoModal],
+    entryComponents: [BarracksUpgradeInfoModal]
 })
 export class BarracksModule {
 }

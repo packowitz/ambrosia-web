@@ -110,32 +110,32 @@ export class BuildingUpgradeModal {
         let nextLevel = this.getBuilding().level + 1;
         if (this.buildingType === 'ACADEMY') {
             this.propertyService.getProps('ACADEMY_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
+                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'BARRACKS') {
             this.propertyService.getProps('BARRACKS_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
+                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'FORGE') {
             this.propertyService.getProps('FORGE_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
+                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'GARAGE') {
             this.propertyService.getProps('GARAGE_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
+                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'JEWELRY') {
             this.propertyService.getProps('JEWELRY_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
+                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'LABORATORY') {
             this.propertyService.getProps('LABORATORY_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.readableProgressStat(p.progressStat, p.value1));
+                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
             });
         }
         if (this.buildingType === 'STORAGE') {
@@ -160,45 +160,5 @@ export class BuildingUpgradeModal {
             });
 
         }
-    }
-
-    readableProgressStat(stat: string, value: number): string {
-        switch(stat) {
-            case 'GARAGE_SLOT': return '+' + value + ' Garage slot';
-            case 'MISSION_SPEED': return '+' + value + '% Mission speed';
-            case 'MISSION_MAX_BATTLES': return '+' + value + ' Battles per mission';
-            case 'BUILDER_QUEUE': return '+' + value + ' Builder queue size';
-            case 'BUILDER_SPEED': return '+' + value + '% Builder speed';
-            case 'BARRACKS_SIZE': return '+' + value + ' Barracks space';
-            case 'HERO_TRAIN_LEVEL': return '+' + value + ' Hero train level';
-            case 'VEHICLE_UPGRADE_LEVEL': return '+' + value + ' Vehicle upgrade level';
-            case 'INCUBATORS': return '+' + value + ' Incubator(s)';
-            case 'LAB_SPEED': return '+' + value + '% Incubation speed';
-            case 'SIMPLE_GENOMES_NEEDED': return value + ' Simple genomes needed';
-            case 'COMMON_GENOMES_NEEDED': return value + ' Common genomes needed';
-            case 'UNCOMMON_GENOMES_NEEDED': return value + ' Uncommon genomes needed';
-            case 'RARE_GENOMES_NEEDED': return value + ' Rare genomes needed';
-            case 'EPIC_GENOMES_NEEDED': return value + ' Epic genomes needed';
-            case 'SIMPLE_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + ' Chance to clone a common hero using simple genomes';
-            case 'COMMON_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + ' Chance to clone an uncommon hero using common genomes';
-            case 'UNCOMMON_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + ' Chance to clone a rare hero using uncommon genomes';
-            case 'RARE_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + ' Chance to clone an epic hero using rare genomes';
-            case 'JEWEL_UPGRADE_LEVEL': return '+' + value + ' Jewel upgrade level';
-            case 'GEAR_MOD_RARITY': return '+' + value + ' Gear rarity allowed to modify';
-            case 'GEAR_MOD_SPEED': return '+' + value + '% Gear modification speed';
-            case 'GEAR_BREAKDOWN_RARITY': return '+' + value + ' Gear rarity allowed to breakdown';
-            case 'GEAR_BREAKDOWN_RESOURCES': return '+' + value + '% Resources when breaking down gear';
-            case 'REROLL_GEAR_QUALITY': return 'New modification: Re roll quality';
-            case 'REROLL_GEAR_STAT': return 'New modification: Re roll stat';
-            case 'INC_GEAR_RARITY': return 'New modification: Increase rarity';
-            case 'REROLL_GEAR_JEWEL': return 'New modification: Re roll jewel slots';
-            case 'ADD_GEAR_JEWEL': return 'New modification: Add jewel slot';
-            case 'ADD_GEAR_SPECIAL_JEWEL': return 'New modification: Add set jewel slot';
-            default: return '';
-        }
-    }
-
-    perMilToPercent(perMil: number): string {
-        return (perMil / 10) + '%';
     }
 }

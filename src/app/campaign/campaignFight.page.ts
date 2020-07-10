@@ -77,7 +77,7 @@ export class CampaignFightPage {
     }
 
     if (this.storyService.storyUnknown(this.enterStory)) {
-      this.showStory();
+      this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
     }
   }
 
@@ -108,10 +108,6 @@ export class CampaignFightPage {
 
   close() {
     this.router.navigateByUrl('/home');
-  }
-
-  showStory() {
-    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   initTeam() {

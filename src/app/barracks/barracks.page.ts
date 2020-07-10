@@ -15,6 +15,7 @@ import {BuffInfoModal} from '../common/buffInfo.modal';
 import {StoryService} from '../services/story.service';
 import {EnumService} from '../services/enum.service';
 import {BuildingService} from '../services/building.service';
+import {BarracksUpgradeInfoModal} from './barracks-upgrade-info.modal';
 
 @Component({
   selector: 'barracks',
@@ -56,16 +57,16 @@ export class BarracksPage {
       this.selectHero(this.model.heroes[0]);
     }
     if (this.storyService.storyUnknown(this.enterStory)) {
-      this.showStory();
+      this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
     }
-  }
-
-  showStory() {
-    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  showUpgradeInfo() {
+    this.modalCtrl.create({component: BarracksUpgradeInfoModal}).then(m => m.present() );
   }
 
   isConfiguredInFight(): boolean {

@@ -5,6 +5,7 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {AcademyPage} from './academy.page';
+import {AcademyUpgradeInfoModal} from './academy-upgrade-info.modal';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import {AcademyPage} from './academy.page';
             }
         ])
     ],
-    declarations: [AcademyPage]
+    declarations: [AcademyPage, AcademyUpgradeInfoModal],
+    entryComponents: [AcademyUpgradeInfoModal]
 })
 export class AcademyModule {
 }

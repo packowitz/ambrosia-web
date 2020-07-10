@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {JewelryPage} from './jewelry.page';
 import {JewelUpgradeModal} from './jewelUpgrade.modal';
+import {JewelryUpgradeInfoModal} from './jewelry-upgrade-info.modal';
 
 @NgModule({
     imports: [
@@ -20,8 +21,8 @@ import {JewelUpgradeModal} from './jewelUpgrade.modal';
             }
         ])
     ],
-    declarations: [JewelryPage, JewelUpgradeModal],
-    entryComponents: [JewelUpgradeModal]
+    declarations: [JewelryPage, JewelUpgradeModal, JewelryUpgradeInfoModal],
+    entryComponents: [JewelUpgradeModal, JewelryUpgradeInfoModal]
 })
 export class JewelryModule {
 }

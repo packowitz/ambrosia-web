@@ -16,8 +16,9 @@ export class BuildingService {
         return this.model.getBuilding(buildingType);
     }
 
-    getUpgradeCosts(buildingType: string): DynamicProperty[] {
-        return this.propertyService.getUpgradeCosts(buildingType, this.getBuilding(buildingType).level + 1);
+    getUpgradeCosts(buildingType: string, level?: number): DynamicProperty[] {
+        let usedLevel = level ? level : (this.getBuilding(buildingType).level + 1);
+        return this.propertyService.getUpgradeCosts(buildingType, usedLevel);
     }
 
     getUpgradeSeconds(buildingType: string): number {

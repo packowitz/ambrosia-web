@@ -11,6 +11,7 @@ import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {JewelUpgradeModal} from './jewelUpgrade.modal';
 import {StoryService} from '../services/story.service';
 import {BuildingService} from '../services/building.service';
+import {JewelryUpgradeInfoModal} from './jewelry-upgrade-info.modal';
 
 @Component({
   selector: 'jewelry',
@@ -42,16 +43,16 @@ export class JewelryPage {
 
   ionViewWillEnter() {
     if (this.storyService.storyUnknown(this.enterStory)) {
-      this.showStory();
+      this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
     }
-  }
-
-  showStory() {
-    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  showUpgradeInfo() {
+    this.modalCtrl.create({component: JewelryUpgradeInfoModal}).then(m => m.present() );
   }
 
   openUpgradeModal() {

@@ -7,6 +7,7 @@ import {GaragePage} from './garage.page';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {VehicleUpgradeModal} from './vehicleUpgrade.modal';
 import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
+import {GarageUpgradeInfoModal} from './garage-upgrade-info.modal';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
       }
     ])
   ],
-  declarations: [GaragePage, VehicleUpgradeModal, VehiclePartUpgradeModal],
-  entryComponents: [VehicleUpgradeModal, VehiclePartUpgradeModal]
+  declarations: [GaragePage, VehicleUpgradeModal, VehiclePartUpgradeModal, GarageUpgradeInfoModal],
+  entryComponents: [VehicleUpgradeModal, VehiclePartUpgradeModal, GarageUpgradeInfoModal]
 })
 export class GarageModule {}

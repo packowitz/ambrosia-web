@@ -7,6 +7,7 @@ import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {ForgePage} from './forge.page';
 import {GearUpgradeModal} from './gearUpgrade.modal';
 import {ModificationSelectionPopover} from './modification-selection-popover';
+import {ForgeUpgradeInfoModal} from './forge-upgrade-info.modal';
 
 @NgModule({
     imports: [
@@ -21,8 +22,8 @@ import {ModificationSelectionPopover} from './modification-selection-popover';
             }
         ])
     ],
-    declarations: [ForgePage, GearUpgradeModal, ModificationSelectionPopover],
-    entryComponents: [GearUpgradeModal, ModificationSelectionPopover]
+    declarations: [ForgePage, GearUpgradeModal, ModificationSelectionPopover, ForgeUpgradeInfoModal],
+    entryComponents: [GearUpgradeModal, ModificationSelectionPopover, ForgeUpgradeInfoModal]
 })
 export class ForgeModule {
 }

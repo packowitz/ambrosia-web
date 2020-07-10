@@ -9,6 +9,8 @@ import {Router} from '@angular/router';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {StoryService} from '../services/story.service';
 import {BuildingService} from '../services/building.service';
+import {LaboratoryUpgradeInfoModal} from '../laboratory/laboratory-upgrade-info.modal';
+import {AcademyUpgradeInfoModal} from './academy-upgrade-info.modal';
 
 @Component({
   selector: 'academy',
@@ -59,12 +61,8 @@ export class AcademyPage {
 
   ionViewWillEnter() {
     if (this.storyService.storyUnknown(this.enterStory)) {
-      this.showStory();
+      this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
     }
-  }
-
-  showStory() {
-    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   openUpgradeModal() {
@@ -153,6 +151,10 @@ export class AcademyPage {
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  showUpgradeInfo() {
+    this.modalCtrl.create({component: AcademyUpgradeInfoModal}).then(m => m.present() );
   }
 
   selectHero(hero: Hero) {

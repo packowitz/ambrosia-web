@@ -14,6 +14,8 @@ import {GearUpgradeModal} from './gearUpgrade.modal';
 import {ModificationSelectionPopover} from './modification-selection-popover';
 import {StoryService} from '../services/story.service';
 import {BuildingService} from '../services/building.service';
+import {LaboratoryUpgradeInfoModal} from '../laboratory/laboratory-upgrade-info.modal';
+import {ForgeUpgradeInfoModal} from './forge-upgrade-info.modal';
 
 @Component({
   selector: 'forge',
@@ -62,17 +64,17 @@ export class ForgePage {
 
   ionViewWillEnter() {
     if (this.storyService.storyUnknown(this.enterStory)) {
-      this.showStory();
+      this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
     }
     this.model.gears.forEach(g => g.markedToBreakdown = false);
   }
 
-  showStory() {
-    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
-  }
-
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  showUpgradeInfo() {
+    this.modalCtrl.create({component: ForgeUpgradeInfoModal}).then(m => m.present() );
   }
 
   modificationFinished(gear: Gear): boolean {

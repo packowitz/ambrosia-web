@@ -5,6 +5,7 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {LaboratoryPage} from './laboratory.page';
+import {LaboratoryUpgradeInfoModal} from './laboratory-upgrade-info.modal';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import {LaboratoryPage} from './laboratory.page';
             }
         ])
     ],
-    declarations: [LaboratoryPage]
+    declarations: [LaboratoryPage, LaboratoryUpgradeInfoModal],
+    entryComponents: [LaboratoryUpgradeInfoModal]
 })
 export class LaboratoryModule {
 }

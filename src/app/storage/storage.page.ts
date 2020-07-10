@@ -7,6 +7,8 @@ import {AlertController, ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {BuildingService} from '../services/building.service';
+import {LaboratoryUpgradeInfoModal} from '../laboratory/laboratory-upgrade-info.modal';
+import {StorageUpgradeInfoModal} from './storage-upgrade-info.modal';
 
 @Component({
   selector: 'storage',
@@ -33,6 +35,10 @@ export class StoragePage {
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  showUpgradeInfo() {
+    this.modalCtrl.create({component: StorageUpgradeInfoModal}).then(m => m.present() );
   }
 
   info(text: string) {

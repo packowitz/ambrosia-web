@@ -13,6 +13,8 @@ import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {StoryService} from '../services/story.service';
 import {BuildingService} from '../services/building.service';
+import {LaboratoryUpgradeInfoModal} from '../laboratory/laboratory-upgrade-info.modal';
+import {GarageUpgradeInfoModal} from './garage-upgrade-info.modal';
 
 export class GarageSlot {
   slot: number;
@@ -58,12 +60,8 @@ export class GaragePage {
     this.vehicle = null;
     this.initSlots();
     if (this.storyService.storyUnknown(this.enterStory)) {
-      this.showStory();
+      this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
     }
-  }
-
-  showStory() {
-    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   initSlots() {
@@ -147,6 +145,10 @@ export class GaragePage {
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  showUpgradeInfo() {
+    this.modalCtrl.create({component: GarageUpgradeInfoModal}).then(m => m.present() );
   }
 
   selectVehicle(vehicle: Vehicle) {

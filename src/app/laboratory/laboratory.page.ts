@@ -10,6 +10,7 @@ import {Hero} from '../domain/hero.model';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {StoryService} from '../services/story.service';
 import {BuildingService} from '../services/building.service';
+import {LaboratoryUpgradeInfoModal} from './laboratory-upgrade-info.modal';
 
 @Component({
   selector: 'laboratory',
@@ -40,16 +41,16 @@ export class LaboratoryPage {
 
   ionViewWillEnter() {
     if (this.storyService.storyUnknown(this.enterStory)) {
-      this.showStory();
+      this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
     }
-  }
-
-  showStory() {
-    this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
   }
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  showUpgradeInfo() {
+    this.modalCtrl.create({component: LaboratoryUpgradeInfoModal}).then(m => m.present() );
   }
 
   info(text: string) {

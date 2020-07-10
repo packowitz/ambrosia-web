@@ -5,6 +5,7 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {StoragePage} from './storage.page';
+import {StorageUpgradeInfoModal} from './storage-upgrade-info.modal';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import {StoragePage} from './storage.page';
             }
         ])
     ],
-    declarations: [StoragePage]
+    declarations: [StoragePage, StorageUpgradeInfoModal],
+    entryComponents: [StorageUpgradeInfoModal]
 })
 export class StorageModule {
 }
