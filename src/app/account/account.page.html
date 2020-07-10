@@ -31,7 +31,7 @@
       <div *ngIf="model.player.admin"><i>You are an <strong>admin</strong>. Please be careful with admin functions.</i></div>
       <div *ngIf="model.player.betaTester"><i>You are a <strong>beta tester</strong>. Thank you for that. Please use these functions only for testing purposes.</i></div>
       <div class="mt-2 flex">
-        <span class="mr-2">Lvl {{model.progress.level}}</span>
+        <span class="mr-2 flex-center">Lvl {{model.progress.level}} <img class="ml-05 mr-05 resource-icon pointer" src="assets/icon/info.png" (click)="showLevelUpInfo()"></span>
         <span class="flex-grow bar-outer with-text xp ml-2">
           <span class="bar-filled" [style.width]="(100 * model.progress.xp / model.progress.maxXp) + '%'"></span>
           <span class="bar-text">{{model.progress.maxXp - model.progress.xp}} XP needed</span>

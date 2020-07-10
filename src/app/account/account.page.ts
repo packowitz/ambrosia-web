@@ -5,6 +5,9 @@ import {environment} from '../../environments/environment';
 import {LoadingState} from '../services/loadingState.service';
 import {PropertyService} from '../services/property.service';
 import {BackendService} from '../services/backend.service';
+import {LaboratoryUpgradeInfoModal} from '../laboratory/laboratory-upgrade-info.modal';
+import {ModalController} from '@ionic/angular';
+import {PlayerLevelInfoModal} from './player-level-info.modal';
 
 @Component({
   selector: 'app-account',
@@ -18,10 +21,15 @@ export class AccountPage {
               private loadingState: LoadingState,
               private propertyService: PropertyService,
               private backendService: BackendService,
-              private router: Router) { }
+              private router: Router,
+              private modalCtrl: ModalController) { }
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  showLevelUpInfo() {
+    this.modalCtrl.create({component: PlayerLevelInfoModal}).then(m => m.present() );
   }
 
   logout() {
