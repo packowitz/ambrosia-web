@@ -43,6 +43,7 @@ export class HomePage {
   victoriousRepeatableFightStory = 'REPEATABLE_FIGHT_WON';
   heroLevelledStory = 'HERO_LEVELLED';
   heroLevel5Story = 'HERO_LEVEL_5';
+  heroLevel40maxStory = 'HERO_LEVEL_40_MAX';
   heroMaxLevelStory = 'HERO_MAX_LEVEL';
   heroAscLevelledStory = 'HERO_ASC_LEVELLED';
 
@@ -223,6 +224,11 @@ export class HomePage {
     } else if (this.storyService.storyUnknown(this.heroLevel5Story) && this.model.vehicles.length > 0 && this.model.heroes.findIndex(h => h.level >= 5) !== -1) {
       this.storyService.showStory(this.heroLevel5Story).subscribe(() => {
         console.log("HomePage hero level 5 story shown");
+        this.checkStories();
+      });
+    } else if (this.storyService.storyUnknown(this.heroLevel40maxStory) && this.model.heroes.findIndex(h => h.level === 40 && h.xp === h.maxXp) !== -1) {
+      this.storyService.showStory(this.heroLevel40maxStory).subscribe(() => {
+        console.log("HomePage hero level 40 max story shown");
         this.checkStories();
       });
     } else if (this.storyService.storyUnknown(this.heroMaxLevelStory) && this.model.heroes.findIndex(h => h.level === (10 * h.stars) && h.xp === h.maxXp) !== -1) {
