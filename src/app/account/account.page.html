@@ -34,7 +34,16 @@
         <span class="mr-2 flex-center">Lvl {{model.progress.level}} <img class="ml-05 mr-05 resource-icon pointer" src="assets/icon/info.png" (click)="showLevelUpInfo()"></span>
         <span class="flex-grow bar-outer with-text xp ml-2">
           <span class="bar-filled" [style.width]="(100 * model.progress.xp / model.progress.maxXp) + '%'"></span>
-          <span class="bar-text">{{model.progress.maxXp - model.progress.xp}} XP needed</span>
+          <span class="bar-text" *ngIf="model.progress.xp < model.progress.maxXp">{{model.progress.maxXp - model.progress.xp}} XP needed</span>
+          <span class="bar-text" *ngIf="model.progress.xp >= model.progress.maxXp">max</span>
+        </span>
+      </div>
+      <div class="mt-2 flex">
+        <span class="mr-2 flex-center">VIP {{model.progress.vipLevel}} <img class="ml-05 mr-05 resource-icon pointer" src="assets/icon/info.png" (click)="showVipLevelInfo()"></span>
+        <span class="flex-grow bar-outer with-text asc ml-2">
+          <span class="bar-filled" [style.width]="(100 * model.progress.vipPoints / model.progress.vipMaxPoints) + '%'"></span>
+          <span class="bar-text" *ngIf="model.progress.vipPoints < model.progress.vipMaxPoints">{{model.progress.vipMaxPoints - model.progress.vipPoints}} VIP needed</span>
+          <span class="bar-text" *ngIf="model.progress.vipPoints >= model.progress.vipMaxPoints">max</span>
         </span>
       </div>
       <div class="mt-2" [class.flex-space-between]="expeditionsToNextLevel() == 0" *ngIf="model.progress.expeditionLevel > 0">

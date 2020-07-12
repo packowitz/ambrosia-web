@@ -95,11 +95,15 @@ export class AcademyPage {
 
   addedFodder(fodder: Hero) {
     if (!this.feedForEvolve) {
-      this.totalXpGained += this.propertyService.getHeroMergeXp(fodder.level);
+      let gainXp = this.propertyService.getHeroMergeXp(fodder.level);
+      gainXp += Math.round((this.model.progress.trainingXpBoost * gainXp) / 100);
+      this.totalXpGained += gainXp;
       this.calcXpLevel();
     }
     if (this.selectedHero.heroBase.heroClass === fodder.heroBase.heroClass) {
-      this.totalAscGained += this.propertyService.getHeroMergeAsc(fodder.stars);
+      let gainAsc = this.propertyService.getHeroMergeAsc(fodder.stars);
+      gainAsc += Math.round((this.model.progress.trainingAscBoost * gainAsc) / 100);
+      this.totalAscGained += gainAsc;
       this.calcAscLevel();
     }
   }

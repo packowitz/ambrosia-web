@@ -3,8 +3,12 @@ export class Progress {
     xp: number;
     maxXp: number;
     level: number;
+    vipPoints: number;
+    vipLevel: number;
+    vipMaxPoints: number;
     currentMapId: number;
     expeditionLevel: number;
+    expeditionSpeed: number;
     numberOddJobs: number;
     garageSlots: number;
     offlineBattleSpeed: number;
@@ -12,7 +16,10 @@ export class Progress {
     builderQueueLength: number;
     builderSpeed: number;
     barrackSize: number;
+    gearQualityIncrease: number;
     maxTrainingLevel: number;
+    trainingXpBoost: number;
+    trainingAscBoost: number;
     vehicleUpgradeLevel: number;
     incubators: number;
     labSpeed: number;
@@ -25,6 +32,7 @@ export class Progress {
     commonIncubationUpPerMil: number;
     uncommonIncubationUpPerMil: number;
     rareIncubationUpPerMil: number;
+    uncommonStartingLevel: number;
     maxJewelUpgradingLevel: number;
     gearModificationRarity: number;
     gearModificationSpeed: number;

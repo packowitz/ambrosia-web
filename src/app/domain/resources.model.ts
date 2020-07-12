@@ -1,5 +1,6 @@
 export class Resources {
     playerId: number;
+    resourceGenerationSpeed: number;
     steam: number;
     steamMax: number;
     steamProduceIn: number;

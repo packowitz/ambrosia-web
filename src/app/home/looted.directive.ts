@@ -14,6 +14,7 @@ import {StoryService} from '../services/story.service';
           <div class="flex-center" *ngIf="model.looted.type == 'BREAKDOWN'">Remnants collected</div>
           <div class="flex-center" *ngIf="model.looted.type == 'STORY'">Docs gift</div>
           <div class="flex-center" *ngIf="model.looted.type == 'LEVEL_UP'">You reached level {{model.progress.level}}</div>
+          <div class="flex-center" *ngIf="model.looted.type == 'VIP_LEVEL_UP'">You reached vip level {{model.progress.vipLevel}}</div>
           <div class="mt-1" [class.flex-space-between]="model.looted.items.length > 1" [class.flex-center]="model.looted.items.length == 1">
             <loot-item *ngFor="let loot of model.looted.items" [loot]="loot" class="loot-item"></loot-item>
           </div>

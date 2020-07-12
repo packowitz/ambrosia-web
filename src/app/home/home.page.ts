@@ -373,6 +373,10 @@ export class HomePage {
     this.router.navigateByUrl('/home/expedition/' + expedition.id);
   }
 
+  getExpeditionDuration(expedition: Expedition): number {
+    return (expedition.expeditionBase.durationMinutes * 60 * 100) / this.model.progress.expeditionSpeed;
+  }
+
   openOddJobs() {
     this.modalCtrl.create({
       component: OddJobsModal

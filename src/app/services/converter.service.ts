@@ -111,13 +111,17 @@ export class ConverterService {
 
     readableProgressStat(stat: string, value: number): string {
         switch(stat) {
+            case 'EXPEDITION_SPEED': return '+' + value + '% Expedition speed';
             case 'GARAGE_SLOT': return '+' + value + ' Garage slot';
             case 'MISSION_SPEED': return '+' + value + '% Mission speed';
             case 'MISSION_MAX_BATTLES': return '+' + value + ' Battles per mission';
             case 'BUILDER_QUEUE': return '+' + value + ' Builder queue size';
-            case 'BUILDER_SPEED': return '+' + value + '% Builder speed';
+            case 'BUILDER_SPEED': return '+' + value + '% Building upgrade speed';
             case 'BARRACKS_SIZE': return '+' + value + ' Barracks space';
+            case 'GEAR_QUALITY_INCREASE': return '+' + value + '% increased gear quality';
             case 'HERO_TRAIN_LEVEL': return '+' + value + ' Hero train level';
+            case 'TRAINING_XP_BOOST': return '+' + value + '% more XP in the academy';
+            case 'TRAINING_ASC_BOOST': return '+' + value + '% more Asc points in the academy';
             case 'VEHICLE_UPGRADE_LEVEL': return '+' + value + ' Vehicle upgrade level';
             case 'INCUBATORS': return '+' + value + ' Incubator(s)';
             case 'LAB_SPEED': return '+' + value + '% Incubation speed';
@@ -126,10 +130,11 @@ export class ConverterService {
             case 'UNCOMMON_GENOMES_NEEDED': return value + ' Uncommon genomes needed';
             case 'RARE_GENOMES_NEEDED': return value + ' Rare genomes needed';
             case 'EPIC_GENOMES_NEEDED': return value + ' Epic genomes needed';
-            case 'SIMPLE_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + '% Chance to clone a common hero using simple genomes';
-            case 'COMMON_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + '% Chance to clone an uncommon hero using common genomes';
-            case 'UNCOMMON_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + '% Chance to clone a rare hero using uncommon genomes';
-            case 'RARE_INCUBATION_UP_PER_MIL': return this.perMilToPercent(value) + '% Chance to clone an epic hero using rare genomes';
+            case 'SIMPLE_INCUBATION_UP_PER_MIL': return '+' + this.perMilToPercent(value) + '% Chance to clone a common hero using simple genomes';
+            case 'COMMON_INCUBATION_UP_PER_MIL': return '+' + this.perMilToPercent(value) + '% Chance to clone an uncommon hero using common genomes';
+            case 'UNCOMMON_INCUBATION_UP_PER_MIL': return '+' + this.perMilToPercent(value) + '% Chance to clone a rare hero using uncommon genomes';
+            case 'RARE_INCUBATION_UP_PER_MIL': return '+' + this.perMilToPercent(value) + '% Chance to clone an epic hero using rare genomes';
+            case 'UNCOMMON_STARTING_LEVEL': return '+' + value + ' uncommon hero level after incubation';
             case 'JEWEL_UPGRADE_LEVEL': return '+' + value + ' Jewel upgrade level';
             case 'GEAR_MOD_RARITY': return '+' + value + ' Gear rarity allowed to modify';
             case 'GEAR_MOD_SPEED': return '+' + value + '% Gear modification speed';

@@ -8,6 +8,7 @@ import {BackendService} from '../services/backend.service';
 import {LaboratoryUpgradeInfoModal} from '../laboratory/laboratory-upgrade-info.modal';
 import {ModalController} from '@ionic/angular';
 import {PlayerLevelInfoModal} from './player-level-info.modal';
+import {VipLevelInfoModal} from './vip-level-info.modal';
 
 @Component({
   selector: 'app-account',
@@ -30,6 +31,10 @@ export class AccountPage {
 
   showLevelUpInfo() {
     this.modalCtrl.create({component: PlayerLevelInfoModal}).then(m => m.present() );
+  }
+
+  showVipLevelInfo() {
+    this.modalCtrl.create({component: VipLevelInfoModal}).then(m => m.present() );
   }
 
   logout() {

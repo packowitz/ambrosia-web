@@ -79,7 +79,7 @@
 
       <div *ngFor="let expedition of getAvailableExpeditions()" class="position-relative mr-4">
         <div class="avatar expedition pointer" (click)="openExpedition(expedition)">
-          <div class="ml-1 mr-1 no-wrap flex-center">{{converter.time(expedition.expeditionBase.durationMinutes * 60)}}</div>
+          <div class="ml-1 mr-1 no-wrap flex-center">{{converter.time(getExpeditionDuration(expedition))}}</div>
           <div class="ml-1 mr-1 time-bar">
             <span class="time-bar-inner full-width {{expedition.expeditionBase.rarity}}"></span>
           </div>
