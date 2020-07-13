@@ -41,6 +41,16 @@ export class ConverterService {
         }).join(' ');
     }
 
+    readableAmount(amount: number): string {
+        if (amount >= 10000000) {
+            return Math.round(amount / 1000000) + 'm';
+        }
+        if (amount >= 10000) {
+            return Math.round(amount / 1000) + 'k';
+        }
+        return amount + '';
+    }
+
     time(sec: number): string {
         if (sec <= 0) {
             return '0:00';

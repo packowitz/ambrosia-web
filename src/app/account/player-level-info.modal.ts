@@ -25,7 +25,7 @@ import {BuildingService} from '../services/building.service';
             <strong>Level {{level}}</strong>
             <div class="flex-grow flex-end">
               <div class="flex ml-1">
-                {{getLevelXp(level)}}<img src="assets/icon/progress/PLAYER_XP.png" class="resource-icon">
+                {{converter.readableAmount(getLevelXp(level))}}<img src="assets/icon/progress/PLAYER_XP.png" class="resource-icon">
               </div>
             </div>
           </div>

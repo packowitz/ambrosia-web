@@ -9,6 +9,13 @@ import {PropertyService} from './property.service';
 })
 export class BuildingService {
 
+    sortOrder = {
+        'METAL': 1,
+        'IRON': 2,
+        'STEEL': 3,
+        'COINS': 4
+    };
+
     constructor(private model: Model,
                 private propertyService: PropertyService) {}
 
@@ -18,7 +25,7 @@ export class BuildingService {
 
     getUpgradeCosts(buildingType: string, level?: number): DynamicProperty[] {
         let usedLevel = level ? level : (this.getBuilding(buildingType).level + 1);
-        return this.propertyService.getUpgradeCosts(buildingType, usedLevel);
+        return this.propertyService.getUpgradeCosts(buildingType, usedLevel).sort((a, b) => this.sortOrder[a.resourceType] - this.sortOrder[b.resourceType]);
     }
 
     getUpgradeSeconds(buildingType: string): number {

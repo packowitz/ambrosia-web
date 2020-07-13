@@ -25,7 +25,7 @@ import {BuildingService} from '../services/building.service';
             <strong>Level {{level}}</strong>
             <div class="flex-grow flex-end">
               <div class="flex ml-1">
-                {{getLevelVipPoints(level)}} VIP
+                {{converter.readableAmount(getLevelVipPoints(level))}} VIP
               </div>
             </div>
           </div>
