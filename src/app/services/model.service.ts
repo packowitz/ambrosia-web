@@ -291,6 +291,7 @@ export class Model {
         }
     }
 
+
     updateExpeditions() {
         if (!this.updateExpeditionsInProgress) {
             this.updateExpeditionsInProgress = true;
