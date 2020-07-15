@@ -419,7 +419,8 @@ export class HomePage {
 
   mapSelection() {
     this.popoverCtrl.create({
-      component: MapSelectionPopover
+      component: MapSelectionPopover,
+      cssClass: 'widePopover'
     }).then(p => {
       p.onDidDismiss().then((dataReturned) => {
         if (dataReturned !== null && dataReturned.data) {

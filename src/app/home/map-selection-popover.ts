@@ -6,7 +6,7 @@ import {ConverterService} from '../services/converter.service';
 @Component({
     selector: 'map-selection-modal',
     template: `
-        <div class="ma-2">
+        <div class="ma-2" style="max-height: 70vh; overflow-y: scroll;">
           <div class="strong">Your marked maps</div>
           <div *ngFor="let map of getFavoriteMaps()" class="pointer mt-1" (click)="close(map.mapId)">
             {{map.name}}
