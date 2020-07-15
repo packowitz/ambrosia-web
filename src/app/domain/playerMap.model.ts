@@ -6,6 +6,7 @@ export class PlayerMap {
     background: string;
     discoverySteamCost: number;
     storyTrigger: string;
+    favorite: boolean;
     minX: number;
     maxX: number;
     minY: number;

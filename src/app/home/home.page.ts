@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Model} from '../services/model.service';
 import {PlayerMapTile} from '../domain/playerMapTile.model';
 import {BackendService} from '../services/backend.service';
-import {AlertController, ModalController} from '@ionic/angular';
+import {AlertController, ModalController, PopoverController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {Building} from '../domain/building.model';
 import {ConverterService} from '../services/converter.service';
@@ -16,6 +16,7 @@ import {Expedition} from '../domain/expedition.model';
 import {PlayerExpedition} from '../domain/playerExpedition.model';
 import {ExpeditionProgressModal} from './expedition-progress-modal';
 import {OddJobsModal} from './odd-jobs-modal';
+import {MapSelectionPopover} from './map-selection-popover';
 
 @Component({
   selector: 'app-home',
@@ -56,7 +57,8 @@ export class HomePage {
               public jewelryService: JewelryService,
               public converter: ConverterService,
               public propertyService: PropertyService,
-              public modalCtrl: ModalController) {}
+              public modalCtrl: ModalController,
+              private popoverCtrl: PopoverController) {}
 
   ionViewWillEnter(): void {
     this.calcRows();
@@ -406,6 +408,30 @@ export class HomePage {
         mission: mission
       }
     }).then(modal => modal.present());
+  }
+
+  toggleFavorite() {
+    this.saving = true;
+    this.backendService.setMapFavorite(this.model.currentMap.mapId, !this.model.currentMap.favorite).subscribe(() => {
+      this.saving = false;
+    }, () => this.saving = false );
+  }
+
+  mapSelection() {
+    this.popoverCtrl.create({
+      component: MapSelectionPopover
+    }).then(p => {
+      p.onDidDismiss().then((dataReturned) => {
+        if (dataReturned !== null && dataReturned.data) {
+          this.saving = true;
+          this.backendService.setCurrentMap(dataReturned.data).subscribe(() => {
+            this.calcRows();
+            this.saving = false;
+          }, () => { this.saving = false; });
+        }
+      });
+      p.present();
+    });
   }
 
   resetMap() {

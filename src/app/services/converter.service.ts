@@ -70,19 +70,49 @@ export class ConverterService {
 
     timeWithUnit(sec: number): string {
         if (sec <= 0) {
-            return '0:00 s';
+            return '0s';
         }
-        if (sec < 10) {
-            return '0:0' + sec + ' m';
+        if (sec <= 60) {
+            return sec + 's';
         }
+        let value = '';
         let secs = sec % 60;
         let mins = (sec - secs) / 60;
         if (mins < 60) {
-            return  mins + ':' + (secs < 10 ? '0' : '') + secs + ' m';
+            value = mins + 'm';
+            if (secs > 0) {
+                value += ' ';
+                if (secs < 10) {
+                    value += '0';
+                }
+                value += secs + 's';
+            }
+            return value;
         }
         let hours = Math.floor(mins / 60);
         mins = mins % 60;
-        return hours + ':' + (mins < 10 ? '0' : '') + mins + ' h';
+        if (hours < 24) {
+            value  = hours + 'h';
+            if (mins > 0) {
+                value += ' ';
+                if (mins < 10) {
+                    value += '0';
+                }
+                value += mins + 'm';
+            }
+            return value;
+        }
+        let days = Math.floor(hours / 24);
+        hours = hours % 24;
+        value = days + 'd';
+        if (hours > 0) {
+            value += ' ';
+            if (hours < 10) {
+                value += '0';
+            }
+            value += hours + 'h';
+        }
+        return value;
     }
 
     dataClone(orig) {

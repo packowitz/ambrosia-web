@@ -236,11 +236,15 @@ export class Model {
                 }
             }
 
-            if (this.currentMap && !!this.currentMap.secondsToReset) {
-                this.currentMap.secondsToReset --;
-                if (pauseDetected || this.currentMap.secondsToReset <= 0) {
-                    this.updateCurrentMap();
-                }
+            if (this.playerMaps) {
+                this.playerMaps.forEach(p => {
+                    if (p.secondsToReset) {
+                        if (p.secondsToReset > 0 ) { p.secondsToReset --; }
+                        if (pauseDetected || p.secondsToReset <= 0) {
+                            this.loadMap(p.mapId);
+                        }
+                    }
+                });
             }
 
         }, 1000);
@@ -302,10 +306,11 @@ export class Model {
         }
     }
 
-    updateCurrentMap() {
+    loadMap(mapId: number) {
         if (!this.updateCurrentMapInProgress) {
             this.updateCurrentMapInProgress = true;
-            this.http.post<PlayerActionResponse>(API_URL + '/map/' + this.currentMap.mapId + '/current', null).subscribe(() => {
+            this.http.get<PlayerMap>(API_URL + '/map/' + mapId).subscribe(data => {
+                this.updatePlayerMap(data);
                 this.updateCurrentMapInProgress = false;
             }, () => this.updateCurrentMapInProgress = false );
         }

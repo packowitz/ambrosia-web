@@ -9,6 +9,7 @@ import {MissionProgressModal} from './mission-progress-modal';
 import {StartExpeditionPage} from './start-expedition.page';
 import {ExpeditionProgressModal} from './expedition-progress-modal';
 import {OddJobsModal} from './odd-jobs-modal';
+import {MapSelectionPopover} from './map-selection-popover';
 
 @NgModule({
     imports: [
@@ -27,8 +28,8 @@ import {OddJobsModal} from './odd-jobs-modal';
             }
         ])
     ],
-    declarations: [HomePage, StartExpeditionPage, MissionProgressModal, ExpeditionProgressModal, OddJobsModal],
-    entryComponents: [MissionProgressModal, ExpeditionProgressModal, OddJobsModal]
+    declarations: [HomePage, StartExpeditionPage, MissionProgressModal, ExpeditionProgressModal, OddJobsModal, MapSelectionPopover],
+    entryComponents: [MissionProgressModal, ExpeditionProgressModal, OddJobsModal, MapSelectionPopover]
 })
 export class HomePageModule {
 }

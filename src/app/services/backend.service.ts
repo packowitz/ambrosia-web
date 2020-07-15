@@ -404,6 +404,10 @@ export class BackendService {
         return this.http.get<PlayerMap>(API_URL + '/map/' + mapId);
     }
 
+    setMapFavorite(mapId: number, favorite: boolean): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/map/' + mapId + '/favorite/' + favorite, null);
+    }
+
     resetMap(mapId: number, discovered: boolean, fights: boolean, chests: boolean): Observable<PlayerActionResponse> {
         let request = {
             discovered: discovered,
