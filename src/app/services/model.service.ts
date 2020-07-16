@@ -566,7 +566,7 @@ export class Model {
             if (idx >= 0) {
                 this.playerMaps[idx] = map;
             } else {
-                this.playerMaps.push(map);
+                this.playerMaps.unshift(map);
             }
             if (map.mapId === this.progress.currentMapId) {
                 this.currentMap = map;
