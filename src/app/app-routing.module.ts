@@ -70,6 +70,7 @@ const routes: Routes = [
     {path: 'laboratory', loadChildren: './laboratory/laboratory.module#LaboratoryModule'},
     {path: 'jewelry', loadChildren: './jewelry/jewelry.module#JewelryModule'},
     {path: 'forge', loadChildren: './forge/forge.module#ForgeModule'},
+    {path: 'bazaar', loadChildren: './bazaar/bazaar.module#BazaarPageModule'},
     {path: 'battle', loadChildren: './battle/battle.module#BattlePageModule'}
 ];
 

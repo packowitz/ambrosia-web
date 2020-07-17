@@ -285,6 +285,9 @@ export class HomePage {
       case 'BARRACKS':
         this.router.navigateByUrl('/barracks');
         break;
+      case 'BAZAAR':
+        this.router.navigateByUrl('/bazaar');
+        break;
       case 'FORGE':
         this.router.navigateByUrl('/forge');
         break;

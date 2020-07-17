@@ -643,4 +643,8 @@ export class BackendService {
     claimDaily(day: number): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/oddjob/daily/' + day, null);
     }
+
+    acceptTrade(tradeName: string): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/bazaar/trade/' + tradeName, null);
+    }
 }

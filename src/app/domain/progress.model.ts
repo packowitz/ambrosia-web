@@ -44,4 +44,5 @@ export class Progress {
     reRollGearJewelEnabled: boolean;
     addGearJewelEnabled: boolean;
     addGearSpecialJewelEnabled: boolean;
+    negotiationLevel: number;
 }

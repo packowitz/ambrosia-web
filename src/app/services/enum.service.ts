@@ -11,6 +11,7 @@ export class JewelType { name: string; slot: string; gearSet: string; }
 export class MapTileStructure { name: string; type: string; }
 export class ResourceType { name: string; category: string; }
 export class Buff { buffName: string; description: string; type: string; propertyType: string; }
+export class Trade { name: string; giveType: string; giveAmount: number; getType: string; getAmount: number; negotiationGiveReduction: number; negotiationGetIncrease: number; }
 
 export class Enums {
     colors: string[];
@@ -45,6 +46,7 @@ export class Enums {
     storyTriggers: string[];
     progressStats: string[];
     oddJobTypes: string[];
+    trades: Trade[];
 }
 
 @Injectable({
@@ -187,5 +189,9 @@ export class EnumService {
 
     getOddJobTypes(): string[] {
         return this.enums.oddJobTypes;
+    }
+
+    getTrades(): Trade[] {
+        return this.enums.trades;
     }
 }
