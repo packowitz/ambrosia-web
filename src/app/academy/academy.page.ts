@@ -9,7 +9,6 @@ import {Router} from '@angular/router';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {StoryService} from '../services/story.service';
 import {BuildingService} from '../services/building.service';
-import {LaboratoryUpgradeInfoModal} from '../laboratory/laboratory-upgrade-info.modal';
 import {AcademyUpgradeInfoModal} from './academy-upgrade-info.modal';
 
 @Component({
@@ -97,6 +96,9 @@ export class AcademyPage {
     if (!this.feedForEvolve) {
       let gainXp = this.propertyService.getHeroMergeXp(fodder.level);
       gainXp += Math.round((this.model.progress.trainingXpBoost * gainXp) / 100);
+      if (this.converter.rarityStars(fodder.heroBase.rarity) > 1) {
+        gainXp *= 2 * this.converter.rarityStars(fodder.heroBase.rarity);
+      }
       this.totalXpGained += gainXp;
       this.calcXpLevel();
     }
