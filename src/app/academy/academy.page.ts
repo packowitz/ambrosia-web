@@ -94,31 +94,39 @@ export class AcademyPage {
 
   addedFodder(fodder: Hero) {
     if (!this.feedForEvolve) {
-      let gainXp = this.propertyService.getHeroMergeXp(fodder.level);
-      gainXp += Math.round((this.model.progress.trainingXpBoost * gainXp) / 100);
-      if (this.converter.rarityStars(fodder.heroBase.rarity) > 1) {
-        gainXp *= 2 * this.converter.rarityStars(fodder.heroBase.rarity);
-      }
-      this.totalXpGained += gainXp;
+      this.totalXpGained += this.gainedXp(fodder);
       this.calcXpLevel();
     }
     if (this.selectedHero.heroBase.heroClass === fodder.heroBase.heroClass) {
-      let gainAsc = this.propertyService.getHeroMergeAsc(fodder.stars);
-      gainAsc += Math.round((this.model.progress.trainingAscBoost * gainAsc) / 100);
-      this.totalAscGained += gainAsc;
+      this.totalAscGained += this.gainedAsc(fodder);
       this.calcAscLevel();
     }
   }
 
   removedFodder(fodder: Hero) {
     if (!this.feedForEvolve) {
-      this.totalXpGained -= this.propertyService.getHeroMergeXp(fodder.level);
+      this.totalXpGained -= this.gainedXp(fodder);
       this.calcXpLevel();
     }
     if (this.selectedHero.heroBase.heroClass === fodder.heroBase.heroClass) {
-      this.totalAscGained -= this.propertyService.getHeroMergeAsc(fodder.stars);
+      this.totalAscGained -= this.gainedAsc(fodder);
       this.calcAscLevel();
     }
+  }
+
+  gainedXp(fodder: Hero): number {
+    let gainXp = this.propertyService.getHeroMergeXp(fodder.level);
+    gainXp += Math.round((this.model.progress.trainingXpBoost * gainXp) / 100);
+    if (this.converter.rarityStars(fodder.heroBase.rarity) > 1) {
+      gainXp *= 2 * this.converter.rarityStars(fodder.heroBase.rarity);
+    }
+    return gainXp;
+  }
+
+  gainedAsc(fodder: Hero): number {
+    let gainAsc = this.propertyService.getHeroMergeAsc(fodder.stars);
+    gainAsc += Math.round((this.model.progress.trainingAscBoost * gainAsc) / 100);
+    return gainAsc;
   }
 
   calcXpLevel() {
