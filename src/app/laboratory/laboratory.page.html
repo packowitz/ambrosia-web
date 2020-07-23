@@ -20,16 +20,16 @@
   </ion-toolbar>
 </ion-header>
 
-<div class="loading-indicator" *ngIf="hero && model.getHeroBase(hero.heroBaseId) as heroBase" (click)="hero = null">
+<div class="loading-indicator" *ngIf="hero" (click)="hero = null">
   <div class="loot-window pa-2">
     <div class="flex-center">You received</div>
     <div class="flex-center mt-1">
       <div class="flex-vert-center">
         <div class="hero-tile-very-small border-grey flex-vert-center loot-item">
-          <ion-img [src]="'assets/icon/chars/' + heroBase.avatar + '.png'" class="hero-avatar-very-small border-bottom-grey"></ion-img>
+          <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'" class="hero-avatar-very-small border-bottom-grey"></ion-img>
           <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
         </div>
-        <div>{{heroBase.name}}</div>
+        <div>{{hero.name}}</div>
       </div>
     </div>
     <div class="flex-center mt-1"><i>(click anywhere to close)</i></div>

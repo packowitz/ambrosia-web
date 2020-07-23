@@ -45,7 +45,7 @@
     <ion-card-header>
       <ion-card-title>
         <div class="flex-space-between">
-          <div [class]="heroBase.color">{{heroBase.name}}</div>
+          <div [class]="selectedHero.color">{{selectedHero.name}}</div>
           <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(selectedHero.stars)"></ion-icon></div>
           <div>Lvl {{selectedHero.level}}</div>
         </div>

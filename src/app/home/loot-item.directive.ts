@@ -16,7 +16,7 @@ import {ConverterService} from '../services/converter.service';
         <div class="font-small">{{getProgressStatText(loot.progressStat, loot.value)}}</div>
       </div>
       <div *ngIf="loot.type == 'HERO' && model.getHero(loot.value) as hero" class="border-grey flex-vert-center loot-hero">
-        <ion-img [src]="'assets/icon/chars/' + model.getHeroBase(hero.heroBaseId).avatar + '.png'" class="border-bottom-grey"></ion-img>
+        <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'" class="border-bottom-grey"></ion-img>
         <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
       </div>
       <div *ngIf="getGear() as gear" class="flex-vert-center">

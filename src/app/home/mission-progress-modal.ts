@@ -16,7 +16,7 @@ import {BackendService} from '../services/backend.service';
             <div *ngIf="vehicle">
               <vehicle [vehicle]="vehicle" [small]="true" [showName]="false"></vehicle>
             </div>
-            <div *ngIf="hero1 && model.getHeroBase(hero1.heroBaseId) as heroBase1">
+            <div *ngIf="hero1">
               <div class="bar-outer xp">
                 <span class="bar-filled" [style.width]="(100 * hero1.xp / hero1.maxXp) + '%'"></span>
               </div>
@@ -24,12 +24,12 @@ import {BackendService} from '../services/backend.service';
                 <span class="bar-filled" [style.width]="(100 * hero1.ascPoints / hero1.ascPointsMax) + '%'"></span>
               </div>
               <div class="mt-01 hero-tile-small border-grey flex-vert-center">
-                <ion-img [src]="'assets/icon/chars/' + heroBase1.avatar + '.png'" class="border-bottom-grey"></ion-img>
-                <div class="top-left-bubble level-bubble background-{{heroBase1.color}}">{{hero1.level}}</div>
+                <ion-img [src]="'assets/icon/chars/' + hero1.avatar + '.png'" class="border-bottom-grey"></ion-img>
+                <div class="top-left-bubble level-bubble background-{{hero1.color}}">{{hero1.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero1.stars + '.png'" class="hero-stars"></ion-img>
               </div>
             </div>
-            <div *ngIf="hero2 && model.getHeroBase(hero2.heroBaseId) as heroBase2">
+            <div *ngIf="hero2">
               <div class="bar-outer xp">
                 <span class="bar-filled" [style.width]="(100 * hero2.xp / hero2.maxXp) + '%'"></span>
               </div>
@@ -37,12 +37,12 @@ import {BackendService} from '../services/backend.service';
                 <span class="bar-filled" [style.width]="(100 * hero2.ascPoints / hero2.ascPointsMax) + '%'"></span>
               </div>
               <div class="mt-01 hero-tile-small border-grey flex-vert-center">
-                <ion-img [src]="'assets/icon/chars/' + heroBase2.avatar + '.png'" class="border-bottom-grey"></ion-img>
-                <div class="top-left-bubble level-bubble background-{{heroBase2.color}}">{{hero2.level}}</div>
+                <ion-img [src]="'assets/icon/chars/' + hero2.avatar + '.png'" class="border-bottom-grey"></ion-img>
+                <div class="top-left-bubble level-bubble background-{{hero2.color}}">{{hero2.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero2.stars + '.png'" class="hero-stars"></ion-img>
               </div>
             </div>
-            <div *ngIf="hero3 && model.getHeroBase(hero3.heroBaseId) as heroBase3">
+            <div *ngIf="hero3">
               <div class="bar-outer xp">
                 <span class="bar-filled" [style.width]="(100 * hero3.xp / hero3.maxXp) + '%'"></span>
               </div>
@@ -50,12 +50,12 @@ import {BackendService} from '../services/backend.service';
                 <span class="bar-filled" [style.width]="(100 * hero3.ascPoints / hero3.ascPointsMax) + '%'"></span>
               </div>
               <div class="mt-01 hero-tile-small border-grey flex-vert-center">
-                <ion-img [src]="'assets/icon/chars/' + heroBase3.avatar + '.png'" class="border-bottom-grey"></ion-img>
-                <div class="top-left-bubble level-bubble background-{{heroBase3.color}}">{{hero3.level}}</div>
+                <ion-img [src]="'assets/icon/chars/' + hero3.avatar + '.png'" class="border-bottom-grey"></ion-img>
+                <div class="top-left-bubble level-bubble background-{{hero3.color}}">{{hero3.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero3.stars + '.png'" class="hero-stars"></ion-img>
               </div>
             </div>
-            <div *ngIf="hero4 && model.getHeroBase(hero4.heroBaseId) as heroBase4">
+            <div *ngIf="hero4">
               <div class="bar-outer xp">
                 <span class="bar-filled" [style.width]="(100 * hero4.xp / hero4.maxXp) + '%'"></span>
               </div>
@@ -63,8 +63,8 @@ import {BackendService} from '../services/backend.service';
                 <span class="bar-filled" [style.width]="(100 * hero4.ascPoints / hero4.ascPointsMax) + '%'"></span>
               </div>
               <div class="mt-01 hero-tile-small border-grey flex-vert-center">
-                <ion-img [src]="'assets/icon/chars/' + heroBase4.avatar + '.png'" class="border-bottom-grey"></ion-img>
-                <div class="top-left-bubble level-bubble background-{{heroBase4.color}}">{{hero4.level}}</div>
+                <ion-img [src]="'assets/icon/chars/' + hero4.avatar + '.png'" class="border-bottom-grey"></ion-img>
+                <div class="top-left-bubble level-bubble background-{{hero4.color}}">{{hero4.level}}</div>
                 <ion-img [src]="'assets/img/star_' + hero4.stars + '.png'" class="hero-stars"></ion-img>
               </div>
             </div>
