@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {AlertController} from '@ionic/angular';
 import {Model} from '../services/model.service';
@@ -10,7 +10,7 @@ import {VehicleBase} from '../domain/vehicleBase.model';
   selector: 'vehicles',
   templateUrl: 'vehicles.page.html'
 })
-export class VehiclesPage implements OnInit {
+export class VehiclesPage {
 
   saving = false;
 
@@ -19,16 +19,6 @@ export class VehiclesPage implements OnInit {
               public model: Model,
               public enumService: EnumService,
               private router: Router) {
-  }
-
-  ngOnInit(): void {
-    if (!this.model.baseVehicles) {
-      this.saving = true;
-      this.backendService.loadAllBaseVehicles().subscribe(data => {
-        this.model.baseVehicles = data;
-        this.saving = false;
-      });
-    }
   }
 
   newVehicle() {

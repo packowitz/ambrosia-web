@@ -15,9 +15,9 @@ import {ConverterService} from '../services/converter.service';
         <img src="assets/icon/progress/{{loot.progressStat}}.png" class="loot-image">
         <div class="font-small">{{getProgressStatText(loot.progressStat, loot.value)}}</div>
       </div>
-      <div *ngIf="loot.type == 'HERO'" class="border-grey flex-vert-center loot-hero">
-        <ion-img [src]="'assets/icon/chars/' + model.getHero(loot.value).heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
-        <ion-img [src]="'assets/img/star_' + model.getHero(loot.value).stars + '.png'" class="hero-stars"></ion-img>
+      <div *ngIf="loot.type == 'HERO' && model.getHero(loot.value) as hero" class="border-grey flex-vert-center loot-hero">
+        <ion-img [src]="'assets/icon/chars/' + model.getHeroBase(hero.heroBaseId).avatar + '.png'" class="border-bottom-grey"></ion-img>
+        <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
       </div>
       <div *ngIf="getGear() as gear" class="flex-vert-center">
         <gear-icon [gear]="gear" [type]="gear.type"></gear-icon>
@@ -28,8 +28,8 @@ import {ConverterService} from '../services/converter.service';
         <div class="font-small no-wrap">{{converter.readableIdentifier(loot.jewelType.name)}}</div>
       </div>
       <div *ngIf="loot.type == 'VEHICLE'" class="flex-vert-center">
-        <img src="assets/img/vehicles/{{model.getVehicle(loot.value).baseVehicle.avatar}}.png">
-        <div class="font-small ion-text-center">{{model.getVehicle(loot.value).baseVehicle.name}}</div>
+        <img src="assets/img/vehicles/{{model.getVehicleBase(model.getVehicle(loot.value).baseVehicleId).avatar}}.png">
+        <div class="font-small ion-text-center">{{model.getVehicleBase(model.getVehicle(loot.value).baseVehicleId).name}}</div>
       </div>
       <div *ngIf="loot.type == 'VEHICLE_PART'" class="flex-vert-center">
         <img src="assets/img/vehicles/parts/{{model.getVehiclePart(loot.value).type}}_{{model.getVehiclePart(loot.value).quality}}.png">

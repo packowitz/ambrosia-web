@@ -41,11 +41,11 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="selectedHero">
+  <ion-card *ngIf="selectedHero && model.getHeroBase(selectedHero.heroBaseId) as heroBase">
     <ion-card-header>
       <ion-card-title>
         <div class="flex-space-between">
-          <div [class]="selectedHero.heroBase.color">{{selectedHero.heroBase.name}}</div>
+          <div [class]="heroBase.color">{{heroBase.name}}</div>
           <div><ion-icon name="star" *ngFor="let star of converter.numberToArray(selectedHero.stars)"></ion-icon></div>
           <div>Lvl {{selectedHero.level}}</div>
         </div>
@@ -99,10 +99,10 @@
           </span>
         </div>
         <div class="mt-1 ml-1 mr-1 mb-2 border-bottom flex-space-between">
-          <div>{{selectedHero.heroBase.rarity}}</div>
-          <div>{{selectedHero.heroBase.color}}</div>
-          <div>{{selectedHero.heroBase.heroClass}}</div>
-          <div>{{selectedHero.heroBase.heroType}}</div>
+          <div>{{heroBase.rarity}}</div>
+          <div>{{heroBase.color}}</div>
+          <div>{{heroBase.heroClass}}</div>
+          <div>{{heroBase.heroType}}</div>
         </div>
         <ion-row>
           <ion-col sizeMd="6">

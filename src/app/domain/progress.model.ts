@@ -45,4 +45,8 @@ export class Progress {
     addGearJewelEnabled: boolean;
     addGearSpecialJewelEnabled: boolean;
     negotiationLevel: number;
+    tradingEnabled: boolean;
+    blackMarketEnabled: boolean;
+    carYardEnabled: boolean;
+    merchantLevel: number;
 }

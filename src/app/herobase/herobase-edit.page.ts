@@ -40,14 +40,7 @@ export class HerobaseEditPage implements OnInit {
     }
 
     ionViewWillEnter() {
-        if (!this.model.baseHeroes) {
-            this.backendService.getHeroBases().subscribe(data => {
-                this.model.baseHeroes = data;
-                this.setHero();
-            });
-        } else {
-            this.setHero();
-        }
+        this.setHero();
     }
 
     setHero(hero?: HeroBase) {

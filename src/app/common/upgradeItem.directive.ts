@@ -17,7 +17,7 @@ import {Gear} from '../domain/gear.model';
             <img src="assets/icon/buildings/{{item.buildingType}}.png">
           </div>
           <div *ngIf="item.vehicleId" class="ma-2">
-            <ion-img class="vehicle-only-avatar" src="assets/img/vehicles/{{getVehicle().baseVehicle.avatar}}.png"></ion-img>
+            <ion-img class="vehicle-only-avatar" src="assets/img/vehicles/{{model.getVehicleBase(getVehicle().baseVehicleId).avatar}}.png"></ion-img>
           </div>
           <div *ngIf="item.vehiclePartId" class="ma-2">
             <ion-img src="/assets/img/vehicles/parts/{{getVehiclePart().type + '_' + getVehiclePart().quality}}.png"></ion-img>
@@ -32,7 +32,7 @@ import {Gear} from '../domain/gear.model';
             Upgrading {{converter.readableIdentifier(item.buildingType)}} to level {{getNextLevel()}}
           </div>
           <div *ngIf="item.vehicleId">
-            Upgrading {{getVehicle().baseVehicle.name}} to level {{getNextLevel()}}
+            Upgrading {{model.getVehicleBase(getVehicle().baseVehicleId).name}} to level {{getNextLevel()}}
           </div>
           <div *ngIf="item.vehiclePartId">
             Upgrading {{converter.readableIdentifier(getVehiclePart().type)}} to level {{getNextLevel()}}
@@ -62,7 +62,7 @@ export class UpgradeItemDirective {
 
     saving = false;
 
-    constructor(private model: Model,
+    constructor(public model: Model,
                 private backendService: BackendService,
                 public converter: ConverterService) {
     }

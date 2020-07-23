@@ -5,6 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {BazaarPage} from './bazaar.page';
+import {BazaarUpgradeInfoModal} from './bazaar-upgrade-info.modal';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [BazaarPage]
+  declarations: [BazaarPage, BazaarUpgradeInfoModal],
+  entryComponents: [BazaarUpgradeInfoModal]
 })
 export class BazaarPageModule {}

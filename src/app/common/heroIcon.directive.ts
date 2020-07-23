@@ -2,18 +2,19 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Hero} from '../domain/hero.model';
 import {PopoverController} from '@ionic/angular';
 import {HeroInfoPopup} from './heroInfo.popup';
+import {Model} from '../services/model.service';
 
 @Component({
     selector: 'hero-icon',
     template: `
       <div *ngIf="hero" (click)="selectHero(hero)" class="hero-tile-small border-grey flex-vert-center" [class.pointer]="isClickable(hero)"
            [class.selected-tile]="selected">
-        <img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="border-bottom-grey">
+        <img [src]="'assets/icon/chars/' + model.getHeroBase(hero.heroBaseId).avatar + '.png'" class="border-bottom-grey">
         <div *ngIf="showBusy && (hero.missionId || hero.playerExpeditionId)" class="on-mission flex-vert-center">
           <div class="text" *ngIf="hero.missionId">On Mission</div>
           <div class="text" *ngIf="hero.playerExpeditionId">On Expedition</div>
         </div>
-        <div class="top-left-bubble level-bubble background-{{hero.heroBase.color}}">{{hero.level}}</div>
+        <div class="top-left-bubble level-bubble background-{{model.getHeroBase(hero.heroBaseId).color}}">{{hero.level}}</div>
         <img *ngIf="showInfo" class="top-right-bubble resource-icon pointer" (click)="info(hero, $event)" src="assets/icon/info.png">
         <img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars">
       </div>
@@ -31,7 +32,8 @@ export class HeroIconDirective {
     @Input() showInfo = true;
     @Output() clicked = new EventEmitter();
 
-    constructor(private popoverCtrl: PopoverController) {}
+    constructor(public model: Model,
+                private popoverCtrl: PopoverController) {}
 
     isClickable(hero: Hero): boolean {
         if (this.clickable) {

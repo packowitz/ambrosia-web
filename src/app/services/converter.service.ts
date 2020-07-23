@@ -186,7 +186,12 @@ export class ConverterService {
             case 'REROLL_GEAR_JEWEL': return 'New modification: Re roll jewel slots';
             case 'ADD_GEAR_JEWEL': return 'New modification: Add jewel slot';
             case 'ADD_GEAR_SPECIAL_JEWEL': return 'New modification: Add set jewel slot';
-            default: return '';
+            case 'NEGOTIATION_LEVEL': return '+' + value + ' Negotiation level';
+            case 'ENABLE_TRADING': return 'Access to trading area granted';
+            case 'ENABLE_BLACK_MARKET': return 'Access to black market granted';
+            case 'ENABLE_CAR_YARD': return 'Access to car yard granted';
+            case 'MERCHANT_LEVEL': return '+' + value + ' Merchant level';
+            default: return 'Unknown stat: ' + stat;
         }
     }
 

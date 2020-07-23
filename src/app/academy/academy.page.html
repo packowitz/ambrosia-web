@@ -41,11 +41,11 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title *ngIf="selectedHero">
-        <ion-card-title>
+        <ion-card-title *ngIf="model.getHeroBase(selectedHero.heroBaseId) as heroBase">
           <div class="flex-space-between">
             <hero-icon [hero]="selectedHero" [clickable]="true" (clicked)="selectHero(selectedHero)"></hero-icon>
             <div class="flex-vert flex-grow">
-              <div class="ml-1 {{selectedHero.heroBase.color}}">{{selectedHero.heroBase.name}}</div>
+              <div class="ml-1 {{heroBase.color}}">{{heroBase.name}}</div>
 
               <div class="flex-start mt-2 ml-1 mr-1">
                 <span class="width-60">Lvl {{currentLevel}}<span *ngIf="selectedHero.level < currentLevel" class="color-green"> +{{currentLevel - selectedHero.level}}</span></span>

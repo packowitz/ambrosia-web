@@ -2,23 +2,25 @@ import {Component} from '@angular/core';
 import {NavParams, PopoverController} from '@ionic/angular';
 import {Hero} from '../domain/hero.model';
 import {HeroSkill} from '../domain/heroSkill.model';
+import {HeroBase} from '../domain/herobase.model';
+import {Model} from '../services/model.service';
 
 @Component({
     selector: 'hero-info-popup',
     template: `
         <div class="ma-2">
           <div class="flex-space-between">
-            <div class="flex-start"><div [class]="hero.heroBase.color">{{hero.heroBase.name}}</div>, Lvl {{hero.level}}</div>
+            <div class="flex-start"><div [class]="heroBase.color">{{heroBase.name}}</div>, Lvl {{hero.level}}</div>
             <ion-icon name="close" class="pointer" (click)="close()"></ion-icon>
           </div>
           
           <div class="mt-2 flex-start font-small">
             <div class="hero-tile-smaller border-grey flex-vert-center mr-2">
-              <ion-img [src]="'assets/icon/chars/' + hero.heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
+              <ion-img [src]="'assets/icon/chars/' + heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
               <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
             </div>
             <div class="flex-vert-space-between-start height70 full-width">
-              <div>{{hero.heroBase.heroClass}}, <i>{{hero.heroBase.heroType}}</i></div>
+              <div>{{heroBase.heroClass}}, <i>{{heroBase.heroType}}</i></div>
               <div class="flex-start full-width">
                 <div class="width-60">XP</div>
                 <div class="flex-grow bar-outer with-text xp">
@@ -118,14 +120,17 @@ import {HeroSkill} from '../domain/heroSkill.model';
 export class HeroInfoPopup {
 
     hero: Hero;
+    heroBase: HeroBase;
     tab = "stats";
     
     skill: HeroSkill;
 
-    constructor(private popoverController: PopoverController,
+    constructor(private model: Model,
+                private popoverController: PopoverController,
                 private navParams: NavParams) {
         this.hero = navParams.get('hero');
-        this.skill = this.hero.heroBase.skills[0];
+        this.heroBase = this.model.getHeroBase(this.hero.heroBaseId);
+        this.skill = this.heroBase.skills[0];
     }
 
     close() {
@@ -133,7 +138,7 @@ export class HeroInfoPopup {
     }
 
     getSkills(): HeroSkill[] {
-        return this.hero.heroBase.skills.filter(s => s.skillActiveTrigger !== 'NPC_ONLY' || this.getSkillLevel(s) > 0);
+        return this.heroBase.skills.filter(s => s.skillActiveTrigger !== 'NPC_ONLY' || this.getSkillLevel(s) > 0);
     }
 
     getSkillLevel(skill: HeroSkill): number {

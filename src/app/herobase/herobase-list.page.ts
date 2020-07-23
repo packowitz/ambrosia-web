@@ -49,15 +49,7 @@ export class HerobaseListPage {
     }
 
     ionViewWillEnter(): void {
-
-        if (!this.model.baseHeroes) {
-            this.backendService.getHeroBases().subscribe(data => {
-                this.model.baseHeroes = data;
-                this.setHeroList();
-            });
-        } else {
-            this.setHeroList();
-        }
+        this.setHeroList();
     }
 
     showStats() {

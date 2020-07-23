@@ -41,6 +41,8 @@ import {OddJobBase} from '../domain/oddJobBase.model';
 import {OddJob} from '../domain/oddJob.model';
 import {DailyActivity} from '../domain/dailyActivity.model';
 import {Achievements} from '../domain/achievements.model';
+import {MerchantItem} from '../domain/merchantItem.model';
+import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
 
 export class Looted {
     type: string;
@@ -86,6 +88,8 @@ export class PlayerActionResponse {
     oddJobs?: OddJob[];
     oddJobDone?: number;
     dailyActivity?: DailyActivity;
+    merchantItems?: MerchantPlayerItem[];
+    boughtMerchantItem?: MerchantPlayerItem;
 }
 
 @Injectable({
@@ -112,11 +116,11 @@ export class BackendService {
     }
 
     getHeroBases(): Observable<HeroBase[]> {
-        return this.http.get<HeroBase[]>(API_URL + '/admin/hero_base');
+        return this.http.get<HeroBase[]>(API_URL + '/hero_base');
     }
 
     getHeroBase(id): Observable<HeroBase> {
-        return this.http.get<HeroBase>(API_URL + '/admin/hero_base/' + id);
+        return this.http.get<HeroBase>(API_URL + '/hero_base/' + id);
     }
 
     createHeroBase(data): Observable<HeroBase> {
@@ -489,7 +493,7 @@ export class BackendService {
     }
 
     loadAllBaseVehicles(): Observable<VehicleBase[]> {
-        return this.http.get<VehicleBase[]>(API_URL + '/admin/vehicle');
+        return this.http.get<VehicleBase[]>(API_URL + '/vehicle');
     }
 
     newBaseVehicle(name: string): Observable<VehicleBase> {
@@ -646,5 +650,21 @@ export class BackendService {
 
     acceptTrade(tradeName: string): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/bazaar/trade/' + tradeName, null);
+    }
+
+    getMerchantItems(): Observable<MerchantItem[]> {
+        return this.http.get<MerchantItem[]>(API_URL + '/admin/merchant/item');
+    }
+
+    saveMerchantItem(item: MerchantItem): Observable<MerchantItem> {
+        return this.http.post<MerchantItem>(API_URL + '/admin/merchant/item', item);
+    }
+
+    renewMerchantItems(): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/bazaar/merchant/items/renew', null);
+    }
+
+    buyMerchantItem(item: MerchantPlayerItem): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/bazaar/merchant/buy/' + item.id, null);
     }
 }

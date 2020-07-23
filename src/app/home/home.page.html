@@ -59,7 +59,7 @@
 
       <div *ngFor="let mission of model.missions" class="position-relative mr-4">
         <div class="avatar mission pointer" (click)="openMission(mission)">
-          <img src="assets/img/vehicles/{{model.getVehicle(mission.vehicleId).baseVehicle.avatar}}.png">
+          <img src="assets/img/vehicles/{{model.getVehicleBase(model.getVehicle(mission.vehicleId).baseVehicleId).avatar}}.png">
           <div class="ml-1 mr-1 time-bar">
             <span class="time-bar-inner" [style.width]="(100 * (mission.duration - mission.secondsUntilDone) / mission.duration) + '%'"></span>
           </div>
@@ -69,7 +69,7 @@
 
       <div *ngFor="let playerExpedition of getPlayerExpeditions()" class="position-relative mr-4">
         <div class="avatar player-expedition pointer" (click)="openPlayerExpedition(playerExpedition)">
-          <img src="assets/img/vehicles/{{model.getVehicle(playerExpedition.vehicleId).baseVehicle.avatar}}.png">
+          <img src="assets/img/vehicles/{{model.getVehicleBase(model.getVehicle(playerExpedition.vehicleId).baseVehicleId).avatar}}.png">
           <div class="ml-1 mr-1 time-bar">
             <span class="time-bar-inner {{playerExpedition.rarity}}" [style.width]="(100 * (playerExpedition.duration - playerExpedition.secondsUntilDone) / playerExpedition.duration) + '%'"></span>
           </div>

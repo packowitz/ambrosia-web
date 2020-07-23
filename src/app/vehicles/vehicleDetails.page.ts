@@ -29,16 +29,7 @@ export class VehicleDetailsPage {
 
   ionViewWillEnter() {
     let id = Number(this.route.snapshot.paramMap.get('id'));
-    if (!this.model.baseVehicles) {
-      this.saving = true;
-      this.backendService.loadAllBaseVehicles().subscribe(data => {
-        this.model.baseVehicles = data;
-        this.vehicle = this.converter.dataClone(this.model.baseVehicles.find(v => v.id === id));
-        this.saving = false;
-      });
-    } else {
-      this.vehicle = this.converter.dataClone(this.model.baseVehicles.find(v => v.id === id));
-    }
+    this.vehicle = this.converter.dataClone(this.model.baseVehicles.find(v => v.id === id));
   }
 
   save() {

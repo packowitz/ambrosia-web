@@ -116,7 +116,7 @@ export class GaragePage {
   }
 
   canUpgradeVehicle(): boolean {
-    return this.vehicle && this.model.progress.vehicleUpgradeLevel > this.vehicle.level && !this.vehicle.missionId && !this.vehicle.playerExpeditionId && this.vehicle.level < this.vehicle.baseVehicle.maxLevel;
+    return this.vehicle && this.model.progress.vehicleUpgradeLevel > this.vehicle.level && !this.vehicle.missionId && !this.vehicle.playerExpeditionId && this.vehicle.level < this.model.getVehicleBase(this.vehicle.baseVehicleId).maxLevel;
   }
 
   canUpgradeVehiclePart(part: VehiclePart): boolean {

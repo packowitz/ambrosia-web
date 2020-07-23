@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Merchant Items
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+<ion-content *ngIf="model.merchantItems && model.lootBoxes">
+  <ion-list>
+    <div *ngFor="let merchantItem of model.merchantItems" class="mt-2">
+      <div class="flex-space-between">
+        <div class="flex-grow">
+          <div class="flex-space-between">
+            <ion-item lines="none">
+              <ion-label position="floating">Level</ion-label>
+              <ion-input [(ngModel)]="merchantItem.merchantLevel" type="number" min="1" max="4" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Order</ion-label>
+              <ion-input [(ngModel)]="merchantItem.sortOrder" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Price</ion-label>
+              <ion-select [(ngModel)]="merchantItem.priceType">
+                <ion-select-option value="COINS">Coins</ion-select-option>
+                <ion-select-option value="RUBIES">Rubies</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Amount</ion-label>
+              <ion-input [(ngModel)]="merchantItem.priceAmount" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Loot</ion-label>
+              <ion-select [(ngModel)]="merchantItem.lootBoxId">
+                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+        <ion-button size="small" color="success" (click)="saveItem(merchantItem)" [disabled]="itemIncomplete(merchantItem)">Update</ion-button>
+      </div>
+    </div>
+    <div class="mt-2">
+      <div class="flex-space-between">
+        <div class="flex-grow">
+          <div class="flex-space-between">
+            <ion-item lines="none">
+              <ion-label position="floating">Level</ion-label>
+              <ion-input [(ngModel)]="newMerchantItem.merchantLevel" type="number" min="1" max="4" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Order</ion-label>
+              <ion-input [(ngModel)]="newMerchantItem.sortOrder" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Price</ion-label>
+              <ion-select [(ngModel)]="newMerchantItem.priceType" placeholder="select">
+                <ion-select-option value="COINS">Coins</ion-select-option>
+                <ion-select-option value="RUBIES">Rubies</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Amount</ion-label>
+              <ion-input [(ngModel)]="newMerchantItem.priceAmount" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Loot</ion-label>
+              <ion-select [(ngModel)]="newMerchantItem.lootBoxId" placeholder="select">
+                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+        <ion-button size="small" color="success" (click)="saveItem(newMerchantItem)" [disabled]="itemIncomplete(newMerchantItem)">Create</ion-button>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>

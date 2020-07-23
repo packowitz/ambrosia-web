@@ -84,6 +84,7 @@ export class BuildingUpgradeModal {
     upgradeText = {
         ACADEMY: 'Upgrade Academy to increase the level of heroes that can be trained',
         BARRACKS: 'Upgrade Barracks to increase space for heroes',
+        BAZAAR: 'Upgrade Bazaar to get access to restricted areas and better deals',
         FORGE: 'Upgrade Forge to improve your modification skills',
         GARAGE: 'Upgrade Garage to increase upgrade level for vehicles and parts',
         JEWELRY: 'Upgrade Jewelry to learn how to upgrade jewels to a higher level',
@@ -108,39 +109,14 @@ export class BuildingUpgradeModal {
     getUpgrades(): string[] {
         let upgrades: string[] = [];
         let nextLevel = this.getBuilding().level + 1;
-        if (this.buildingType === 'ACADEMY') {
-            this.propertyService.getProps('ACADEMY_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
-            });
-        }
-        if (this.buildingType === 'BARRACKS') {
-            this.propertyService.getProps('BARRACKS_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
-            });
-        }
-        if (this.buildingType === 'FORGE') {
-            this.propertyService.getProps('FORGE_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
-            });
-        }
-        if (this.buildingType === 'GARAGE') {
-            this.propertyService.getProps('GARAGE_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
-            });
-        }
-        if (this.buildingType === 'JEWELRY') {
-            this.propertyService.getProps('JEWELRY_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
-            });
-        }
-        if (this.buildingType === 'LABORATORY') {
-            this.propertyService.getProps('LABORATORY_BUILDING', nextLevel).forEach(p => {
-                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
-            });
-        }
+
         if (this.buildingType === 'STORAGE') {
             this.propertyService.getProps('STORAGE_BUILDING', nextLevel).forEach(p => {
                 upgrades.push('+' + p.value1 + ' ' + this.converter.readableIdentifier(p.resourceType));
+            });
+        } else {
+            this.propertyService.getProps(this.buildingType + '_BUILDING', nextLevel).forEach(p => {
+                upgrades.push(this.converter.readableProgressStat(p.progressStat, p.value1));
             });
         }
         return upgrades;

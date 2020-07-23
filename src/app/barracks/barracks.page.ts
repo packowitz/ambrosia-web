@@ -117,14 +117,15 @@ export class BarracksPage {
   }
 
   selectSkill(number: number) {
-    this.selectedSkill = this.selectedHero.heroBase.skills.find(s => s.number === number);
+    let heroBase = this.model.getHeroBase(this.selectedHero.heroBaseId);
+    this.selectedSkill = heroBase.skills.find(s => s.number === number);
     if (!this.selectedSkill) {
-      this.selectedSkill = this.selectedHero.heroBase.skills[0];
+      this.selectedSkill = heroBase.skills[0];
     }
   }
 
   getSkills(): HeroSkill[] {
-    return this.selectedHero.heroBase.skills.filter(s => s.skillActiveTrigger !== 'NPC_ONLY' || this.model.player.serviceAccount);
+    return this.model.getHeroBase(this.selectedHero.heroBaseId).skills.filter(s => s.skillActiveTrigger !== 'NPC_ONLY' || this.model.player.serviceAccount);
   }
 
   getSkillLevel(skill: HeroSkill): number {

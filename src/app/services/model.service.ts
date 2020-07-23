@@ -33,6 +33,8 @@ import {OddJobBase} from '../domain/oddJobBase.model';
 import {OddJob} from '../domain/oddJob.model';
 import {DailyActivity} from '../domain/dailyActivity.model';
 import {Achievements} from '../domain/achievements.model';
+import {MerchantItem} from '../domain/merchantItem.model';
+import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
 
 @Injectable({
     providedIn: 'root'
@@ -74,7 +76,9 @@ export class Model {
     looted: Looted;
     expeditionBases: ExpeditionBase[];
     oddJobBases: OddJobBase[];
+    merchantItems: MerchantItem[];
     dailyActivity: DailyActivity;
+    merchantPlayerItems: MerchantPlayerItem[];
 
     interval: number;
     lastIntervalTimestamp: number = Date.now();
@@ -84,6 +88,8 @@ export class Model {
     updatePlayerExpeditionsInProgress = false;
     updateExpeditionsInProgress = false;
     updateCurrentMapInProgress = false;
+    updateMerchantPlayerItemsInProgress = false;
+    updateMerchantPlayerItemsFailed = false;
     useServiceAccount = false;
 
     constructor(private http: HttpClient,
@@ -111,12 +117,20 @@ export class Model {
         this.dailyActivity = null;
     }
 
+    getHeroBase(id: number): HeroBase {
+        return this.baseHeroes.find(h => h.id === id);
+    }
+
     getHero(id: number): Hero {
         return this.heroes.find(h => h.id === id);
     }
 
     getGear(id: number): Gear {
         return this.gears.find(g => g.id === id);
+    }
+
+    getVehicleBase(id: number): VehicleBase {
+        return this.baseVehicles.find(v => v.id === id);
     }
 
     getVehicle(id: number): Vehicle {
@@ -247,6 +261,14 @@ export class Model {
                 });
             }
 
+            if (this.merchantPlayerItems && this.merchantPlayerItems.length > 0) {
+                let firstMerchantPlayerItem = this.merchantPlayerItems[0];
+                if (firstMerchantPlayerItem.secondsUntilRefresh > 0) { firstMerchantPlayerItem.secondsUntilRefresh --; }
+                if (pauseDetected || this.updateMerchantPlayerItemsFailed || firstMerchantPlayerItem.secondsUntilRefresh <= 0) {
+                    this.loadMerchantPlayerItems();
+                }
+            }
+
         }, 1000);
     }
 
@@ -314,6 +336,20 @@ export class Model {
                 this.updatePlayerMap(data);
                 this.updateCurrentMapInProgress = false;
             }, () => this.updateCurrentMapInProgress = false );
+        }
+    }
+
+    loadMerchantPlayerItems() {
+        if (!this.updateMerchantPlayerItemsInProgress) {
+            this.updateMerchantPlayerItemsInProgress = true;
+            this.http.get<MerchantPlayerItem[]>(API_URL + '/bazaar/merchant/items').subscribe(data => {
+                this.merchantPlayerItems = data;
+                this.updateMerchantPlayerItemsFailed = false;
+                this.updateMerchantPlayerItemsInProgress = false;
+            }, () => {
+                this.updateMerchantPlayerItemsFailed = true;
+                this.updateMerchantPlayerItemsInProgress = false;
+            } );
         }
     }
 
@@ -485,6 +521,15 @@ export class Model {
         if (data.dailyActivity) {
             this.dailyActivity = data.dailyActivity;
         }
+        if (data.merchantItems && data.merchantItems.length > 0) {
+            this.merchantPlayerItems = data.merchantItems;
+        }
+        if (data.boughtMerchantItem) {
+            let item = this.merchantPlayerItems.find(m => m.id === data.boughtMerchantItem.id);
+            if (item) {
+                item.sold = true;
+            }
+        }
         if (data.looted) {
             this.looted = data.looted;
         }
@@ -512,10 +557,10 @@ export class Model {
             this.heroes = this.heroes.sort((a, b) => {
                 if (a.level === b.level) {
                     if (a.stars === b.stars) {
-                        if (a.heroBase.id === b.heroBase.id) {
+                        if (a.heroBaseId === b.heroBaseId) {
                             return a.id - b.id;
                         } else {
-                            return a.heroBase.id - b.heroBase.id;
+                            return a.heroBaseId - b.heroBaseId;
                         }
                     } else {
                         return b.stars - a.stars;

@@ -56,6 +56,11 @@ const routes: Routes = [
         loadChildren: './story/story.module#StoryModule',
         canActivate: [AdminGuard]
     },
+    {
+        path: 'merchant',
+        loadChildren: './merchant/merchant.module#MerchantPageModule',
+        canActivate: [AdminGuard]
+    },
     {path: 'account', loadChildren: './account/account.module#AccountPageModule'},
     {path: 'arena', loadChildren: './arena/arena.module#ArenaPageModule'},
     {path: 'barracks', loadChildren: './barracks/barracks.module#BarracksModule'},

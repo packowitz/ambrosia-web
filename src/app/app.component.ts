@@ -97,6 +97,11 @@ export class AppComponent {
             icon: 'rune-stone'
         },
         {
+            title: 'Merchant',
+            url: '/merchant',
+            icon: 'apple'
+        },
+        {
             title: 'Ongoing Battle',
             url: '/battle',
             icon: 'dripping-sword'

@@ -1,4 +1,3 @@
-import {HeroBase} from './herobase.model';
 import {Gear} from './gear.model';
 import {HeroGearSet} from './heroGearSet.model';
 
@@ -7,7 +6,7 @@ export class Hero {
     playerId: number;
     missionId: number;
     playerExpeditionId: number;
-    heroBase: HeroBase;
+    heroBaseId: number;
     stars: number;
     level: number;
     xp: number;

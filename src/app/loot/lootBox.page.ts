@@ -44,16 +44,6 @@ export class LootBoxPage {
                 this.model.gearLoots = data;
             });
         }
-        if (!this.model.baseHeroes) {
-            this.backendService.getHeroBases().subscribe(data => {
-                this.model.baseHeroes = data;
-            });
-        }
-        if (!this.model.baseVehicles) {
-            this.backendService.loadAllBaseVehicles().subscribe(data => {
-                this.model.baseVehicles = data;
-            });
-        }
     }
 
     compareNullable(o1, o2): boolean {

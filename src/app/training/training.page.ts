@@ -21,7 +21,7 @@ export class TrainingPage implements OnInit {
 
   otherTeams: OtherTeam[] = [];
 
-  constructor(private model: Model,
+  constructor(public model: Model,
               private converter: ConverterService,
               private backendService: BackendService,
               private router: Router) { }

@@ -97,7 +97,7 @@ export class AcademyPage {
       this.totalXpGained += this.gainedXp(fodder);
       this.calcXpLevel();
     }
-    if (this.selectedHero.heroBase.heroClass === fodder.heroBase.heroClass) {
+    if (this.model.getHeroBase(this.selectedHero.heroBaseId).heroClass === this.model.getHeroBase(fodder.heroBaseId).heroClass) {
       this.totalAscGained += this.gainedAsc(fodder);
       this.calcAscLevel();
     }
@@ -108,7 +108,7 @@ export class AcademyPage {
       this.totalXpGained -= this.gainedXp(fodder);
       this.calcXpLevel();
     }
-    if (this.selectedHero.heroBase.heroClass === fodder.heroBase.heroClass) {
+    if (this.model.getHeroBase(this.selectedHero.heroBaseId).heroClass === this.model.getHeroBase(fodder.heroBaseId).heroClass) {
       this.totalAscGained -= this.gainedAsc(fodder);
       this.calcAscLevel();
     }
@@ -117,8 +117,9 @@ export class AcademyPage {
   gainedXp(fodder: Hero): number {
     let gainXp = this.propertyService.getHeroMergeXp(fodder.level);
     gainXp += Math.round((this.model.progress.trainingXpBoost * gainXp) / 100);
-    if (this.converter.rarityStars(fodder.heroBase.rarity) > 1) {
-      gainXp *= 2 * this.converter.rarityStars(fodder.heroBase.rarity);
+    let fodderRarityStars = this.converter.rarityStars(this.model.getHeroBase(fodder.heroBaseId).rarity);
+    if (fodderRarityStars > 1) {
+      gainXp *= 2 * fodderRarityStars;
     }
     return gainXp;
   }
@@ -152,7 +153,7 @@ export class AcademyPage {
     this.ascGainCurrentLevel = this.totalAscGained;
     let diffToMax = this.selectedHero.ascPointsMax - this.selectedHero.ascPoints;
     while (this.ascGainCurrentLevel > diffToMax) {
-      if (this.currentAscLevel < this.selectedHero.heroBase.maxAscLevel) {
+      if (this.currentAscLevel < this.model.getHeroBase(this.selectedHero.heroBaseId).maxAscLevel) {
         this.ascGainCurrentLevel -= diffToMax;
         this.currentAscLevel ++;
         this.currentAscLevelMaxPoints = this.propertyService.getHeroMaxAsc(this.currentAscLevel);
