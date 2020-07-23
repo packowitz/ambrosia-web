@@ -7,6 +7,9 @@ export class Hero {
     missionId: number;
     playerExpeditionId: number;
     heroBaseId: number;
+    name: string;
+    color: string;
+    avatar: string;
     stars: number;
     level: number;
     xp: number;

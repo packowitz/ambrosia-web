@@ -24,7 +24,7 @@ export class BazaarPage {
   buildingType = 'BAZAAR';
   enterStory = this.buildingType + '_ENTERED';
 
-  constructor(private model: Model,
+  constructor(public model: Model,
               public enumService: EnumService,
               public converter: ConverterService,
               private backendService: BackendService,
