@@ -62,7 +62,7 @@
               </div>
               <div *ngIf="item.gear" class="flex-vert-center">
                 <gear-icon [gear]="item.gear" [type]="item.gear.type"></gear-icon>
-                {{converter.readableIdentifier(item.gear.set)}}
+                <span class="no-wrap">{{converter.readableIdentifier(item.gear.set)}}</span>
                 <gear-stat class="font-small no-wrap" [stat]="item.gear.stat" [value]="item.gear.statValue"></gear-stat>
               </div>
               <div *ngIf="item.jewelType" class="flex-vert-center">
