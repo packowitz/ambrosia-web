@@ -319,7 +319,6 @@ export class HomePage {
     if (this.buildingService.upgradeFinished(building.type)) { return 'alert'; }
     switch (building.type) {
       case 'ARENA':
-      case 'BAZAAR':
         return 'none';
       case 'BARRACKS': {
         if (this.model.heroes.findIndex(h => h.skillPoints > 0) !== -1) { return 'alert'; }
