@@ -28,4 +28,5 @@ export class Mission {
 
     // transient
     updating: boolean;
+    updateFailed: boolean;
 }

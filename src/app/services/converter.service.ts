@@ -152,6 +152,7 @@ export class ConverterService {
     readableProgressStat(stat: string, value: number): string {
         switch(stat) {
             case 'EXPEDITION_SPEED': return '+' + value + '% Expedition speed';
+            case 'NUMBER_ODD_JOBS': return '+' + value + ' Odd Job in progress';
             case 'GARAGE_SLOT': return '+' + value + ' Garage slot';
             case 'MISSION_SPEED': return '+' + value + '% Mission speed';
             case 'MISSION_MAX_BATTLES': return '+' + value + ' Battles per mission';

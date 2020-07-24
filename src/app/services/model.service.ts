@@ -84,10 +84,14 @@ export class Model {
     lastIntervalTimestamp: number = Date.now();
     expeditionsCheckedTimestamp: number = Date.now();
     updateResourcesInProgress = false;
+    updateResourcesFailed = false;
     updateIncubatorsInProgress = false;
+    updateIncubatorsFailed = false;
     updatePlayerExpeditionsInProgress = false;
+    updatePlayerExpeditionsFailed = false;
     updateExpeditionsInProgress = false;
     updateCurrentMapInProgress = false;
+    updateCurrentMapFailed = false;
     updateMerchantPlayerItemsInProgress = false;
     updateMerchantPlayerItemsFailed = false;
     useServiceAccount = false;
@@ -178,12 +182,12 @@ export class Model {
             }
 
             if (this.progress && this.progress.expeditionLevel > 0 && (now - this.expeditionsCheckedTimestamp) > 300000) {
-                this.updateExpeditions();
+                this.loadExpeditions();
             }
 
             this.lastIntervalTimestamp = now;
             if (this.resources) {
-                let updateResources = pauseDetected;
+                let updateResources = pauseDetected || this.updateResourcesFailed;
                 if (this.resources.steam < this.resources.steamMax) {
                     this.resources.steamProduceIn --;
                     updateResources = updateResources || this.resources.steamProduceIn <= 0;
@@ -197,7 +201,7 @@ export class Model {
                     updateResources = updateResources || this.resources.tokensProduceIn <= 0;
                 }
                 if (updateResources) {
-                    this.updateResources();
+                    this.loadResources();
                 }
             }
 
@@ -208,10 +212,14 @@ export class Model {
                     mission.battles.forEach(battle => {
                         battle.secondsUntilDone --;
                     });
-                    if (pauseDetected || mission.nextUpdateSeconds <= 0 && !mission.updating) {
+                    if (!mission.updating && (pauseDetected || mission.updateFailed || mission.nextUpdateSeconds <= 0)) {
                         mission.updating = true;
-                        this.http.post<PlayerActionResponse>(API_URL + '/battle/mission/' + mission.id, null).subscribe(data => {
-                            console.log("Updated mission " + data.missions[0].id);
+                        this.http.get<Mission>(API_URL + '/battle/mission/' + mission.id).subscribe(data => {
+                            this.updateMission(data);
+                            console.log("Updated mission " + data.id);
+                        }, () => {
+                            mission.updating = false;
+                            mission.updateFailed = true;
                         });
                     }
                 });
@@ -221,17 +229,23 @@ export class Model {
                 let upgradeInProgress = this.upgrades.find(u => u.inProgress);
                 if (upgradeInProgress) {
                     upgradeInProgress.secondsUntilDone --;
-                    if (pauseDetected || upgradeInProgress.secondsUntilDone <= 0 && !upgradeInProgress.updating) {
+                    if (!upgradeInProgress.updating && (pauseDetected || upgradeInProgress.updateFailed || upgradeInProgress.secondsUntilDone <= 0)) {
                         upgradeInProgress.updating = true;
-                        this.http.post<PlayerActionResponse>(API_URL + '/upgrade/check', null).subscribe(() => {
+                        this.http.get<Upgrade[]>(API_URL + '/upgrade/check').subscribe(data => {
+                            upgradeInProgress.updating = false;
+                            upgradeInProgress.updateFailed = false;
+                            data.forEach(u => this.updateUpgrade(u));
                             console.log("Updated upgrades");
+                        }, () => {
+                            upgradeInProgress.updating = false;
+                            upgradeInProgress.updateFailed = true;
                         });
                     }
                 }
             }
 
             if (this.incubators) {
-                let incubatorUpdate = pauseDetected;
+                let incubatorUpdate = pauseDetected || this.updateIncubatorsFailed;
                 this.incubators.filter(i => !i.finished).forEach(incubator => {
                     incubator.secondsUntilDone --;
                     if (incubator.secondsUntilDone <= 0) {
@@ -239,14 +253,14 @@ export class Model {
                     }
                 });
                 if (incubatorUpdate) {
-                    this.updateIncubators();
+                    this.loadIncubators();
                 }
             }
 
             if (this.playerExpeditions && this.playerExpeditions.length > 0) {
                 this.playerExpeditions.filter(p => !p.completed).forEach(p => p.secondsUntilDone --);
-                if (pauseDetected) {
-                    this.updatePlayerExpeditions();
+                if (pauseDetected || this.updatePlayerExpeditionsFailed) {
+                    this.loadPlayerExpeditions();
                 }
             }
 
@@ -254,7 +268,7 @@ export class Model {
                 this.playerMaps.forEach(p => {
                     if (p.secondsToReset) {
                         if (p.secondsToReset > 0 ) { p.secondsToReset --; }
-                        if (pauseDetected || p.secondsToReset <= 0) {
+                        if (pauseDetected || this.updateCurrentMapFailed || p.secondsToReset <= 0) {
                             this.loadMap(p.mapId);
                         }
                     }
@@ -272,35 +286,37 @@ export class Model {
         }, 1000);
     }
 
-    updateResources() {
+    loadResources() {
         if (!this.updateResourcesInProgress) {
             this.updateResourcesInProgress = true;
             this.http.get<Resources>(API_URL + '/resources').subscribe(data => {
                 this.resources = data;
+                this.updateResourcesFailed = false;
                 this.updateResourcesInProgress = false;
-                console.log('resources updated');
             }, () => {
+                this.updateResourcesFailed = true;
                 this.updateResourcesInProgress = false;
-                console.log('resource update failed');
+                console.log('load resources failed');
             });
         }
     }
 
-    updateIncubators() {
+    loadIncubators() {
         if (!this.updateIncubatorsInProgress) {
             this.updateIncubatorsInProgress = true;
             this.http.get<Incubator[]>(API_URL + '/laboratory/incubators').subscribe(data => {
                 this.incubators = data;
+                this.updateIncubatorsFailed = false;
                 this.updateIncubatorsInProgress = false;
-                console.log('incubators updated');
             }, () => {
+                this.updateIncubatorsFailed = true;
                 this.updateIncubatorsInProgress = false;
-                console.log('incubators update failed');
+                console.log('load incubators failed');
             });
         }
     }
 
-    updatePlayerExpeditions() {
+    loadPlayerExpeditions() {
         if (!this.updatePlayerExpeditionsInProgress) {
             this.updatePlayerExpeditionsInProgress = true;
             this.http.get<PlayerExpedition[]>(API_URL + '/expedition/in-progress').subscribe(data => {
@@ -308,13 +324,13 @@ export class Model {
                 this.updatePlayerExpeditionsInProgress = false;
             }, () => {
                 this.updatePlayerExpeditionsInProgress = false;
-                console.log('player expeditions update failed');
+                console.log('load player expeditions failed');
             });
         }
     }
 
 
-    updateExpeditions() {
+    loadExpeditions() {
         if (!this.updateExpeditionsInProgress) {
             this.updateExpeditionsInProgress = true;
             console.log('Updating active expeditions');
@@ -324,7 +340,7 @@ export class Model {
                 this.updateExpeditionsInProgress = false;
             }, () => {
                 this.updateExpeditionsInProgress = false;
-                console.log('expeditions update failed');
+                console.log('load expeditions failed');
             });
         }
     }
@@ -334,8 +350,13 @@ export class Model {
             this.updateCurrentMapInProgress = true;
             this.http.get<PlayerMap>(API_URL + '/map/' + mapId).subscribe(data => {
                 this.updatePlayerMap(data);
+                this.updateCurrentMapFailed = false;
                 this.updateCurrentMapInProgress = false;
-            }, () => this.updateCurrentMapInProgress = false );
+            }, () => {
+                this.updateCurrentMapFailed = true;
+                this.updateCurrentMapInProgress = false;
+                console.log('load current map failed');
+            } );
         }
     }
 
@@ -349,6 +370,7 @@ export class Model {
             }, () => {
                 this.updateMerchantPlayerItemsFailed = true;
                 this.updateMerchantPlayerItemsInProgress = false;
+                console.log('load merchant player items failed');
             } );
         }
     }
@@ -366,7 +388,7 @@ export class Model {
         }
         if (data.progress) {
             if (this.progress && this.progress.expeditionLevel !== data.progress.expeditionLevel) {
-                this.updateExpeditions();
+                this.loadExpeditions();
             }
             this.progress = data.progress;
         }

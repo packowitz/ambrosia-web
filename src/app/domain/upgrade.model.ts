@@ -18,4 +18,5 @@ export class Upgrade {
 
     // transient
     updating: boolean;
+    updateFailed: boolean;
 }
