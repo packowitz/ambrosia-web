@@ -160,7 +160,7 @@ export class PropertyService {
       case 'DMG_PER_TURN': returnValue += '% Dmg Over Time'; break;
       case 'CONFUSE_CHANCE': returnValue += '% Confuse chance'; break;
       case 'DAMAGE_REDUCTION': returnValue += '% Dmg Reduction'; break;
-      case 'CRIT_RESIST': returnValue += '% Crit Resistance'; break;
+      case 'CRIT_RESIST': returnValue += ' Crit Resistance'; break;
       case 'BUFF_RESISTANCE': returnValue += '% Buff Resistance'; break;
     }
     return returnValue;
