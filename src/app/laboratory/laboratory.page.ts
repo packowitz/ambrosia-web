@@ -98,6 +98,7 @@ export class LaboratoryPage {
       }
     }
     time += Math.round((upChance * nextLevelTime) / 100);
+    time = Math.round((time * 100) / this.model.progress.labSpeed);
     return this.converter.timeWithUnit(time);
   }
 
