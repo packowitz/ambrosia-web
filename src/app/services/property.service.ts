@@ -151,7 +151,7 @@ export class PropertyService {
       case 'GREEN_DMG_INC': returnValue += '% Dmg vs Green'; break;
       case 'BLUE_DMG_INC': returnValue += '% Dmg vs Blue'; break;
       case 'HEALING_INC': returnValue += '% Healing'; break;
-      case 'SUPER_CRIT_CHANCE': returnValue += '% SuperCrit chance'; break;
+      case 'SUPER_CRIT_CHANCE': returnValue += '% SuperCrit'; break;
       case 'BUFF_INTENSITY_INC': returnValue += ' Buff Intensity'; break;
       case 'DEBUFF_INTENSITY_INC': returnValue += ' Debuff Intensity'; break;
       case 'BUFF_DURATION_INC': returnValue += ' Buff Duration'; break;

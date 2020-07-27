@@ -51,19 +51,25 @@
   <ion-card>
     <ion-card-content>
       <div class="flex">
-        <div class="width-60">Quality</div>
+        <div class="width-60 flex-start">Type</div>
+        <div class="flex-space-between flex-grow flex-wrap">
+          <img *ngFor="let type of enumService.getGearTypes()" src="assets/img/sets/default_{{type}}.png" class="resource-icon pointer mt-1 mr-1" (click)="toggleGearType(type)" [class.black-border]="gearType == type">
+        </div>
+      </div>
+      <div class="mt-2 flex">
+        <div class="width-60 flex-start">Quality</div>
         <div class="flex-space-between flex-grow flex-wrap">
           <div *ngFor="let qual of allQualities" class="pointer mt-1 mr-1" [class.text-selected]="qualities.indexOf(qual) != -1" (click)="toggleQuality(qual)">{{converter.readableIdentifier(qual)}}</div>
         </div>
       </div>
       <div class="mt-2 flex">
-        <div class="width-60">Sets</div>
+        <div class="width-60 flex-start">Sets</div>
         <div class="flex-space-between flex-grow flex-wrap">
-          <img *ngFor="let set of enumService.getGearSets()" src="assets/icon/gear/{{set}}.png" (click)="toggleSet(set)" class="medium-icon pointer mt-1 mr-1" [class.small-icon-selected]="sets.indexOf(set) >= 0">
+          <img *ngFor="let set of enumService.getGearSets()" src="assets/icon/gear/{{set}}.png" (click)="toggleSet(set)" class="medium-icon pointer mt-1 mr-1" [class.small-icon-selected]="selectedSet === set">
         </div>
       </div>
       <div class="mt-2 flex">
-        <div class="width-60">Stars</div>
+        <div class="width-60 flex-start">Stars</div>
         <div class="flex-space-between flex-grow flex-wrap">
           <div class="pointer mt-1 mr-1" [class.text-selected]="showSimple" (click)="showSimple = !showSimple">Simple</div>
           <div class="pointer mt-1 mr-1" [class.text-selected]="showCommon" (click)="showCommon = !showCommon">Common</div>
@@ -71,6 +77,16 @@
           <div class="pointer mt-1 mr-1" [class.text-selected]="showRare" (click)="showRare = !showRare">Rare</div>
           <div class="pointer mt-1 mr-1" [class.text-selected]="showEpic" (click)="showEpic = !showEpic">Epic</div>
           <div class="pointer mt-1 mr-1" [class.text-selected]="showLegendary" (click)="showLegendary = !showLegendary">Legendary</div>
+        </div>
+      </div>
+      <div class="mt-2 flex">
+        <div class="width-60 flex-start">Jewels</div>
+        <div class="flex-space-between flex-grow flex-wrap">
+          <div class="pointer mt-1 mr-1" [class.text-selected]="show0jewels" (click)="show0jewels = !show0jewels">None</div>
+          <div class="pointer mt-1 mr-1" [class.text-selected]="show1jewels" (click)="show1jewels = !show1jewels">One</div>
+          <div class="pointer mt-1 mr-1" [class.text-selected]="show2jewels" (click)="show2jewels = !show2jewels">Two</div>
+          <div class="pointer mt-1 mr-1" [class.text-selected]="show3jewels" (click)="show3jewels = !show3jewels">Three</div>
+          <div class="pointer mt-1 mr-1" [class.text-selected]="show4jewels" (click)="show4jewels = !show4jewels">Four</div>
         </div>
       </div>
       <div class="mt-2 flex-end">

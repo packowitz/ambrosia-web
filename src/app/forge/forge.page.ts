@@ -14,7 +14,6 @@ import {GearUpgradeModal} from './gearUpgrade.modal';
 import {ModificationSelectionPopover} from './modification-selection-popover';
 import {StoryService} from '../services/story.service';
 import {BuildingService} from '../services/building.service';
-import {LaboratoryUpgradeInfoModal} from '../laboratory/laboratory-upgrade-info.modal';
 import {ForgeUpgradeInfoModal} from './forge-upgrade-info.modal';
 
 @Component({
@@ -34,7 +33,14 @@ export class ForgePage {
 
   allQualities = ['SHABBY', 'RUSTY', 'ORDINARY', 'USEFUL', 'GOOD', 'AWESOME', 'FLAWLESS', 'PERFECT', 'GODLIKE'];
   qualities = ['SHABBY', 'RUSTY', 'ORDINARY', 'USEFUL'];
-  sets: string[] = [];
+  selectedSet: string;
+  gearType = 'WEPAON';
+
+  show0jewels = true;
+  show1jewels = true;
+  show2jewels = true;
+  show3jewels = false;
+  show4jewels = false;
 
   buildingType = "FORGE";
   enterStory = this.buildingType + '_ENTERED';
@@ -59,7 +65,8 @@ export class ForgePage {
       this.showRare = this.showRare || stars >= 5;
       this.showEpic = this.showEpic || stars >= 6;
     });
-    this.sets = converter.dataClone(this.enumService.getGearSets());
+    this.selectedSet = this.enumService.getGearSets()[0];
+    this.gearType = 'WEAPON';
   }
 
   ionViewWillEnter() {
@@ -95,12 +102,11 @@ export class ForgePage {
   }
 
   toggleSet(set) {
-    let idx = this.sets.indexOf(set);
-    if (idx >= 0) {
-      this.sets.splice(idx, 1);
-    } else {
-      this.sets.push(set);
-    }
+    this.selectedSet = set;
+  }
+
+  toggleGearType(type: string) {
+    this.gearType = type;
   }
 
   openBuildingUpgradeModal() {
@@ -154,7 +160,19 @@ export class ForgePage {
       if (g.rarity === 'RARE' && !this.showRare) { return false; }
       if (g.rarity === 'EPIC' && !this.showEpic) { return false; }
       if (g.rarity === 'LEGENDARY' && !this.showLegendary) { return false; }
-      if (this.sets.indexOf(g.set) === -1) { return false; }
+      if (this.selectedSet !== g.set) { return false; }
+      if (this.gearType !== g.type) { return false; }
+      if (g.jewelSlot4) {
+        if (!this.show4jewels) { return false; }
+      } else if (g.jewelSlot3) {
+        if (!this.show3jewels) { return false; }
+      } else if (g.jewelSlot2) {
+        if (!this.show2jewels) { return false; }
+      } else if (g.jewelSlot1) {
+        if (!this.show1jewels) { return false; }
+      } else {
+        if (!this.show0jewels) { return false; }
+      }
       if (this.qualities.indexOf(g.gearQuality) === -1) { return false; }
       return true;
     });
