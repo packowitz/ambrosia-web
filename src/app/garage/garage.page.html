@@ -35,7 +35,10 @@
     <ion-card-content>
       <div class="scrollable-list">
         <div *ngFor="let slot of slots" class="mr-2">
-          <div class="ion-text-center">Slot {{slot.slot}}</div>
+          <div [class.flex-space-around]="slot.vehicle" [class.flex-center]="!slot.vehicle">
+            Slot {{slot.slot}}
+            <ion-button *ngIf="slot.vehicle" [disabled]="slot.vehicle.missionId || slot.vehicle.upgradeTriggered || slot.vehicle.playerExpeditionId" size="small" fill="clear" color="danger" (click)="deactivate(slot.vehicle)"><ion-icon name="remove-circle-outline"></ion-icon></ion-button>
+          </div>
           <div *ngIf="slot.vehicle" [class.selected-tile]="slot.slot == vehicle?.slot" (click)="selectVehicle(slot.vehicle)" class="pointer">
             <vehicle [vehicle]="slot.vehicle" [showBusy]="true"></vehicle>
           </div>
@@ -54,9 +57,8 @@
           <div>{{baseVehicle.name}}</div>
           <div class="flex-center">
             Lvl {{vehicle.level}} / {{baseVehicle.maxLevel}}
-            <ion-button class="ml-2" *ngIf="canUpgradeVehicle()" size="small" color="success" (click)="openUpgradeVehicleModal()">{{vehicle.upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
+            <ion-button class="ml-2" *ngIf="canUpgradeVehicle()" size="small" fill="outline" color="success" (click)="openUpgradeVehicleModal()">{{vehicle.upgradeTriggered ? 'In progress' : 'Upgrade'}}</ion-button>
           </div>
-          <div class="flex-center">Slot {{vehicle.slot}} <ion-button *ngIf="!vehicle.missionId && !vehicle.upgradeTriggered && !vehicle.playerExpeditionId" size="small" (click)="deactivate()">Deactivate</ion-button></div>
         </div>
       </ion-card-title>
       <ion-card-content>
@@ -152,7 +154,7 @@
                 <div class="full-width flex-space-between">
                   <div>Spare Parts</div>
                 </div></ion-item>
-              <ion-item *ngFor="let part of spareParts">
+              <ion-item *ngFor="let part of getSpareParts()">
                 <ion-img src="/assets/img/vehicles/parts/{{part.type + '_' + part.quality}}.png"></ion-img>
                 <div class="flex-space-between ml-2 full-width">
                   <div class="flex-vert font-small">
@@ -161,7 +163,7 @@
                   </div>
                   <div>
                     <ion-button *ngIf="canUpgradeVehiclePart(part)" [fill]="part.upgradeTriggered ? 'outline' : 'clear'" size="small" (click)="openUpgradeVehiclePartModal(part)"><ion-img class="equip-icon" src="/assets/img/upgrade.png"></ion-img></ion-button>
-                    <ion-button *ngIf="!vehicle.missionId && !vehicle.playerExpeditionId" fill="clear" size="small" (click)="plugin(part)" [disabled]="part.upgradeTriggered"><ion-img class="equip-icon" src="/assets/img/equip.png"></ion-img></ion-button>
+                    <ion-button *ngIf="!vehicle.missionId && !vehicle.playerExpeditionId" fill="clear" size="small" (click)="plugin(part)" [disabled]="part.upgradeTriggered || !canPluginPart(part)"><ion-img class="equip-icon" src="/assets/img/equip.png"></ion-img></ion-button>
                   </div>
                 </div>
               </ion-item>

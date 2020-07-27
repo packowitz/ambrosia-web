@@ -13,7 +13,6 @@ import {VehiclePartUpgradeModal} from './vehiclePartUpgrade.modal';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {StoryService} from '../services/story.service';
 import {BuildingService} from '../services/building.service';
-import {LaboratoryUpgradeInfoModal} from '../laboratory/laboratory-upgrade-info.modal';
 import {GarageUpgradeInfoModal} from './garage-upgrade-info.modal';
 
 export class GarageSlot {
@@ -39,8 +38,6 @@ export class GaragePage {
 
   slots: GarageSlot[] = [];
   vehicle: Vehicle;
-
-  spareParts: VehiclePart[] = [];
 
   constructor(public model: Model,
               private router: Router,
@@ -73,7 +70,6 @@ export class GaragePage {
       this.vehicle = this.vehicle || vehicle;
       slot ++;
     }
-    this.initSpareParts();
   }
 
   openUpgradeModal() {
@@ -108,10 +104,7 @@ export class GaragePage {
         componentProps: {
           partId: part.id
         }
-      }).then(modal => {
-        modal.onDidDismiss().then(() => this.initSpareParts());
-        modal.present();
-      });
+      }).then(modal => modal.present());
     }
   }
 
@@ -123,24 +116,43 @@ export class GaragePage {
     return this.model.progress.vehicleUpgradeLevel > part.level && !!this.propertyService.getUpgradeTime('PART_' + part.quality, part.level + 1);
   }
 
-  reloadVehicle() {
-    this.vehicle = this.model.vehicles.find(v => v.id === this.vehicle.id);
-    this.initSpareParts();
+  canPluginPart(part: VehiclePart): boolean {
+    if (part.level <= this.vehicle.level) {
+      if (part.type === 'ENGINE' || part.type === 'FRAME' || part.type === 'COMPUTER') {
+        return true;
+      }
+      let baseVehicle = this.model.getVehicleBase(this.vehicle.baseVehicleId);
+      if (part.type === baseVehicle.specialPart1) {
+        switch(part.quality) {
+          case 'BASIC': return true;
+          case 'MODERATE': return baseVehicle.specialPart1Quality !== 'BASIC';
+          case 'GOOD': return baseVehicle.specialPart1Quality === 'GOOD';
+        }
+      }
+      if (part.type === baseVehicle.specialPart2) {
+        switch(part.quality) {
+          case 'BASIC': return true;
+          case 'MODERATE': return baseVehicle.specialPart2Quality !== 'BASIC';
+          case 'GOOD': return baseVehicle.specialPart2Quality === 'GOOD';
+        }
+      }
+      if (part.type === baseVehicle.specialPart3) {
+        switch(part.quality) {
+          case 'BASIC': return true;
+          case 'MODERATE': return baseVehicle.specialPart3Quality !== 'BASIC';
+          case 'GOOD': return baseVehicle.specialPart3Quality === 'GOOD';
+        }
+      }
+    }
+    return false;
   }
 
-  initSpareParts() {
-    if (this.vehicle) {
-      this.spareParts = this.model.vehicleParts.filter(p => {
-        if (p.equippedTo == null) {
-          if (p.level <= this.vehicle.level) {
-            return true;
-          }
-        }
-        return false;
-      });
-    } else {
-      this.spareParts = [];
-    }
+  reloadVehicle() {
+    this.vehicle = this.model.vehicles.find(v => v.id === this.vehicle.id);
+  }
+
+  getSpareParts(): VehiclePart[] {
+    return this.model.vehicleParts.filter(p => p.equippedTo == null);
   }
 
   close() {
@@ -153,7 +165,6 @@ export class GaragePage {
 
   selectVehicle(vehicle: Vehicle) {
     this.vehicle = vehicle;
-    this.initSpareParts();
   }
 
   emptySlot(slot: number) {
@@ -174,11 +185,13 @@ export class GaragePage {
     });
   }
 
-  deactivate() {
+  deactivate(vehicle: Vehicle) {
     this.saving = true;
-    this.backendService.deactivateVehicle(this.vehicle).subscribe(() => {
+    this.backendService.deactivateVehicle(vehicle).subscribe(() => {
+      if (vehicle.slot === this.vehicle.slot) {
+        this.vehicle = null;
+      }
       this.saving = false;
-      this.vehicle = null;
       this.initSlots();
     });
   }
