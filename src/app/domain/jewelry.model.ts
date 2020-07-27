@@ -16,4 +16,7 @@ export class Jewelry {
     constructor(type: string) {
         this.type = type;
     }
+
+    // transient
+    expanded = false;
 }

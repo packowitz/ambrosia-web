@@ -12,6 +12,7 @@ import {JewelUpgradeModal} from './jewelUpgrade.modal';
 import {StoryService} from '../services/story.service';
 import {BuildingService} from '../services/building.service';
 import {JewelryUpgradeInfoModal} from './jewelry-upgrade-info.modal';
+import {Jewelry} from '../domain/jewelry.model';
 
 @Component({
   selector: 'jewelry',
@@ -45,6 +46,7 @@ export class JewelryPage {
     if (this.storyService.storyUnknown(this.enterStory)) {
       this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
     }
+    this.jewelryService.getAllJewelries().forEach(j => j.expanded = false);
   }
 
   close() {
@@ -53,6 +55,19 @@ export class JewelryPage {
 
   showUpgradeInfo() {
     this.modalCtrl.create({component: JewelryUpgradeInfoModal}).then(m => m.present() );
+  }
+
+  hasJewelsToMerge(jewelry: Jewelry): boolean {
+    let jewelUpgradeLevel = this.model.progress.maxJewelUpgradingLevel;
+    return (jewelry.lvl1 >= 4 && jewelUpgradeLevel >= 1) ||
+        (jewelry.lvl2 >= 4 && jewelUpgradeLevel >= 2) ||
+        (jewelry.lvl3 >= 4 && jewelUpgradeLevel >= 3) ||
+        (jewelry.lvl4 >= 4 && jewelUpgradeLevel >= 4) ||
+        (jewelry.lvl5 >= 4 && jewelUpgradeLevel >= 5) ||
+        (jewelry.lvl6 >= 4 && jewelUpgradeLevel >= 6) ||
+        (jewelry.lvl7 >= 4 && jewelUpgradeLevel >= 7) ||
+        (jewelry.lvl8 >= 4 && jewelUpgradeLevel >= 8) ||
+        (jewelry.lvl9 >= 4 && jewelUpgradeLevel >= 9);
   }
 
   openUpgradeModal() {

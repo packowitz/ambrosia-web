@@ -37,11 +37,20 @@
   </ion-card>
   <ion-card *ngFor="let jewelry of jewelryService.getAllJewelries()">
     <ion-card-header>
-      <ion-card-title>{{converter.readableIdentifier(jewelry.type)}}</ion-card-title>
+      <ion-card-title>
+        <div class="full-width flex-space-between pointer" (click)="jewelry.expanded = !jewelry.expanded">
+          <div class="position-relative">
+            {{converter.readableIdentifier(jewelry.type)}}
+            <div *ngIf="hasJewelsToMerge(jewelry)" class="upgrade-bubble upgrade-possible">!</div>
+          </div>
+          <ion-icon *ngIf="!jewelry.expanded" name="chevron-forward-circle-outline"></ion-icon>
+          <ion-icon *ngIf="jewelry.expanded" name="chevron-down-circle-outline"></ion-icon>
+        </div>
+      </ion-card-title>
     </ion-card-header>
-    <ion-card-content>
-      <div class="flex-space-between scrollable-vert">
-        <div class="flex-vert-center flex-no-shrink" *ngFor="let level of levels">
+    <ion-card-content *ngIf="jewelry.expanded">
+      <div class="flex-space-between flex-wrap">
+        <div class="flex-vert-center flex-no-shrink mb-3" *ngFor="let level of levels">
           Level {{level}}
           <ion-button (click)="openJewelUpgradeModal(jewelry.type, level)" size="small" [fill]="jewelry['lvl' + level] < 4 || model.progress.maxJewelUpgradingLevel < level ? 'clear' : 'outline'" [color]="jewelry['lvl' + level] < 4 || model.progress.maxJewelUpgradingLevel < level ? 'dark' : 'success'" [disabled]="jewelry['lvl' + level] < 4 || model.progress.maxJewelUpgradingLevel < level">
               {{jewelry['lvl' + level] > 0 ? jewelry['lvl' + level] + 'x ' : ''}}<img src="assets/img/jewels/{{jewelry.slot}}_{{level}}.png" class="jewel-icon">
