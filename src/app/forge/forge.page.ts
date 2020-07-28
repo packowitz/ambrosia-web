@@ -106,7 +106,11 @@ export class ForgePage {
   }
 
   toggleGearType(type: string) {
-    this.gearType = type;
+    if (this.gearType === type) {
+      this.gearType = null;
+    } else {
+      this.gearType = type;
+    }
   }
 
   openBuildingUpgradeModal() {
@@ -161,7 +165,7 @@ export class ForgePage {
       if (g.rarity === 'EPIC' && !this.showEpic) { return false; }
       if (g.rarity === 'LEGENDARY' && !this.showLegendary) { return false; }
       if (this.selectedSet !== g.set) { return false; }
-      if (this.gearType !== g.type) { return false; }
+      if (this.gearType && this.gearType !== g.type) { return false; }
       if (g.jewelSlot4) {
         if (!this.show4jewels) { return false; }
       } else if (g.jewelSlot3) {
