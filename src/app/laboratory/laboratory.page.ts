@@ -53,6 +53,10 @@ export class LaboratoryPage {
     this.modalCtrl.create({component: LaboratoryUpgradeInfoModal}).then(m => m.present() );
   }
 
+  showHeroOverview() {
+    this.router.navigateByUrl('/laboratory/heroes');
+  }
+
   info(text: string) {
     this.alertCtrl.create({
       subHeader: text

@@ -667,4 +667,8 @@ export class BackendService {
     buyMerchantItem(item: MerchantPlayerItem): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/bazaar/merchant/buy/' + item.id, null);
     }
+
+    getKnownHeroIds(): Observable<number[]> {
+        return this.http.get<number[]>(API_URL + '/hero/known');
+    }
 }

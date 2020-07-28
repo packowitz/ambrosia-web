@@ -34,6 +34,15 @@ export class ConverterService {
         }
     }
 
+    colorToSort(color: string): number {
+        switch (color) {
+            case 'RED': return 1;
+            case 'GREEN': return 2;
+            case 'BLUE': return 3;
+            default: return 99;
+        }
+    }
+
     readableIdentifier(name: string): string {
         return name.split('_').map((str) => {
             str = str.toLowerCase();

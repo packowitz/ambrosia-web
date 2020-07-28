@@ -6,6 +6,8 @@ import {RouterModule} from '@angular/router';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
 import {LaboratoryPage} from './laboratory.page';
 import {LaboratoryUpgradeInfoModal} from './laboratory-upgrade-info.modal';
+import {HeroOverviewPage} from './hero-overview.page';
+import {HeroOverviewModal} from './hero-overview.modal';
 
 @NgModule({
     imports: [
@@ -17,11 +19,15 @@ import {LaboratoryUpgradeInfoModal} from './laboratory-upgrade-info.modal';
             {
                 path: '',
                 component: LaboratoryPage
+            },
+            {
+                path: 'heroes',
+                component: HeroOverviewPage
             }
         ])
     ],
-    declarations: [LaboratoryPage, LaboratoryUpgradeInfoModal],
-    entryComponents: [LaboratoryUpgradeInfoModal]
+    declarations: [LaboratoryPage, LaboratoryUpgradeInfoModal, HeroOverviewPage, HeroOverviewModal],
+    entryComponents: [LaboratoryUpgradeInfoModal, HeroOverviewModal]
 })
 export class LaboratoryModule {
 }

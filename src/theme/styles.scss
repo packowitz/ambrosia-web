@@ -110,6 +110,10 @@
   border: 2px solid #2a40dc;
 }
 
+.border-selected {
+  border: 2px solid #dcb717;
+}
+
 .border-neutral {
   border: 2px solid #9c9696;
 }
@@ -531,6 +535,15 @@ ion-row.table-row {
   }
 }
 
+.greyed-out {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .skill_icon_tile {
   position: relative;
 
@@ -566,10 +579,6 @@ ion-row.table-row {
 .skill_icon {
   width: 40px;
   height: 40px;
-}
-
-.skill_selected {
-  border: 2px solid #dcb717;
 }
 
 .buff_icon_large {

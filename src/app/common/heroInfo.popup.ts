@@ -87,7 +87,7 @@ import {Model} from '../services/model.service';
 
           <div *ngIf="tab == 'skills'" class="font-small">
             <div class="flex-start">
-              <div *ngFor="let heroSkill of getSkills()" (click)="skill = heroSkill" class="skill-tile flex-vert-center pointer mr-2" [class.selected-skill]="heroSkill == skill">
+              <div *ngFor="let heroSkill of getSkills()" (click)="skill = heroSkill" class="skill-tile flex-vert-center pointer mr-2" [class.border-selected]="heroSkill == skill">
                 <ion-img [src]="'assets/icon/skills/' + heroSkill.icon + '.png'" class="skill_icon"></ion-img>
                 <div *ngIf="getSkillLevel(heroSkill) > 0" class="skill-level">{{getSkillLevel(heroSkill)}}</div>
                 <div *ngIf="getSkillLevel(heroSkill) == 0" class="locked"><ion-icon name="lock-closed"></ion-icon></div>
