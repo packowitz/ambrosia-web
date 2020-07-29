@@ -1,9 +1,7 @@
-import {Component, Input} from '@angular/core';
-import {AlertController, ModalController} from '@ionic/angular';
+import {Component} from '@angular/core';
+import {ModalController} from '@ionic/angular';
 import {Model} from '../services/model.service';
-import {BackendService} from '../services/backend.service';
 import {PropertyService} from '../services/property.service';
-import {DynamicProperty} from '../domain/property.model';
 import {ConverterService} from '../services/converter.service';
 import {Building} from '../domain/building.model';
 import {BuildingService} from '../services/building.service';

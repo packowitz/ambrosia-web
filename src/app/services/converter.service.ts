@@ -60,7 +60,8 @@ export class ConverterService {
         return amount + '';
     }
 
-    time(sec: number): string {
+    time(secInput: number): string {
+        let sec = Math.round(secInput);
         if (sec <= 0) {
             return '0:00';
         }
@@ -77,7 +78,8 @@ export class ConverterService {
         return hours + ':' + (mins < 10 ? '0' : '') + mins;
     }
 
-    timeWithUnit(sec: number): string {
+    timeWithUnit(secInput: number): string {
+        let sec = Math.round(secInput);
         if (sec <= 0) {
             return '0s';
         }

@@ -33,7 +33,7 @@ import {Jewelry} from '../domain/jewelry.model';
                 <div *ngIf="hasEnoughResources">Upgrade costs</div>
                 <div *ngIf="!hasEnoughResources">Insufficient resources</div>
                 <div class="flex-center">
-                  <div [class.color-red]="!getJewelry()['lvl' + jewelLevel] < 4">{{getJewelry()['lvl' + jewelLevel]}}</div>/4<ion-img src="assets/img/jewels/{{getJewelry().slot}}_{{jewelLevel}}.png" class="jewel-icon"></ion-img>
+                  <div [class.color-red]="getJewelry()['lvl' + jewelLevel] < 4">{{getJewelry()['lvl' + jewelLevel]}}</div>/4<ion-img src="assets/img/jewels/{{getJewelry().slot}}_{{jewelLevel}}.png" class="jewel-icon"></ion-img>
                 </div>
                 <div *ngFor="let cost of upgradeCosts" class="flex">
                   <div [class.color-red]="!model.hasEnoughResources(cost.resourceType, cost.value1)">{{model.getResourceAmount(cost.resourceType)}}</div>/{{cost.value1}}<ion-img src="assets/icon/resources/{{cost.resourceType}}.png" class="resource-icon"></ion-img>
@@ -41,7 +41,8 @@ import {Jewelry} from '../domain/jewelry.model';
               </div>
               <div class="mt-2 flex-center">
                 <ion-button color="danger" fill="outline" (click)="closeModal()">Close</ion-button>
-                <ion-button [disabled]="!hasEnoughResources || saving || model.upgrades.length >= model.progress.builderQueueLength" (click)="performUpgrade()">Upgrade {{converter.readableIdentifier(jewelType)}} to level {{jewelLevel + 1}}</ion-button>
+                <ion-button [disabled]="!hasEnoughResources || saving || model.upgrades.length >= model.progress.builderQueueLength"
+                            (click)="performUpgrade()">Upgrade ({{converter.timeWithUnit(upgradeSeconds)}})</ion-button>
               </div>
             </div>
           </div>
