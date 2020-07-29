@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
-import {ExpeditionBase} from '../domain/expeditionBase.model';
 import {OddJobBase} from '../domain/oddJobBase.model';
 
 @Component({

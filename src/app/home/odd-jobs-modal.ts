@@ -1,10 +1,6 @@
 import {Component} from '@angular/core';
 import {AlertController, ModalController, NavParams} from '@ionic/angular';
 import {Model} from '../services/model.service';
-import {Vehicle} from '../domain/vehicle.model';
-import {Mission} from '../domain/mission.model';
-import {Hero} from '../domain/hero.model';
-import {OfflineBattle} from '../domain/offlineBattle.model';
 import {BackendService} from '../services/backend.service';
 import {OddJob} from '../domain/oddJob.model';
 import {PropertyService} from '../services/property.service';
@@ -168,7 +164,8 @@ export class OddJobsModal {
             case 'SPEND_COGWHEELS': return 'Spend ' + number + ' Cogwheels for battles in dungeons.';
             case 'SPEND_TOKENS': return 'Spend ' + number + ' Tokens in the arena';
             case 'FINISH_MISSIONS': return 'Finish ' + number + ' mission battles';
-            case 'OPEN_CHESTS': return 'Open ' + number + ' chests anywhere on the map';
+            case 'OPEN_CHESTS': return 'Open ' + number + ' chests anywhere on any map';
+            case 'DISCOVER_TILES': return 'Discover ' + number + ' tiles on any map';
             case 'UPGRADE_BUILDING': return 'Finish ' + number + ' building upgrade' + (number > 1 ? 's' : '');
             case 'UPGRADE_VEHICLE': return 'Finish ' + number + ' vehicle upgrade' + (number > 1 ? 's' : '');
             case 'UPGRADE_PARTS': return 'Finish ' + number + ' vehicle part upgrade' + (number > 1 ? 's' : '');
@@ -179,6 +176,7 @@ export class OddJobsModal {
             case 'LOOT_GEAR': return 'Loot ' + number + ' gear item' + (number > 1 ? 's' : '') + ' from battles or chests';
             case 'LOOT_PARTS': return 'Loot ' + number + ' vehicle part' + (number > 1 ? 's' : '') + ' from battles or chests';
             case 'LOOT_COINS': return 'Loot ' + number + ' coin' + (number > 1 ? 's' : '') + ' from battles or chests';
+            case 'LOOT_JEWELS': return 'Loot ' + number + ' jewels' + (number > 1 ? 's' : '') + ' from battles or chests';
             default: return 'Unknown job ' + jobType;
         }
     }
