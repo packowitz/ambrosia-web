@@ -61,6 +61,11 @@ const routes: Routes = [
         loadChildren: './merchant/merchant.module#MerchantPageModule',
         canActivate: [AdminGuard]
     },
+    {
+        path: 'achievements',
+        loadChildren: './achievements/achievements.module#AchievementsPageModule',
+        canActivate: [AdminGuard]
+    },
     {path: 'account', loadChildren: './account/account.module#AccountPageModule'},
     {path: 'arena', loadChildren: './arena/arena.module#ArenaPageModule'},
     {path: 'barracks', loadChildren: './barracks/barracks.module#BarracksModule'},

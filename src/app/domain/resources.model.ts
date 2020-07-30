@@ -35,4 +35,8 @@ export class Resources {
     uncommonGenome: number;
     rareGenome: number;
     epicGenome: number;
+    woodenKeys: number;
+    bronzeKeys: number;
+    silverKeys: number;
+    goldenKeys: number;
 }

@@ -10,4 +10,28 @@ export class Achievements {
     dailyRewardsClaimed: number;
     academyXpGained: number;
     academyAscGained: number;
+    steamUsed: number;
+    cogwheelsUsed: number;
+    tokensUsed: number;
+    coinsUsed: number;
+    rubiesUsed: number;
+    metalUsed: number;
+    ironUsed: number;
+    steelUsed: number;
+    woodUsed: number;
+    brownCoalUsed: number;
+    blackCoalUsed: number;
+    merchantItemsBought: number;
+    mapTilesDiscovered: number;
+    gearModified: number;
+    jewelsMerged: number;
+    buildingsUpgradesDone: number;
+    vehiclesUpgradesDone: number;
+    vehiclePartUpgradesDone: number;
+    buildingMinLevel: number;
+    woodenKeysCollected: number;
+    bronzeKeysCollected: number;
+    silverKeysCollected: number;
+    goldenKeysCollected: number;
+    chestsOpened: number;
 }

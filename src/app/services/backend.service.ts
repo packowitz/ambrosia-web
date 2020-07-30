@@ -43,6 +43,7 @@ import {DailyActivity} from '../domain/dailyActivity.model';
 import {Achievements} from '../domain/achievements.model';
 import {MerchantItem} from '../domain/merchantItem.model';
 import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
+import {AchievementReward} from '../domain/achievementReward.model';
 
 export class Looted {
     type: string;
@@ -90,6 +91,8 @@ export class PlayerActionResponse {
     dailyActivity?: DailyActivity;
     merchantItems?: MerchantPlayerItem[];
     boughtMerchantItem?: MerchantPlayerItem;
+    achievementRewards?: AchievementReward[];
+    claimedAchievementRewardId?: number;
 }
 
 @Injectable({
@@ -670,5 +673,13 @@ export class BackendService {
 
     getKnownHeroIds(): Observable<number[]> {
         return this.http.get<number[]>(API_URL + '/hero/known');
+    }
+
+    loadAllAchievementRewards(): Observable<AchievementReward[]> {
+        return this.http.get<AchievementReward[]>(API_URL + '/admin/achievement_reward');
+    }
+
+    saveAchievementReward(reward: AchievementReward): Observable<AchievementReward> {
+        return this.http.post<AchievementReward>(API_URL + '/admin/achievement_reward', reward);
     }
 }

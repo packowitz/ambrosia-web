@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Achievements
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+<ion-content *ngIf="model.allAchievementRewards && model.lootBoxes">
+  <ion-list>
+    <div *ngFor="let reward of model.allAchievementRewards" class="mt-2">
+      <div class="flex-space-between">
+        <div class="flex-grow">
+          <div class="flex-space-between">
+            #{{reward.id}}
+            <ion-item lines="none">
+              <ion-label>Name</ion-label>
+              <ion-input [(ngModel)]="reward.name"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>Starter</ion-label>
+              <ion-checkbox slot="start" [(ngModel)]="reward.starter"></ion-checkbox>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">To achieve</ion-label>
+              <ion-input [(ngModel)]="reward.achievementAmount" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Type</ion-label>
+              <ion-select [(ngModel)]="reward.achievementType">
+                <ion-select-option *ngFor="let type of enumService.getAchievementRewardTypes()" [value]="type">{{type}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">FollowUp</ion-label>
+              <ion-input [(ngModel)]="reward.followUpReward" type="number" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Loot</ion-label>
+              <ion-select [(ngModel)]="reward.lootBoxId">
+                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+        <ion-button size="small" color="success" (click)="saveReward(reward)" [disabled]="achievementRewardIncomplete(reward)">Update</ion-button>
+      </div>
+    </div>
+    <div class="mt-2">
+      <div class="flex-space-between">
+        <div class="flex-grow">
+          <div class="flex-space-between">
+            <ion-item lines="none">
+              <ion-label>Name</ion-label>
+              <ion-input [(ngModel)]="newAchievementReward.name"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>Starter</ion-label>
+              <ion-checkbox slot="start" [(ngModel)]="newAchievementReward.starter"></ion-checkbox>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">To achieve</ion-label>
+              <ion-input [(ngModel)]="newAchievementReward.achievementAmount" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Type</ion-label>
+              <ion-select [(ngModel)]="newAchievementReward.achievementType" placeholder="select">
+                <ion-select-option *ngFor="let type of enumService.getAchievementRewardTypes()" [value]="type">{{type}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">FollowUp</ion-label>
+              <ion-input [(ngModel)]="newAchievementReward.followUpReward" type="number" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Loot</ion-label>
+              <ion-select [(ngModel)]="newAchievementReward.lootBoxId" placeholder="select">
+                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+        <ion-button size="small" color="success" (click)="saveReward(newAchievementReward)" [disabled]="achievementRewardIncomplete(newAchievementReward)">Create</ion-button>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>

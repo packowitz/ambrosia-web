@@ -35,6 +35,7 @@ import {DailyActivity} from '../domain/dailyActivity.model';
 import {Achievements} from '../domain/achievements.model';
 import {MerchantItem} from '../domain/merchantItem.model';
 import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
+import {AchievementReward} from '../domain/achievementReward.model';
 
 @Injectable({
     providedIn: 'root'
@@ -79,6 +80,8 @@ export class Model {
     merchantItems: MerchantItem[];
     dailyActivity: DailyActivity;
     merchantPlayerItems: MerchantPlayerItem[];
+    allAchievementRewards: AchievementReward[];
+    achievementRewards: AchievementReward[];
 
     interval: number;
     lastIntervalTimestamp: number = Date.now();
@@ -555,6 +558,19 @@ export class Model {
         if (data.looted) {
             this.looted = data.looted;
         }
+        if (data.achievementRewards) {
+            if (this.achievementRewards) {
+                data.achievementRewards.forEach(a => this.updateAchievementReward(a));
+            } else {
+                this.achievementRewards = data.achievementRewards.sort((a, b) => a.name > b.name ? -1 : 1 );
+            }
+        }
+        if (data.claimedAchievementRewardId) {
+            let idx = this.achievementRewards.findIndex(a => a.id === data.claimedAchievementRewardId);
+            if (idx >= 0) {
+                this.achievementRewards.splice(idx, 1);
+            }
+        }
     }
 
     updateBaseHero(hero?: HeroBase) {
@@ -793,6 +809,18 @@ export class Model {
                 this.oddJobs[idx] = oddJob;
             } else {
                 this.oddJobs.push(oddJob);
+            }
+        }
+    }
+
+    updateAchievementReward(reward?: AchievementReward) {
+        if (reward) {
+            let idx = this.achievementRewards.findIndex(a => a.id === a.id);
+            if (idx >= 0) {
+                this.achievementRewards[idx] = reward;
+            } else {
+                this.achievementRewards.push(reward);
+                this.achievementRewards = this.achievementRewards.sort((a, b) => a.name > b.name ? -1 : 1 );
             }
         }
     }

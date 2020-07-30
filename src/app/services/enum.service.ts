@@ -47,6 +47,7 @@ export class Enums {
     progressStats: string[];
     oddJobTypes: string[];
     trades: Trade[];
+    achievementRewardTypes: string[];
 }
 
 @Injectable({
@@ -193,5 +194,9 @@ export class EnumService {
 
     getTrades(): Trade[] {
         return this.enums.trades;
+    }
+
+    getAchievementRewardTypes(): string[] {
+        return this.enums.achievementRewardTypes;
     }
 }

@@ -102,6 +102,11 @@ export class AppComponent {
             icon: 'apple'
         },
         {
+            title: 'Achievements',
+            url: '/achievements',
+            icon: 'trophy'
+        },
+        {
             title: 'Ongoing Battle',
             url: '/battle',
             icon: 'dripping-sword'
