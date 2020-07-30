@@ -775,8 +775,8 @@ export class Model {
                 this.upgrades[idx] = upgrade;
             } else {
                 this.upgrades.push(upgrade);
-                this.upgrades = this.upgrades.sort((a, b) => a.position - b.position);
             }
+            this.upgrades = this.upgrades.sort((a, b) => a.position - b.position);
         }
     }
 
