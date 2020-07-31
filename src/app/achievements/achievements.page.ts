@@ -4,6 +4,10 @@ import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
 import {OddJobBase} from '../domain/oddJobBase.model';
 import {AchievementReward} from '../domain/achievementReward.model';
+import {PopoverController} from '@ionic/angular';
+import {LootSelectionPopover} from '../common/loot-selection.popover';
+import {LootBox} from '../domain/lootBox.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'achievements-page',
@@ -17,7 +21,9 @@ export class AchievementsPage implements OnInit {
 
   constructor(private backendService: BackendService,
               public model: Model,
-              public enumService: EnumService) {
+              public enumService: EnumService,
+              private popoverCtrl: PopoverController,
+              private router: Router) {
     this.initNewAchievementReward();
   }
 
@@ -32,6 +38,32 @@ export class AchievementsPage implements OnInit {
         this.model.lootBoxes = data;
       });
     }
+  }
+
+  lootBoxSelection(reward: AchievementReward) {
+    this.popoverCtrl.create({
+      component: LootSelectionPopover,
+      componentProps: {
+        searchPrefill: 'Ach',
+        selected: reward.lootBoxId
+      }
+    }).then(p => {
+      p.onDidDismiss().then(data => {
+        if (data && data.data && data.data.id) {
+          reward.lootBoxId = data.data.id;
+        }
+      });
+      p.present();
+    });
+  }
+
+  lootBoxName(id: number): string {
+    let box = this.model.lootBoxes.find(l => l.id === id);
+    return box ? box.name : 'unknown';
+  }
+
+  gotoLootBox(lootBoxId: number) {
+    this.router.navigateByUrl('/loot/box/' + lootBoxId);
   }
 
   initNewAchievementReward() {

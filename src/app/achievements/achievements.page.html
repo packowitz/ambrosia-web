@@ -40,10 +40,9 @@
               <ion-input [(ngModel)]="reward.followUpReward" type="number" class="width-60"></ion-input>
             </ion-item>
             <ion-item lines="none">
-              <ion-label position="floating">Loot</ion-label>
-              <ion-select [(ngModel)]="reward.lootBoxId">
-                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
-              </ion-select>
+              <ion-icon name="pencil" class="pointer mr-05" (click)="lootBoxSelection(reward)"></ion-icon>
+              <ion-icon name="return-up-forward" class="pointer mr-05" (click)="gotoLootBox(reward.lootBoxId)"></ion-icon>
+              {{lootBoxName(reward.lootBoxId)}}
             </ion-item>
           </div>
         </div>
@@ -76,11 +75,13 @@
               <ion-label position="floating">FollowUp</ion-label>
               <ion-input [(ngModel)]="newAchievementReward.followUpReward" type="number" class="width-60"></ion-input>
             </ion-item>
-            <ion-item lines="none">
-              <ion-label position="floating">Loot</ion-label>
-              <ion-select [(ngModel)]="newAchievementReward.lootBoxId" placeholder="select">
-                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
-              </ion-select>
+            <ion-item lines="none" *ngIf="!newAchievementReward.lootBoxId" class="pointer" (click)="lootBoxSelection(newAchievementReward)">
+              Loot
+            </ion-item>
+            <ion-item lines="none" *ngIf="newAchievementReward.lootBoxId">
+              <ion-icon name="pencil" class="pointer mr-05" (click)="lootBoxSelection(newAchievementReward)"></ion-icon>
+              <ion-icon name="return-up-forward" class="pointer mr-05" (click)="gotoLootBox(newAchievementReward.lootBoxId)"></ion-icon>
+              {{lootBoxName(newAchievementReward.lootBoxId)}}
             </ion-item>
           </div>
         </div>

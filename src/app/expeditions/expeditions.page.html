@@ -39,10 +39,9 @@
               </ion-select>
             </ion-item>
             <ion-item lines="none">
-              <ion-label position="floating">Loot</ion-label>
-              <ion-select [(ngModel)]="expedition.lootBoxId">
-                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
-              </ion-select>
+              <ion-icon name="pencil" class="pointer mr-05" (click)="lootBoxSelection(expedition)"></ion-icon>
+              <ion-icon name="return-up-forward" class="pointer mr-05" (click)="gotoLootBox(expedition.lootBoxId)"></ion-icon>
+              {{lootBoxName(expedition.lootBoxId)}}
             </ion-item>
           </div>
           <ion-item>
@@ -79,11 +78,13 @@
                 <ion-select-option *ngFor="let rarity of enumService.getRarities()" [value]="rarity">{{rarity}}</ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-item lines="none">
-              <ion-label position="floating">Loot</ion-label>
-              <ion-select [(ngModel)]="newExpedition.lootBoxId" placeholder="select">
-                <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
-              </ion-select>
+            <ion-item lines="none" *ngIf="!newExpedition.lootBoxId" class="pointer" (click)="lootBoxSelection(newExpedition)">
+              Loot
+            </ion-item>
+            <ion-item lines="none" *ngIf="newExpedition.lootBoxId">
+              <ion-icon name="pencil" class="pointer mr-05" (click)="lootBoxSelection(newExpedition)"></ion-icon>
+              <ion-icon name="return-up-forward" class="pointer mr-05" (click)="gotoLootBox(newExpedition.lootBoxId)"></ion-icon>
+              {{lootBoxName(newExpedition.lootBoxId)}}
             </ion-item>
           </div>
           <ion-item>

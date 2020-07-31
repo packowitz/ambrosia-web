@@ -3,6 +3,10 @@ import {BackendService} from '../services/backend.service';
 import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
 import {ExpeditionBase} from '../domain/expeditionBase.model';
+import {AchievementReward} from '../domain/achievementReward.model';
+import {LootSelectionPopover} from '../common/loot-selection.popover';
+import {PopoverController} from '@ionic/angular';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'expeditions',
@@ -16,7 +20,9 @@ export class ExpeditionsPage implements OnInit {
 
   constructor(private backendService: BackendService,
               public model: Model,
-              public enumService: EnumService) {
+              public enumService: EnumService,
+              private popoverCtrl: PopoverController,
+              private router: Router) {
     this.initNewExpedition();
   }
 
@@ -31,6 +37,32 @@ export class ExpeditionsPage implements OnInit {
         this.model.lootBoxes = data;
       });
     }
+  }
+
+  lootBoxSelection(expedition: ExpeditionBase) {
+    this.popoverCtrl.create({
+      component: LootSelectionPopover,
+      componentProps: {
+        searchPrefill: 'Exp',
+        selected: expedition.lootBoxId
+      }
+    }).then(p => {
+      p.onDidDismiss().then(data => {
+        if (data && data.data && data.data.id) {
+          expedition.lootBoxId = data.data.id;
+        }
+      });
+      p.present();
+    });
+  }
+
+  lootBoxName(id: number): string {
+    let box = this.model.lootBoxes.find(l => l.id === id);
+    return box ? box.name : 'unknown';
+  }
+
+  gotoLootBox(lootBoxId: number) {
+    this.router.navigateByUrl('/loot/box/' + lootBoxId);
   }
 
   initNewExpedition() {

@@ -19,13 +19,15 @@ import {SetsInfoModal} from './setsInfo.modal';
 import {GearInfoModal} from './gearInfo.modal';
 import {BuffInfoModal} from './buffInfo.modal';
 import {StoryPopover} from './story.popover';
+import {LootSelectionPopover} from './loot-selection.popover';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
         BuildingUpgradeModal,
         GearIcon, GearListItem, GearModal, GearJewelSlot, GearStat, GearInfoModal, SetsInfoModal,
         HeroIconDirective, HeroInfoPopup, BuffInfoModal,
-        LootedDirective, LootItemDirective,
+        LootedDirective, LootItemDirective, LootSelectionPopover,
         StoryPopover,
         UpgradeItemDirective, UpgradeModal,
         VehicleDirective, VehicleSelectionPopover
@@ -34,16 +36,17 @@ import {StoryPopover} from './story.popover';
         BuildingUpgradeModal,
         GearIcon, GearListItem, GearModal, GearJewelSlot, GearStat, GearInfoModal, SetsInfoModal,
         HeroIconDirective, HeroInfoPopup, BuffInfoModal,
-        LootedDirective, LootItemDirective,
+        LootedDirective, LootItemDirective, LootSelectionPopover,
         StoryPopover,
         UpgradeItemDirective, UpgradeModal,
         VehicleDirective, VehicleSelectionPopover
     ],
     imports: [
         CommonModule,
-        IonicModule
+        IonicModule,
+        FormsModule
     ],
-    entryComponents: [BuildingUpgradeModal, GearModal, HeroInfoPopup, BuffInfoModal, UpgradeModal, VehicleSelectionPopover, GearInfoModal, SetsInfoModal, StoryPopover]
+    entryComponents: [BuildingUpgradeModal, GearModal, HeroInfoPopup, BuffInfoModal, UpgradeModal, VehicleSelectionPopover, GearInfoModal, SetsInfoModal, StoryPopover, LootSelectionPopover]
 })
 export class CommonAmbrosiaModule {
 }
