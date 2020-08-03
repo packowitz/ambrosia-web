@@ -43,11 +43,15 @@ export class Enums {
     vehicleStats: string[];
     lootItemTypes: string[];
     modifications: string[];
-    storyTriggers: string[];
     progressStats: string[];
     oddJobTypes: string[];
     trades: Trade[];
     achievementRewardTypes: string[];
+}
+
+export class AdminEnums {
+    storyTriggers: string[];
+    mapTypes: string[];
 }
 
 @Injectable({
@@ -57,11 +61,16 @@ export class EnumService {
 
     enumsFailed = false;
     enums: Enums;
+    adminEnums: AdminEnums;
 
     constructor(private http: HttpClient) {}
 
     loadEnums(): Observable<Enums> {
         return this.http.get<Enums>(API_URL + '/enums');
+    }
+
+    loadAdminEnums(): Observable<AdminEnums> {
+        return this.http.get<AdminEnums>(API_URL + '/enums/admin');
     }
 
     getColors(): string[] {
@@ -178,10 +187,6 @@ export class EnumService {
 
     getModifications(): string[] {
         return this.enums.modifications;
-    }
-
-    getStoryTriggerns(): string[] {
-        return this.enums.storyTriggers;
     }
 
     getProgressStats(): string[] {

@@ -3,6 +3,7 @@ import {MapTile} from './mapTile.model';
 export class Map {
     id: number;
     name: string;
+    type: string;
     startingMap: boolean;
     storyTrigger: string;
     discoverySteamCost: number;

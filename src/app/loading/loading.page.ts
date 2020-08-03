@@ -4,7 +4,7 @@ import {AlertController} from '@ionic/angular';
 import {Model} from '../services/model.service';
 import {Router} from '@angular/router';
 import {PropertyService} from '../services/property.service';
-import {Enums, EnumService} from '../services/enum.service';
+import {AdminEnums, Enums, EnumService} from '../services/enum.service';
 import {LoadingState} from '../services/loadingState.service';
 import {environment} from '../../environments/environment';
 import {JewelryService} from '../services/jewelry.service';
@@ -46,6 +46,8 @@ export class LoadingPage {
       this.loadServiceAccount();
     } else if (!this.loadingState.enumsLoaded) {
       this.loadEnums();
+    } else if (this.model.player.admin && !this.loadingState.adminEnumsLoaded) {
+      this.loadAdminEnums();
     } else {
       let path = localStorage.getItem(environment.requestedPage);
       if (!path.startsWith('/battle') && this.model.ongoingBattle) {
@@ -75,6 +77,19 @@ export class LoadingPage {
     }, error => {
       this.alertCtrl.create({
         subHeader: 'Failed to load static content from ambrosia server. Please reload page.'
+      }).then(alert => alert.present());
+    });
+  }
+
+  loadAdminEnums() {
+    this.status = 'Loading admin static content';
+    this.enumService.loadAdminEnums().subscribe((data: AdminEnums) => {
+      this.enumService.adminEnums = data;
+      this.loadingState.adminEnumsLoaded = true;
+      this.initApp();
+    }, error => {
+      this.alertCtrl.create({
+        subHeader: 'Failed to load admin static content from ambrosia server. Please reload page.'
       }).then(alert => alert.present());
     });
   }

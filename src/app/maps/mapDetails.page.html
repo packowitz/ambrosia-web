@@ -25,14 +25,20 @@
           <ion-input [(ngModel)]="map.name"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Discovery costs <i class="ra ra-site"></i></ion-label>
+          <ion-label>Discovery costs</ion-label>
           <ion-input type="number" [(ngModel)]="map.discoverySteamCost"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Type</ion-label>
+          <ion-select [(ngModel)]="map.type">
+            <ion-select-option *ngFor="let type of enumService.adminEnums.mapTypes" [value]="type">{{converter.readableIdentifier(type)}}</ion-select-option>
+          </ion-select>
         </ion-item>
         <ion-item>
           <ion-label>Story</ion-label>
           <ion-select [(ngModel)]="map.storyTrigger">
             <ion-select-option [value]="null">NONE</ion-select-option>
-            <ion-select-option *ngFor="let storyTrigger of enumService.getStoryTriggerns()" [value]="storyTrigger">{{converter.readableIdentifier(storyTrigger)}}</ion-select-option>
+            <ion-select-option *ngFor="let storyTrigger of enumService.adminEnums.storyTriggers" [value]="storyTrigger">{{converter.readableIdentifier(storyTrigger)}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>

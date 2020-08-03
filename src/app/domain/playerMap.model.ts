@@ -3,6 +3,7 @@ import {PlayerMapTile} from './playerMapTile.model';
 export class PlayerMap {
     mapId: number;
     name: string;
+    type: string;
     background: string;
     discoverySteamCost: number;
     storyTrigger: string;

@@ -11,4 +11,5 @@ export class LoadingState {
     serviceAccountLoaded = false;
     serviceAccountsLoaded = false;
     enumsLoaded = false;
+    adminEnumsLoaded = false;
 }

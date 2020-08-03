@@ -38,7 +38,7 @@
           <div class="flex-start">
             <ion-button size="small" color="success" *ngIf="stories" (click)="saveStoryLine()" class="mr-2">save</ion-button>
             <ion-select [(ngModel)]="storyTrigger" (ionChange)="storyTriggerChanged()" class="font-small" placeholder="Select">
-              <ion-select-option *ngFor="let trigger of enumService.getStoryTriggerns()">{{trigger}}</ion-select-option>
+              <ion-select-option *ngFor="let trigger of enumService.adminEnums.storyTriggers">{{trigger}}</ion-select-option>
             </ion-select>
           </div>
         </div>
