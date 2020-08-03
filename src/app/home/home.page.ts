@@ -390,11 +390,22 @@ export class HomePage {
   openOddJobs() {
     this.modalCtrl.create({
       component: OddJobsModal
-    }).then(modal => modal.present());
+    }).then(modal => {
+      modal.onDidDismiss().then(() => this.checkStories());
+      modal.present();
+    });
   }
 
   hasOddJobToClaim(): boolean {
-    return !!this.model.oddJobs.find(o => o.jobAmountDone >= o.jobAmount);
+    if (!!this.model.oddJobs.find(o => o.jobAmountDone >= o.jobAmount)) {
+      return true;
+    }
+    for (let i = 1; i <= this.model.dailyActivity.today; i++) {
+      if (!!this.model.dailyActivity['day' + i] && !this.model.dailyActivity['day' + i + 'claimed']) {
+        return true;
+      }
+    }
+    return !!this.model.achievementRewards.find(a => this.model.getAchievementAmount(a.achievementType) >= a.achievementAmount);
   }
 
   getMissionAlertCss(mission: Mission): string {

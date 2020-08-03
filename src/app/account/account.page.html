@@ -46,15 +46,6 @@
           <span class="bar-text" *ngIf="model.progress.vipPoints >= model.progress.vipMaxPoints">max</span>
         </span>
       </div>
-      <div class="mt-2" [class.flex-space-between]="expeditionsToNextLevel() == 0" *ngIf="model.progress.expeditionLevel > 0">
-        <div>
-          Expedition level:
-          <strong>{{model.progress.expeditionLevel}}</strong>
-          <i *ngIf="model.progress.expeditionLevel == 6"> (max)</i>
-          <span *ngIf="model.progress.expeditionLevel < 6"> ({{expeditionsToNextLevel()}} to next level)</span>
-        </div>
-        <ion-button *ngIf="expeditionsToNextLevel() == 0" color="success" size="small" (click)="expLevelUp()">Level up</ion-button>
-      </div>
       <div class="mt-2">
         <ion-button size="small" fill="outline" (click)="logout()">Logout</ion-button>
       </div>

@@ -176,6 +176,44 @@ export class Model {
         return 0;
     }
 
+    getAchievementAmount(type: string): number {
+        if (type === 'STEAM_USED') { return this.achievements.steamUsed; }
+        if (type === 'COGWHEELS_USED') { return this.achievements.cogwheelsUsed; }
+        if (type === 'TOKENS_USED') { return this.achievements.tokensUsed; }
+        if (type === 'COINS_USED') { return this.achievements.coinsUsed; }
+        if (type === 'RUBIES_USED') { return this.achievements.rubiesUsed; }
+        if (type === 'METAL_USED') { return this.achievements.metalUsed; }
+        if (type === 'IRON_USED') { return this.achievements.ironUsed; }
+        if (type === 'STEEL_USED') { return this.achievements.steelUsed; }
+        if (type === 'WOOD_USED') { return this.achievements.woodUsed; }
+        if (type === 'BROWN_COAL_USED') { return this.achievements.brownCoalUsed; }
+        if (type === 'BLACK_COAL_USED') { return this.achievements.blackCoalUsed; }
+        if (type === 'SIMPLE_INCUBATIONS') { return this.achievements.simpleIncubationsDone; }
+        if (type === 'COMMON_INCUBATIONS') { return this.achievements.commonIncubationsDone; }
+        if (type === 'UNCOMMON_INCUBATIONS') { return this.achievements.uncommonIncubationsDone; }
+        if (type === 'RARE_INCUBATIONS') { return this.achievements.rareIncubationsDone; }
+        if (type === 'EPIC_INCUBATIONS') { return this.achievements.epicIncubationsDone; }
+        if (type === 'EXPEDITIONS') { return this.achievements.expeditionsDone; }
+        if (type === 'ODD_JOBS') { return this.achievements.oddJobsDone; }
+        if (type === 'DAILY_ACTIVITY') { return this.achievements.dailyRewardsClaimed; }
+        if (type === 'ACADEMY_XP') { return this.achievements.academyXpGained; }
+        if (type === 'ACADEMY_ASC') { return this.achievements.academyAscGained; }
+        if (type === 'MERCHANT_ITEMS_BOUGHT') { return this.achievements.merchantItemsBought; }
+        if (type === 'MAP_TILES_DISCOVERED') { return this.achievements.mapTilesDiscovered; }
+        if (type === 'GEAR_MODIFICATIONS') { return this.achievements.gearModified; }
+        if (type === 'JEWELS_MERGED') { return this.achievements.jewelsMerged; }
+        if (type === 'BUILDING_UPGRADES') { return this.achievements.buildingsUpgradesDone; }
+        if (type === 'VEHICLE_UPGRADES') { return this.achievements.vehiclesUpgradesDone; }
+        if (type === 'VEHICLE_PART_UPGRADES') { return this.achievements.vehiclePartUpgradesDone; }
+        if (type === 'BUILDING_MIN_LEVEL') { return this.achievements.buildingMinLevel; }
+        if (type === 'WOODEN_KEYS_COLLECTED') { return this.achievements.woodenKeysCollected; }
+        if (type === 'BRONZE_KEYS_COLLECTED') { return this.achievements.bronzeKeysCollected; }
+        if (type === 'SILVER_KEYS_COLLECTED') { return this.achievements.silverKeysCollected; }
+        if (type === 'GOLDEN_KEYS_COLLECTED') { return this.achievements.goldenKeysCollected; }
+        if (type === 'CHESTS_OPENED') { return this.achievements.chestsOpened; }
+        return 0;
+    }
+
     startInterval() {
         this.interval = setInterval(() => {
             let now = Date.now();

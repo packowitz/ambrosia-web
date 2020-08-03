@@ -682,4 +682,8 @@ export class BackendService {
     saveAchievementReward(reward: AchievementReward): Observable<AchievementReward> {
         return this.http.post<AchievementReward>(API_URL + '/admin/achievement_reward', reward);
     }
+
+    claimAchievementReward(reward: AchievementReward): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/achievement/claim/' + reward.id, null);
+    }
 }
