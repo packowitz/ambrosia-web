@@ -46,7 +46,7 @@ import {Gear} from '../domain/gear.model';
           <div class="flex-grow">&nbsp;</div>
           <div class="progress-bar-with-time" *ngIf="item.inProgress">
             <span class="bar-inner" [style.width]="progressInPercent() + '%'">&nbsp;</span>
-            <span class="bar-text">{{item.secondsUntilDone > 0 ? converter.time(item.secondsUntilDone) : 'Done'}}</span>
+            <span class="bar-text">{{item.secondsUntilDone > 0 ? converter.time(item.secondsUntilDone < item.origDuration ? item.secondsUntilDone : item.origDuration) : 'Done'}}</span>
             &nbsp;
           </div>
           <div *ngIf="!item.inProgress">{{progressInPercent()}}%</div>
@@ -111,10 +111,11 @@ export class UpgradeItemDirective {
         if (this.item.secondsUntilDone <= 0) {
             return "100";
         }
-        if (this.item.secondsUntilDone >= this.item.duration) {
+        let secondsLeft = this.item.inProgress ? this.item.secondsUntilDone : this.item.duration;
+        if (secondsLeft >= this.item.origDuration) {
             return "0";
         }
-        return Math.floor((this.item.duration - this.item.secondsUntilDone) * 100 / this.item.duration) + "";
+        return Math.floor((this.item.origDuration - secondsLeft) * 100 / this.item.origDuration) + "";
     }
 
     finishUpgrade() {

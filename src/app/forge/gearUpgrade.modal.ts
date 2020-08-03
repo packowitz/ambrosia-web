@@ -10,6 +10,7 @@ import {ConverterService} from '../services/converter.service';
     selector: 'gear-upgrade-modal',
     template: `
       <div class="ma-2" *ngIf="gearId">
+        <looted></looted>
         <div class="flex-space-around">
           <div class="flex">{{model.resources.wood}}/{{model.resources.woodMax}}
             <ion-img src="assets/icon/resources/WOOD.png" class="resource-icon"></ion-img>

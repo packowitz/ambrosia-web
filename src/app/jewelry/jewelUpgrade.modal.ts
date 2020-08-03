@@ -12,6 +12,7 @@ import {Jewelry} from '../domain/jewelry.model';
     selector: 'jewel-upgrade-modal',
     template: `
         <div class="ma-2">
+          <looted></looted>
           <div class="flex-space-around">
             <div class="flex-center">{{getJewelry()['lvl' + jewelLevel]}}<ion-img src="assets/img/jewels/{{getJewelry().slot}}_{{jewelLevel}}.png" class="jewel-icon"></ion-img></div>
             <div class="flex">{{model.resources.coins}}<ion-img src="assets/icon/resources/COINS.png" class="resource-icon"></ion-img></div>

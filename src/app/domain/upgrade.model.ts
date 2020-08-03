@@ -14,6 +14,7 @@ export class Upgrade {
     finished: boolean;
     inProgress: boolean;
     duration: number;
+    origDuration: number;
     secondsUntilDone: number;
 
     // transient

@@ -10,6 +10,7 @@ import {BuildingService} from '../services/building.service';
     selector: 'building-upgrade-modal',
     template: `
       <div class="ma-2" *ngIf="buildingType">
+        <looted></looted>
         <div class="flex-space-around">
           <div class="flex">{{model.resources.metal}}/{{model.resources.metalMax}}
             <ion-img src="assets/icon/resources/METAL.png" class="resource-icon"></ion-img>

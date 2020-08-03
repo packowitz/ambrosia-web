@@ -11,6 +11,7 @@ import {ConverterService} from '../services/converter.service';
     selector: 'vehicle-part-upgrade-modal',
     template: `
       <div class="ma-2">
+        <looted></looted>
         <div class="flex-space-around">
           <div class="flex">{{model.resources.metal}}/{{model.resources.metalMax}}
             <ion-img src="assets/icon/resources/METAL.png" class="resource-icon"></ion-img>
