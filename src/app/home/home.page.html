@@ -41,6 +41,9 @@
           <div class="building-avatar">
             <img src="assets/icon/buildings/{{building.type}}.png" class="pointer" (click)="gotoBuilding(building.type)">
           </div>
+          <div class="flex-center building-level-wrapper">
+            <div class="building-level">{{building.level}}</div>
+          </div>
           <div class="avatar-bubble {{getBuildingAlertCss(building)}}">!</div>
         </div>
         <div class="mt-1">{{converter.readableIdentifier(building.type)}}</div>
