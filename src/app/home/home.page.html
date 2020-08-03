@@ -41,7 +41,7 @@
           <div class="building-avatar">
             <img src="assets/icon/buildings/{{building.type}}.png" class="pointer" (click)="gotoBuilding(building.type)">
           </div>
-          <div class="flex-center building-level-wrapper">
+          <div class="flex-center building-level-wrapper" *ngIf="building.level < 10" (click)="gotoBuilding(building.type)">
             <div class="building-level">{{building.level}}</div>
           </div>
           <div class="avatar-bubble {{getBuildingAlertCss(building)}}">!</div>
