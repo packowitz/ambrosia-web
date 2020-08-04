@@ -39,7 +39,7 @@ export class JewelryUpgradeInfoModal {
 
     buildingType = "JEWELRY";
     building: Building;
-    levels = [2, 3, 4, 5, 6, 7, 8, 9];
+    levels = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     constructor(private modalCtrl: ModalController,
                 public model: Model,
