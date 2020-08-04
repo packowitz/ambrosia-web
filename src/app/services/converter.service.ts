@@ -188,6 +188,7 @@ export class ConverterService {
             case 'RARE_INCUBATION_UP_PER_MIL': return '+' + this.perMilToPercent(value) + '% Chance to clone an epic hero using rare genomes';
             case 'UNCOMMON_STARTING_LEVEL': return '+' + value + ' uncommon hero level after incubation';
             case 'JEWEL_UPGRADE_LEVEL': return '+' + value + ' Jewel upgrade level';
+            case 'JEWEL_MERGE_DOUBLE_CHANCE': return '+' + value + '% Chance to retrieve 2 jewels after merging';
             case 'GEAR_MOD_RARITY': return '+' + value + ' Gear rarity allowed to modify';
             case 'GEAR_MOD_SPEED': return '+' + value + '% Gear modification speed';
             case 'GEAR_BREAKDOWN_RARITY': return '+' + value + ' Gear rarity allowed to breakdown';

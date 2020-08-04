@@ -34,6 +34,7 @@ export class Progress {
     rareIncubationUpPerMil: number;
     uncommonStartingLevel: number;
     maxJewelUpgradingLevel: number;
+    jewelMergeDoubleChance: number;
     gearModificationRarity: number;
     gearModificationSpeed: number;
     gearBreakDownRarity: number;
