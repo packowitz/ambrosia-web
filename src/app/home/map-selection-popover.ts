@@ -17,10 +17,10 @@ import {PlayerMap} from '../domain/playerMap.model';
               <ion-label>Dungeons</ion-label>
             </ion-segment-button>
             <ion-segment-button value="MINE" *ngIf="hasMineDiscovered()">
-              <ion-label>Mines</ion-label>
+              <ion-label class="position-relative">Mines<div *ngIf="mapType != 'MINE' && hasUnvisitedMinesThatWillResetSoon()" class="upgrade-bubble upgrade-done">!</div></ion-label>
             </ion-segment-button>
           </ion-segment>
-          <div *ngFor="let map of getFavoriteMaps()" class="pointer mt-1" (click)="close(map.mapId)">
+          <div *ngFor="let map of getFavoriteMaps()" class="pointer mt-1" (click)="close(map.mapId)" [class.strong]="map.unvisited" [class.color-red]="map.unvisited && map.secondsToReset <= 86400">
             {{map.name}}
             <span *ngIf="map.secondsToReset" class="font-small color-grey ml-05"> (reset in {{converter.timeWithUnit(map.secondsToReset)}})</span>
           </div>
@@ -41,6 +41,10 @@ export class MapSelectionPopover {
 
     hasMineDiscovered(): boolean {
         return !!this.model.playerMaps.find(p => p.type === 'MINE');
+    }
+
+    hasUnvisitedMinesThatWillResetSoon(): boolean {
+        return !!this.model.playerMaps.find(p => p.type === 'MINE' && p.unvisited && p.secondsToReset <= 86400);
     }
 
     getFavoriteMaps(): PlayerMap[] {

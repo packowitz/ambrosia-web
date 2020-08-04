@@ -408,6 +408,10 @@ export class HomePage {
     return !!this.model.achievementRewards.find(a => this.model.getAchievementAmount(a.achievementType) >= a.achievementAmount);
   }
 
+  hasUnvisitedMinesThatWillResetSoon(): boolean {
+    return !!this.model.playerMaps.find(p => p.type === 'MINE' && p.unvisited && p.secondsToReset <= 86400);
+  }
+
   getMissionAlertCss(mission: Mission): string {
     if (mission.battles.findIndex(b => b.battleSuccess === false) !== -1) { return 'alert'; }
     if (mission.missionFinished) { return 'info'; }

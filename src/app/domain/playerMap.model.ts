@@ -13,6 +13,7 @@ export class PlayerMap {
     minY: number;
     maxY: number;
     secondsToReset?: number;
+    unvisited: boolean;
 
     tiles: PlayerMapTile[];
 }

@@ -96,7 +96,11 @@
       <ion-card-title>
         <div class="flex-space-between">
           <div class="flex-start">
-            <ion-button color="dark" size="small" fill="clear" (click)="mapSelection()"><ion-icon name="map-outline"></ion-icon></ion-button>{{map.name}}
+            <div class="position-relative mr-3">
+              <ion-icon name="map-outline" class="pointer mt-05" (click)="mapSelection()"></ion-icon>
+              <div *ngIf="hasUnvisitedMinesThatWillResetSoon()" class="upgrade-bubble upgrade-done">!</div>
+            </div>
+            {{map.name}}
             <span *ngIf="map.secondsToReset" class="font-small color-grey ml-05"> (reset in {{converter.timeWithUnit(map.secondsToReset)}})</span>
           </div>
           <div>
