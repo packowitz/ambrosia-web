@@ -71,17 +71,15 @@
       </div>
       <div class="flex-space-between">
         <div>Difficulty: {{fight.level}}</div>
-        <div>XP: {{fight.xp}}</div>
+        <div>XP: {{getXp(fight)}}</div>
         <div>Asc: {{fight.ascPoints}}</div>
       </div>
-      <div class="strong">{{fight.stages.length}} Stage{{fight.stages.length > 1 ? 's' : ''}} <span class="fake-link" (click)="showStages = !showStages">{{showStages ? 'hide' : 'show'}}</span></div>
-      <div *ngIf="showStages">
-        <div *ngFor="let fightStage of fight.stages" class="mt-2 flex-start">
-          <div class="flex-center strong mr-2 font-enlarged">{{fightStage.stage}}.</div>
-          <div class="flex-space-between mt-2 flex-grow">
-            <div *ngFor="let stageHero of getStageHeroe(fightStage)">
-              <hero-icon *ngIf="stageHero" [hero]="stageHero"></hero-icon>
-            </div>
+      <div class="strong">{{fight.stages.length}} Stage{{fight.stages.length > 1 ? 's' : ''}}</div>
+      <div *ngFor="let fightStage of fight.stages" class="mt-2 flex-start">
+        <div class="flex-center strong mr-2 font-enlarged">{{fightStage.stage}}.</div>
+        <div class="flex-space-between mt-2 flex-grow">
+          <div *ngFor="let stageHero of getStageHeroe(fightStage)">
+            <hero-icon *ngIf="stageHero" [hero]="stageHero"></hero-icon>
           </div>
         </div>
       </div>

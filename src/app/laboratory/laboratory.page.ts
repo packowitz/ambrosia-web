@@ -78,7 +78,9 @@ export class LaboratoryPage {
   incubationtime(genome: string): string {
     let time = this.propertyService.getIncubationTime(genome)[0].value1;
     let upChance = 0;
+    let superUpChance = 0;
     let nextLevelTime = 0;
+    let nextAfterLevelTime = 0;
     switch (genome) {
       case 'SIMPLE_GENOME': {
         upChance = this.model.progress.simpleIncubationUpPerMil;
@@ -92,7 +94,9 @@ export class LaboratoryPage {
       }
       case 'UNCOMMON_GENOME': {
         upChance = this.model.progress.uncommonIncubationUpPerMil;
+        superUpChance = this.model.progress.uncommonIncubationSuperUpPerMil;
         nextLevelTime = this.propertyService.getIncubationTime('RARE_GENOME')[0].value1;
+        nextAfterLevelTime = this.propertyService.getIncubationTime('EPIC_GENOME')[0].value1;
         break;
       }
       case 'RARE_GENOME': {
@@ -102,6 +106,7 @@ export class LaboratoryPage {
       }
     }
     time += Math.round((upChance * nextLevelTime) / 100);
+    time += Math.round((superUpChance * nextAfterLevelTime) / 100);
     time = Math.round((time * 100) / this.model.progress.labSpeed);
     return this.converter.timeWithUnit(time);
   }

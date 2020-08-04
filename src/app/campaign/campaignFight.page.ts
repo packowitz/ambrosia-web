@@ -15,6 +15,7 @@ import {StartMissionPopover} from './start-mission-popover';
 import {ConverterService} from '../services/converter.service';
 import {FightStageResolved} from '../domain/fightStageResolved.model';
 import {StoryService} from '../services/story.service';
+import {PropertyService} from '../services/property.service';
 
 @Component({
   selector: 'campaign-fight',
@@ -26,8 +27,6 @@ export class CampaignFightPage {
 
   map: PlayerMap;
   tile: PlayerMapTile;
-
-  showStages = false;
 
   fight: FightResolved;
   team: Team;
@@ -52,7 +51,8 @@ export class CampaignFightPage {
               public enumService: EnumService,
               private popoverCtrl: PopoverController,
               private converter: ConverterService,
-              private storyService: StoryService) {
+              private storyService: StoryService,
+              private propertyService: PropertyService) {
   }
 
   ionViewWillEnter() {
@@ -108,6 +108,17 @@ export class CampaignFightPage {
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  getXp(fight: FightResolved): number {
+    let xp = fight.xp;
+    let bonus = 100 + this.model.progress.battleXpBoost;
+    if (this.vehicle && this.vehicle.frame) {
+      this.propertyService.getVehiclePartProperties(this.vehicle.frame)
+          .filter(p => p.vehicleStat === 'BATTLE_XP')
+          .forEach(p => bonus += p.value1);
+    }
+    return Math.round(xp * bonus / 100);
   }
 
   initTeam() {

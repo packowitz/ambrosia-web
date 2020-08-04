@@ -20,6 +20,7 @@ export class Progress {
     maxTrainingLevel: number;
     trainingXpBoost: number;
     trainingAscBoost: number;
+    battleXpBoost: number;
     vehicleUpgradeLevel: number;
     incubators: number;
     labSpeed: number;
@@ -31,6 +32,7 @@ export class Progress {
     simpleIncubationUpPerMil: number;
     commonIncubationUpPerMil: number;
     uncommonIncubationUpPerMil: number;
+    uncommonIncubationSuperUpPerMil: number;
     rareIncubationUpPerMil: number;
     uncommonStartingLevel: number;
     maxJewelUpgradingLevel: number;
