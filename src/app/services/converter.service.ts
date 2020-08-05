@@ -208,6 +208,33 @@ export class ConverterService {
         }
     }
 
+    readableProgressStatBonus(stat: string, value: number): string {
+        let bonus = value >= 0 ? '+' + value : '' + value;
+        switch(stat) {
+            case 'EXPEDITION_SPEED':
+            case 'MISSION_SPEED':
+            case 'BUILDER_SPEED':
+            case 'GEAR_QUALITY_INCREASE':
+            case 'TRAINING_XP_BOOST':
+            case 'TRAINING_ASC_BOOST':
+            case 'LAB_SPEED':
+            case 'JEWEL_MERGE_DOUBLE_CHANCE':
+            case 'GEAR_MOD_SPEED':
+            case 'GEAR_BREAKDOWN_RESOURCES':
+                bonus += '%';
+                break;
+
+            case 'PLAYER_XP': return '' + value;
+
+            case 'SIMPLE_INCUBATION_UP_PER_MIL':
+            case 'COMMON_INCUBATION_UP_PER_MIL':
+            case 'UNCOMMON_INCUBATION_UP_PER_MIL':
+            case 'RARE_INCUBATION_UP_PER_MIL':
+                return '+' + this.perMilToPercent(value) + '%';
+        }
+        return bonus;
+    }
+
     perMilToPercent(perMil: number): number {
         return (perMil / 10);
     }

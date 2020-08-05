@@ -5,6 +5,7 @@ export class OddJob {
     playerId: number;
     oddJobBaseId: number;
     level: number;
+    name: string;
     rarity: string;
     jobType: string;
     jobAmount: number;

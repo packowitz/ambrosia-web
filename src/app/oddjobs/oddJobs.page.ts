@@ -75,6 +75,7 @@ export class OddJobsPage implements OnInit {
     return !oddJob.rarity ||
         !oddJob.jobType ||
         !oddJob.lootBoxId ||
+        !oddJob.name ||
         oddJob.level <= 0 ||
         oddJob.level > 6 ||
         oddJob.jobAmount < 1;

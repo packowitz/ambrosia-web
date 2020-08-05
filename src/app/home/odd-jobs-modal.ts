@@ -6,6 +6,7 @@ import {OddJob} from '../domain/oddJob.model';
 import {PropertyService} from '../services/property.service';
 import {DynamicProperty} from '../domain/property.model';
 import {AchievementReward} from '../domain/achievementReward.model';
+import {ConverterService} from '../services/converter.service';
 
 @Component({
     selector: 'odd-jobs-modal',
@@ -57,21 +58,22 @@ import {AchievementReward} from '../domain/achievementReward.model';
             <ion-item *ngFor="let oddJob of model.oddJobs">
               <div class="mt-3 mb-3 full-width">
                 <div class="flex-space-between">
-                  <div class="flex-grow flex-wrap">{{getJobDescription(oddJob.jobType, oddJob.jobAmount)}}</div>
-                  <div class="color-grey mr-2">{{oddJob.jobAmountDone}}/{{oddJob.jobAmount}}</div>
-                  <div class="flex-center flex-no-shrink">
-                    <div *ngFor="let item of oddJob.reward" class="ml-05">
-                      <span>{{item.value}}</span>
+                  <div class="strong">{{oddJob.name}}</div>
+                  <div class="flex-center">
+                    <div *ngFor="let item of oddJob.reward" class="ml-05 flex-center">
+                      <span *ngIf="item.resourceType">{{item.value}}</span>
+                      <span *ngIf="item.progressStat">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
                       <img *ngIf="item.resourceType" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
                       <img *ngIf="item.progressStat" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
                     </div>
-                    <ion-button *ngIf="oddJob.jobAmountDone < oddJob.jobAmount" size="small" fill="clear" color="dark" (click)="removeOddJob(oddJob)">
-                      <ion-icon name="trash-outline"></ion-icon>
-                    </ion-button>
-                    <ion-button *ngIf="oddJob.jobAmountDone >= oddJob.jobAmount" size="small" color="success" (click)="claimOddJob(oddJob)">
-                      Claim
-                    </ion-button>
                   </div>
+                </div>
+                <div class="flex-space-between mt-05">
+                  <div class="flex-grow flex-wrap">{{getJobDescription(oddJob.jobType, oddJob.jobAmount)}}</div>
+                  <div *ngIf="oddJob.jobAmountDone < oddJob.jobAmount" class="color-grey">{{oddJob.jobAmountDone}}/{{oddJob.jobAmount}}</div>
+                  <ion-button *ngIf="oddJob.jobAmountDone >= oddJob.jobAmount" size="small" color="success" (click)="claimOddJob(oddJob)">
+                    Claim
+                  </ion-button>
                 </div>
                 <div class="time-bar light-border">
                   <span class="time-bar-inner" [style.width]="(100 * oddJob.jobAmountDone / oddJob.jobAmount) + '%'"></span>
@@ -88,20 +90,23 @@ import {AchievementReward} from '../domain/achievementReward.model';
           <ion-list *ngIf="tab == 'progress'" class="mt-3">
             <ion-item *ngFor="let reward of model.achievementRewards">
               <div class="mt-3 mb-3 full-width">
-                <div class="strong">{{reward.name}}</div>
-                <div class="flex-space-between mt-05">
-                  <div class="flex-grow flex-wrap">{{getRewardDescription(reward.achievementType, reward.achievementAmount)}}</div>
-                  <div class="color-grey mr-2">{{model.getAchievementAmount(reward.achievementType)}}/{{reward.achievementAmount}}</div>
-                  <div class="flex-center flex-no-shrink">
-                    <div *ngFor="let item of reward.reward" class="ml-05">
-                      <span>{{item.value}}</span>
+                <div class="flex-space-between">
+                  <div class="strong">{{reward.name}}</div>
+                  <div class="flex-center">
+                    <div *ngFor="let item of reward.reward" class="ml-05 flex-center">
+                      <span *ngIf="item.resourceType">{{item.value}}</span>
+                      <span *ngIf="item.progressStat">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
                       <img *ngIf="item.resourceType" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
                       <img *ngIf="item.progressStat" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
                     </div>
-                    <ion-button *ngIf="model.getAchievementAmount(reward.achievementType) >= reward.achievementAmount" size="small" color="success" (click)="claimAchievementReward(reward)">
-                      Claim
-                    </ion-button>
                   </div>
+                </div>
+                <div class="flex-space-between mt-05">
+                  <div class="flex-grow flex-wrap">{{getRewardDescription(reward.achievementType, reward.achievementAmount)}}</div>
+                  <div *ngIf="model.getAchievementAmount(reward.achievementType) < reward.achievementAmount" class="color-grey">{{model.getAchievementAmount(reward.achievementType)}}/{{reward.achievementAmount}}</div>
+                  <ion-button *ngIf="model.getAchievementAmount(reward.achievementType) >= reward.achievementAmount" size="small" color="success" (click)="claimAchievementReward(reward)">
+                    Claim
+                  </ion-button>
                 </div>
                 <div class="time-bar light-border mt-05">
                   <span class="time-bar-inner" [style.width]="(100 * model.getAchievementAmount(reward.achievementType) / reward.achievementAmount) + '%'"></span>
@@ -124,6 +129,7 @@ export class OddJobsModal {
     constructor(private modalCtrl: ModalController,
                 private navParams: NavParams,
                 public model: Model,
+                public converter: ConverterService,
                 private propertyService: PropertyService,
                 private backendService: BackendService,
                 private alertCtrl: AlertController) {

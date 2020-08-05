@@ -25,6 +25,10 @@
               <ion-input [(ngModel)]="oddJob.level" type="number" min="1" max="6" class="width-60"></ion-input>
             </ion-item>
             <ion-item lines="none">
+              <ion-label position="floating">Name</ion-label>
+              <ion-input [(ngModel)]="oddJob.name" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
               <ion-label position="floating">Rarity</ion-label>
               <ion-select [(ngModel)]="oddJob.rarity">
                 <ion-select-option *ngFor="let rarity of enumService.getRarities()" [value]="rarity">{{rarity}}</ion-select-option>
@@ -61,6 +65,10 @@
             <ion-item lines="none">
               <ion-label position="floating">Level</ion-label>
               <ion-input [(ngModel)]="newOddJob.level" type="number" min="1" max="6" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Name</ion-label>
+              <ion-input [(ngModel)]="newOddJob.name" placeholder="Name" class="width-60"></ion-input>
             </ion-item>
             <ion-item lines="none">
               <ion-label position="floating">Rarity</ion-label>
