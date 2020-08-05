@@ -30,6 +30,8 @@ export class BarracksPage {
   gearTypeFilter: string[] = [];
   gearSetFilter = "STONE_SKIN";
 
+  blockView = false;
+
   buildingType = 'BARRACKS';
   enterStory = this.buildingType + '_ENTERED';
 

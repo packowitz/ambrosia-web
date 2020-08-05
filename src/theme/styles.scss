@@ -279,6 +279,19 @@ ion-row.table-row {
   overflow-x: scroll;
 }
 
+.hero-block-view {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 350px;
+  overflow-y: scroll;
+}
+
+@media (max-width: 540px) {
+  .hero-block-view {
+    max-height: 65vw;
+  }
+}
+
 .hero-avatar {
   width: 120px;
 }

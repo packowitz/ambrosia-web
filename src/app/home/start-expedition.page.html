@@ -38,8 +38,11 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div class="scrollable-list">
-        <hero-icon *ngFor="let hero of model.heroes" [hero]="hero" class="mr-2" [clickable]="true" (clicked)="selectHero(hero)" [selected]="hero == hero1 || hero == hero2 || hero == hero3 || hero == hero4"></hero-icon>
+      <div [class.scrollable-list]="!blockView" [class.hero-block-view]="blockView">
+        <hero-icon *ngFor="let hero of model.heroes" [hero]="hero" class="mr-1 ml-1" [class.mt-1]="blockView" [clickable]="true" (clicked)="selectHero(hero)" [selected]="hero == hero1 || hero == hero2 || hero == hero3 || hero == hero4"></hero-icon>
+      </div>
+      <div class="full-width flex-center">
+        <ion-button size="small" fill="outline" color="dark" (click)="blockView = !blockView"><ion-icon [name]="blockView ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon></ion-button>
       </div>
     </ion-card-content>
   </ion-card>

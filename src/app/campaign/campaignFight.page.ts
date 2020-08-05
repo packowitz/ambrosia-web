@@ -25,6 +25,8 @@ export class CampaignFightPage {
 
   saving = false;
 
+  blockView = false;
+
   map: PlayerMap;
   tile: PlayerMapTile;
 

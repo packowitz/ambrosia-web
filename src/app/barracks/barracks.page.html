@@ -32,11 +32,14 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div class="scrollable-list pt-2">
-        <div *ngFor="let hero of model.heroes" class="position-relative mr-2">
+      <div class="pt-3" [class.scrollable-list]="!blockView" [class.hero-block-view]="blockView">
+        <div *ngFor="let hero of model.heroes" class="position-relative mr-1 ml-1" [class.mt-1]="blockView">
           <hero-icon [hero]="hero" [clickable]="true" (clicked)="selectHero(hero)" [busyClickable]="true" [showInfo]="false" [selected]="hero == selectedHero"></hero-icon>
           <div *ngIf="hero.skillPoints > 0" class="avatar-bubble alert">!</div>
         </div>
+      </div>
+      <div class="full-width flex-center">
+        <ion-button size="small" fill="outline" color="dark" (click)="blockView = !blockView"><ion-icon [name]="blockView ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon></ion-button>
       </div>
     </ion-card-content>
   </ion-card>

@@ -20,6 +20,8 @@ export class AcademyPage {
   saving = false;
   selectedHero: Hero;
 
+  blockView = false;
+
   feedForEvolve = false;
 
   totalXpGained = 0;

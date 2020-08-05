@@ -8,7 +8,6 @@ import {Vehicle} from '../domain/vehicle.model';
 import {PopoverController} from '@ionic/angular';
 import {VehicleSelectionPopover} from '../garage/vehicle-selection-popover';
 import {ConverterService} from '../services/converter.service';
-import {StoryService} from '../services/story.service';
 import {Expedition} from '../domain/expedition.model';
 import {Team} from '../domain/team.model';
 
@@ -17,6 +16,8 @@ import {Team} from '../domain/team.model';
   templateUrl: 'start-expedition.page.html'
 })
 export class StartExpeditionPage {
+
+  blockView = false;
 
   saving = false;
 

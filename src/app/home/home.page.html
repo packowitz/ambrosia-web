@@ -36,7 +36,7 @@
   </ion-card>
   <ion-card>
     <div class="scrollable-list pa-2" *ngIf="model.buildings">
-      <div *ngFor="let building of buildings" class="flex-vert-center mr-4">
+      <div *ngFor="let building of buildings; let i = index" class="flex-vert-center mr-4" [class.pr-4]="(i + 1) == buildings.length">
         <div class="position-relative">
           <div class="building-avatar">
             <img src="assets/icon/buildings/{{building.type}}.png" class="pointer" (click)="gotoBuilding(building.type)">

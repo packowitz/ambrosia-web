@@ -14,6 +14,8 @@ import {BuildingService} from '../services/building.service';
   templateUrl: './arena.page.html'
 })
 export class ArenaPage implements OnInit {
+
+  blockView = false;
   
   team: Team;
   hero1?: Hero;
