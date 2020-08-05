@@ -45,6 +45,13 @@
               {{lootBoxName(reward.lootBoxId)}}
             </ion-item>
           </div>
+          <div *ngIf="getLootBox(reward.lootBoxId) as lootBox" class="flex-end">
+            <div *ngFor="let lootItem of lootBox.items" class="ml-2 flex-center">
+              <div *ngIf="lootItem.type == 'RESOURCE'" class="flex-center">{{lootItem.resourceTo}} <img src="assets/icon/resources/{{lootItem.resourceType}}.png" class="resource-icon"></div>
+              <div *ngIf="lootItem.type == 'PROGRESS'" class="flex-center">{{lootItem.progressStatBonus}} <img src="assets/icon/progress/{{lootItem.progressStat}}.png" class="resource-icon"></div>
+              <div *ngIf="lootItem.type == 'JEWEL'" class="flex-center">L{{lootItem.jewelLevel}} {{lootItem.jewelTypes[0]}} jewel</div>
+            </div>
+          </div>
         </div>
         <ion-button size="small" color="success" (click)="saveReward(reward)" [disabled]="achievementRewardIncomplete(reward)">Update</ion-button>
       </div>
@@ -83,6 +90,13 @@
               <ion-icon name="return-up-forward" class="pointer mr-05" (click)="gotoLootBox(newAchievementReward.lootBoxId)"></ion-icon>
               {{lootBoxName(newAchievementReward.lootBoxId)}}
             </ion-item>
+          </div>
+          <div *ngIf="getLootBox(newAchievementReward.lootBoxId) as lootBox" class="flex-end">
+            <div *ngFor="let lootItem of lootBox.items" class="ml-2 flex-center">
+              <div *ngIf="lootItem.type == 'RESOURCE'" class="flex-center">{{lootItem.resourceTo}} <img src="assets/icon/resources/{{lootItem.resourceType}}.png" class="resource-icon"></div>
+              <div *ngIf="lootItem.type == 'PROGRESS'" class="flex-center">{{lootItem.progressStatBonus}} <img src="assets/icon/progress/{{lootItem.progressStat}}.png" class="resource-icon"></div>
+              <div *ngIf="lootItem.type == 'JEWEL'" class="flex-center">L{{lootItem.jewelLevel}} {{lootItem.jewelTypes[0]}} jewel</div>
+            </div>
           </div>
         </div>
         <ion-button size="small" color="success" (click)="saveReward(newAchievementReward)" [disabled]="achievementRewardIncomplete(newAchievementReward)">Create</ion-button>

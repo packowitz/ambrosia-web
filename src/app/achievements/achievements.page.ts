@@ -57,8 +57,12 @@ export class AchievementsPage implements OnInit {
     });
   }
 
+  getLootBox(id: number): LootBox {
+    return this.model.lootBoxes.find(l => l.id === id);
+  }
+
   lootBoxName(id: number): string {
-    let box = this.model.lootBoxes.find(l => l.id === id);
+    let box = this.getLootBox(id);
     return box ? box.name : 'unknown';
   }
 

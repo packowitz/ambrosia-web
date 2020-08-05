@@ -61,10 +61,10 @@ import {ConverterService} from '../services/converter.service';
                   <div class="strong">{{oddJob.name}}</div>
                   <div class="flex-center">
                     <div *ngFor="let item of oddJob.reward" class="ml-05 flex-center">
-                      <span *ngIf="item.resourceType">{{item.value}}</span>
-                      <span *ngIf="item.progressStat">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
-                      <img *ngIf="item.resourceType" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
-                      <img *ngIf="item.progressStat" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
+                      <span *ngIf="item.type == 'RESOURCE'">{{item.value}}</span>
+                      <img *ngIf="item.type == 'RESOURCE'" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
+                      <span *ngIf="item.type == 'PROGRESS'">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
+                      <img *ngIf="item.type == 'PROGRESS'" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
                     </div>
                   </div>
                 </div>
@@ -95,9 +95,10 @@ import {ConverterService} from '../services/converter.service';
                   <div class="flex-center">
                     <div *ngFor="let item of reward.reward" class="ml-05 flex-center">
                       <span *ngIf="item.resourceType">{{item.value}}</span>
-                      <span *ngIf="item.progressStat">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
                       <img *ngIf="item.resourceType" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
+                      <span *ngIf="item.progressStat">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
                       <img *ngIf="item.progressStat" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
+                      <span *ngIf="item.type == 'JEWEL'"><img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.value}}.png" class="jewel-icon"></span>
                     </div>
                   </div>
                 </div>
