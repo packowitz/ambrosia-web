@@ -600,7 +600,7 @@ export class Model {
             if (this.achievementRewards) {
                 data.achievementRewards.forEach(a => this.updateAchievementReward(a));
             } else {
-                this.achievementRewards = data.achievementRewards.sort((a, b) => a.name > b.name ? -1 : 1 );
+                this.achievementRewards = data.achievementRewards.sort((a, b) => a.name > b.name ? 1 : -1 );
             }
         }
         if (data.claimedAchievementRewardId) {
@@ -858,7 +858,7 @@ export class Model {
                 this.achievementRewards[idx] = reward;
             } else {
                 this.achievementRewards.push(reward);
-                this.achievementRewards = this.achievementRewards.sort((a, b) => a.name > b.name ? -1 : 1 );
+                this.achievementRewards = this.achievementRewards.sort((a, b) => a.name > b.name ? 1 : -1 );
             }
         }
     }
