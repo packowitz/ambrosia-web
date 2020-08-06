@@ -36,6 +36,7 @@ import {Achievements} from '../domain/achievements.model';
 import {MerchantItem} from '../domain/merchantItem.model';
 import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
 import {AchievementReward} from '../domain/achievementReward.model';
+import {BlackMarketItem} from '../domain/blackMarketItem.model';
 
 @Injectable({
     providedIn: 'root'
@@ -82,6 +83,8 @@ export class Model {
     merchantPlayerItems: MerchantPlayerItem[];
     allAchievementRewards: AchievementReward[];
     achievementRewards: AchievementReward[];
+    blackMarketItems: BlackMarketItem[];
+    allBlackMarketItems: BlackMarketItem[];
 
     interval: number;
     lastIntervalTimestamp: number = Date.now();
@@ -173,6 +176,10 @@ export class Model {
         if (type === 'UNCOMMON_GENOME') { return this.resources.uncommonGenome; }
         if (type === 'RARE_GENOME') { return this.resources.rareGenome; }
         if (type === 'EPIC_GENOME') { return this.resources.epicGenome; }
+        if (type === 'WOODEN_KEYS') { return this.resources.woodenKeys; }
+        if (type === 'BRONZE_KEYS') { return this.resources.bronzeKeys; }
+        if (type === 'SILVER_KEYS') { return this.resources.silverKeys; }
+        if (type === 'GOLDEN_KEYS') { return this.resources.goldenKeys; }
         return 0;
     }
 
@@ -592,6 +599,9 @@ export class Model {
             if (item) {
                 item.sold = true;
             }
+        }
+        if (data.blackMarketItems && data.blackMarketItems.length > 0) {
+            this.blackMarketItems = data.blackMarketItems;
         }
         if (data.looted) {
             this.looted = data.looted;

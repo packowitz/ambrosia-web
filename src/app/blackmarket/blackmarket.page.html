@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Black market Items
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+<ion-content *ngIf="model.allBlackMarketItems && model.lootBoxes">
+  <ion-list>
+    <div *ngFor="let blackMarketItem of model.allBlackMarketItems" class="mt-2">
+      <div class="flex-space-between">
+        <div class="flex-grow">
+          <div class="flex-space-between">
+            <ion-item lines="none">
+              <ion-label>Active</ion-label>
+              <ion-checkbox slot="start" [(ngModel)]="blackMarketItem.active"></ion-checkbox>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Order</ion-label>
+              <ion-input [(ngModel)]="blackMarketItem.sortOrder" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Price</ion-label>
+              <ion-select [(ngModel)]="blackMarketItem.priceType">
+                <ion-select-option value="WOODEN_KEYS">Wooden Keys</ion-select-option>
+                <ion-select-option value="BRONZE_KEYS">Bronze Keys</ion-select-option>
+                <ion-select-option value="SILVER_KEYS">Silver Keys</ion-select-option>
+                <ion-select-option value="GOLDEN_KEYS">Golden Keys</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Amount</ion-label>
+              <ion-input [(ngModel)]="blackMarketItem.priceAmount" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-icon name="pencil" class="pointer mr-05" (click)="lootBoxSelection(blackMarketItem)"></ion-icon>
+              <ion-icon name="return-up-forward" class="pointer mr-05" (click)="gotoLootBox(blackMarketItem.lootBoxId)"></ion-icon>
+              {{lootBoxName(blackMarketItem.lootBoxId)}}
+            </ion-item>
+          </div>
+        </div>
+        <ion-button size="small" color="success" (click)="saveItem(blackMarketItem)" [disabled]="itemIncomplete(blackMarketItem)">Update</ion-button>
+      </div>
+    </div>
+    <div class="mt-2">
+      <div class="flex-space-between">
+        <div class="flex-grow">
+          <div class="flex-space-between">
+            <ion-item lines="none">
+              <ion-label>Active</ion-label>
+              <ion-checkbox slot="start" [(ngModel)]="newBlackMarketItem.active"></ion-checkbox>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Order</ion-label>
+              <ion-input [(ngModel)]="newBlackMarketItem.sortOrder" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Price</ion-label>
+              <ion-select [(ngModel)]="newBlackMarketItem.priceType" placeholder="select">
+                <ion-select-option value="WOODEN_KEYS">Wooden Keys</ion-select-option>
+                <ion-select-option value="BRONZE_KEYS">Bronze Keys</ion-select-option>
+                <ion-select-option value="SILVER_KEYS">Silver Keys</ion-select-option>
+                <ion-select-option value="GOLDEN_KEYS">Golden Keys</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Amount</ion-label>
+              <ion-input [(ngModel)]="newBlackMarketItem.priceAmount" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="!newBlackMarketItem.lootBoxId" class="pointer" (click)="lootBoxSelection(newBlackMarketItem)">
+              Loot
+            </ion-item>
+            <ion-item lines="none" *ngIf="newBlackMarketItem.lootBoxId">
+              <ion-icon name="pencil" class="pointer mr-05" (click)="lootBoxSelection(newBlackMarketItem)"></ion-icon>
+              <ion-icon name="return-up-forward" class="pointer mr-05" (click)="gotoLootBox(newBlackMarketItem.lootBoxId)"></ion-icon>
+              {{lootBoxName(newBlackMarketItem.lootBoxId)}}
+            </ion-item>
+          </div>
+        </div>
+        <ion-button size="small" color="success" (click)="saveItem(newBlackMarketItem)" [disabled]="itemIncomplete(newBlackMarketItem)">Create</ion-button>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>

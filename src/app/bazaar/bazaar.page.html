@@ -33,61 +33,62 @@
     <ion-segment-button value="trader" *ngIf="model.progress.tradingEnabled">
       <ion-label>Trader</ion-label>
     </ion-segment-button>
+    <ion-segment-button value="blackMarket" *ngIf="model.progress.blackMarketEnabled">
+      <ion-label>Black Market</ion-label>
+    </ion-segment-button>
   </ion-segment>
 
-  <div *ngIf="tab == 'merchant' && model.merchantPlayerItems">
+  <ion-card *ngIf="tab == 'merchant' && model.merchantPlayerItems">
+    <ion-card-content>
+      <div class="flex-space-between">
+        <i>Merchant level {{model.progress.merchantLevel}}</i>
+        <div>{{model.resources.coins}} <img src="assets/icon/resources/COINS.png" class="resource-icon"></div>
+        <div>{{model.resources.rubies}} <img src="assets/icon/resources/RUBIES.png" class="resource-icon"></div>
+        <div class="flex-center">
+          <div *ngIf="model.merchantPlayerItems.length > 0">refresh in {{converter.timeWithUnit(model.merchantPlayerItems[0].secondsUntilRefresh)}}</div>
+          <ion-button size="small" fill="clear" color="primary" (click)="renewMerchantItems()"><ion-icon name="refresh-circle-outline"></ion-icon></ion-button>
+        </div>
+      </div>
+    </ion-card-content>
     <ion-card>
       <ion-card-content>
-        <div class="flex-space-between">
-          <i>Merchant level {{model.progress.merchantLevel}}</i>
-          <div>{{model.resources.coins}} <img src="assets/icon/resources/COINS.png" class="resource-icon"></div>
-          <div>{{model.resources.rubies}} <img src="assets/icon/resources/RUBIES.png" class="resource-icon"></div>
-          <div class="flex-center">
-            <div *ngIf="model.merchantPlayerItems.length > 0">refresh in {{converter.timeWithUnit(model.merchantPlayerItems[0].secondsUntilRefresh)}}</div>
-            <ion-button size="small" fill="clear" color="primary" (click)="renewMerchantItems()"><ion-icon name="refresh-circle-outline"></ion-icon></ion-button>
+        <div class="flex-space-between flex-wrap" style="align-items: flex-end;">
+          <div *ngFor="let item of model.merchantPlayerItems" class="flex-vert-center loot-item mb-4">
+            <div *ngIf="item.resourceType" class="flex-vert-center">
+              <img src="assets/icon/resources/{{item.resourceType}}.png" class="loot-image">
+              <div class="font-small">{{item.resourceAmount}}</div>
+            </div>
+            <div *ngIf="item.heroBaseId && model.getHeroBase(item.heroBaseId) as heroBase" class="border-grey flex-vert-center loot-hero">
+              <ion-img [src]="'assets/icon/chars/' + heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
+              <ion-img [src]="'assets/img/star_' + getHeroStars(heroBase, item.heroLevel) + '.png'" class="hero-stars"></ion-img>
+            </div>
+            <div *ngIf="item.gear" class="flex-vert-center">
+              <gear-icon [gear]="item.sold ? null : item.gear" [type]="item.gear.type"></gear-icon>
+              <span class="no-wrap">{{converter.readableIdentifier(item.gear.set)}}</span>
+              <gear-stat class="font-small no-wrap" [stat]="item.gear.stat" [value]="item.gear.statValue"></gear-stat>
+            </div>
+            <div *ngIf="item.jewelType" class="flex-vert-center">
+              <img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.jewelLevel}}.png" class="loot-image">
+              <div class="font-small no-wrap">L{{item.jewelLevel}} {{converter.readableIdentifier(item.jewelType.name)}}</div>
+            </div>
+            <div *ngIf="item.vehicleBaseId && model.getVehicleBase(item.vehicleBaseId) as baseVehicle" class="flex-vert-center">
+              <img src="assets/img/vehicles/{{baseVehicle.avatar}}.png">
+              <div class="font-small ion-text-center">{{baseVehicle.name}}</div>
+            </div>
+            <div *ngIf="item.vehiclePartQuality" class="flex-vert-center">
+              <img src="assets/img/vehicles/parts/{{item.vehiclePartType}}_{{item.vehiclePartQuality}}.png">
+              <div class="font-small ion-text-center">{{converter.readableIdentifier(item.vehiclePartType)}}</div>
+            </div>
+
+            <ion-button size="small" [disabled]="item.sold || !model.hasEnoughResources(item.priceType, item.priceAmount)" (click)="buyMerchantItem(item)">
+              <span *ngIf="!item.sold" class="pl-1 pr-1 flex-center">{{item.priceAmount}} <img src="assets/icon/resources/{{item.priceType}}.png" class="resource-icon"></span>
+              <span *ngIf="item.sold">SOLD</span>
+            </ion-button>
           </div>
         </div>
       </ion-card-content>
-      <ion-card>
-        <ion-card-content>
-          <div class="flex-space-between flex-wrap" style="align-items: flex-end;">
-            <div *ngFor="let item of model.merchantPlayerItems" class="flex-vert-center loot-item mb-4">
-              <div *ngIf="item.resourceType" class="flex-vert-center">
-                <img src="assets/icon/resources/{{item.resourceType}}.png" class="loot-image">
-                <div class="font-small">{{item.resourceAmount}}x</div>
-              </div>
-              <div *ngIf="item.heroBaseId && model.getHeroBase(item.heroBaseId) as heroBase" class="border-grey flex-vert-center loot-hero">
-                <ion-img [src]="'assets/icon/chars/' + heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
-                <ion-img [src]="'assets/img/star_' + getHeroStars(heroBase, item.heroLevel) + '.png'" class="hero-stars"></ion-img>
-              </div>
-              <div *ngIf="item.gear" class="flex-vert-center">
-                <gear-icon [gear]="item.gear" [type]="item.gear.type"></gear-icon>
-                <span class="no-wrap">{{converter.readableIdentifier(item.gear.set)}}</span>
-                <gear-stat class="font-small no-wrap" [stat]="item.gear.stat" [value]="item.gear.statValue"></gear-stat>
-              </div>
-              <div *ngIf="item.jewelType" class="flex-vert-center">
-                <img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.jewelLevel}}.png" class="loot-image">
-                <div class="font-small no-wrap">L{{item.jewelLevel}} {{converter.readableIdentifier(item.jewelType.name)}}</div>
-              </div>
-              <div *ngIf="item.vehicleBaseId && model.getVehicleBase(item.vehicleBaseId) as baseVehicle" class="flex-vert-center">
-                <img src="assets/img/vehicles/{{baseVehicle.avatar}}.png">
-                <div class="font-small ion-text-center">{{baseVehicle.name}}</div>
-              </div>
-              <div *ngIf="item.vehiclePartQuality" class="flex-vert-center">
-                <img src="assets/img/vehicles/parts/{{item.vehiclePartType}}_{{item.vehiclePartQuality}}.png">
-                <div class="font-small ion-text-center">{{converter.readableIdentifier(item.vehiclePartType)}}</div>
-              </div>
-
-              <ion-button size="small" [disabled]="item.sold || !model.hasEnoughResources(item.priceType, item.priceAmount)" (click)="buyMerchantItem(item)">
-                <span *ngIf="!item.sold" class="pl-1 pr-1 flex-center">{{item.priceAmount}} <img src="assets/icon/resources/{{item.priceType}}.png" class="resource-icon"></span>
-                <span *ngIf="item.sold">SOLD</span>
-              </ion-button>
-            </div>
-          </div>
-        </ion-card-content>
-      </ion-card>
     </ion-card>
-  </div>
+  </ion-card>
 
   <div *ngIf="tab == 'shop'">
     Shop is not implemented yet. You'll find here offers from ambrosia inc to purchase with real money
@@ -111,5 +112,49 @@
         <ion-button size="small" fill="outline" (click)="acceptTrade(trade.name)" [disabled]="!model.hasEnoughResources(trade.giveType, trade.giveAmount - (model.progress.negotiationLevel * trade.negotiationGiveReduction))">Deal</ion-button>
       </ion-item>
     </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="tab == 'blackMarket' && model.blackMarketItems">
+    <ion-card-content>
+      <div class="flex-space-between">
+        <div class="flex-center">{{model.resources.woodenKeys}} <img src="assets/icon/resources/WOODEN_KEYS.png" class="resource-icon"></div>
+        <div class="flex-center">{{model.resources.bronzeKeys}} <img src="assets/icon/resources/BRONZE_KEYS.png" class="resource-icon"></div>
+        <div class="flex-center">{{model.resources.silverKeys}} <img src="assets/icon/resources/SILVER_KEYS.png" class="resource-icon"></div>
+        <div class="flex-center">{{model.resources.goldenKeys}} <img src="assets/icon/resources/GOLDEN_KEYS.png" class="resource-icon"></div>
+      </div>
+    </ion-card-content>
+    <ion-card>
+      <ion-card-content>
+        <div class="flex-space-between flex-wrap" style="align-items: flex-end;">
+          <div *ngFor="let item of model.blackMarketItems" class="flex-vert-center loot-item mb-4">
+            <div *ngIf="item.lootableItem.resourceType" class="flex-vert-center">
+              <img src="assets/icon/resources/{{item.lootableItem.resourceType}}.png" class="loot-image">
+              <div class="font-small">{{item.lootableItem.resourceAmount}}</div>
+            </div>
+            <div *ngIf="item.lootableItem.heroBaseId && model.getHeroBase(item.lootableItem.heroBaseId) as heroBase" class="border-grey flex-vert-center loot-hero position-relative">
+              <ion-img [src]="'assets/icon/chars/' + heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>
+              <ion-img [src]="'assets/img/star_' + getHeroStars(heroBase, item.lootableItem.heroLevel) + '.png'" class="hero-stars"></ion-img>
+              <div class="top-left-bubble level-bubble background-{{heroBase.color}}">{{item.lootableItem.heroLevel}}</div>
+            </div>
+            <div *ngIf="item.lootableItem.jewelType" class="flex-vert-center">
+              <img src="assets/img/jewels/{{item.lootableItem.jewelType.slot}}_{{item.lootableItem.jewelLevel}}.png" class="loot-image">
+              <div class="font-small no-wrap">L{{item.lootableItem.jewelLevel}} {{converter.readableIdentifier(item.lootableItem.jewelType.name)}}</div>
+            </div>
+            <div *ngIf="item.lootableItem.vehicleBaseId && model.getVehicleBase(item.lootableItem.vehicleBaseId) as baseVehicle" class="flex-vert-center">
+              <img src="assets/img/vehicles/{{baseVehicle.avatar}}.png">
+              <div class="font-small ion-text-center">{{baseVehicle.name}}</div>
+            </div>
+            <div *ngIf="item.lootableItem.vehiclePartQuality" class="flex-vert-center">
+              <img src="assets/img/vehicles/parts/{{item.lootableItem.vehiclePartType}}_{{item.lootableItem.vehiclePartQuality}}.png">
+              <div class="font-small ion-text-center">{{converter.readableIdentifier(item.lootableItem.vehiclePartType)}}</div>
+            </div>
+
+            <ion-button size="small" [disabled]="!model.hasEnoughResources(item.priceType, item.priceAmount)" (click)="buyBlackMarketItem(item)">
+              <span class="pl-1 pr-1 flex-center">{{item.priceAmount}} <img src="assets/icon/resources/{{item.priceType}}.png" class="resource-icon"></span>
+            </ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </ion-card>
 </ion-content>

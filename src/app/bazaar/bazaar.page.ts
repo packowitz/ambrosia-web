@@ -11,6 +11,7 @@ import {AlertController, ModalController} from '@ionic/angular';
 import {BazaarUpgradeInfoModal} from './bazaar-upgrade-info.modal';
 import {HeroBase} from '../domain/herobase.model';
 import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
+import {BlackMarketItem} from '../domain/blackMarketItem.model';
 
 @Component({
   selector: 'app-bazaar',
@@ -88,8 +89,15 @@ export class BazaarPage {
     }, () => this.saving = false );
   }
 
+  buyBlackMarketItem(item: BlackMarketItem) {
+    this.saving = true;
+    this.backendService.buyBlackMarketItem(item).subscribe(() => {
+      this.saving = false;
+    }, () => this.saving = false );
+  }
+
   getHeroStars(heroBase: HeroBase, level: number): number {
-    let levelStars = level / 10;
+    let levelStars = Math.floor(level / 10);
     if (level % 10 > 0) {
       levelStars ++;
     }

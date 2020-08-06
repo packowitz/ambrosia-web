@@ -102,6 +102,11 @@ export class AppComponent {
             icon: 'apple'
         },
         {
+            title: 'Black Market',
+            url: '/blackmarket',
+            icon: 'three-keys'
+        },
+        {
             title: 'Achievements',
             url: '/achievements',
             icon: 'trophy'

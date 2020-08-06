@@ -44,6 +44,7 @@ import {Achievements} from '../domain/achievements.model';
 import {MerchantItem} from '../domain/merchantItem.model';
 import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
 import {AchievementReward} from '../domain/achievementReward.model';
+import {BlackMarketItem} from '../domain/blackMarketItem.model';
 
 export class Looted {
     type: string;
@@ -91,6 +92,7 @@ export class PlayerActionResponse {
     dailyActivity?: DailyActivity;
     merchantItems?: MerchantPlayerItem[];
     boughtMerchantItem?: MerchantPlayerItem;
+    blackMarketItems?: BlackMarketItem[];
     achievementRewards?: AchievementReward[];
     claimedAchievementRewardId?: number;
 }
@@ -685,5 +687,17 @@ export class BackendService {
 
     claimAchievementReward(reward: AchievementReward): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/achievement/claim/' + reward.id, null);
+    }
+
+    getAllBlackMarketItems(): Observable<BlackMarketItem[]> {
+        return this.http.get<BlackMarketItem[]>(API_URL + '/admin/blackmarket/item');
+    }
+
+    saveBlackMarketItem(item: BlackMarketItem): Observable<BlackMarketItem> {
+        return this.http.post<BlackMarketItem>(API_URL + '/admin/blackmarket/item', item);
+    }
+
+    buyBlackMarketItem(item: BlackMarketItem): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/bazaar/blackmarket/buy/' + item.id, null);
     }
 }
