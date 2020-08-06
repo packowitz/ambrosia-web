@@ -5,7 +5,7 @@ branches:
   only:
   - master
 before_script:
-- npm install -g ionic
+- npm install -g @ionic/cli
 script:
 - npm install
 - ionic build --prod
