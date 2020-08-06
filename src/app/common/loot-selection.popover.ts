@@ -37,7 +37,7 @@ export class LootSelectionPopover {
 
     getLootBoxes(): LootBox[] {
         if (!this.searchTerm) {
-            return this.model.lootBoxes;
+            return this.model.lootBoxes.filter(b => b.type === this.lootBoxType);
         }
         let terms = this.searchTerm.trim().toLowerCase().split(' ');
         return this.model.lootBoxes.filter(box => {
