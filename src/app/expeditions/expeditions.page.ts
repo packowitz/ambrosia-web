@@ -43,7 +43,7 @@ export class ExpeditionsPage implements OnInit {
     this.popoverCtrl.create({
       component: LootSelectionPopover,
       componentProps: {
-        searchPrefill: 'Exp',
+        lootBoxType: 'EXPEDITION',
         selected: expedition.lootBoxId
       }
     }).then(p => {

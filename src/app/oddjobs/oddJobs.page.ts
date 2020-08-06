@@ -42,7 +42,7 @@ export class OddJobsPage implements OnInit {
     this.popoverCtrl.create({
       component: LootSelectionPopover,
       componentProps: {
-        searchPrefill: 'Job',
+        lootBoxType: 'ODD_JOB',
         selected: oddJob.lootBoxId
       }
     }).then(p => {

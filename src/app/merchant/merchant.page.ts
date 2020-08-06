@@ -43,7 +43,7 @@ export class MerchantPage implements OnInit {
     this.popoverCtrl.create({
       component: LootSelectionPopover,
       componentProps: {
-        searchPrefill: 'Mer',
+        lootBoxType: 'MERCHANT',
         selected: item.lootBoxId
       }
     }).then(p => {

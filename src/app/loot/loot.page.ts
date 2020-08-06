@@ -13,6 +13,7 @@ import {LootBox} from '../domain/lootBox.model';
 export class LootPage implements OnInit {
 
   saving = false;
+  lootBoxType = 'LOOT';
 
   constructor(private backendService: BackendService,
               private alertCtrl: AlertController,
@@ -31,9 +32,13 @@ export class LootPage implements OnInit {
     }
   }
 
+  getLootBoxes(): LootBox[] {
+    return this.model.lootBoxes.filter(l => l.type === this.lootBoxType);
+  }
+
   newLootBox() {
     this.alertCtrl.create({
-      subHeader: 'New loot box',
+      subHeader: 'New ' + this.lootBoxType + ' loot box',
       inputs: [
         {
           name: 'name',
@@ -51,7 +56,7 @@ export class LootPage implements OnInit {
           handler: (data) => {
             if (data.name) {
               this.saving = true;
-              this.backendService.saveLootBox({name: data.name}).subscribe(lootBox => {
+              this.backendService.saveLootBox({name: data.name, type: this.lootBoxType}).subscribe(lootBox => {
                 this.model.lootBoxes.push(lootBox);
                 this.saving = false;
               });

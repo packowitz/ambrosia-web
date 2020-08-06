@@ -7,7 +7,6 @@ import {AlertController, ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {BuildingUpgradeModal} from '../common/buildingUpgrade.modal';
 import {BuildingService} from '../services/building.service';
-import {LaboratoryUpgradeInfoModal} from '../laboratory/laboratory-upgrade-info.modal';
 import {StorageUpgradeInfoModal} from './storage-upgrade-info.modal';
 
 @Component({

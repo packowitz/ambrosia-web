@@ -14,8 +14,11 @@
 
 <div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
 <ion-content *ngIf="model.lootBoxes">
+  <div class="flex-space-between ma-2">
+    <ion-button *ngFor="let type of enumService.adminEnums.lootBoxTypes" size="small" [fill]="lootBoxType == type ? 'solid' : 'outline'" (click)="lootBoxType = type">{{type}}</ion-button>
+  </div>
   <ion-list>
-    <ion-item *ngFor="let lootBox of model.lootBoxes" (click)="lootBoxDetails(lootBox)" detail class="pointer">
+    <ion-item *ngFor="let lootBox of getLootBoxes()" (click)="lootBoxDetails(lootBox)" detail class="pointer">
       <ion-label>#{{lootBox.id}} {{lootBox.name}}</ion-label>
     </ion-item>
   </ion-list>

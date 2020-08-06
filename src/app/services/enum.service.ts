@@ -52,6 +52,7 @@ export class Enums {
 export class AdminEnums {
     storyTriggers: string[];
     mapTypes: string[];
+    lootBoxTypes: string[];
 }
 
 @Injectable({

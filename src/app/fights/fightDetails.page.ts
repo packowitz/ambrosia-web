@@ -9,6 +9,7 @@ import {Hero} from '../domain/hero.model';
 import {FightResolved} from '../domain/fightResolved.model';
 import {FightStageResolved} from '../domain/fightStageResolved.model';
 import {ConverterService} from '../services/converter.service';
+import {LootBox} from '../domain/lootBox.model';
 
 @Component({
   selector: 'fight-details',
@@ -68,6 +69,10 @@ export class FightDetailsPage implements OnInit {
 
   getResourceTypes(): ResourceType[] {
     return this.enumService.getResourceTypes().filter(r => r.category === 'BATTLE_FEE');
+  }
+
+  getLootBoxes(): LootBox[] {
+    return this.model.lootBoxes.filter(l => l.type === 'LOOT');
   }
 
   addStage() {

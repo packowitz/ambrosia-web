@@ -44,7 +44,7 @@ export class AchievementsPage implements OnInit {
     this.popoverCtrl.create({
       component: LootSelectionPopover,
       componentProps: {
-        searchPrefill: 'Ach',
+        lootBoxType: 'ACHIEVEMENT',
         selected: reward.lootBoxId
       }
     }).then(p => {

@@ -100,7 +100,7 @@
       <ion-item>
         <ion-label slot="start">Loot</ion-label>
         <ion-select [(ngModel)]="fight.lootBox" [compareWith]="compareById">
-          <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot">{{loot.name}}</ion-select-option>
+          <ion-select-option *ngFor="let loot of getLootBoxes()" [value]="loot">{{loot.name}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-card-content>

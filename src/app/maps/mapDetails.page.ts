@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Map} from '../domain/map.model';
 import {MapTile} from '../domain/mapTile.model';
 import {ConverterService} from '../services/converter.service';
+import {LootBox} from '../domain/lootBox.model';
 
 @Component({
   selector: 'map-details',
@@ -200,6 +201,10 @@ export class MapDetailsPage implements OnInit {
 
   chestIcons(): MapTileStructure[] {
     return this.enumService.getMapTileStructures().filter(s => s.type === 'CHEST');
+  }
+
+  getLootBoxes(): LootBox[] {
+    return this.model.lootBoxes.filter(l => l.type === 'LOOT');
   }
 
   fightName(fightId): string {

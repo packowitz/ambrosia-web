@@ -7,6 +7,7 @@ import {StoryPlaceholder} from '../domain/storyPlaceholder.model';
 import {PlaceholderPopover} from './placeholder.popover';
 import {Story} from '../domain/story.model';
 import {StoryPicSelectionPopover} from './storyPicSelection.popover';
+import {LootBox} from '../domain/lootBox.model';
 
 @Component({
   selector: 'story',
@@ -38,6 +39,10 @@ export class StoryPage implements OnInit {
         this.model.lootBoxes = data;
       });
     }
+  }
+
+  getLootBoxes(): LootBox[] {
+    return this.model.lootBoxes.filter(l => l.type === 'STORY');
   }
 
   resetStoryLine() {

@@ -49,7 +49,7 @@
             <ion-label>LootBox</ion-label>
             <ion-select [(ngModel)]="lootBoxId" placeholder="select">
               <ion-select-option [value]="null">None</ion-select-option>
-              <ion-select-option *ngFor="let loot of model.lootBoxes" [value]="loot.id">{{loot.name}}</ion-select-option>
+              <ion-select-option *ngFor="let loot of getLootBoxes()" [value]="loot.id">{{loot.name}}</ion-select-option>
             </ion-select>
           </ion-item>
         </div>

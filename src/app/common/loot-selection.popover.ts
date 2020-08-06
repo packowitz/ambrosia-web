@@ -17,13 +17,14 @@ import {BackendService} from '../services/backend.service';
 export class LootSelectionPopover {
 
     searchTerm = '';
+    lootBoxType: string;
     currentSelectedId = 0;
 
     constructor(private model: Model,
                 private backendService: BackendService,
                 private popoverController: PopoverController,
                 private navParams: NavParams) {
-        this.searchTerm = navParams.get('searchPrefill');
+        this.lootBoxType = navParams.get('lootBoxType');
         let selected = navParams.get('selected');
         if (selected) {
             this.currentSelectedId = selected;
@@ -40,6 +41,9 @@ export class LootSelectionPopover {
         }
         let terms = this.searchTerm.trim().toLowerCase().split(' ');
         return this.model.lootBoxes.filter(box => {
+            if (box.type !== this.lootBoxType) {
+                return false;
+            }
             let name = box.name.toLowerCase();
             for (let i = 0; i < terms.length; i++) {
                 if (name.indexOf(terms[i]) === -1) {
@@ -52,7 +56,7 @@ export class LootSelectionPopover {
 
     createLootBox() {
         if (this.searchTerm) {
-            this.backendService.saveLootBox({name: this.searchTerm}).subscribe(lootBox => {
+            this.backendService.saveLootBox({name: this.searchTerm, type: this.lootBoxType}).subscribe(lootBox => {
                 this.model.lootBoxes.push(lootBox);
                 this.close(lootBox);
             });

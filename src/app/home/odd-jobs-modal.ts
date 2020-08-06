@@ -65,6 +65,7 @@ import {ConverterService} from '../services/converter.service';
                       <img *ngIf="item.type == 'RESOURCE'" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
                       <span *ngIf="item.type == 'PROGRESS'">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
                       <img *ngIf="item.type == 'PROGRESS'" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
+                      <span *ngIf="item.type == 'JEWEL'"><img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.value}}.png" class="jewel-icon"></span>
                     </div>
                   </div>
                 </div>
