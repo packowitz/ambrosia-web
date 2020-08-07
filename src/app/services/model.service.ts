@@ -863,7 +863,7 @@ export class Model {
 
     updateAchievementReward(reward?: AchievementReward) {
         if (reward) {
-            let idx = this.achievementRewards.findIndex(a => a.id === a.id);
+            let idx = this.achievementRewards.findIndex(a => a.id === reward.id);
             if (idx >= 0) {
                 this.achievementRewards[idx] = reward;
             } else {
