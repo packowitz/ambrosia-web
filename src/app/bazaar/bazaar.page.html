@@ -23,17 +23,17 @@
 <div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
 <looted></looted>
 <ion-content>
-  <ion-segment [(ngModel)]="tab">
-    <ion-segment-button value="merchant">
+  <ion-segment [(ngModel)]="tab" class="scrollable-vert" style="justify-content: inherit;">
+    <ion-segment-button value="merchant" class="flex-no-shrink">
       <ion-label>Merchant</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="shop">
+    <ion-segment-button value="shop" class="flex-no-shrink">
       <ion-label>Shop</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="trader" *ngIf="model.progress.tradingEnabled">
+    <ion-segment-button value="trader" *ngIf="model.progress.tradingEnabled" class="flex-no-shrink">
       <ion-label>Trader</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="blackMarket" *ngIf="model.progress.blackMarketEnabled">
+    <ion-segment-button value="blackMarket" *ngIf="model.progress.blackMarketEnabled" class="flex-no-shrink">
       <ion-label>Black Market</ion-label>
     </ion-segment-button>
   </ion-segment>
