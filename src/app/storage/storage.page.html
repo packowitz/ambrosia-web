@@ -361,4 +361,88 @@
       </ion-row>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Other Items</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <img src="assets/icon/resources/WOODEN_KEYS.png" class="resource-icon-large">
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-down">
+          <b>Wooden Keys</b> can be found in the mines after defeating a lower level team. Use them in the black market to retrieve an already levelled hero.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Wooden keys</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Wooden keys can be found in the mines after defeating a lower level team. Use them in the black market to retrieve an already levelled hero.')">
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.woodenKeys}}<ion-img src="assets/icon/resources/WOODEN_KEYS.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <img src="assets/icon/resources/BRONZE_KEYS.png" class="resource-icon-large">
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-down">
+          <b>Bronze Keys</b> can be found in the mines after defeating a mid level team. Use them in the black market to retrieve an already levelled hero.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Bronze keys</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Bronze keys can be found in the mines after defeating a mid level team. Use them in the black market to retrieve an already levelled hero.')">
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.bronzeKeys}}<ion-img src="assets/icon/resources/BRONZE_KEYS.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <img src="assets/icon/resources/SILVER_KEYS.png" class="resource-icon-large">
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-down">
+          <b>Silver Keys</b> can be found in the mines after defeating a higher level team. Use them in the black market to retrieve an already levelled hero.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Silver keys</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Silver keys can be found in the mines after defeating a higher level team. Use them in the black market to retrieve an already levelled hero.')">
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.silverKeys}}<ion-img src="assets/icon/resources/SILVER_KEYS.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeMd="2" class="flex-center">
+          <img src="assets/icon/resources/GOLDEN_KEYS.png" class="resource-icon-large">
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-down">
+          <b>Golden Keys</b> can be found in the mines after defeating the highest level team. Use them in the black market to retrieve an already levelled hero.
+        </ion-col>
+        <ion-col sizeMd="6" class="ion-hide-md-up flex-center">
+          <b>Golden keys</b> <img src="assets/icon/info.png" class="resource-icon pointer ml-1" (click)="info('Golden keys can be found in the mines after defeating the highest level team. Use them in the black market to retrieve an already levelled hero.')">
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-end">
+          <div class="bold flex-center">
+            {{model.resources.goldenKeys}}<ion-img src="assets/icon/resources/GOLDEN_KEYS.png" class="resource-icon"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col sizeMd="1" class="flex-center">
+          <i>no limit</i>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
