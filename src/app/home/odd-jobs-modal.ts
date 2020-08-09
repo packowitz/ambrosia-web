@@ -11,7 +11,7 @@ import {ConverterService} from '../services/converter.service';
 @Component({
     selector: 'odd-jobs-modal',
     template: `
-        <div class="ma-2">
+        <div class="ma-2 full-height-scrollable">
           <div class="flex-end">
             <ion-button size="small" fill="clear" color="dark" (click)="closeModal()">
               <ion-icon name="close"></ion-icon>

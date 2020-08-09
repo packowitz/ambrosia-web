@@ -279,6 +279,11 @@ ion-row.table-row {
   overflow-x: scroll;
 }
 
+.full-height-scrollable {
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
 .hero-block-view {
   display: flex;
   flex-wrap: wrap;
