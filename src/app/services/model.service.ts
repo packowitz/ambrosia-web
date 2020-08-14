@@ -37,6 +37,7 @@ import {MerchantItem} from '../domain/merchantItem.model';
 import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
 import {AchievementReward} from '../domain/achievementReward.model';
 import {BlackMarketItem} from '../domain/blackMarketItem.model';
+import {AutoBreakdownConfiguration} from '../domain/autoBreakdownConfiguration.model';
 
 @Injectable({
     providedIn: 'root'
@@ -85,6 +86,7 @@ export class Model {
     achievementRewards: AchievementReward[];
     blackMarketItems: BlackMarketItem[];
     allBlackMarketItems: BlackMarketItem[];
+    autoBreakdownConfiguration: AutoBreakdownConfiguration;
 
     interval: number;
     lastIntervalTimestamp: number = Date.now();
@@ -208,6 +210,7 @@ export class Model {
         if (type === 'MERCHANT_ITEMS_BOUGHT') { return this.achievements.merchantItemsBought; }
         if (type === 'MAP_TILES_DISCOVERED') { return this.achievements.mapTilesDiscovered; }
         if (type === 'GEAR_MODIFICATIONS') { return this.achievements.gearModified; }
+        if (type === 'GEAR_BREAKDOWN') { return this.achievements.gearBreakdown; }
         if (type === 'JEWELS_MERGED') { return this.achievements.jewelsMerged; }
         if (type === 'BUILDING_UPGRADES') { return this.achievements.buildingsUpgradesDone; }
         if (type === 'VEHICLE_UPGRADES') { return this.achievements.vehiclesUpgradesDone; }
@@ -618,6 +621,9 @@ export class Model {
             if (idx >= 0) {
                 this.achievementRewards.splice(idx, 1);
             }
+        }
+        if (data.autoBreakdownConfiguration) {
+            this.autoBreakdownConfiguration = data.autoBreakdownConfiguration;
         }
     }
 

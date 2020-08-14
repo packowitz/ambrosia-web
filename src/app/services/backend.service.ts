@@ -45,6 +45,7 @@ import {MerchantItem} from '../domain/merchantItem.model';
 import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
 import {AchievementReward} from '../domain/achievementReward.model';
 import {BlackMarketItem} from '../domain/blackMarketItem.model';
+import {AutoBreakdownConfiguration} from '../domain/autoBreakdownConfiguration.model';
 
 export class Looted {
     type: string;
@@ -95,6 +96,7 @@ export class PlayerActionResponse {
     blackMarketItems?: BlackMarketItem[];
     achievementRewards?: AchievementReward[];
     claimedAchievementRewardId?: number;
+    autoBreakdownConfiguration?: AutoBreakdownConfiguration;
 }
 
 @Injectable({

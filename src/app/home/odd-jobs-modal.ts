@@ -274,6 +274,7 @@ export class OddJobsModal {
             case 'MERCHANT_ITEMS_BOUGHT': return 'Purchase ' + number + ' items from the merchant';
             case 'MAP_TILES_DISCOVERED': return 'Discover ' + number + ' map tiles';
             case 'GEAR_MODIFICATIONS': return 'Perform ' + number + ' gear modifications';
+            case 'GEAR_BREAKDOWN': return 'Breakdown ' + number + ' gear items';
             case 'JEWELS_MERGED': return 'Merge ' + number + ' jewels';
             case 'BUILDING_UPGRADES': return 'Perform ' + number + ' building upgrades';
             case 'VEHICLE_UPGRADES': return 'Perform ' + number + ' vehicle upgrades';

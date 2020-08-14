@@ -23,6 +23,7 @@ export class Achievements {
     blackCoalUsed: number;
     merchantItemsBought: number;
     mapTilesDiscovered: number;
+    gearBreakdown: number;
     gearModified: number;
     jewelsMerged: number;
     buildingsUpgradesDone: number;

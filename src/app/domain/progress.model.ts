@@ -41,6 +41,7 @@ export class Progress {
     gearModificationSpeed: number;
     gearBreakDownRarity: number;
     gearBreakDownResourcesInc: number;
+    autoBreakDownEnabled: boolean;
     reRollGearQualityEnabled: boolean;
     reRollGearStatEnabled: boolean;
     incGearRarityEnabled: boolean;
