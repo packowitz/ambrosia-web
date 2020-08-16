@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Model} from './model.service';
-import {DynamicProperty} from '../domain/property.model';
-import {PropertyService} from './property.service';
 import {Gear} from '../domain/gear.model';
 
 
@@ -16,12 +14,12 @@ export class GearService {
         if (this.model.progress.autoBreakDownEnabled) {
             let conf = this.model.autoBreakdownConfiguration;
             switch (gear.rarity) {
-                case 'SIMPLE': return this.getNumberOfJewels(gear) < conf.simpleMinJewelSlots && this.gearQualityToNumber(gear.gearQuality) < conf.simpleMinQuality;
-                case 'COMMON': return this.getNumberOfJewels(gear) < conf.commonMinJewelSlots && this.gearQualityToNumber(gear.gearQuality) < conf.commonMinQuality;
-                case 'UNCOMMON': return this.getNumberOfJewels(gear) < conf.uncommonMinJewelSlots && this.gearQualityToNumber(gear.gearQuality) < conf.uncommonMinQuality;
-                case 'RARE': return this.getNumberOfJewels(gear) < conf.rareMinJewelSlots && this.gearQualityToNumber(gear.gearQuality) < conf.rareMinQuality;
-                case 'EPIC': return this.getNumberOfJewels(gear) < conf.epicMinJewelSlots && this.gearQualityToNumber(gear.gearQuality) < conf.epicMinQuality;
-                case 'LEGENDARY': return this.getNumberOfJewels(gear) < conf.legendaryMinJewelSlots && this.gearQualityToNumber(gear.gearQuality) < conf.legendaryMinQuality;
+                case 'SIMPLE': return this.getNumberOfJewels(gear) < conf.simpleMinJewelSlots || this.gearQualityToNumber(gear.gearQuality) < conf.simpleMinQuality;
+                case 'COMMON': return this.getNumberOfJewels(gear) < conf.commonMinJewelSlots || this.gearQualityToNumber(gear.gearQuality) < conf.commonMinQuality;
+                case 'UNCOMMON': return this.getNumberOfJewels(gear) < conf.uncommonMinJewelSlots || this.gearQualityToNumber(gear.gearQuality) < conf.uncommonMinQuality;
+                case 'RARE': return this.getNumberOfJewels(gear) < conf.rareMinJewelSlots || this.gearQualityToNumber(gear.gearQuality) < conf.rareMinQuality;
+                case 'EPIC': return this.getNumberOfJewels(gear) < conf.epicMinJewelSlots || this.gearQualityToNumber(gear.gearQuality) < conf.epicMinQuality;
+                case 'LEGENDARY': return this.getNumberOfJewels(gear) < conf.legendaryMinJewelSlots || this.gearQualityToNumber(gear.gearQuality) < conf.legendaryMinQuality;
             }
         }
         return false;

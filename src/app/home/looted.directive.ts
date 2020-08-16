@@ -3,23 +3,26 @@ import {Model} from '../services/model.service';
 import {PropertyService} from '../services/property.service';
 import {ConverterService} from '../services/converter.service';
 import {StoryService} from '../services/story.service';
+import {GearService} from '../services/gear.service';
+import {BackendService, Looted} from '../services/backend.service';
 
 @Component({
     selector: 'looted',
     template: `
-      <div *ngIf="model.looted" class="loading-indicator" (click)="lootCollected()">
+      <div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+      <div *ngIf="getLooted() as looted" class="loading-indicator" (click)="lootCollected()">
         <div class="loot-window pa-2">
-          <div class="flex-center" *ngIf="model.looted.type == 'CHEST'">Chest contained</div>
-          <div class="flex-center" *ngIf="model.looted.type == 'BATTLE'">Battle trophy</div>
-          <div class="flex-center" *ngIf="model.looted.type == 'BREAKDOWN'">Remnants collected</div>
-          <div class="flex-center" *ngIf="model.looted.type == 'STORY'">Docs gift</div>
-          <div class="flex-center" *ngIf="model.looted.type == 'LEVEL_UP'">You reached level {{model.progress.level}}</div>
-          <div class="flex-center" *ngIf="model.looted.type == 'VIP_LEVEL_UP'">You reached vip level {{model.progress.vipLevel}}</div>
-          <div class="flex-center" *ngIf="model.looted.type == 'MERCHANT'">You bought</div>
-          <div class="flex-center" *ngIf="model.looted.type == 'UPGRADE'">Upgrade finished</div>
-          <div class="flex-center" *ngIf="model.looted.type == 'BLACK_MARKET'">You bought</div>
-          <div class="mt-1" [class.flex-space-between]="model.looted.items.length > 1" [class.flex-center]="model.looted.items.length == 1">
-            <loot-item *ngFor="let loot of model.looted.items" [loot]="loot" class="loot-item"></loot-item>
+          <div class="flex-center" *ngIf="looted.type == 'CHEST'">Chest contained</div>
+          <div class="flex-center" *ngIf="looted.type == 'BATTLE'">Battle trophy</div>
+          <div class="flex-center" *ngIf="looted.type == 'BREAKDOWN'">Remnants collected</div>
+          <div class="flex-center" *ngIf="looted.type == 'STORY'">Docs gift</div>
+          <div class="flex-center" *ngIf="looted.type == 'LEVEL_UP'">You reached level {{model.progress.level}}</div>
+          <div class="flex-center" *ngIf="looted.type == 'VIP_LEVEL_UP'">You reached vip level {{model.progress.vipLevel}}</div>
+          <div class="flex-center" *ngIf="looted.type == 'MERCHANT'">You bought</div>
+          <div class="flex-center" *ngIf="looted.type == 'UPGRADE'">Upgrade finished</div>
+          <div class="flex-center" *ngIf="looted.type == 'BLACK_MARKET'">You bought</div>
+          <div class="mt-1" [class.flex-space-between]="looted.items.length > 1" [class.flex-center]="looted.items.length == 1">
+            <loot-item *ngFor="let loot of looted.items" [loot]="loot" class="loot-item"></loot-item>
           </div>
           <div class="flex-center mt-1 color-grey font-small"><i>(click anywhere to close)</i></div>
         </div>
@@ -27,6 +30,8 @@ import {StoryService} from '../services/story.service';
   `
 })
 export class LootedDirective {
+
+    saving = false;
 
     gearStory = 'GEAR_FOUND';
     jewelStory = 'JEWEL_FOUND';
@@ -36,7 +41,25 @@ export class LootedDirective {
     constructor(public model: Model,
                 public propertyService: PropertyService,
                 public converter: ConverterService,
-                private storyService: StoryService) {
+                private storyService: StoryService,
+                private gearService: GearService,
+                private backendService: BackendService) {
+    }
+
+    getLooted(): Looted {
+        if (this.model.looted && !this.model.looted.autobreakdownChecked) {
+            this.checkAutoBreakdown();
+        }
+        return this.model.looted;
+    }
+
+    checkAutoBreakdown() {
+        this.model.looted.items.filter(item => item.type === 'GEAR').forEach(item => {
+            const gear = this.model.getGear(item.value);
+            if (gear && this.gearService.autoBreakdown(gear)) {
+                gear.markedToBreakdown = true;
+            }
+        });
     }
 
     lootCollected() {
@@ -53,7 +76,18 @@ export class LootedDirective {
             this.storyService.showStory(this.genomeStory).subscribe(() => console.log(this.genomeStory + ' story finished'));
         }
 
-        this.model.looted = null;
+        const breakdownGear = this.model.looted.items
+            .filter(item => item.type === 'GEAR')
+            .map(item => this.model.getGear(item.value))
+            .filter(gear => gear.markedToBreakdown);
+        if (breakdownGear && breakdownGear.length > 0) {
+            this.backendService.breakdownGear(breakdownGear, true).subscribe(() => {
+                this.saving = false;
+                this.model.looted = null;
+            }, () => this.saving = false);
+        } else {
+            this.model.looted = null;
+        }
     }
 
     gearLooted(): boolean {

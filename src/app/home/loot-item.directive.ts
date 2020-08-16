@@ -3,6 +3,7 @@ import {LootedItem} from '../services/backend.service';
 import {Model} from '../services/model.service';
 import {PropertyService} from '../services/property.service';
 import {ConverterService} from '../services/converter.service';
+import {Gear} from '../domain/gear.model';
 
 @Component({
     selector: 'loot-item',
@@ -19,9 +20,10 @@ import {ConverterService} from '../services/converter.service';
         <ion-img [src]="'assets/icon/chars/' + hero.avatar + '.png'" class="border-bottom-grey"></ion-img>
         <ion-img [src]="'assets/img/star_' + hero.stars + '.png'" class="hero-stars"></ion-img>
       </div>
-      <div *ngIf="getGear() as gear" class="flex-vert-center">
+      <div *ngIf="getGear() as gear" class="flex-vert-center position-relative pointer" (click)="toggleGear(gear, $event)">
         <gear-icon [gear]="gear" [type]="gear.type"></gear-icon>
         <gear-stat class="font-small no-wrap" [stat]="gear.stat" [value]="gear.statValue"></gear-stat>
+        <img *ngIf="gear.markedToBreakdown" src="assets/icon/breakdown.png" class="greyed-out">
       </div>
       <div *ngIf="loot.type == 'JEWEL'" class="flex-vert-center">
         <img src="assets/img/jewels/{{loot.jewelType.slot}}_{{loot.value}}.png" class="loot-image">
@@ -48,6 +50,11 @@ export class LootItemDirective {
         if (this.loot.type === 'GEAR') {
             return this.model.getGear(this.loot.value);
         }
+    }
+
+    toggleGear(gear: Gear, event) {
+        event.stopPropagation();
+        gear.markedToBreakdown = !gear.markedToBreakdown;
     }
 
     getProgressStatText(progressStat: string, bonus: number): string {

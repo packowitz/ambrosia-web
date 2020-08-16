@@ -24,6 +24,8 @@ export class ForgePage {
 
   saving = false;
 
+  showAutoBreakdown = false;
+
   showSimple = true;
   showCommon = false;
   showUncommon = false;
@@ -82,6 +84,13 @@ export class ForgePage {
 
   showUpgradeInfo() {
     this.modalCtrl.create({component: ForgeUpgradeInfoModal}).then(m => m.present() );
+  }
+
+  saveAutoConfig() {
+    this.saving = true;
+    this.backendService.saveAutoBreakdownConfig(this.model.autoBreakdownConfiguration).subscribe(() => {
+      this.saving = false;
+    }, () => this.saving = false);
   }
 
   modificationFinished(gear: Gear): boolean {

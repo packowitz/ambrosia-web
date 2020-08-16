@@ -50,6 +50,9 @@ import {AutoBreakdownConfiguration} from '../domain/autoBreakdownConfiguration.m
 export class Looted {
     type: string;
     items: LootedItem[];
+
+    // transient
+    autobreakdownChecked: boolean;
 }
 export class LootedItem {
     type: string;
@@ -571,9 +574,10 @@ export class BackendService {
         return this.http.post<PlayerActionResponse>(API_URL + '/laboratory/cancel/' + incubatorId, null);
     }
 
-    breakdownGear(gears: Gear[]): Observable<PlayerActionResponse> {
+    breakdownGear(gears: Gear[], silent?: boolean): Observable<PlayerActionResponse> {
         let request = {
-            gearIds: gears.map(g => g.id)
+            gearIds: gears.map(g => g.id),
+            silent: silent === true
         };
         return this.http.post<PlayerActionResponse>(API_URL + '/forge/breakdown', request);
     }
@@ -701,5 +705,9 @@ export class BackendService {
 
     buyBlackMarketItem(item: BlackMarketItem): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/bazaar/blackmarket/buy/' + item.id, null);
+    }
+
+    saveAutoBreakdownConfig(config: AutoBreakdownConfiguration): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/forge/auto', config);
     }
 }
