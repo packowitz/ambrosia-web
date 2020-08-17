@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Model} from './model.service';
 import {Gear} from '../domain/gear.model';
+import {LootedItem} from './backend.service';
 
 
 @Injectable({
@@ -9,6 +10,15 @@ import {Gear} from '../domain/gear.model';
 export class GearService {
 
     constructor(private model: Model) {}
+
+    checkAutoBreakdown(items?: LootedItem[]) {
+        items?.filter(item => item.type === 'GEAR').forEach(item => {
+            const gear = this.model.getGear(item.value);
+            if (gear && this.autoBreakdown(gear)) {
+                gear.markedToBreakdown = true;
+            }
+        });
+    }
 
     autoBreakdown(gear: Gear): boolean {
         if (this.model.progress.autoBreakDownEnabled) {

@@ -6,6 +6,8 @@ import {Mission} from '../domain/mission.model';
 import {Hero} from '../domain/hero.model';
 import {OfflineBattle} from '../domain/offlineBattle.model';
 import {BackendService} from '../services/backend.service';
+import {GearService} from '../services/gear.service';
+import {Gear} from '../domain/gear.model';
 
 @Component({
     selector: 'mission-progress-popover',
@@ -115,7 +117,8 @@ export class MissionProgressModal {
     constructor(private modalCtrl: ModalController,
                 private navParams: NavParams,
                 public model: Model,
-                private backendService: BackendService) {
+                private backendService: BackendService,
+                private gearService: GearService) {
         this.mission = navParams.get('mission');
         this.init();
 
@@ -146,7 +149,32 @@ export class MissionProgressModal {
     }
 
     closeModal() {
-        this.modalCtrl.dismiss();
+        if (this.mission.lootCollected) {
+            let autoBreakdown: Gear[] = [];
+            this.mission.battles
+                .filter(battle => battle.lootedItems && battle.lootedItems.length > 0)
+                .forEach(battle => {
+                    battle.lootedItems.forEach(item => {
+                        if (item.type === 'GEAR') {
+                            const gear = this.model.getGear(item.value);
+                            if (gear.markedToBreakdown) {
+                                autoBreakdown.push(gear);
+                            }
+                        }
+                    });
+                });
+            if (autoBreakdown.length > 0) {
+                this.saving = true;
+                this.backendService.breakdownGear(autoBreakdown, true).subscribe(() => {
+                    this.saving = false;
+                    this.modalCtrl.dismiss();
+                }, () => this.saving = false);
+            } else {
+                this.modalCtrl.dismiss();
+            }
+        } else {
+            this.modalCtrl.dismiss();
+        }
     }
 
     progressInPercent(battle: OfflineBattle) {
@@ -166,6 +194,9 @@ export class MissionProgressModal {
             this.saving = false;
             if (data.missions && data.missions.length > 0) {
                 this.mission = data.missions[0];
+                this.mission.battles.forEach(battle => {
+                    this.gearService.checkAutoBreakdown(battle.lootedItems);
+                });
             } else {
                 this.closeModal();
             }

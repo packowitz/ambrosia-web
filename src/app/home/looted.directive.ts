@@ -48,18 +48,9 @@ export class LootedDirective {
 
     getLooted(): Looted {
         if (this.model.looted && !this.model.looted.autobreakdownChecked) {
-            this.checkAutoBreakdown();
+            this.gearService.checkAutoBreakdown(this.model.looted.items);
         }
         return this.model.looted;
-    }
-
-    checkAutoBreakdown() {
-        this.model.looted.items.filter(item => item.type === 'GEAR').forEach(item => {
-            const gear = this.model.getGear(item.value);
-            if (gear && this.gearService.autoBreakdown(gear)) {
-                gear.markedToBreakdown = true;
-            }
-        });
     }
 
     lootCollected() {

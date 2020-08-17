@@ -6,6 +6,8 @@ import {Hero} from '../domain/hero.model';
 import {BackendService} from '../services/backend.service';
 import {PlayerExpedition} from '../domain/playerExpedition.model';
 import {ConverterService} from '../services/converter.service';
+import {GearService} from '../services/gear.service';
+import {Gear} from '../domain/gear.model';
 
 @Component({
     selector: 'expedition-progress-popover',
@@ -97,7 +99,8 @@ export class ExpeditionProgressModal {
                 public model: Model,
                 private backendService: BackendService,
                 private alertCtrl: AlertController,
-                public converter: ConverterService) {
+                public converter: ConverterService,
+                private gearService: GearService) {
         this.playerExpedition = navParams.get('playerExpedition');
         this.init();
     }
@@ -111,7 +114,28 @@ export class ExpeditionProgressModal {
     }
 
     closeModal() {
-        this.modalCtrl.dismiss();
+        if (this.playerExpedition.lootedItems) {
+            let autoBreakdown: Gear[] = [];
+            this.playerExpedition.lootedItems.forEach(item => {
+                if (item.type === 'GEAR') {
+                    const gear = this.model.getGear(item.value);
+                    if (gear.markedToBreakdown) {
+                        autoBreakdown.push(gear);
+                    }
+                }
+            });
+            if (autoBreakdown.length > 0) {
+                this.saving = true;
+                this.backendService.breakdownGear(autoBreakdown, true).subscribe(() => {
+                    this.saving = false;
+                    this.modalCtrl.dismiss();
+                }, () => this.saving = false);
+            } else {
+                this.modalCtrl.dismiss();
+            }
+        } else {
+            this.modalCtrl.dismiss();
+        }
     }
 
     abortExpedition() {
@@ -126,8 +150,9 @@ export class ExpeditionProgressModal {
 
     finishExpedition() {
         this.saving = true;
-        this.backendService.finishExpedition(this.playerExpedition.id).subscribe(data => {
+        this.backendService.finishExpedition(this.playerExpedition.id).subscribe(() => {
             this.playerExpedition = this.model.playerExpeditions.find(p => p.id === this.playerExpedition.id);
+            this.gearService.checkAutoBreakdown(this.playerExpedition.lootedItems);
             this.init();
             this.saving = false;
         }, () => this.saving = false );
