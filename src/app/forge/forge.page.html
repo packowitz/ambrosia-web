@@ -90,25 +90,26 @@
           <div class="flex-space-between full-width">
             <div>
               <ion-select (ionChange)="saveAutoConfig()" [(ngModel)]="model.autoBreakdownConfiguration.commonMinJewelSlots" [interfaceOptions]="{subHeader: 'When 2* gear has'}">
-                <ion-select-option [value]="0">0 Jewels</ion-select-option>
-                <ion-select-option [value]="1">1 Jewel or less</ion-select-option>
-                <ion-select-option [value]="2">2 Jewels or less</ion-select-option>
-                <ion-select-option [value]="3">3 Jewels or less</ion-select-option>
-                <ion-select-option [value]="4">4 Jewels or less</ion-select-option>
+                <ion-select-option [value]="0">Never</ion-select-option>
+                <ion-select-option [value]="1">0 Jewels</ion-select-option>
+                <ion-select-option [value]="2">1 Jewel or less</ion-select-option>
+                <ion-select-option [value]="3">2 Jewels or less</ion-select-option>
+                <ion-select-option [value]="4">3 Jewels or less</ion-select-option>
+                <ion-select-option [value]="5">4 Jewels or less</ion-select-option>
               </ion-select>
             </div>
             <div>
               <ion-select (ionChange)="saveAutoConfig()" [(ngModel)]="model.autoBreakdownConfiguration.commonMinQuality" [interfaceOptions]="{subHeader: 'When 2* gear is'}">
                 <ion-select-option [value]="0">Never</ion-select-option>
-                <ion-select-option [value]="1">Shabby</ion-select-option>
-                <ion-select-option [value]="2">Rusty or lesser</ion-select-option>
-                <ion-select-option [value]="3">Ordinary or lesser</ion-select-option>
-                <ion-select-option [value]="4">Useful or lesser</ion-select-option>
-                <ion-select-option [value]="5">Good or lesser</ion-select-option>
-                <ion-select-option [value]="6">Awesome or lesser</ion-select-option>
-                <ion-select-option [value]="7">Flawless or lesser</ion-select-option>
-                <ion-select-option [value]="8">Perfect or lesser</ion-select-option>
-                <ion-select-option [value]="9">Godlike or lesser</ion-select-option>
+                <ion-select-option [value]="2">Shabby</ion-select-option>
+                <ion-select-option [value]="3">Rusty or lesser</ion-select-option>
+                <ion-select-option [value]="4">Ordinary or lesser</ion-select-option>
+                <ion-select-option [value]="5">Useful or lesser</ion-select-option>
+                <ion-select-option [value]="6">Good or lesser</ion-select-option>
+                <ion-select-option [value]="7">Awesome or lesser</ion-select-option>
+                <ion-select-option [value]="8">Flawless or lesser</ion-select-option>
+                <ion-select-option [value]="9">Perfect or lesser</ion-select-option>
+                <ion-select-option [value]="10">Godlike or lesser</ion-select-option>
               </ion-select>
             </div>
           </div>
@@ -118,25 +119,26 @@
           <div class="flex-space-between full-width">
             <div>
               <ion-select (ionChange)="saveAutoConfig()" [(ngModel)]="model.autoBreakdownConfiguration.uncommonMinJewelSlots" [interfaceOptions]="{subHeader: 'When 3* gear has'}">
-                <ion-select-option [value]="0">0 Jewels</ion-select-option>
-                <ion-select-option [value]="1">1 Jewel or less</ion-select-option>
-                <ion-select-option [value]="2">2 Jewels or less</ion-select-option>
-                <ion-select-option [value]="3">3 Jewels or less</ion-select-option>
-                <ion-select-option [value]="4">4 Jewels or less</ion-select-option>
+                <ion-select-option [value]="0">Never</ion-select-option>
+                <ion-select-option [value]="1">0 Jewels</ion-select-option>
+                <ion-select-option [value]="2">1 Jewel or less</ion-select-option>
+                <ion-select-option [value]="3">2 Jewels or less</ion-select-option>
+                <ion-select-option [value]="4">3 Jewels or less</ion-select-option>
+                <ion-select-option [value]="5">4 Jewels or less</ion-select-option>
               </ion-select>
             </div>
             <div>
               <ion-select (ionChange)="saveAutoConfig()" [(ngModel)]="model.autoBreakdownConfiguration.uncommonMinQuality" [interfaceOptions]="{subHeader: 'When 3* gear is'}">
                 <ion-select-option [value]="0">Never</ion-select-option>
-                <ion-select-option [value]="1">Shabby</ion-select-option>
-                <ion-select-option [value]="2">Rusty or lesser</ion-select-option>
-                <ion-select-option [value]="3">Ordinary or lesser</ion-select-option>
-                <ion-select-option [value]="4">Useful or lesser</ion-select-option>
-                <ion-select-option [value]="5">Good or lesser</ion-select-option>
-                <ion-select-option [value]="6">Awesome or lesser</ion-select-option>
-                <ion-select-option [value]="7">Flawless or lesser</ion-select-option>
-                <ion-select-option [value]="8">Perfect or lesser</ion-select-option>
-                <ion-select-option [value]="9">Godlike or lesser</ion-select-option>
+                <ion-select-option [value]="2">Shabby</ion-select-option>
+                <ion-select-option [value]="3">Rusty or lesser</ion-select-option>
+                <ion-select-option [value]="4">Ordinary or lesser</ion-select-option>
+                <ion-select-option [value]="5">Useful or lesser</ion-select-option>
+                <ion-select-option [value]="6">Good or lesser</ion-select-option>
+                <ion-select-option [value]="7">Awesome or lesser</ion-select-option>
+                <ion-select-option [value]="8">Flawless or lesser</ion-select-option>
+                <ion-select-option [value]="9">Perfect or lesser</ion-select-option>
+                <ion-select-option [value]="10">Godlike or lesser</ion-select-option>
               </ion-select>
             </div>
           </div>
@@ -146,25 +148,26 @@
           <div class="flex-space-between full-width">
             <div>
               <ion-select (ionChange)="saveAutoConfig()" [(ngModel)]="model.autoBreakdownConfiguration.rareMinJewelSlots" [interfaceOptions]="{subHeader: 'When 4* gear has'}">
-                <ion-select-option [value]="0">0 Jewels</ion-select-option>
-                <ion-select-option [value]="1">1 Jewel or less</ion-select-option>
-                <ion-select-option [value]="2">2 Jewels or less</ion-select-option>
-                <ion-select-option [value]="3">3 Jewels or less</ion-select-option>
-                <ion-select-option [value]="4">4 Jewels or less</ion-select-option>
+                <ion-select-option [value]="0">Never</ion-select-option>
+                <ion-select-option [value]="1">0 Jewels</ion-select-option>
+                <ion-select-option [value]="2">1 Jewel or less</ion-select-option>
+                <ion-select-option [value]="3">2 Jewels or less</ion-select-option>
+                <ion-select-option [value]="4">3 Jewels or less</ion-select-option>
+                <ion-select-option [value]="5">4 Jewels or less</ion-select-option>
               </ion-select>
             </div>
             <div>
               <ion-select (ionChange)="saveAutoConfig()" [(ngModel)]="model.autoBreakdownConfiguration.rareMinQuality" [interfaceOptions]="{subHeader: 'When 4* gear is'}">
                 <ion-select-option [value]="0">Never</ion-select-option>
-                <ion-select-option [value]="1">Shabby</ion-select-option>
-                <ion-select-option [value]="2">Rusty or lesser</ion-select-option>
-                <ion-select-option [value]="3">Ordinary or lesser</ion-select-option>
-                <ion-select-option [value]="4">Useful or lesser</ion-select-option>
-                <ion-select-option [value]="5">Good or lesser</ion-select-option>
-                <ion-select-option [value]="6">Awesome or lesser</ion-select-option>
-                <ion-select-option [value]="7">Flawless or lesser</ion-select-option>
-                <ion-select-option [value]="8">Perfect or lesser</ion-select-option>
-                <ion-select-option [value]="9">Godlike or lesser</ion-select-option>
+                <ion-select-option [value]="2">Shabby</ion-select-option>
+                <ion-select-option [value]="3">Rusty or lesser</ion-select-option>
+                <ion-select-option [value]="4">Ordinary or lesser</ion-select-option>
+                <ion-select-option [value]="5">Useful or lesser</ion-select-option>
+                <ion-select-option [value]="6">Good or lesser</ion-select-option>
+                <ion-select-option [value]="7">Awesome or lesser</ion-select-option>
+                <ion-select-option [value]="8">Flawless or lesser</ion-select-option>
+                <ion-select-option [value]="9">Perfect or lesser</ion-select-option>
+                <ion-select-option [value]="10">Godlike or lesser</ion-select-option>
               </ion-select>
             </div>
           </div>
@@ -174,25 +177,26 @@
           <div class="flex-space-between full-width">
             <div>
               <ion-select (ionChange)="saveAutoConfig()" [(ngModel)]="model.autoBreakdownConfiguration.epicMinJewelSlots" [interfaceOptions]="{subHeader: 'When 5* gear has'}">
-                <ion-select-option [value]="0">0 Jewels</ion-select-option>
-                <ion-select-option [value]="1">1 Jewel or less</ion-select-option>
-                <ion-select-option [value]="2">2 Jewels or less</ion-select-option>
-                <ion-select-option [value]="3">3 Jewels or less</ion-select-option>
-                <ion-select-option [value]="4">4 Jewels or less</ion-select-option>
+                <ion-select-option [value]="0">Never</ion-select-option>
+                <ion-select-option [value]="1">0 Jewels</ion-select-option>
+                <ion-select-option [value]="2">1 Jewel or less</ion-select-option>
+                <ion-select-option [value]="3">2 Jewels or less</ion-select-option>
+                <ion-select-option [value]="4">3 Jewels or less</ion-select-option>
+                <ion-select-option [value]="5">4 Jewels or less</ion-select-option>
               </ion-select>
             </div>
             <div>
               <ion-select (ionChange)="saveAutoConfig()" [(ngModel)]="model.autoBreakdownConfiguration.epicMinQuality" [interfaceOptions]="{subHeader: 'When 5* gear is'}">
                 <ion-select-option [value]="0">Never</ion-select-option>
-                <ion-select-option [value]="1">Shabby</ion-select-option>
-                <ion-select-option [value]="2">Rusty or lesser</ion-select-option>
-                <ion-select-option [value]="3">Ordinary or lesser</ion-select-option>
-                <ion-select-option [value]="4">Useful or lesser</ion-select-option>
-                <ion-select-option [value]="5">Good or lesser</ion-select-option>
-                <ion-select-option [value]="6">Awesome or lesser</ion-select-option>
-                <ion-select-option [value]="7">Flawless or lesser</ion-select-option>
-                <ion-select-option [value]="8">Perfect or lesser</ion-select-option>
-                <ion-select-option [value]="9">Godlike or lesser</ion-select-option>
+                <ion-select-option [value]="2">Shabby</ion-select-option>
+                <ion-select-option [value]="3">Rusty or lesser</ion-select-option>
+                <ion-select-option [value]="4">Ordinary or lesser</ion-select-option>
+                <ion-select-option [value]="5">Useful or lesser</ion-select-option>
+                <ion-select-option [value]="6">Good or lesser</ion-select-option>
+                <ion-select-option [value]="7">Awesome or lesser</ion-select-option>
+                <ion-select-option [value]="8">Flawless or lesser</ion-select-option>
+                <ion-select-option [value]="9">Perfect or lesser</ion-select-option>
+                <ion-select-option [value]="10">Godlike or lesser</ion-select-option>
               </ion-select>
             </div>
           </div>
@@ -202,25 +206,26 @@
           <div class="flex-space-between full-width">
             <div>
               <ion-select (ionChange)="saveAutoConfig()" [(ngModel)]="model.autoBreakdownConfiguration.legendaryMinJewelSlots" [interfaceOptions]="{subHeader: 'When 6* gear has'}">
-                <ion-select-option [value]="0">0 Jewels</ion-select-option>
-                <ion-select-option [value]="1">1 Jewel or less</ion-select-option>
-                <ion-select-option [value]="2">2 Jewels or less</ion-select-option>
-                <ion-select-option [value]="3">3 Jewels or less</ion-select-option>
-                <ion-select-option [value]="4">4 Jewels or less</ion-select-option>
+                <ion-select-option [value]="0">Never</ion-select-option>
+                <ion-select-option [value]="1">0 Jewels</ion-select-option>
+                <ion-select-option [value]="2">1 Jewel or less</ion-select-option>
+                <ion-select-option [value]="3">2 Jewels or less</ion-select-option>
+                <ion-select-option [value]="4">3 Jewels or less</ion-select-option>
+                <ion-select-option [value]="5">4 Jewels or less</ion-select-option>
               </ion-select>
             </div>
             <div>
               <ion-select (ionChange)="saveAutoConfig()" [(ngModel)]="model.autoBreakdownConfiguration.legendaryMinQuality" [interfaceOptions]="{subHeader: 'When 6* gear is'}">
                 <ion-select-option [value]="0">Never</ion-select-option>
-                <ion-select-option [value]="1">Shabby</ion-select-option>
-                <ion-select-option [value]="2">Rusty or lesser</ion-select-option>
-                <ion-select-option [value]="3">Ordinary or lesser</ion-select-option>
-                <ion-select-option [value]="4">Useful or lesser</ion-select-option>
-                <ion-select-option [value]="5">Good or lesser</ion-select-option>
-                <ion-select-option [value]="6">Awesome or lesser</ion-select-option>
-                <ion-select-option [value]="7">Flawless or lesser</ion-select-option>
-                <ion-select-option [value]="8">Perfect or lesser</ion-select-option>
-                <ion-select-option [value]="9">Godlike or lesser</ion-select-option>
+                <ion-select-option [value]="2">Shabby</ion-select-option>
+                <ion-select-option [value]="3">Rusty or lesser</ion-select-option>
+                <ion-select-option [value]="4">Ordinary or lesser</ion-select-option>
+                <ion-select-option [value]="5">Useful or lesser</ion-select-option>
+                <ion-select-option [value]="6">Good or lesser</ion-select-option>
+                <ion-select-option [value]="7">Awesome or lesser</ion-select-option>
+                <ion-select-option [value]="8">Flawless or lesser</ion-select-option>
+                <ion-select-option [value]="9">Perfect or lesser</ion-select-option>
+                <ion-select-option [value]="10">Godlike or lesser</ion-select-option>
               </ion-select>
             </div>
           </div>
