@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="flex-space-between">
+        Inbox
+        <ion-button size="small" fill="clear" color="dark" (click)="close()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+<ion-content *ngIf="model.inboxMessages">
+  <ion-list>
+    <ion-item *ngIf="getInboxMessages().length == 0">
+      <i>Your inbox is empty</i>
+    </ion-item>
+    <ion-item *ngFor="let msg of getInboxMessages()">
+      <div class="flex-space-between full-width">
+        <div>
+          <div class="font-small color-grey">{{converter.timeWithUnit(msg.validInSeconds)}}</div>
+          <div>{{msg.message}}</div>
+        </div>
+        <div class="flex-center">
+          <div class="flex-center">
+            <div *ngFor="let item of msg.items" class="ml-05 flex-center">
+              <span *ngIf="item.type == 'RESOURCE'">{{item.resourceAmount}}</span>
+              <img *ngIf="item.type == 'RESOURCE'" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
+              <span *ngIf="item.type == 'PROGRESS'">{{converter.readableProgressStatBonus(item.progressStat, item.progressBonus)}}</span>
+              <img *ngIf="item.type == 'PROGRESS'" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
+              <span *ngIf="item.type == 'JEWEL'"><img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.jewelLevel}}.png" class="jewel-icon"></span>
+              <span *ngIf="item.type == 'HERO'">HERO</span>
+              <span *ngIf="item.type == 'VEHICLE'">VEHICLE</span>
+              <span *ngIf="item.type == 'VEHICLE_PART'">VEHICLE_PART</span>
+            </div>
+          </div>
+          <ion-button size="small" (click)="claimGoods(msg)" [disabled]="unclaimable(msg)">Claim</ion-button>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

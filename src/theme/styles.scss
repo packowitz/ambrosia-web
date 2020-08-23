@@ -695,6 +695,14 @@ ion-row.table-row {
   font-weight: 600;
   text-align: center;
 
+  &.on-button {
+    top: 6px;
+    right: 10px;
+    width: 14px;
+    height: 14px;
+    font-size: 10px;
+  }
+
   &.alert {
     background-color: rgba(234, 20, 20, 0.9);
   }

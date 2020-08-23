@@ -315,6 +315,14 @@ export class HomePage {
     this.router.navigateByUrl('/account');
   }
 
+  gotoInbox() {
+    this.router.navigateByUrl('/inbox');
+  }
+
+  getUnreadMessageCount(): number {
+    return this.model.inboxMessages.filter(message => message.messageType === 'GOODS' || !message.read).length;
+  }
+
   getBuildingAlertCss(building: Building): string {
     if (this.buildingService.upgradeFinished(building.type)) { return 'alert'; }
     switch (building.type) {

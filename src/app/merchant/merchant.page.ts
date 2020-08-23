@@ -39,6 +39,10 @@ export class MerchantPage implements OnInit {
     }
   }
 
+  close() {
+    this.router.navigateByUrl('/home');
+  }
+
   lootBoxSelection(item: MerchantItem) {
     this.popoverCtrl.create({
       component: LootSelectionPopover,

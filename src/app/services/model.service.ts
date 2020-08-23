@@ -38,6 +38,7 @@ import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
 import {AchievementReward} from '../domain/achievementReward.model';
 import {BlackMarketItem} from '../domain/blackMarketItem.model';
 import {AutoBreakdownConfiguration} from '../domain/autoBreakdownConfiguration.model';
+import {InboxMessage} from "../domain/inboxMessage.model";
 
 @Injectable({
     providedIn: 'root'
@@ -87,6 +88,7 @@ export class Model {
     blackMarketItems: BlackMarketItem[];
     allBlackMarketItems: BlackMarketItem[];
     autoBreakdownConfiguration: AutoBreakdownConfiguration;
+    inboxMessages: InboxMessage[];
 
     interval: number;
     lastIntervalTimestamp: number = Date.now();
@@ -333,6 +335,13 @@ export class Model {
                     this.loadMerchantPlayerItems();
                 }
             }
+
+            this.inboxMessages?.forEach(i => {
+                if (i.validInSeconds > 0) {
+                    i.validInSeconds --;
+                }
+                i.ageInSeconds ++;
+            });
 
         }, 1000);
     }
@@ -625,6 +634,19 @@ export class Model {
         if (data.autoBreakdownConfiguration) {
             this.autoBreakdownConfiguration = data.autoBreakdownConfiguration;
         }
+        if (data.inboxMessages) {
+            if (this.inboxMessages) {
+                data.inboxMessages.forEach(i => this.updateInboxMessage(i));
+            } else {
+                this.inboxMessages = data.inboxMessages;
+            }
+        }
+        if (data.inboxMessageDeleted) {
+            let idx = this.inboxMessages.findIndex(i => i.id === data.inboxMessageDeleted);
+            if (idx >= 0) {
+                this.inboxMessages.splice(idx, 1);
+            }
+        }
     }
 
     updateBaseHero(hero?: HeroBase) {
@@ -883,6 +905,17 @@ export class Model {
         if (story) {
             if (this.knownStories.indexOf(story) === -1) {
                 this.knownStories.push(story);
+            }
+        }
+    }
+
+    updateInboxMessage(message?: InboxMessage) {
+        if (message) {
+            let idx = this.inboxMessages.findIndex(i => i.id === message.id);
+            if (idx >= 0) {
+                this.inboxMessages[idx] = message;
+            } else {
+                this.inboxMessages.push(message);
             }
         }
     }

@@ -86,6 +86,7 @@ const routes: Routes = [
     {path: 'jewelry', loadChildren: './jewelry/jewelry.module#JewelryModule'},
     {path: 'forge', loadChildren: './forge/forge.module#ForgeModule'},
     {path: 'bazaar', loadChildren: './bazaar/bazaar.module#BazaarPageModule'},
+    {path: 'inbox', loadChildren: './inbox/inbox.module#InboxPageModule'},
     {path: 'battle', loadChildren: './battle/battle.module#BattlePageModule'}
 ];
 

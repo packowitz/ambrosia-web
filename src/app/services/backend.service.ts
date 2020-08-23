@@ -46,6 +46,7 @@ import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
 import {AchievementReward} from '../domain/achievementReward.model';
 import {BlackMarketItem} from '../domain/blackMarketItem.model';
 import {AutoBreakdownConfiguration} from '../domain/autoBreakdownConfiguration.model';
+import {InboxMessage} from "../domain/inboxMessage.model";
 
 export class Looted {
     type: string;
@@ -100,6 +101,8 @@ export class PlayerActionResponse {
     achievementRewards?: AchievementReward[];
     claimedAchievementRewardId?: number;
     autoBreakdownConfiguration?: AutoBreakdownConfiguration;
+    inboxMessages?: InboxMessage[];
+    inboxMessageDeleted?: number;
 }
 
 @Injectable({
@@ -709,5 +712,9 @@ export class BackendService {
 
     saveAutoBreakdownConfig(config: AutoBreakdownConfiguration): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/forge/auto', config);
+    }
+
+    claimMessage(msg: InboxMessage): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/inbox/claim/' + msg.id, null);
     }
 }
