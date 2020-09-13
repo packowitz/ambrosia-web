@@ -29,8 +29,8 @@
         <div class="flex-center">
           <div class="flex-center">
             <div *ngFor="let item of msg.items" class="ml-05 flex-center">
-              <span *ngIf="item.type == 'RESOURCE'">{{item.resourceAmount}}</span>
               <img *ngIf="item.type == 'RESOURCE'" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
+              <span *ngIf="item.type == 'RESOURCE'">{{item.resourceAmount}}</span>
               <span *ngIf="item.type == 'PROGRESS'">{{converter.readableProgressStatBonus(item.progressStat, item.progressBonus)}}</span>
               <img *ngIf="item.type == 'PROGRESS'" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
               <span *ngIf="item.type == 'JEWEL'"><img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.jewelLevel}}.png" class="jewel-icon"></span>

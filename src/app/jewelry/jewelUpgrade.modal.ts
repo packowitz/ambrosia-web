@@ -15,8 +15,8 @@ import {Jewelry} from '../domain/jewelry.model';
           <looted></looted>
           <div class="flex-space-around">
             <div class="flex-center">{{getJewelry()['lvl' + jewelLevel]}}<ion-img src="assets/img/jewels/{{getJewelry().slot}}_{{jewelLevel}}.png" class="jewel-icon"></ion-img></div>
-            <div class="flex">{{model.resources.coins}}<ion-img src="assets/icon/resources/COINS.png" class="resource-icon"></ion-img></div>
-            <div class="flex">{{model.resources.rubies}}<ion-img src="assets/icon/resources/RUBIES.png" class="resource-icon"></ion-img></div>
+            <div class="flex"><img src="assets/icon/resources/COINS.png" class="resource-icon">{{model.resources.coins}}</div>
+            <div class="flex"><img src="assets/icon/resources/RUBIES.png" class="resource-icon">{{model.resources.rubies}}</div>
           </div>
           <div class="mt-2 flex-center">
             Upgraded Jewels grant higher bonuses
@@ -37,7 +37,8 @@ import {Jewelry} from '../domain/jewelry.model';
                   <div [class.color-red]="getJewelry()['lvl' + jewelLevel] < 4">{{getJewelry()['lvl' + jewelLevel]}}</div>/4<ion-img src="assets/img/jewels/{{getJewelry().slot}}_{{jewelLevel}}.png" class="jewel-icon"></ion-img>
                 </div>
                 <div *ngFor="let cost of upgradeCosts" class="flex">
-                  <div [class.color-red]="!model.hasEnoughResources(cost.resourceType, cost.value1)">{{model.getResourceAmount(cost.resourceType)}}</div>/{{cost.value1}}<ion-img src="assets/icon/resources/{{cost.resourceType}}.png" class="resource-icon"></ion-img>
+                  <img src="assets/icon/resources/{{cost.resourceType}}.png" class="resource-icon">
+                  <div [class.color-red]="!model.hasEnoughResources(cost.resourceType, cost.value1)">{{model.getResourceAmount(cost.resourceType)}}</div>/{{cost.value1}}
                 </div>
               </div>
               <div class="mt-2 flex-center">

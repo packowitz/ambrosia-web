@@ -9,8 +9,8 @@ import {Gear} from '../domain/gear.model';
     selector: 'loot-item',
     template: `
       <div *ngIf="loot.type == 'RESOURCE'" class="flex-vert-center">
-        <img src="assets/icon/resources/{{loot.resourceType}}.png" class="loot-image">
         <div class="font-small">{{loot.value}}x</div>
+        <img src="assets/icon/resources/{{loot.resourceType}}.png" class="loot-image">
       </div>
       <div *ngIf="loot.type == 'PROGRESS'" class="flex-vert-center">
         <img src="assets/icon/progress/{{loot.progressStat}}.png" class="loot-image">

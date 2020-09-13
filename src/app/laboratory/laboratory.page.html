@@ -71,10 +71,10 @@
     <ion-card-content>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center ion-hide-md-down">
-          <ion-img src="assets/icon/resources/SIMPLE_GENOME.png" class="large-icon"></ion-img>
+          <img src="assets/icon/resources/SIMPLE_GENOME.png" class="large-icon">
         </ion-col>
         <ion-col sizeXs="2" class="flex-center ion-hide-md-up">
-          <ion-img src="assets/icon/resources/SIMPLE_GENOME.png" class="medium-icon"></ion-img>
+          <img src="assets/icon/resources/SIMPLE_GENOME.png" class="medium-icon">
         </ion-col>
         <ion-col sizeMd="6" class="ion-hide-md-down">
           Incubating <b>Simple Genomes</b> will clone a simple (1*) hero.{{model.progress.simpleIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.simpleIncubationUpPerMil) + ' chance to clone a common (2*) hero.' : ''}}
@@ -84,7 +84,7 @@
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
-            <span [class.color-red]="!hasEnoughGenomes('SIMPLE_GENOME')">{{model.resources.simpleGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('SIMPLE_GENOME')}}<ion-img src="assets/icon/resources/SIMPLE_GENOME.png" class="resource-icon"></ion-img>
+            <span [class.color-red]="!hasEnoughGenomes('SIMPLE_GENOME')">{{model.resources.simpleGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('SIMPLE_GENOME')}}<img src="assets/icon/resources/SIMPLE_GENOME.png" class="resource-icon">
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
@@ -93,10 +93,10 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center ion-hide-md-down">
-          <ion-img src="assets/icon/resources/COMMON_GENOME.png" class="large-icon"></ion-img>
+          <img src="assets/icon/resources/COMMON_GENOME.png" class="large-icon">
         </ion-col>
         <ion-col sizeXs="2" class="flex-center ion-hide-md-up">
-          <ion-img src="assets/icon/resources/COMMON_GENOME.png" class="medium-icon"></ion-img>
+          <img src="assets/icon/resources/COMMON_GENOME.png" class="medium-icon">
         </ion-col>
         <ion-col sizeMd="6" class="ion-hide-md-down">
           Incubating <b>Common Genomes</b> will clone a common (2*) hero.{{model.progress.commonIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.commonIncubationUpPerMil) + ' chance to clone an uncommon (3*) hero.' : ''}}
@@ -106,7 +106,7 @@
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
-            <span [class.color-red]="!hasEnoughGenomes('COMMON_GENOME')">{{model.resources.commonGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('COMMON_GENOME')}}<ion-img src="assets/icon/resources/COMMON_GENOME.png" class="resource-icon"></ion-img>
+            <span [class.color-red]="!hasEnoughGenomes('COMMON_GENOME')">{{model.resources.commonGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('COMMON_GENOME')}}<img src="assets/icon/resources/COMMON_GENOME.png" class="resource-icon">
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
@@ -115,10 +115,10 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center ion-hide-md-down">
-          <ion-img src="assets/icon/resources/UNCOMMON_GENOME.png" class="large-icon"></ion-img>
+          <img src="assets/icon/resources/UNCOMMON_GENOME.png" class="large-icon">
         </ion-col>
         <ion-col sizeXs="2" class="flex-center ion-hide-md-up">
-          <ion-img src="assets/icon/resources/UNCOMMON_GENOME.png" class="medium-icon"></ion-img>
+          <img src="assets/icon/resources/UNCOMMON_GENOME.png" class="medium-icon">
         </ion-col>
         <ion-col sizeMd="6" class="ion-hide-md-down">
           Incubating <b>Uncommon Genomes</b> will clone a uncommon (3*) hero.{{model.progress.uncommonIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.uncommonIncubationUpPerMil) + ' chance to clone a rare (4*) hero.' : ''}}{{model.progress.uncommonIncubationSuperUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.uncommonIncubationSuperUpPerMil) + ' chance to clone an epic (5*) hero.' : ''}}
@@ -128,7 +128,7 @@
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
-            <span [class.color-red]="!hasEnoughGenomes('UNCOMMON_GENOME')">{{model.resources.uncommonGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('UNCOMMON_GENOME')}}<ion-img src="assets/icon/resources/UNCOMMON_GENOME.png" class="resource-icon"></ion-img>
+            <span [class.color-red]="!hasEnoughGenomes('UNCOMMON_GENOME')">{{model.resources.uncommonGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('UNCOMMON_GENOME')}}<img src="assets/icon/resources/UNCOMMON_GENOME.png" class="resource-icon">
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
@@ -137,10 +137,10 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center ion-hide-md-down">
-          <ion-img src="assets/icon/resources/RARE_GENOME.png" class="large-icon"></ion-img>
+          <img src="assets/icon/resources/RARE_GENOME.png" class="large-icon">
         </ion-col>
         <ion-col sizeXs="2" class="flex-center ion-hide-md-up">
-          <ion-img src="assets/icon/resources/RARE_GENOME.png" class="medium-icon"></ion-img>
+          <img src="assets/icon/resources/RARE_GENOME.png" class="medium-icon">
         </ion-col>
         <ion-col sizeMd="6" class="ion-hide-md-down">
           Incubating <b>Rare Genomes</b> will clone a rare (4*) hero.{{model.progress.rareIncubationUpPerMil > 0 ? ' ' + perMilToPercent(model.progress.rareIncubationUpPerMil) + ' chance to clone an epic (5*) hero.' : ''}}
@@ -150,7 +150,7 @@
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
-            <span [class.color-red]="!hasEnoughGenomes('RARE_GENOME')">{{model.resources.rareGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('RARE_GENOME')}}<ion-img src="assets/icon/resources/RARE_GENOME.png" class="resource-icon"></ion-img>
+            <span [class.color-red]="!hasEnoughGenomes('RARE_GENOME')">{{model.resources.rareGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('RARE_GENOME')}}<img src="assets/icon/resources/RARE_GENOME.png" class="resource-icon">
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">
@@ -159,10 +159,10 @@
       </ion-row>
       <ion-row>
         <ion-col sizeMd="2" class="flex-center ion-hide-md-down">
-          <ion-img src="assets/icon/resources/EPIC_GENOME.png" class="large-icon"></ion-img>
+          <img src="assets/icon/resources/EPIC_GENOME.png" class="large-icon">
         </ion-col>
         <ion-col sizeXs="2" class="flex-center ion-hide-md-up">
-          <ion-img src="assets/icon/resources/EPIC_GENOME.png" class="medium-icon"></ion-img>
+          <img src="assets/icon/resources/EPIC_GENOME.png" class="medium-icon">
         </ion-col>
         <ion-col sizeMd="6" class="ion-hide-md-down">
           Incubating <b>Epic Genomes</b> will clone a epic (5*) hero.
@@ -172,7 +172,7 @@
         </ion-col>
         <ion-col sizeMd="2" class="flex-end">
           <div class="bold flex-center">
-            <span [class.color-red]="!hasEnoughGenomes('EPIC_GENOME')">{{model.resources.epicGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('EPIC_GENOME')}}<ion-img src="assets/icon/resources/EPIC_GENOME.png" class="resource-icon"></ion-img>
+            <span [class.color-red]="!hasEnoughGenomes('EPIC_GENOME')">{{model.resources.epicGenome}}</span>&nbsp;/&nbsp;{{genomesNeeded('EPIC_GENOME')}}<img src="assets/icon/resources/EPIC_GENOME.png" class="resource-icon">
           </div>
         </ion-col>
         <ion-col sizeMd="2" class="flex-center">

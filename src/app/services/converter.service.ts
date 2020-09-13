@@ -51,11 +51,11 @@ export class ConverterService {
     }
 
     readableAmount(amount: number): string {
-        if (amount >= 10000000) {
-            return Math.round(amount / 1000000) + 'm';
+        if (amount >= 1000000) {
+            return Math.round(amount / 1000000) / 10 + 'm';
         }
-        if (amount >= 10000) {
-            return Math.round(amount / 1000) + 'k';
+        if (amount >= 1000) {
+            return Math.round(amount / 1000) / 10 + 'k';
         }
         return amount + '';
     }

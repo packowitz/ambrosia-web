@@ -26,12 +26,12 @@
         <div class="flex-space-between">
           <div>Your heroes</div>
           <div class="flex font-small" *ngIf="fight.resourceType == 'STEAM'">
-            <div class="flex ml-2 mr-2">{{model.resources.premiumSteam}}/{{model.resources.premiumSteamMax}}<img src="assets/icon/resources/PREMIUM_STEAM.png" class="resource-icon" alt="premium steam"></div>
-            <div class="flex pointer" (click)="steamTimer = !steamTimer">{{steamTimer ? ( model.resources.steam >= model.resources.steamMax ? 'max' : converter.time(model.resources.steamProduceIn) ) : model.resources.steam + '/' + model.resources.steamMax}}<img src="assets/icon/resources/STEAM.png" class="resource-icon" alt="steam"></div>
+            <div class="flex ml-2 mr-2"><img src="assets/icon/resources/PREMIUM_STEAM.png" class="resource-icon" alt="premium steam">{{model.resources.premiumSteam}}/{{model.resources.premiumSteamMax}}</div>
+            <div class="flex pointer" (click)="steamTimer = !steamTimer"><img src="assets/icon/resources/STEAM.png" class="resource-icon" alt="steam">{{steamTimer ? ( model.resources.steam >= model.resources.steamMax ? 'max' : converter.time(model.resources.steamProduceIn) ) : model.resources.steam + '/' + model.resources.steamMax}}</div>
           </div>
           <div class="flex font-small" *ngIf="fight.resourceType == 'COGWHEELS'">
-            <div class="flex ml-2 mr-2">{{model.resources.premiumCogwheels}}/{{model.resources.premiumCogwheelsMax}}<img src="assets/icon/resources/PREMIUM_COGWHEELS.png" class="resource-icon" alt="premium cogwheels"></div>
-            <div class="flex pointer" (click)="cogwheelsTimer = !cogwheelsTimer">{{cogwheelsTimer ? ( model.resources.cogwheels >= model.resources.cogwheelsMax ? 'max' : converter.time(model.resources.cogwheelsProduceIn) ) : model.resources.cogwheels + '/' + model.resources.cogwheelsMax}}<img src="assets/icon/resources/COGWHEELS.png" class="resource-icon" alt="cogwheels"></div>
+            <div class="flex ml-2 mr-2"><img src="assets/icon/resources/PREMIUM_COGWHEELS.png" class="resource-icon" alt="premium cogwheels">{{model.resources.premiumCogwheels}}/{{model.resources.premiumCogwheelsMax}}</div>
+            <div class="flex pointer" (click)="cogwheelsTimer = !cogwheelsTimer"><img src="assets/icon/resources/COGWHEELS.png" class="resource-icon" alt="cogwheels">{{cogwheelsTimer ? ( model.resources.cogwheels >= model.resources.cogwheelsMax ? 'max' : converter.time(model.resources.cogwheelsProduceIn) ) : model.resources.cogwheels + '/' + model.resources.cogwheelsMax}}</div>
           </div>
         </div>
       </ion-card-title>
@@ -58,7 +58,7 @@
       </div>
       <div class="flex-space-around">
         <ion-button color="success" size="small" (click)="start()" [disabled]="!canStartBattle()">
-          <div *ngIf="!testFight" class="flex-center">Start ({{fight.costs}}<ion-img src="assets/icon/resources/{{fight.resourceType}}.png" class="resource-icon"></ion-img>)</div>
+          <div *ngIf="!testFight" class="flex-center">Start (<img src="assets/icon/resources/{{fight.resourceType}}.png" class="resource-icon">{{fight.costs}})</div>
           <div *ngIf="testFight">Start</div>
         </ion-button>
         <ion-button size="small" *ngIf="offlineBattleEnabled()" (click)="openMission()" [disabled]="!vehicle || !canStartBattle()">Mission</ion-button>

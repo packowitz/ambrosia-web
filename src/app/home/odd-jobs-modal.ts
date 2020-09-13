@@ -34,8 +34,8 @@ import {ConverterService} from '../services/converter.service';
                     <div class="avatar daily flex-center" [class.small]="day != 5" [class.today]="isToday(day)" [class.claimed]="(dayClaimed(day) || dayClaimable(day)) && !isToday(day)" [class.pointer]="dayClaimable(day)" (click)="claimDaily(day)">
                       <img src="assets/img/equip.png" *ngIf="dayClaimed(day)">
                       <div *ngIf="dailyReward(day) as reward" class="flex-center">
-                        {{reward.value1}}
                         <img src="assets/icon/resources/{{reward.resourceType}}.png" class="resource-icon">
+                        {{reward.value1}}
                       </div>
                     </div>
                     <div class="avatar-bubble info" *ngIf="dayClaimable(day)">!</div>
@@ -46,8 +46,8 @@ import {ConverterService} from '../services/converter.service';
                     <div class="avatar daily flex-center" [class.small]="day != 10" [class.today]="isToday(day)" [class.claimed]="(dayClaimed(day) || dayClaimable(day)) && !isToday(day)" [class.pointer]="dayClaimable(day)" (click)="claimDaily(day)">
                       <img src="assets/img/equip.png" *ngIf="dayClaimed(day)">
                       <div *ngIf="dailyReward(day) as reward" class="flex-center">
-                        {{reward.value1}}
                         <img src="assets/icon/resources/{{reward.resourceType}}.png" class="resource-icon">
+                        {{reward.value1}}
                       </div>
                     </div>
                     <div class="avatar-bubble info" *ngIf="dayClaimable(day)">!</div>
@@ -61,8 +61,8 @@ import {ConverterService} from '../services/converter.service';
                   <div class="strong">{{oddJob.name}}</div>
                   <div class="flex-center">
                     <div *ngFor="let item of oddJob.reward" class="ml-05 flex-center">
-                      <span *ngIf="item.type == 'RESOURCE'">{{item.value}}</span>
                       <img *ngIf="item.type == 'RESOURCE'" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
+                      <span *ngIf="item.type == 'RESOURCE'">{{item.value}}</span>
                       <span *ngIf="item.type == 'PROGRESS'">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
                       <img *ngIf="item.type == 'PROGRESS'" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
                       <span *ngIf="item.type == 'JEWEL'"><img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.value}}.png" class="jewel-icon"></span>
@@ -95,8 +95,8 @@ import {ConverterService} from '../services/converter.service';
                   <div class="strong">{{reward.name}}</div>
                   <div class="flex-center">
                     <div *ngFor="let item of reward.reward" class="ml-05 flex-center">
-                      <span *ngIf="item.resourceType">{{item.value}}</span>
                       <img *ngIf="item.resourceType" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
+                      <span *ngIf="item.resourceType">{{item.value}}</span>
                       <span *ngIf="item.progressStat">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
                       <img *ngIf="item.progressStat" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
                       <span *ngIf="item.type == 'JEWEL'"><img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.value}}.png" class="jewel-icon"></span>

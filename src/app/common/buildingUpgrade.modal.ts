@@ -12,20 +12,25 @@ import {BuildingService} from '../services/building.service';
       <div class="ma-2" *ngIf="buildingType">
         <looted></looted>
         <div class="flex-space-around">
-          <div class="flex">{{model.resources.metal}}/{{model.resources.metalMax}}
+          <div class="flex">
             <ion-img src="assets/icon/resources/METAL.png" class="resource-icon"></ion-img>
+            {{model.resources.metal}}/{{model.resources.metalMax}}
           </div>
-          <div class="flex">{{model.resources.iron}}/{{model.resources.ironMax}}
+          <div class="flex">
             <ion-img src="assets/icon/resources/IRON.png" class="resource-icon"></ion-img>
+            {{model.resources.iron}}/{{model.resources.ironMax}}
           </div>
-          <div class="flex">{{model.resources.steel}}/{{model.resources.steelMax}}
+          <div class="flex">
             <ion-img src="assets/icon/resources/STEEL.png" class="resource-icon"></ion-img>
+            {{model.resources.steel}}/{{model.resources.steelMax}}
           </div>
-          <div class="flex">{{model.resources.coins}}
+          <div class="flex">
             <ion-img src="assets/icon/resources/COINS.png" class="resource-icon"></ion-img>
+            {{model.resources.coins}}
           </div>
-          <div class="flex">{{model.resources.rubies}}
+          <div class="flex">
             <ion-img src="assets/icon/resources/RUBIES.png" class="resource-icon"></ion-img>
+            {{model.resources.rubies}}
           </div>
         </div>
         <ion-item class="mt-2">
@@ -52,10 +57,11 @@ import {BuildingService} from '../services/building.service';
               <div *ngIf="buildingService.canEffortUpgradeBuilding(buildingType)">Upgrade costs</div>
               <div *ngIf="!buildingService.canEffortUpgradeBuilding(buildingType)">Insufficient resources</div>
               <div *ngFor="let cost of buildingService.getUpgradeCosts(buildingType)" class="flex">
-                <div [class.color-red]="!model.hasEnoughResources(cost.resourceType, cost.value1)"
-                     [class.color-green]="model.hasEnoughResources(cost.resourceType, cost.value1)">{{model.getResourceAmount(cost.resourceType)}}</div>
-                /{{cost.value1}}
                 <ion-img src="assets/icon/resources/{{cost.resourceType}}.png" class="resource-icon"></ion-img>
+                <div [class.color-red]="!model.hasEnoughResources(cost.resourceType, cost.value1)"
+                     [class.color-green]="model.hasEnoughResources(cost.resourceType, cost.value1)">
+                  {{model.getResourceAmount(cost.resourceType)}}
+                </div>/{{cost.value1}}
               </div>
             </div>
             <div class="mt-2 flex-center">

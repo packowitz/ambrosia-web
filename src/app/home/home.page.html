@@ -27,18 +27,18 @@
     <div class="flex-space-around">
       <div class="flex">
         <div class="ion-hide-md-down">Tokens</div>
-        <div class="flex ml-2 mr-2">{{model.resources.premiumTokens}}/{{model.resources.premiumTokensMax}}<ion-img src="assets/icon/resources/PREMIUM_TOKENS.png" class="resource-icon" alt="premium tokens"></ion-img></div>
-        <div class="flex pointer" (click)="tokensTimer = !tokensTimer">{{tokensTimer ? ( model.resources.tokens >= model.resources.tokensMax ? 'max' : converter.time(model.resources.tokensProduceIn) ) : model.resources.tokens + '/' + model.resources.tokensMax}}<ion-img src="assets/icon/resources/TOKENS.png" class="resource-icon" alt="tokens"></ion-img></div>
+        <div class="flex ml-2 mr-2"><img src="assets/icon/resources/PREMIUM_TOKENS.png" class="resource-icon" alt="premium tokens">{{model.resources.premiumTokens}}/{{model.resources.premiumTokensMax}}</div>
+        <div class="flex pointer" (click)="tokensTimer = !tokensTimer"><img src="assets/icon/resources/TOKENS.png" class="resource-icon" alt="tokens">{{tokensTimer ? ( model.resources.tokens >= model.resources.tokensMax ? 'max' : converter.time(model.resources.tokensProduceIn) ) : model.resources.tokens + '/' + model.resources.tokensMax}}</div>
       </div>
       <div class="flex">
         <div class="ion-hide-md-down">Cogwheels</div>
-        <div class="flex ml-2 mr-2">{{model.resources.premiumCogwheels}}/{{model.resources.premiumCogwheelsMax}}<ion-img src="assets/icon/resources/PREMIUM_COGWHEELS.png" class="resource-icon" alt="premium cogwheels"></ion-img></div>
-        <div class="flex pointer" (click)="cogwheelsTimer = !cogwheelsTimer">{{cogwheelsTimer ? ( model.resources.cogwheels >= model.resources.cogwheelsMax ? 'max' : converter.time(model.resources.cogwheelsProduceIn) ) : model.resources.cogwheels + '/' + model.resources.cogwheelsMax}}<ion-img src="assets/icon/resources/COGWHEELS.png" class="resource-icon" alt="cogwheels"></ion-img></div>
+        <div class="flex ml-2 mr-2"><img src="assets/icon/resources/PREMIUM_COGWHEELS.png" class="resource-icon" alt="premium cogwheels">{{model.resources.premiumCogwheels}}/{{model.resources.premiumCogwheelsMax}}</div>
+        <div class="flex pointer" (click)="cogwheelsTimer = !cogwheelsTimer"><img src="assets/icon/resources/COGWHEELS.png" class="resource-icon" alt="cogwheels">{{cogwheelsTimer ? ( model.resources.cogwheels >= model.resources.cogwheelsMax ? 'max' : converter.time(model.resources.cogwheelsProduceIn) ) : model.resources.cogwheels + '/' + model.resources.cogwheelsMax}}</div>
       </div>
       <div class="flex">
         <div class="ion-hide-md-down">Steam</div>
-        <div class="flex ml-2 mr-2">{{model.resources.premiumSteam}}/{{model.resources.premiumSteamMax}}<ion-img src="assets/icon/resources/PREMIUM_STEAM.png" class="resource-icon" alt="premium steam"></ion-img></div>
-        <div class="flex pointer" (click)="steamTimer = !steamTimer">{{steamTimer ? ( model.resources.steam >= model.resources.steamMax ? 'max' : converter.time(model.resources.steamProduceIn) ) : model.resources.steam + '/' + model.resources.steamMax}}<ion-img src="assets/icon/resources/STEAM.png" class="resource-icon" alt="steam"></ion-img></div>
+        <div class="flex ml-2 mr-2"><img src="assets/icon/resources/PREMIUM_STEAM.png" class="resource-icon" alt="premium steam">{{model.resources.premiumSteam}}/{{model.resources.premiumSteamMax}}</div>
+        <div class="flex pointer" (click)="steamTimer = !steamTimer"><img src="assets/icon/resources/STEAM.png" class="resource-icon" alt="steam">{{steamTimer ? ( model.resources.steam >= model.resources.steamMax ? 'max' : converter.time(model.resources.steamProduceIn) ) : model.resources.steam + '/' + model.resources.steamMax}}</div>
       </div>
     </div>
   </ion-card>
@@ -132,7 +132,7 @@
                   </div>
                 </div>
                 <div *ngIf="tile.discoverable" class="costs">
-                  {{map.discoverySteamCost}}<ion-img src="assets/icon/resources/STEAM.png" class="resource-icon"></ion-img>
+                  <img src="assets/icon/resources/STEAM.png" class="resource-icon">{{map.discoverySteamCost}}
                 </div>
               </div>
               <div class="map-hexagon">

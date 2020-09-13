@@ -11,20 +11,25 @@ import {ConverterService} from '../services/converter.service';
     template: `
       <div class="ma-2">
         <div class="flex-space-around">
-          <div class="flex">{{model.resources.metal}}/{{model.resources.metalMax}}
+          <div class="flex">
             <ion-img src="assets/icon/resources/METAL.png" class="resource-icon"></ion-img>
+            {{model.resources.metal}}/{{model.resources.metalMax}}
           </div>
-          <div class="flex">{{model.resources.iron}}/{{model.resources.ironMax}}
+          <div class="flex">
             <ion-img src="assets/icon/resources/IRON.png" class="resource-icon"></ion-img>
+            {{model.resources.iron}}/{{model.resources.ironMax}}
           </div>
-          <div class="flex">{{model.resources.steel}}/{{model.resources.steelMax}}
+          <div class="flex">
             <ion-img src="assets/icon/resources/STEEL.png" class="resource-icon"></ion-img>
+            {{model.resources.steel}}/{{model.resources.steelMax}}
           </div>
-          <div class="flex">{{model.resources.coins}}
+          <div class="flex">
             <ion-img src="assets/icon/resources/COINS.png" class="resource-icon"></ion-img>
+            {{model.resources.coins}}
           </div>
-          <div class="flex">{{model.resources.rubies}}
+          <div class="flex">
             <ion-img src="assets/icon/resources/RUBIES.png" class="resource-icon"></ion-img>
+            {{model.resources.rubies}}
           </div>
         </div>
         <ion-item class="mt-2">

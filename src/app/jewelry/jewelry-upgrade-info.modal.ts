@@ -23,7 +23,7 @@ import {BuildingService} from '../services/building.service';
             <strong>Level {{level}}</strong>
             <div class="flex-grow flex-end">
               <div *ngFor="let cost of buildingService.getUpgradeCosts(buildingType, level)" class="flex ml-1">
-                {{converter.readableAmount(cost.value1)}}<img src="assets/icon/resources/{{cost.resourceType}}.png" class="resource-icon">
+                <img src="assets/icon/resources/{{cost.resourceType}}.png" class="resource-icon">{{converter.readableAmount(cost.value1)}}
               </div>
             </div>
           </div>
