@@ -14,11 +14,9 @@ export class Battle {
     mapPosX?: number;
     mapPosY?: number;
     playerId: number;
-    playerName: number;
+    playerName: string;
     opponentId: number;
-    opponentName: number;
-    started: string;
-    lastAction: string;
+    opponentName: string;
     activeHero: string;
     turnsDone: number;
     hero1?: BattleHero;
