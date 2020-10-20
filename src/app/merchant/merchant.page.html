@@ -30,14 +30,18 @@
               <ion-input [(ngModel)]="merchantItem.sortOrder" type="number" min="1" class="width-60"></ion-input>
             </ion-item>
             <ion-item lines="none">
-              <ion-label position="floating">Price</ion-label>
+              <ion-label position="floating">Amount</ion-label>
+              <ion-input [(ngModel)]="merchantItem.amount" type="number" min="1" class="width-60"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Currency</ion-label>
               <ion-select [(ngModel)]="merchantItem.priceType">
                 <ion-select-option value="COINS">Coins</ion-select-option>
                 <ion-select-option value="RUBIES">Rubies</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item lines="none">
-              <ion-label position="floating">Amount</ion-label>
+              <ion-label position="floating">Price</ion-label>
               <ion-input [(ngModel)]="merchantItem.priceAmount" type="number" min="1" class="width-60"></ion-input>
             </ion-item>
             <ion-item lines="none">

@@ -56,7 +56,7 @@
           <div *ngFor="let item of model.merchantPlayerItems" class="flex-vert-center loot-item mb-4">
             <div *ngIf="item.resourceType" class="flex-vert-center">
               <img src="assets/icon/resources/{{item.resourceType}}.png" class="loot-image">
-              <div class="font-small">{{item.resourceAmount}}</div>
+              <div class="font-small">{{item.amountAvailable > 1 ? item.amountAvailable + 'x ' : ''}}{{item.resourceAmount}}</div>
             </div>
             <div *ngIf="item.heroBaseId && model.getHeroBase(item.heroBaseId) as heroBase" class="border-grey flex-vert-center loot-hero">
               <ion-img [src]="'assets/icon/chars/' + heroBase.avatar + '.png'" class="border-bottom-grey"></ion-img>

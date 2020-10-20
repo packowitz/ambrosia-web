@@ -609,7 +609,8 @@ export class Model {
         if (data.boughtMerchantItem) {
             let item = this.merchantPlayerItems.find(m => m.id === data.boughtMerchantItem.id);
             if (item) {
-                item.sold = true;
+                item.sold = data.boughtMerchantItem.sold;
+                item.amountAvailable = data.boughtMerchantItem.amountAvailable;
             }
         }
         if (data.blackMarketItems && data.blackMarketItems.length > 0) {

@@ -6,6 +6,7 @@ export class MerchantPlayerItem {
     playerId: number;
     sortOrder: number;
     merchantLevel: number;
+    amountAvailable: number;
     sold: boolean;
     priceType: string;
     priceAmount: number;
