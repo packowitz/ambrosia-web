@@ -11,7 +11,7 @@ import {PropertyService} from '../services/property.service';
   selector: 'gear-list-item',
   template: `
       <div class="flex-start" [class.color-grey]="!gear">
-        <gear-icon [gear]="gear" [type]="type" (click)="showGearDetails($event)" [class.pointer]="canShowDetails()"></gear-icon>
+        <gear-icon [gear]="gear" [type]="type" (click)="showGearDetails($event)" class="pointer"></gear-icon>
         <div *ngIf="gear" class="flex-vert font-small flex-grow ml-1">
           <div>{{converter.readableIdentifier(gear.gearQuality)}} {{converter.readableIdentifier(gear.set)}} {{converter.readableIdentifier(gear.type)}}</div>
           <gear-stat [stat]="gear.stat" [value]="gear.statValue"></gear-stat>
@@ -23,10 +23,10 @@ import {PropertyService} from '../services/property.service';
             <i *ngFor="let bonus of propertyService.getJewelValueAndName(gear.specialJewelType, gear.specialJewelLevel)">{{bonus}}</i>
           </div>
         </div>
-        <div *ngIf="!readonly && gear && !gear.equippedTo && !hero.missionId && !hero.playerExpeditionId">
+        <div *ngIf="!readonly && gear && !gear.equippedTo">
           <ion-button fill="clear" size="small" (click)="equipGear($event)"><ion-img class="equip-icon" src="/assets/img/equip.png"></ion-img></ion-button>
         </div>
-        <div *ngIf="!readonly && gear && gear.equippedTo && !hero.missionId && !hero.playerExpeditionId">
+        <div *ngIf="!readonly && gear && gear.equippedTo">
           <ion-button fill="clear" size="small" (click)="unequipGear($event)"><ion-img class="equip-icon" src="/assets/img/unequip.png"></ion-img></ion-button>
         </div>
       </div>
@@ -39,7 +39,7 @@ export class GearListItem {
   @Input() readonly = false;
   @Output() callback = new EventEmitter();
 
-  constructor(private converter: ConverterService,
+  constructor(public converter: ConverterService,
               private backendService: BackendService,
               private modalCtrl: ModalController,
               public propertyService: PropertyService) { }
@@ -58,21 +58,16 @@ export class GearListItem {
     });
   }
 
-  canShowDetails(): boolean {
-    return !this.readonly && this.gear && !((this.hero.missionId || this.hero.playerExpeditionId) && this.gear.equippedTo);
-  }
-
-  showGearDetails(ev) {
+  async showGearDetails(ev) {
     ev.stopPropagation();
-    if (this.canShowDetails()) {
-      this.modalCtrl.create({
-        component: GearModal,
-        componentProps: {
-          gear: this.gear,
-          heroCallback: this.callback
-        }
-      }).then(modal => modal.present());
-    }
+    const modal = await this.modalCtrl.create({
+      component: GearModal,
+      componentProps: {
+        gear: this.gear,
+        heroCallback: this.callback
+      }
+    });
+    modal.present();
   }
 
 }

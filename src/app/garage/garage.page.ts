@@ -102,7 +102,7 @@ export class GaragePage {
       this.modalCtrl.create({
         component: VehiclePartUpgradeModal,
         componentProps: {
-          partId: part.id
+          part: part
         }
       }).then(modal => modal.present());
     }

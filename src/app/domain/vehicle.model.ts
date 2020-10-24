@@ -1,4 +1,3 @@
-import {VehicleBase} from './vehicleBase.model';
 import {VehiclePart} from './vehiclePart.model';
 
 export class Vehicle {

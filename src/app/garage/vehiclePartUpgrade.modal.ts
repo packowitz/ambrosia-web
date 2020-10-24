@@ -40,10 +40,10 @@ import {ConverterService} from '../services/converter.service';
           </div>
         </ion-item>
         <upgrade-item *ngFor="let item of model.upgrades" [item]="item"></upgrade-item>
-        <div *ngIf="!getPart().upgradeTriggered">
-          <div class="mt-2 flex-center" *ngIf="!upgradeSeconds">Cannot upgrade Vehicle Part higher than level {{getPart().level}}</div>
+        <div *ngIf="!part.upgradeTriggered">
+          <div class="mt-2 flex-center" *ngIf="!upgradeSeconds">Cannot upgrade Vehicle Part higher than level {{part.level}}</div>
           <div class="mt-3" *ngIf="upgradeSeconds">
-            Level {{getPart().level + 1}} {{converter.readableIdentifier(getPart().type)}}:
+            Level {{part.level + 1}} {{converter.readableIdentifier(part.type)}}:
             <ul>
               <li *ngFor="let upgrade of getUpgrades()">{{upgrade}}</li>
             </ul>
@@ -60,12 +60,12 @@ import {ConverterService} from '../services/converter.service';
             <div class="mt-2 flex-center">
               <ion-button color="danger" fill="outline" (click)="closeModal()">Close</ion-button>
               <ion-button [disabled]="!hasEnoughResources || saving || model.upgrades.length >= model.progress.builderQueueLength"
-                          (click)="performUpgrade()">Upgrade Part to level {{getPart().level + 1}}</ion-button>
+                          (click)="performUpgrade()">Upgrade Part to level {{part.level + 1}}</ion-button>
             </div>
           </div>
         </div>
 
-        <div *ngIf="getPart().upgradeTriggered">
+        <div *ngIf="part.upgradeTriggered">
           <div class="mt-2 flex-center">
             <ion-button color="danger" fill="outline" (click)="closeModal()">Close</ion-button>
           </div>
@@ -76,7 +76,7 @@ import {ConverterService} from '../services/converter.service';
 })
 export class VehiclePartUpgradeModal {
 
-    @Input() partId: number;
+    @Input() part: VehiclePart;
 
     upgradeSeconds: number = null;
     upgradeCosts: DynamicProperty[] = [];
@@ -92,14 +92,13 @@ export class VehiclePartUpgradeModal {
     }
 
     ionViewWillEnter() {
-        let part = this.getPart();
-        let type = 'PART_' + part.quality;
+        let type = 'PART_' + this.part.quality;
 
-        let upTimes = this.propertyService.getUpgradeTime(type, part.level + 1);
+        let upTimes = this.propertyService.getUpgradeTime(type, this.part.level + 1);
         if (upTimes.length === 1) {
             this.upgradeSeconds = upTimes[0].value1;
         }
-        this.upgradeCosts = this.propertyService.getUpgradeCosts(type, part.level + 1);
+        this.upgradeCosts = this.propertyService.getUpgradeCosts(type, this.part.level + 1);
         this.hasEnoughResources = true;
         this.upgradeCosts.forEach(c => {
             if (!this.model.hasEnoughResources(c.resourceType, c.value1)) {
@@ -108,14 +107,9 @@ export class VehiclePartUpgradeModal {
         });
     }
 
-    getPart(): VehiclePart {
-        return this.model.getVehiclePart(this.partId);
-    }
-
     getUpgrades(): string[] {
         let upgrades: string[] = [];
-        let part = this.getPart();
-        this.propertyService.getProps(part.type + '_PART_' + part.quality, part.level + 1).forEach(p => {
+        this.propertyService.getProps(this.part.type + '_PART_' + this.part.quality, this.part.level + 1).forEach(p => {
             upgrades.push('+' + p.value1 + ' ' + this.converter.readableIdentifier(p.vehicleStat));
         });
         return upgrades;
@@ -126,9 +120,9 @@ export class VehiclePartUpgradeModal {
     }
 
     performUpgrade() {
-        if (this.hasEnoughResources && this.upgradeSeconds && this.model.upgrades.length < this.model.progress.builderQueueLength && !this.getPart().upgradeTriggered) {
+        if (this.hasEnoughResources && this.upgradeSeconds && this.model.upgrades.length < this.model.progress.builderQueueLength && !this.part.upgradeTriggered) {
             this.saving = true;
-            this.backendService.upgradeVehiclePart(this.partId).subscribe(data => {
+            this.backendService.upgradeVehiclePart(this.part.id).subscribe(() => {
                 this.saving = false;
                 this.ionViewWillEnter();
             }, () => {
