@@ -125,13 +125,13 @@ export class CampaignFightPage {
 
   initTeam() {
     if (this.model.teams) {
-      let team = this.model.teams.find(t => t.type === (this.testFight ? 'TEST' : 'CAMPAIGN'));
+      let team = this.model.teams.find(t => t.type === (this.testFight ? 'TEST' : `C_${this.map.mapId}`));
       if (team) {
         this.team = this.converter.dataClone(team);
       }
     }
     if (!this.team) {
-      this.team = new Team(this.testFight ? 'TEST' : 'CAMPAIGN');
+      this.team = new Team(this.testFight ? 'TEST' : `C_${this.map.mapId}`);
     } else {
       this.hero1 = this.team.hero1Id ? this.model.heroes.find(h => h.id === this.team.hero1Id && !h.missionId && !h.playerExpeditionId) : null;
       if (!this.hero1) { this.team.hero1Id = null; }
@@ -141,8 +141,15 @@ export class CampaignFightPage {
       if (!this.hero3) { this.team.hero3Id = null; }
       this.hero4 = this.team.hero4Id ? this.model.heroes.find(h => h.id === this.team.hero4Id && !h.missionId && !h.playerExpeditionId) : null;
       if (!this.hero4) { this.team.hero4Id = null; }
+      if (this.team.vehicleId) {
+        let vehicle = this.model.getVehicle(this.team.vehicleId);
+        if (vehicle && !vehicle.missionId && !vehicle.upgradeTriggered && !vehicle.playerExpeditionId) {
+          this.vehicle = vehicle;
+        }
+      }
+
     }
-    if (this.model.vehicles && this.model.vehicles.length > 0) {
+    if (!this.vehicle && this.model.vehicles && this.model.vehicles.length > 0) {
       this.vehicle = this.model.vehicles.find(v => v.slot != null && !v.missionId && !v.upgradeTriggered && !v.playerExpeditionId);
     }
   }

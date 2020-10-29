@@ -5,7 +5,6 @@ export class Team {
     hero2Id?: number;
     hero3Id?: number;
     hero4Id?: number;
-
     vehicleId?: number;
 
     constructor(type: string) {

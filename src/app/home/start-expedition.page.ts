@@ -44,11 +44,33 @@ export class StartExpeditionPage {
     if (!this.expedition || this.model.playerExpeditions.findIndex(p => p.expeditionId === expeditionId) !== -1) {
       this.close();
     }
-    this.vehicle = this.model.vehicles.find(v => v.slot && !v.missionId && !v.playerExpeditionId && !v.upgradeTriggered);
+    this.initTeam();
   }
 
   close() {
     this.router.navigateByUrl('/home');
+  }
+
+  initTeam() {
+    let team: Team;
+    if (this.model.teams) {
+      team = this.model.teams.find(t => t.type === 'Expedition');
+    }
+    if (team) {
+      this.hero1 = team.hero1Id ? this.model.heroes.find(h => h.id === team.hero1Id && !h.missionId && !h.playerExpeditionId) : null;
+      this.hero2 = team.hero2Id ? this.model.heroes.find(h => h.id === team.hero2Id && !h.missionId && !h.playerExpeditionId) : null;
+      this.hero3 = team.hero3Id ? this.model.heroes.find(h => h.id === team.hero3Id && !h.missionId && !h.playerExpeditionId) : null;
+      this.hero4 = team.hero4Id ? this.model.heroes.find(h => h.id === team.hero4Id && !h.missionId && !h.playerExpeditionId) : null;
+      if (team.vehicleId) {
+        let vehicle = this.model.getVehicle(team.vehicleId);
+        if (vehicle && !vehicle.missionId && !vehicle.upgradeTriggered && !vehicle.playerExpeditionId) {
+          this.vehicle = vehicle;
+        }
+      }
+    }
+    if (!this.vehicle && this.model.vehicles && this.model.vehicles.length > 0) {
+      this.vehicle = this.model.vehicles.find(v => v.slot != null && !v.missionId && !v.upgradeTriggered && !v.playerExpeditionId);
+    }
   }
 
   selectHero(hero: Hero) {
@@ -109,12 +131,16 @@ export class StartExpeditionPage {
   startExpedition() {
     if (this.canStartExpedition()) {
       this.saving = true;
-      let team = new Team('EXPEDITION');
+      let team = this.model.teams.find(t => t.type === 'Expedition');
+      if (!team) {
+        team = new Team('Expedition');
+        this.model.updateTeam(team);
+      }
       team.vehicleId = this.vehicle.id;
-      if (this.hero1) { team.hero1Id = this.hero1.id; }
-      if (this.hero2) { team.hero2Id = this.hero2.id; }
-      if (this.hero3) { team.hero3Id = this.hero3.id; }
-      if (this.hero4) { team.hero4Id = this.hero4.id; }
+      team.hero1Id = this.hero1?.id;
+      team.hero2Id = this.hero2?.id;
+      team.hero3Id = this.hero3?.id;
+      team.hero4Id = this.hero4?.id;
       this.backendService.startExpedition(this.expedition, team).subscribe(data => {
         this.saving = false;
         this.router.navigateByUrl('/home');
