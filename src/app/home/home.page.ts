@@ -392,7 +392,7 @@ export class HomePage {
   }
 
   getExpeditionDuration(expedition: Expedition): number {
-    return (expedition.expeditionBase.durationMinutes * 60 * 100) / this.model.progress.expeditionSpeed;
+    return (expedition.expeditionBase.durationHours * 60 * 60 * 100) / this.model.progress.expeditionSpeed;
   }
 
   openOddJobs() {
