@@ -26,7 +26,7 @@
       <div>{{expedition.expeditionBase.description}}</div>
       <div class="flex-space-between">
         <div>{{converter.readableIdentifier(expedition.expeditionBase.rarity)}}</div>
-        <div>{{converter.timeWithUnit(expedition.expeditionBase.durationMinutes * 60)}}</div>
+        <div>{{converter.timeWithUnit(expedition.expeditionBase.durationHours * 60 * 60)}}</div>
         <div>{{expedition.expeditionBase.xp}} XP</div>
       </div>
     </ion-card-content>
@@ -58,7 +58,7 @@
         <hero-icon *ngFor="let hero of getSelectedHeroes()" [hero]="hero" [clickable]="true" (clicked)="selectHero($event)"></hero-icon>
       </div>
       <div class="flex-center">
-        <ion-button size="small" (click)="startExpedition()" [disabled]="!canStartExpedition()">{{converter.timeWithUnit(expedition.expeditionBase.durationMinutes * 60)}}</ion-button>
+        <ion-button size="small" (click)="startExpedition()" [disabled]="!canStartExpedition()">{{converter.timeWithUnit(expedition.expeditionBase.durationHours * 60 * 60)}}</ion-button>
       </div>
     </ion-card-content>
   </ion-card>

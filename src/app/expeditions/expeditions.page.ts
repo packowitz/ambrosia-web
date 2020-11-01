@@ -67,7 +67,7 @@ export class ExpeditionsPage implements OnInit {
   initNewExpedition() {
     this.newExpedition = new ExpeditionBase();
     this.newExpedition.level = 1;
-    this.newExpedition.durationMinutes = 60;
+    this.newExpedition.durationHours = 1;
     this.newExpedition.xp = 500;
   }
 
@@ -81,7 +81,7 @@ export class ExpeditionsPage implements OnInit {
         !expedition.level ||
         expedition.level <= 0 ||
         expedition.level > 6 ||
-        !expedition.durationMinutes ||
+        !expedition.durationHours ||
         !expedition.xp ||
         !expedition.rarity ||
         !expedition.lootBoxId;

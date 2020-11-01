@@ -4,7 +4,7 @@ export class ExpeditionBase {
     description: string;
     level: number;
     rarity: string;
-    durationMinutes: number;
+    durationHours: number;
     xp: number;
     lootBoxId: number;
 }
