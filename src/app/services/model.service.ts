@@ -648,6 +648,13 @@ export class Model {
                 this.inboxMessages.splice(idx, 1);
             }
         }
+        if (data.teams) {
+            if (this.teams) {
+                data.teams.forEach(t => this.updateTeam(t));
+            } else {
+                this.teams = data.teams;
+            }
+        }
     }
 
     updateBaseHero(hero?: HeroBase) {

@@ -44,14 +44,7 @@ export class StartExpeditionPage {
     if (!this.expedition || this.model.playerExpeditions.findIndex(p => p.expeditionId === expeditionId) !== -1) {
       this.close();
     }
-    if (!this.model.teams) {
-      this.backendService.getOwnTeams().subscribe(data => {
-        this.model.teams = data;
-        this.initTeam();
-      });
-    } else {
-      this.initTeam();
-    }
+    this.initTeam();
   }
 
   close() {

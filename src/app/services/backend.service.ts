@@ -103,6 +103,7 @@ export class PlayerActionResponse {
     autoBreakdownConfiguration?: AutoBreakdownConfiguration;
     inboxMessages?: InboxMessage[];
     inboxMessageDeleted?: number;
+    teams: Team[];
 }
 
 @Injectable({

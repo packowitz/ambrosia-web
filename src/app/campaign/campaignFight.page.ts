@@ -69,14 +69,7 @@ export class CampaignFightPage {
       this.initMapCampaign(mapId, posX, posY);
     }
 
-    if (!this.model.teams) {
-      this.backendService.getOwnTeams().subscribe(data => {
-        this.model.teams = data;
-        this.initTeam();
-      });
-    } else {
-      this.initTeam();
-    }
+    this.initTeam();
 
     if (this.storyService.storyUnknown(this.enterStory)) {
       this.storyService.showStory(this.enterStory).subscribe(() => console.log(this.enterStory + ' story finished'));
