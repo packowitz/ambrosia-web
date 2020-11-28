@@ -8,6 +8,7 @@ export class LoadingState {
     playerLoaded = false;
     heroBaseLoaded = false;
     vehicleBaseLoaded = false;
+    tasksLoaded = false;
     serviceAccountLoaded = false;
     serviceAccountsLoaded = false;
     enumsLoaded = false;

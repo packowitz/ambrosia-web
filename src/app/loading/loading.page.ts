@@ -40,6 +40,8 @@ export class LoadingPage {
       this.loadBaseHeroes();
     } else if (!this.loadingState.vehicleBaseLoaded) {
       this.loadBaseVehicles();
+    } else if (!this.loadingState.tasksLoaded) {
+      this.loadTasks();
     } else if (this.model.player.admin === true && !this.loadingState.serviceAccountsLoaded) {
       this.loadServiceAccounts();
     } else if (!this.loadingState.serviceAccountLoaded) {
@@ -129,6 +131,15 @@ export class LoadingPage {
     this.backendService.loadAllBaseVehicles().subscribe(data => {
       this.model.baseVehicles = data;
       this.loadingState.vehicleBaseLoaded = true;
+      this.initApp();
+    });
+  }
+
+  loadTasks() {
+    this.status = 'Loading tasks';
+    this.backendService.loadTaskClusters().subscribe(data => {
+      this.model.taskClusters = data;
+      this.loadingState.tasksLoaded = true;
       this.initApp();
     });
   }

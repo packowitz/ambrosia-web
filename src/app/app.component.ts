@@ -107,8 +107,8 @@ export class AppComponent {
             icon: 'three-keys'
         },
         {
-            title: 'Achievements',
-            url: '/achievements',
+            title: 'Tasks',
+            url: '/tasks',
             icon: 'trophy'
         },
         {

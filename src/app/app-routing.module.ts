@@ -62,8 +62,8 @@ const routes: Routes = [
         canActivate: [AdminGuard]
     },
     {
-        path: 'achievements',
-        loadChildren: './achievements/achievements.module#AchievementsPageModule',
+        path: 'tasks',
+        loadChildren: './tasks/tasks.module#TasksModule',
         canActivate: [AdminGuard]
     },
     {

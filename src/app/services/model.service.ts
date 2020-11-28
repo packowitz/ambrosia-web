@@ -35,10 +35,11 @@ import {DailyActivity} from '../domain/dailyActivity.model';
 import {Achievements} from '../domain/achievements.model';
 import {MerchantItem} from '../domain/merchantItem.model';
 import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
-import {AchievementReward} from '../domain/achievementReward.model';
 import {BlackMarketItem} from '../domain/blackMarketItem.model';
 import {AutoBreakdownConfiguration} from '../domain/autoBreakdownConfiguration.model';
 import {InboxMessage} from "../domain/inboxMessage.model";
+import {TaskCluster} from "../domain/taskCluster.model";
+import {PlayerTask} from "../domain/playerTask.model";
 
 @Injectable({
     providedIn: 'root'
@@ -83,12 +84,12 @@ export class Model {
     merchantItems: MerchantItem[];
     dailyActivity: DailyActivity;
     merchantPlayerItems: MerchantPlayerItem[];
-    allAchievementRewards: AchievementReward[];
-    achievementRewards: AchievementReward[];
     blackMarketItems: BlackMarketItem[];
     allBlackMarketItems: BlackMarketItem[];
     autoBreakdownConfiguration: AutoBreakdownConfiguration;
     inboxMessages: InboxMessage[];
+    taskClusters: TaskCluster[];
+    playerTasks: PlayerTask[];
 
     interval: number;
     lastIntervalTimestamp: number = Date.now();
@@ -157,6 +158,26 @@ export class Model {
 
     getBuilding(type: string): Building {
         return this.buildings.find(b => b.type === type);
+    }
+
+    hasClaimableActivity(): boolean {
+        if (!!this.oddJobs.find(o => o.jobAmountDone >= o.jobAmount)) {
+            return true;
+        }
+        for (let i = 1; i <= this.dailyActivity.today; i++) {
+            if (!!this.dailyActivity['day' + i] && !this.dailyActivity['day' + i + 'claimed']) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    hasClaimableTask(): boolean {
+        return !!this.playerTasks.find(playerTask => {
+            const taskCluster = this.taskClusters.find(cluster => playerTask.taskClusterId === cluster.id);
+            const task = taskCluster?.tasks.find(t => t.number === playerTask.currentTaskNumber);
+            return !!task && this.getAchievementAmount(task.taskType) >= task.taskAmount;
+        });
     }
 
     hasEnoughResources(type: string, amount: number): boolean {
@@ -619,19 +640,6 @@ export class Model {
         if (data.looted) {
             this.looted = data.looted;
         }
-        if (data.achievementRewards) {
-            if (this.achievementRewards) {
-                data.achievementRewards.forEach(a => this.updateAchievementReward(a));
-            } else {
-                this.achievementRewards = data.achievementRewards.sort((a, b) => a.name > b.name ? 1 : -1 );
-            }
-        }
-        if (data.claimedAchievementRewardId) {
-            let idx = this.achievementRewards.findIndex(a => a.id === data.claimedAchievementRewardId);
-            if (idx >= 0) {
-                this.achievementRewards.splice(idx, 1);
-            }
-        }
         if (data.autoBreakdownConfiguration) {
             this.autoBreakdownConfiguration = data.autoBreakdownConfiguration;
         }
@@ -653,6 +661,13 @@ export class Model {
                 data.teams.forEach(t => this.updateTeam(t));
             } else {
                 this.teams = data.teams;
+            }
+        }
+        if (data.playerTasks) {
+            if (this.playerTasks) {
+                data.playerTasks.forEach(p => this.updatePlayerTask(p));
+            } else {
+                this.playerTasks = data.playerTasks;
             }
         }
     }
@@ -897,18 +912,6 @@ export class Model {
         }
     }
 
-    updateAchievementReward(reward?: AchievementReward) {
-        if (reward) {
-            let idx = this.achievementRewards.findIndex(a => a.id === reward.id);
-            if (idx >= 0) {
-                this.achievementRewards[idx] = reward;
-            } else {
-                this.achievementRewards.push(reward);
-                this.achievementRewards = this.achievementRewards.sort((a, b) => a.name > b.name ? 1 : -1 );
-            }
-        }
-    }
-
     finishedStory(story: string) {
         if (story) {
             if (this.knownStories.indexOf(story) === -1) {
@@ -924,6 +927,28 @@ export class Model {
                 this.inboxMessages[idx] = message;
             } else {
                 this.inboxMessages.push(message);
+            }
+        }
+    }
+
+    updatePlayerTask(playerTask: PlayerTask) {
+        if (playerTask) {
+            let idx = this.playerTasks.findIndex(p => p.id === playerTask.id);
+            if (idx >= 0) {
+                this.playerTasks[idx] = playerTask;
+            } else {
+                this.playerTasks.push(playerTask);
+            }
+        }
+    }
+
+    updateTaskCluster(taskCluster: TaskCluster) {
+        if (taskCluster) {
+            let idx = this.taskClusters.findIndex(t => t.id === taskCluster.id);
+            if (idx >= 0) {
+                this.taskClusters[idx] = taskCluster;
+            } else {
+                this.taskClusters.push(taskCluster);
             }
         }
     }

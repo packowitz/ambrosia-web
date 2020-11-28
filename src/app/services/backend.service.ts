@@ -43,10 +43,11 @@ import {DailyActivity} from '../domain/dailyActivity.model';
 import {Achievements} from '../domain/achievements.model';
 import {MerchantItem} from '../domain/merchantItem.model';
 import {MerchantPlayerItem} from '../domain/merchantPlayerItem.model';
-import {AchievementReward} from '../domain/achievementReward.model';
 import {BlackMarketItem} from '../domain/blackMarketItem.model';
 import {AutoBreakdownConfiguration} from '../domain/autoBreakdownConfiguration.model';
 import {InboxMessage} from "../domain/inboxMessage.model";
+import {TaskCluster} from "../domain/taskCluster.model";
+import {PlayerTask} from "../domain/playerTask.model";
 
 export class Looted {
     type: string;
@@ -98,12 +99,11 @@ export class PlayerActionResponse {
     merchantItems?: MerchantPlayerItem[];
     boughtMerchantItem?: MerchantPlayerItem;
     blackMarketItems?: BlackMarketItem[];
-    achievementRewards?: AchievementReward[];
-    claimedAchievementRewardId?: number;
     autoBreakdownConfiguration?: AutoBreakdownConfiguration;
     inboxMessages?: InboxMessage[];
     inboxMessageDeleted?: number;
     teams: Team[];
+    playerTasks: PlayerTask[];
 }
 
 @Injectable({
@@ -631,10 +631,6 @@ export class BackendService {
         return this.http.post<PlayerActionResponse>(API_URL + '/progress/level_up', null);
     }
 
-    expeditionLevelUp(): Observable<PlayerActionResponse> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/progress/exp_level_up', null);
-    }
-
     startExpedition(expedition: Expedition, team: Team): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/expedition/' + expedition.id + '/start', team);
     }
@@ -687,18 +683,6 @@ export class BackendService {
         return this.http.get<number[]>(API_URL + '/hero/known');
     }
 
-    loadAllAchievementRewards(): Observable<AchievementReward[]> {
-        return this.http.get<AchievementReward[]>(API_URL + '/admin/achievement_reward');
-    }
-
-    saveAchievementReward(reward: AchievementReward): Observable<AchievementReward> {
-        return this.http.post<AchievementReward>(API_URL + '/admin/achievement_reward', reward);
-    }
-
-    claimAchievementReward(reward: AchievementReward): Observable<PlayerActionResponse> {
-        return this.http.post<PlayerActionResponse>(API_URL + '/achievement/claim/' + reward.id, null);
-    }
-
     getAllBlackMarketItems(): Observable<BlackMarketItem[]> {
         return this.http.get<BlackMarketItem[]>(API_URL + '/admin/blackmarket/item');
     }
@@ -717,5 +701,17 @@ export class BackendService {
 
     claimMessage(msg: InboxMessage): Observable<PlayerActionResponse> {
         return this.http.post<PlayerActionResponse>(API_URL + '/inbox/claim/' + msg.id, null);
+    }
+
+    loadTaskClusters(): Observable<TaskCluster[]> {
+        return this.http.get<TaskCluster[]>(API_URL + '/tasks');
+    }
+
+    saveTaskCluster(taskCluster: TaskCluster): Observable<TaskCluster> {
+        return this.http.post<TaskCluster>(API_URL + '/admin/tasks', taskCluster);
+    }
+
+    claimPlayerTask(cluster: TaskCluster): Observable<PlayerActionResponse> {
+        return this.http.post<PlayerActionResponse>(API_URL + '/tasks/claim/' + cluster.id, null);
     }
 }

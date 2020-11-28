@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {Model} from '../services/model.service';
 import {EnumService} from '../services/enum.service';
-import {MerchantItem} from '../domain/merchantItem.model';
-import {AchievementReward} from '../domain/achievementReward.model';
 import {LootSelectionPopover} from '../common/loot-selection.popover';
 import {PopoverController} from '@ionic/angular';
 import {Router} from '@angular/router';

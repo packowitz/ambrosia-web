@@ -4,7 +4,8 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {CommonAmbrosiaModule} from '../common/common-ambrosia.module';
-import {AchievementsPage} from './achievements.page';
+import {TasksPage} from './tasks.page';
+import {TaskClustersPage} from "./taskClusters.page";
 
 @NgModule({
   imports: [
@@ -15,10 +16,14 @@ import {AchievementsPage} from './achievements.page';
     RouterModule.forChild([
       {
         path: '',
-        component: AchievementsPage
+        component: TaskClustersPage
+      },
+      {
+        path: ':id',
+        component: TasksPage
       }
     ])
   ],
-  declarations: [AchievementsPage]
+  declarations: [TaskClustersPage, TasksPage]
 })
-export class AchievementsPageModule {}
+export class TasksModule {}

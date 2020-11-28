@@ -5,8 +5,10 @@ import {BackendService} from '../services/backend.service';
 import {OddJob} from '../domain/oddJob.model';
 import {PropertyService} from '../services/property.service';
 import {DynamicProperty} from '../domain/property.model';
-import {AchievementReward} from '../domain/achievementReward.model';
 import {ConverterService} from '../services/converter.service';
+import {EnumService} from "../services/enum.service";
+import {TaskCluster} from "../domain/taskCluster.model";
+import {Task} from "../domain/task.model";
 
 @Component({
     selector: 'odd-jobs-modal',
@@ -19,10 +21,10 @@ import {ConverterService} from '../services/converter.service';
           </div>
           <ion-segment [(ngModel)]="tab">
             <ion-segment-button value="activity">
-              <ion-label class="position-relative">Activity<div *ngIf="tab != 'activity' && hasClaimableActivity()" class="upgrade-bubble upgrade-possible">!</div></ion-label>
+              <ion-label class="position-relative">Activity<div *ngIf="tab != 'activity' && model.hasClaimableActivity()" class="upgrade-bubble upgrade-possible">!</div></ion-label>
             </ion-segment-button>
             <ion-segment-button value="progress">
-              <ion-label class="position-relative">Progress<div *ngIf="tab != 'progress' && hasClaimableAchievement()" class="upgrade-bubble upgrade-possible">!</div></ion-label>
+              <ion-label class="position-relative">Progress<div *ngIf="tab != 'progress' && model.hasClaimableTask()" class="upgrade-bubble upgrade-possible">!</div></ion-label>
             </ion-segment-button>
           </ion-segment>
           
@@ -88,34 +90,42 @@ import {ConverterService} from '../services/converter.service';
             </ion-item>
           </ion-list>
           
-          <ion-list *ngIf="tab == 'progress'" class="mt-3">
-            <ion-item *ngFor="let reward of model.achievementRewards">
-              <div class="mt-3 mb-3 full-width">
-                <div class="flex-space-between">
-                  <div class="strong">{{reward.name}}</div>
-                  <div class="flex-center">
-                    <div *ngFor="let item of reward.reward" class="ml-05 flex-center">
-                      <img *ngIf="item.resourceType" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
-                      <span *ngIf="item.resourceType">{{item.value}}</span>
-                      <span *ngIf="item.progressStat">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
-                      <img *ngIf="item.progressStat" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
-                      <span *ngIf="item.type == 'JEWEL'"><img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.value}}.png" class="jewel-icon"></span>
+          <div *ngIf="tab == 'progress'" class="mt-3">
+            <ion-list *ngFor="let taskCategory of enumService.enums.taskCategories">
+              <ion-list-header>
+                {{converter.readableIdentifier(taskCategory)}}
+              </ion-list-header>
+              <div *ngFor="let taskCluster of getTaskCluster(taskCategory)">
+                <ion-item *ngIf="getTask(taskCluster) as task">
+                  <div class="mt-3 mb-3 full-width">
+                    <div class="flex-space-between">
+                      <div class="strong">{{taskCluster.name}}</div>
+                      <div class="flex-center">
+                        <div *ngFor="let item of task.reward" class="ml-05 flex-center">
+                          <img *ngIf="item.resourceType" src="assets/icon/resources/{{item.resourceType}}.png" class="resource-icon">
+                          <span *ngIf="item.resourceType">{{item.value}}</span>
+                          <span *ngIf="item.progressStat">{{converter.readableProgressStatBonus(item.progressStat, item.value)}}</span>
+                          <img *ngIf="item.progressStat" src="assets/icon/progress/{{item.progressStat}}.png" class="resource-icon">
+                          <span *ngIf="item.type == 'JEWEL'"><img src="assets/img/jewels/{{item.jewelType.slot}}_{{item.value}}.png" class="jewel-icon"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex-space-between mt-05">
+                      <div class="flex-grow flex-wrap">{{getRewardDescription(task.taskType, task.taskAmount)}}</div>
+                      <div *ngIf="model.getAchievementAmount(task.taskType) < task.taskAmount" class="color-grey">{{model.getAchievementAmount(task.taskType)}}/{{task.taskAmount}}</div>
+                      <ion-button *ngIf="model.getAchievementAmount(task.taskType) >= task.taskAmount" size="small" color="success" (click)="claimTask(taskCluster)">
+                        Claim
+                      </ion-button>
+                    </div>
+                    <div class="time-bar light-border mt-05">
+                      <span class="time-bar-inner" [style.width]="(100 * model.getAchievementAmount(task.taskType) / task.taskAmount) + '%'"></span>
                     </div>
                   </div>
-                </div>
-                <div class="flex-space-between mt-05">
-                  <div class="flex-grow flex-wrap">{{getRewardDescription(reward.achievementType, reward.achievementAmount)}}</div>
-                  <div *ngIf="model.getAchievementAmount(reward.achievementType) < reward.achievementAmount" class="color-grey">{{model.getAchievementAmount(reward.achievementType)}}/{{reward.achievementAmount}}</div>
-                  <ion-button *ngIf="model.getAchievementAmount(reward.achievementType) >= reward.achievementAmount" size="small" color="success" (click)="claimAchievementReward(reward)">
-                    Claim
-                  </ion-button>
-                </div>
-                <div class="time-bar light-border mt-05">
-                  <span class="time-bar-inner" [style.width]="(100 * model.getAchievementAmount(reward.achievementType) / reward.achievementAmount) + '%'"></span>
-                </div>
+                </ion-item>
               </div>
-            </ion-item>
-          </ion-list>
+              
+            </ion-list>
+          </div>
         </div>
     `
 })
@@ -132,6 +142,7 @@ export class OddJobsModal {
                 private navParams: NavParams,
                 public model: Model,
                 public converter: ConverterService,
+                public enumService: EnumService,
                 private propertyService: PropertyService,
                 private backendService: BackendService,
                 private alertCtrl: AlertController) {
@@ -139,22 +150,6 @@ export class OddJobsModal {
 
     closeModal() {
         this.modalCtrl.dismiss();
-    }
-
-    hasClaimableActivity(): boolean {
-        if (!!this.model.oddJobs.find(o => o.jobAmountDone >= o.jobAmount)) {
-            return true;
-        }
-        for (let i = 1; i <= this.model.dailyActivity.today; i++) {
-            if (!!this.model.dailyActivity['day' + i] && !this.model.dailyActivity['day' + i + 'claimed']) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    hasClaimableAchievement(): boolean {
-        return !!this.model.achievementRewards.find(a => this.model.getAchievementAmount(a.achievementType) >= a.achievementAmount);
     }
 
     claimDaily(day: number) {
@@ -218,9 +213,22 @@ export class OddJobsModal {
         }).then(a => a.present());
     }
 
-    claimAchievementReward(reward: AchievementReward) {
+    getTaskCluster(taskCategory: string): TaskCluster[] {
+        return this.model.taskClusters.filter(t => t.category === taskCategory);
+    }
+
+    getTask(taskCluster: TaskCluster): Task {
+        const playerTask = this.model.playerTasks.find(t => t.taskClusterId === taskCluster.id);
+        if (playerTask) {
+            return taskCluster.tasks.find(t => t.number === playerTask.currentTaskNumber);
+        } else {
+            return taskCluster.tasks[0];
+        }
+    }
+
+    claimTask(taskCluster: TaskCluster) {
         this.saving = true;
-        this.backendService.claimAchievementReward(reward).subscribe(() => {
+        this.backendService.claimPlayerTask(taskCluster).subscribe(() => {
             this.saving = false;
         }, () => this.saving = false);
     }

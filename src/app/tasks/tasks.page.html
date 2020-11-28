@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title *ngIf="taskCluster">
+      <div class="flex-space-between">
+        <div class="flex-start">{{taskCluster.name ? taskCluster.name : 'New Cluster'}}</div>
+        <div>
+          <ion-button (click)="initNewTaskCluster()">New Cluster</ion-button>
+          <ion-button color="medium" fill="clean" (click)="cancel()">Cancel</ion-button>
+          <ion-button color="success" (click)="saveTaskCluster()" [disabled]="taskClusterIncomplete()">Save</ion-button>
+        </div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+<ion-content *ngIf="taskCluster">
+  <ion-card>
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input [(ngModel)]="taskCluster.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>SortOrder</ion-label>
+      <ion-input [(ngModel)]="taskCluster.sortOrder" type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <ion-select [(ngModel)]="taskCluster.category">
+        <ion-select-option *ngFor="let category of enumService.enums.taskCategories" [value]="category">{{category}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-card>
+  <ion-list *ngIf="model.lootBoxes">
+    <div *ngFor="let task of taskCluster.tasks" class="mt-2">
+      <div class="flex-space-between">
+        <div class="flex-grow">
+          <div class="flex-space-between">
+            <ion-item lines="none">
+              <ion-label position="floating">Number</ion-label>
+              <ion-input [(ngModel)]="task.number" type="number" min="1"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">To achieve</ion-label>
+              <ion-input [(ngModel)]="task.taskAmount" type="number" min="1"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Type</ion-label>
+              <ion-select [(ngModel)]="task.taskType">
+                <ion-select-option *ngFor="let type of enumService.getAchievementRewardTypes()" [value]="type">{{type}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-icon name="pencil" class="pointer mr-05" (click)="lootBoxSelection(task)"></ion-icon>
+              <ion-icon name="return-up-forward" class="pointer mr-05" (click)="gotoLootBox(task.lootBoxId)"></ion-icon>
+              {{lootBoxName(task.lootBoxId)}}
+            </ion-item>
+          </div>
+          <div *ngIf="getLootBox(task.lootBoxId) as lootBox" class="flex-end">
+            <div *ngFor="let lootItem of lootBox.items" class="ml-2 flex-center">
+              <div *ngIf="lootItem.type == 'RESOURCE'" class="flex-center"><img src="assets/icon/resources/{{lootItem.resourceType}}.png" class="resource-icon"> {{lootItem.resourceTo}}</div>
+              <div *ngIf="lootItem.type == 'PROGRESS'" class="flex-center"><img src="assets/icon/progress/{{lootItem.progressStat}}.png" class="resource-icon"> {{lootItem.progressStatBonus}}</div>
+              <div *ngIf="lootItem.type == 'JEWEL'" class="flex-center">L{{lootItem.jewelLevel}} {{lootItem.jewelTypes[0]}} jewel</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex-center">
+      <ion-button (click)="addTask()">Add Task</ion-button>
+    </div>
+  </ion-list>
+</ion-content>

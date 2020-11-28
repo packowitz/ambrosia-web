@@ -47,6 +47,7 @@ export class Enums {
     oddJobTypes: string[];
     trades: Trade[];
     achievementRewardTypes: string[];
+    taskCategories: string[];
 }
 
 export class AdminEnums {

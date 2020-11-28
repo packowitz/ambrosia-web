@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Task Clusters
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="saving" class="loading-indicator"><img src="assets/icon/logo.png" alt="" class="logo"></div>
+<ion-content *ngIf="model.taskClusters">
+  <ion-list *ngFor="let category of enumService.enums.taskCategories">
+    <ion-title>{{converter.readableIdentifier(category)}}</ion-title>
+    <ion-item *ngFor="let taskCluster of clustersByCategory(category)" (click)="clusterDetails(taskCluster)" detail class="pointer">
+      <ion-label>{{taskCluster.sortOrder}}. {{taskCluster.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
